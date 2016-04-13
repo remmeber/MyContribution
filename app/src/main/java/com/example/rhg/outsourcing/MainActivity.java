@@ -79,16 +79,19 @@ public class MainActivity extends AppCompatActivity
             //当item被选中状态
             @Override
             public void onTabSelected(int position) {
+
             }
 
             //当item不被选中状态
             @Override
             public void onTabUnselected(int position) {
+
             }
 
             //当item再次被选中状态
             @Override
             public void onTabReselected(int position) {
+                
             }
         });
 
