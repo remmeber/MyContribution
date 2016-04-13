@@ -1,0 +1,9 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="ic_ecit_password" type="drawable">@mipmap/ic_vpn_key_grey600_24dp</item>
+    <item name="ic_persional_info" type="drawable">@mipmap/ic_edit_grey600_24dp</item>
+    <item name="ic_info_feedback" type="drawable">@mipmap/suggestion</item>
+    <item name="ic_update" type="drawable">@mipmap/ic_cloud_upload_grey600_24dp</item>
+    <item name="ic_exit" type="drawable">@mipmap/ic_exit_to_app_grey600_24dp</item>
+    <item name="ic_about_us" type="drawable">@mipmap/ic_tag_faces_grey600_24dp</item>
+    <item name="ic_user_icon" type="drawable">@mipmap/ic_user_icon</item>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:clipChildren="false">
+
+    <com.example.rhg.outsourcing.widget.CircleImageView
+        android:id="@+id/gridview_imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        app:border_width="2dp"
+        app:border_color="@color/light" />
+
+    <TextView
+        android:id="@+id/gridview_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="false"
+        android:textSize="15sp" />
+
+</LinearLayout>
