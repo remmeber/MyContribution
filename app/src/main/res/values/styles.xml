@@ -14,7 +14,7 @@
     </style>
 
     <!--change system default logo-->
-    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark">
         <item name="actionOverflowButtonStyle">@style/MyActionOverflowButton</item>
     </style>
 
