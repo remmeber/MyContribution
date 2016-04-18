@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,9 +20,23 @@ import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.facebook.rebound.BaseSpringSystem;
+import com.facebook.rebound.SimpleSpringListener;
+import com.facebook.rebound.Spring;
+import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringSystem;
+import com.facebook.rebound.SpringUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    //for rebound
+    private final BaseSpringSystem mSpringSystem = SpringSystem.create();
+    private final ExampleSpringListener exampleSpringListener = new ExampleSpringListener();
+    private Spring mScaleSpring;
+    //设置弹跳参数
+    private final double TENSION = 100;
+    private final double FICTION = 4;
+
     BottomSheetBehavior behavior;
     FloatingActionButton fab;
 
@@ -30,6 +45,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        mScaleSpring = mSpringSystem.createSpring();
+        //设置弹跳
+        mScaleSpring.setSpringConfig(new SpringConfig(TENSION,FICTION));
+        //可以作为点击事件的效果
+
+
 
         final View bottom_view = (View) findViewById(R.id.bottom_view);
         TextView tv = (TextView) bottom_view.findViewById(R.id.tv);
@@ -42,7 +64,28 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mScaleSpring.setEndValue(1);
+//                        Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                                .setAction("Action", null).show();
+                        if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                            behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                        else
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        mScaleSpring.setEndValue(0);
+                        break;
+                }
+                return true;
+            }
+        });
+        /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -52,12 +95,12 @@ public class MainActivity extends AppCompatActivity
                 else
                     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
-        });
-
+        });*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -91,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             //当item再次被选中状态
             @Override
             public void onTabReselected(int position) {
-                
+
             }
         });
 
@@ -110,6 +153,28 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mScaleSpring.addListener(exampleSpringListener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mScaleSpring.removeListener(exampleSpringListener);
+    }
+
+    private class ExampleSpringListener extends SimpleSpringListener {
+        @Override
+        public void onSpringUpdate(Spring spring) {
+            float mappedValue = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 1, 0.5);
+            fab.setScaleX(mappedValue);
+            fab.setScaleY(mappedValue);
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
