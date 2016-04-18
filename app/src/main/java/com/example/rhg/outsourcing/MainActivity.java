@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity
                 .setActiveColor(R.color.colorActiveYellow)
                 .setInActiveColor(R.color.colorInActive)
                 .setBarBackgroundColor(R.color.colorBackground);
-        bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_user_icon, "首页"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_user_icon, "订单"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_user_icon, "我的"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_user_icon, "购物车"))
+        bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_about_us, "首页"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_exit, "订单"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_ecit_password, "我的"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_info_feedback, "购物车"))
                 .initialise();
         bottomNavigation.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             //当item被选中状态
