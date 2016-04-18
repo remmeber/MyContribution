@@ -13,7 +13,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark">
+    <!--change system default logo-->
+    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="actionOverflowButtonStyle">@style/MyActionOverflowButton</item>
     </style>
 
