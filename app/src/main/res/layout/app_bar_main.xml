@@ -9,14 +9,12 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/AppTheme" >
+        android:layout_height="wrap_content" >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -69,18 +67,10 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" />
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7b3a4a57891c9421f92b503ce6b1ac7343d17ab8
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottom_navigation"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-<<<<<<< HEAD
-=======
-
->>>>>>> 7b3a4a57891c9421f92b503ce6b1ac7343d17ab8
 </com.example.rhg.outsourcing.MyLayout>

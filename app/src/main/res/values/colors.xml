@@ -8,4 +8,5 @@
     <color name="colorInActive">#BFBFBF</color>
     <color name="colorBackground">#ECECEC</color>
     <color name="light">#FFEEEEEE</color>
+    <color name="white">#FFFFFF</color>
 </resources>
