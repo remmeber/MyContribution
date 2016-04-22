@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     private final BaseSpringSystem mSpringSystem = SpringSystem.create();
     private final ExampleSpringListener exampleSpringListener = new ExampleSpringListener();
     private Spring mScaleSpring;
-    //设置弹跳参数
+    //设置弹跳参数，默认为40，7
     private final double TENSION = 100;
     private final double FICTION = 4;
 
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity
         mScaleSpring = mSpringSystem.createSpring();
         //设置弹跳
         mScaleSpring.setSpringConfig(new SpringConfig(TENSION,FICTION));
+//        mScaleSpring.setVelocity(1);
         //可以作为点击事件的效果
 
 
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        mScaleSpring.setEndValue(1);
+                        //按钮的变化最大程度，1表示程度最大，0表示程度最小
+                        mScaleSpring.setEndValue(0.5);
 //                        Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                                .setAction("Action", null).show();
                         if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
+                        //按钮的变化最大程度，1表示程度最大，0表示程度最小
                         mScaleSpring.setEndValue(0);
                         break;
                 }
