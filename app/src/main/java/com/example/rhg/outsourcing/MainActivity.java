@@ -44,8 +44,17 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //for toolbar:Note:all settings need to be done before setSupportActionBar;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO back
+            }
+        });
 
         mScaleSpring = mSpringSystem.createSpring();
         //设置弹跳
@@ -55,14 +64,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        final View bottom_view = (View) findViewById(R.id.bottom_view);
-        TextView tv = (TextView) bottom_view.findViewById(R.id.tv);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-            }
-        });
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnTouchListener(new View.OnTouchListener() {
@@ -74,10 +75,11 @@ public class MainActivity extends AppCompatActivity
                         mScaleSpring.setEndValue(0.5);
 //                        Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                                .setAction("Action", null).show();
-                        if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                        //for BottomSheetView
+                       /* if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
                             behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                         else
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);*/
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
@@ -99,15 +101,15 @@ public class MainActivity extends AppCompatActivity
                     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });*/
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        //for DrawerLayout
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
-
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);*/
 
         BottomNavigationBar bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
@@ -141,9 +143,17 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
+        //for bottomView
+        /*final View bottom_view = (View) findViewById(R.id.bottom_view);
+        TextView tv = (TextView) bottom_view.findViewById(R.id.tv);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+        });
         behavior = BottomSheetBehavior.from(bottom_view);
-//        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(View bottomSheet, int newState) {
@@ -154,7 +164,7 @@ public class MainActivity extends AppCompatActivity
             public void onSlide(View bottomSheet, float slideOffset) {
                 ViewCompat.setScaleY(bottomSheet, slideOffset);
             }
-        });
+        });*/
     }
 
     @Override
@@ -181,12 +191,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
+        super.onBackPressed();
     }
 
     @Override
