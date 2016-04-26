@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         mScaleSpring = mSpringSystem.createSpring();
         //设置弹跳
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity
                 behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
-        setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnTouchListener(new View.OnTouchListener() {
