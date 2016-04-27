@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -26,9 +24,18 @@ import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
+import com.lapism.searchview.adapter.SearchAdapter;
+import com.lapism.searchview.adapter.SearchItem;
+import com.lapism.searchview.history.SearchHistoryTable;
+import com.lapism.searchview.view.SearchCodes;
+import com.lapism.searchview.view.SearchView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private final static String TAG = "MainActivity";
     //for rebound
     private final BaseSpringSystem mSpringSystem = SpringSystem.create();
     private final ExampleSpringListener exampleSpringListener = new ExampleSpringListener();
@@ -37,6 +44,11 @@ public class MainActivity extends AppCompatActivity
     private final double TENSION = 100;
     private final double FICTION = 4;
 
+    //for searchView
+    SearchView searchView;
+    private SearchHistoryTable msearchHistory;
+    private List<SearchItem> mSuggestionsList;
+
     BottomSheetBehavior behavior;
     FloatingActionButton fab;
 
@@ -44,10 +56,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        msearchHistory = new SearchHistoryTable(this);
+
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
-
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,13 +69,60 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        searchView = (SearchView)findViewById(R.id.searchView);
+        searchView.setVersion(SearchCodes.VERSION_MENU_ITEM);
+        searchView.setStyle(SearchCodes.STYLE_MENU_ITEM_CLASSIC);
+        searchView.setTheme(SearchCodes.THEME_LIGHT);
+        searchView.setDivider(false);
+        searchView.setHint(R.string.searchHint);
+        searchView.setHintSize(R.dimen.search_text_medium);
+        searchView.setVoice(false);
+        searchView.setAnimationDuration(300);
+        searchView.setShadowColor(ContextCompat.getColor(this,R.color.searchShadow));
+//        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.hide(true);
+                msearchHistory.addItem(new SearchItem(query));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setOnSearchViewListener(new SearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                fab.hide();
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                fab.show();
+            }
+        });
+        mSuggestionsList = new ArrayList<>();
+        List<SearchItem> mResultsList = new ArrayList<>();
+        SearchAdapter mSearchAdapter = new SearchAdapter(this, mResultsList, mSuggestionsList, SearchCodes.THEME_LIGHT);
+        mSearchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                TextView textView = (TextView)view.findViewById(R.id.textView_item_text);
+                CharSequence text = textView.getText();
+                msearchHistory.addItem(new SearchItem(text));
+            }
+        });
+        searchView.setAdapter(mSearchAdapter);
+
+
         mScaleSpring = mSpringSystem.createSpring();
         //设置弹跳
-        mScaleSpring.setSpringConfig(new SpringConfig(TENSION,FICTION));
+        mScaleSpring.setSpringConfig(new SpringConfig(TENSION, FICTION));
 //        mScaleSpring.setVelocity(1);
         //可以作为点击事件的效果
-
-
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -166,6 +226,13 @@ public class MainActivity extends AppCompatActivity
             }
         });*/
     }
+    private void showSearchViwe(){
+        mSuggestionsList.clear();
+        mSuggestionsList.addAll(msearchHistory.getAllItems());
+        mSuggestionsList.add(new SearchItem("Google"));
+        mSuggestionsList.add(new SearchItem("Android"));
+        searchView.show(true);
+    }
 
     @Override
     protected void onResume() {
@@ -225,16 +292,17 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         if (id == R.id.action_search) {
-            final Snackbar snackbar = Snackbar.make(fab, item.getTitle(), Snackbar.LENGTH_SHORT);
+           /* final Snackbar snackbar = Snackbar.make(fab, item.getTitle(), Snackbar.LENGTH_SHORT);
             snackbar.setAction("Done", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     snackbar.dismiss();
                 }
-            }).show();
+            }).show();*/
+            showSearchViwe();//TODO search
+
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

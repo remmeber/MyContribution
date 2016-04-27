@@ -9,4 +9,5 @@
     <color name="colorBackground">#ECECEC</color>
     <color name="light">#FFEEEEEE</color>
     <color name="white">#FFFFFF</color>
+    <color name="searchShadow">#80000000</color>
 </resources>

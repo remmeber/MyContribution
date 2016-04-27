@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.0.0'
     compile 'com.facebook.rebound:rebound:0.3.8'
+    compile project(':searchview')
 }
