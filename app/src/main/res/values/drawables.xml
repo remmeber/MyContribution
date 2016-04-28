@@ -6,4 +6,8 @@
     <item name="ic_exit" type="drawable">@mipmap/ic_exit_to_app_grey600_24dp</item>
     <item name="ic_about_us" type="drawable">@mipmap/ic_tag_faces_grey600_24dp</item>
     <item name="ic_user_icon" type="drawable">@mipmap/ic_user_icon</item>
+    <item name="ic_home" type="drawable">@mipmap/ic_home_white</item>
+    <item name="ic_user" type="drawable">@mipmap/ic_user_white</item>
+    <item name="ic_shopping_car" type="drawable">@mipmap/ic_shopping_cart_white</item>
+    <item name="ic_search" type="drawable">@mipmap/ic_search_white</item>
 </resources>

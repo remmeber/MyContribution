@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/colorPrimary">
+
+    <ImageButton
+        android:id="@+id/map_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ic_place_white_36dp"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+    <TextView
+        android:id="@+id/map_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="杭州"
+        android:textSize="@dimen/search_text_medium"
+        android:textColor="#AA000000"
+        android:layout_toRightOf="@id/map_button"
+        android:layout_alignBottom="@id/map_button"/>
+
+    <TextView
+        android:id="@+id/search_text"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:hint="@string/searchHint"
+        android:gravity="center_vertical"
+        android:textSize="20dp"
+        android:background="@drawable/searchview_background"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_alignBottom="@id/map_textview"
+        android:layout_toRightOf="@id/map_textview"
+        android:layout_toLeftOf="@+id/swipe"/>
+
+    <ImageButton
+        android:id="@+id/right_drawable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_toLeftOf="@+id/swipe"/>
+    <LinearLayout
+        android:id="@+id/swipe"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/swipe_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_search_white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫一扫"/>
+    </LinearLayout>
+</RelativeLayout>

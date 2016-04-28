@@ -1,23 +1,29 @@
 package com.example.rhg.outsourcing;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.view.MotionEvent;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
+import com.example.rhg.outsourcing.View.BaseView;
+import com.example.rhg.outsourcing.presenter.TestPresenter;
+import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.facebook.rebound.BaseSpringSystem;
 import com.facebook.rebound.SimpleSpringListener;
 import com.facebook.rebound.Spring;
@@ -32,58 +38,88 @@ import com.lapism.searchview.view.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BaseView
+//        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
+{
     private final static String TAG = "MainActivity";
-    //for rebound
+    //----------------------for rebound 弹簧效果---------------------------------------------------
     private final BaseSpringSystem mSpringSystem = SpringSystem.create();
     private final ExampleSpringListener exampleSpringListener = new ExampleSpringListener();
     private Spring mScaleSpring;
     //设置弹跳参数，默认为40，7
     private final double TENSION = 100;
     private final double FICTION = 4;
-
+    //---------------------------------------------------------------------------------------------
+    //for refresh 用来刷新整个页面，可以动态添加HeadView和FooterView
+    private MaterialRefreshLayout materialRefreshLayout;
     //for searchView
-    SearchView searchView;
+    private SearchView searchView;
     private SearchHistoryTable msearchHistory;
     private List<SearchItem> mSuggestionsList;
+    private TextView textView_search;
+    //for banner
+    private ConvenientBanner convenientBanner;
+    //BottomNavigationBar当前还不能隐藏(private)，修改完bug后可以修改(public)
+    private BottomNavigationBar bottomNavigation;
+    //底部弹页
+    private BottomSheetBehavior behavior;
+    //浮动按钮
+    private FloatingActionButton fab;
 
-    BottomSheetBehavior behavior;
-    FloatingActionButton fab;
+    //---------getdata-----------
+    private TestPresenter testPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        msearchHistory = new SearchHistoryTable(this);
-
+        testPresenter = new TestPresenter(this);
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+        RelativeLayout toolbar = (RelativeLayout) findViewById(R.id.toolbar);
+        //----------------------对图片轮廓进行颜色填充----------------------------------------------
+        /*ImageButton imageButton = (ImageButton)toolbar.findViewById(R.id.right_drawable);
+        Drawable drawable = getResources().getDrawable(R.mipmap.ic_search_white);
+        Drawable tintdrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(tintdrawable,getResources().getColor(R.color.colorActiveYellow));
+        imageButton.setImageDrawable(tintdrawable);*/
+        ImageButton imageButton = (ImageButton)toolbar.findViewById(R.id.right_drawable);
+        Drawable drawable = getResources().getDrawable(R.mipmap.ic_search_white);
+        ImageUtils.TintFill(imageButton,drawable,getResources().getColor(R.color.colorActiveYellow));
+        //----------------------------------------------------------------------------------------
+
+        /*toolbar.setTitle("");
+        toolbar.setSubtitle("杭州");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO back
             }
+        });*/
+        //------------------------搜索框的一些配置操作-----------------------------------------------
+        textView_search = (TextView)toolbar.findViewById(R.id.search_text);
+        textView_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSearchViwe();
+            }
         });
-
-        searchView = (SearchView)findViewById(R.id.searchView);
+        msearchHistory = new SearchHistoryTable(this);
+        searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setVersion(SearchCodes.VERSION_MENU_ITEM);
         searchView.setStyle(SearchCodes.STYLE_MENU_ITEM_CLASSIC);
         searchView.setTheme(SearchCodes.THEME_LIGHT);
         searchView.setDivider(false);
-        searchView.setHint(R.string.searchHint);
-        searchView.setHintSize(R.dimen.search_text_medium);
         searchView.setVoice(false);
         searchView.setAnimationDuration(300);
-        searchView.setShadowColor(ContextCompat.getColor(this,R.color.searchShadow));
+        searchView.setShadowColor(ContextCompat.getColor(this, R.color.searchShadow));
 //        searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchView.hide(true);
+                searchView.hide(false);
                 msearchHistory.addItem(new SearchItem(query));
                 return false;
             }
@@ -110,20 +146,48 @@ public class MainActivity extends AppCompatActivity
         mSearchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                TextView textView = (TextView)view.findViewById(R.id.textView_item_text);
+                searchView.hide(false);
+                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
                 CharSequence text = textView.getText();
                 msearchHistory.addItem(new SearchItem(text));
             }
         });
         searchView.setAdapter(mSearchAdapter);
-
-
+        //-----------------------------------------------------------------------------------------
+        //--------------------------------弹跳特效--------------------------------------------------
         mScaleSpring = mSpringSystem.createSpring();
         //设置弹跳
         mScaleSpring.setSpringConfig(new SpringConfig(TENSION, FICTION));
 //        mScaleSpring.setVelocity(1);
         //可以作为点击事件的效果
+        //-----------------------------------------------------------------------------------------
 
+        materialRefreshLayout = (MaterialRefreshLayout)findViewById(R.id.refresh);
+        materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+                Log.i(TAG,"onRefresh");
+                //------------获取数据入口----------------------------------------------------------
+                testPresenter.getData();
+                //--------------------------------------------------------------------------------
+            }
+
+            @Override
+            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
+                Log.i(TAG,"onRefreshLoadMore");
+            }
+
+            @Override
+            public void onfinish() {
+                Log.i(TAG,"onfinish");
+                //------------------结束数据获取出口------------------------------------------------
+
+                //--------------------------------------------------------------------------------
+            }
+        });
+        materialRefreshLayout.setIsOverLay(false);
+        materialRefreshLayout.setWaveShow(true);
+//        materialRefreshLayout.setLoadMore(true);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnTouchListener(new View.OnTouchListener() {
@@ -170,18 +234,18 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);*/
-
-        BottomNavigationBar bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
+        //-------------------------底部导航栏=-------------------------------------------------------
+        bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigation
                 .setActiveColor(R.color.colorActiveYellow)
                 .setInActiveColor(R.color.colorInActive)
                 .setBarBackgroundColor(R.color.colorBackground);
-        bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_about_us, "首页"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_exit, "订单"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_ecit_password, "我的"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_info_feedback, "购物车"))
+        bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_home, R.string.Home))
+                .addItem(new BottomNavigationItem(R.drawable.ic_exit, "商家"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_user, "我的"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_shopping_car, "购物车"))
                 .initialise();
         bottomNavigation.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             //当item被选中状态
@@ -202,6 +266,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+        //-----------------------------------------------------------------------------------------
 
         //for bottomView
         /*final View bottom_view = (View) findViewById(R.id.bottom_view);
@@ -225,27 +290,26 @@ public class MainActivity extends AppCompatActivity
                 ViewCompat.setScaleY(bottomSheet, slideOffset);
             }
         });*/
+
     }
-    private void showSearchViwe(){
+    //----------------------------单独呼出搜索页面--------------------------------------------------
+    private void showSearchViwe() {
         mSuggestionsList.clear();
         mSuggestionsList.addAll(msearchHistory.getAllItems());
         mSuggestionsList.add(new SearchItem("Google"));
         mSuggestionsList.add(new SearchItem("Android"));
         searchView.show(true);
     }
+    //--------------------------------------------------------------------------------------------
+    //------------------------回调显示统一区--------------------------------------------------------
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mScaleSpring.addListener(exampleSpringListener);
+    public void showData(Object o) {
+        Log.i(TAG,o.toString());
+        materialRefreshLayout.finishRefresh();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mScaleSpring.removeListener(exampleSpringListener);
-    }
-
+    //---------------------------------------------------------------------------------------------
     private class ExampleSpringListener extends SimpleSpringListener {
         @Override
         public void onSpringUpdate(Spring spring) {
@@ -266,7 +330,7 @@ public class MainActivity extends AppCompatActivity
         }*/
         super.onBackPressed();
     }
-
+    //--------------------------toolbar右上方menu---------------------------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -291,23 +355,24 @@ public class MainActivity extends AppCompatActivity
             }).show();
             return true;
         }
-        if (id == R.id.action_search) {
-           /* final Snackbar snackbar = Snackbar.make(fab, item.getTitle(), Snackbar.LENGTH_SHORT);
+        /*if (id == R.id.action_search) {
+           *//* final Snackbar snackbar = Snackbar.make(fab, item.getTitle(), Snackbar.LENGTH_SHORT);
             snackbar.setAction("Done", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     snackbar.dismiss();
                 }
-            }).show();*/
+            }).show();*//*
             showSearchViwe();//TODO search
 
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
+    //--------------------------------------------------------------------------------------------
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    /*@SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -330,5 +395,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }*/
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mScaleSpring.addListener(exampleSpringListener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mScaleSpring.removeListener(exampleSpringListener);
     }
 }
