@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.rhg.outsourcing.View.BaseView;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
+import com.example.rhg.outsourcing.utils.FragmentUtil;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.facebook.rebound.BaseSpringSystem;
 import com.facebook.rebound.SimpleSpringListener;
@@ -84,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements BaseView
         Drawable tintdrawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(tintdrawable,getResources().getColor(R.color.colorActiveYellow));
         imageButton.setImageDrawable(tintdrawable);*/
-        ImageButton imageButton = (ImageButton)toolbar.findViewById(R.id.right_drawable);
+        ImageButton imageButton = (ImageButton) toolbar.findViewById(R.id.right_drawable);
         Drawable drawable = getResources().getDrawable(R.mipmap.ic_search_white);
-        ImageUtils.TintFill(imageButton,drawable,getResources().getColor(R.color.colorActiveYellow));
+        ImageUtils.TintFill(imageButton, drawable, getResources().getColor(R.color.colorActiveYellow));
         //----------------------------------------------------------------------------------------
 
         /*toolbar.setTitle("");
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
             }
         });*/
         //------------------------搜索框的一些配置操作-----------------------------------------------
-        textView_search = (TextView)toolbar.findViewById(R.id.search_text);
+        textView_search = (TextView) toolbar.findViewById(R.id.search_text);
         textView_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,11 +165,11 @@ public class MainActivity extends AppCompatActivity implements BaseView
         //可以作为点击事件的效果
         //-----------------------------------------------------------------------------------------
 
-        materialRefreshLayout = (MaterialRefreshLayout)findViewById(R.id.refresh);
+        materialRefreshLayout = (MaterialRefreshLayout) findViewById(R.id.refresh);
         materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-                Log.i(TAG,"onRefresh");
+                Log.i(TAG, "onRefresh");
                 //------------获取数据入口----------------------------------------------------------
                 testPresenter.getData();
                 //--------------------------------------------------------------------------------
@@ -174,12 +177,12 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-                Log.i(TAG,"onRefreshLoadMore");
+                Log.i(TAG, "onRefreshLoadMore");
             }
 
             @Override
             public void onfinish() {
-                Log.i(TAG,"onfinish");
+                Log.i(TAG, "onfinish");
                 //------------------结束数据获取出口------------------------------------------------
 
                 //--------------------------------------------------------------------------------
@@ -252,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
             @Override
             public void onTabSelected(int position) {
 
+               FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             }
 
             //当item不被选中状态
@@ -263,7 +267,6 @@ public class MainActivity extends AppCompatActivity implements BaseView
             //当item再次被选中状态
             @Override
             public void onTabReselected(int position) {
-
             }
         });
         //-----------------------------------------------------------------------------------------
@@ -292,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
         });*/
 
     }
+
     //----------------------------单独呼出搜索页面--------------------------------------------------
     private void showSearchViwe() {
         mSuggestionsList.clear();
@@ -305,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showData(Object o) {
-        Log.i(TAG,o.toString());
+        Log.i(TAG, o.toString());
         materialRefreshLayout.finishRefresh();
     }
 
@@ -330,6 +334,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
         }*/
         super.onBackPressed();
     }
+
     //--------------------------toolbar右上方menu---------------------------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
