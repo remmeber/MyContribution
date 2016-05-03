@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +24,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.rhg.outsourcing.View.BaseView;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
-import com.example.rhg.outsourcing.utils.FragmentUtil;
+import com.example.rhg.outsourcing.ui.HomeController;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.facebook.rebound.BaseSpringSystem;
 import com.facebook.rebound.SimpleSpringListener;
@@ -41,12 +40,12 @@ import com.lapism.searchview.view.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements BaseView
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {
     private final static String TAG = "MainActivity";
+    HomeController homeController;
     //----------------------for rebound 弹簧效果---------------------------------------------------
     private final BaseSpringSystem mSpringSystem = SpringSystem.create();
     private final ExampleSpringListener exampleSpringListener = new ExampleSpringListener();
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
     private final double FICTION = 4;
     //---------------------------------------------------------------------------------------------
     //for refresh 用来刷新整个页面，可以动态添加HeadView和FooterView
-    private MaterialRefreshLayout materialRefreshLayout;
+//    private MaterialRefreshLayout materialRefreshLayout;
     //for searchView
     private SearchView searchView;
     private SearchHistoryTable msearchHistory;
@@ -78,7 +77,10 @@ public class MainActivity extends AppCompatActivity implements BaseView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         testPresenter = new TestPresenter(this);
+
+        homeController = new HomeController(this,testPresenter);
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
         RelativeLayout toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         //----------------------对图片轮廓进行颜色填充----------------------------------------------
@@ -165,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
         //可以作为点击事件的效果
         //-----------------------------------------------------------------------------------------
 
-        materialRefreshLayout = (MaterialRefreshLayout) findViewById(R.id.refresh);
+        /*materialRefreshLayout = (MaterialRefreshLayout) findViewById(R.id.refresh);
         materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
             }
         });
         materialRefreshLayout.setIsOverLay(false);
-        materialRefreshLayout.setWaveShow(true);
+        materialRefreshLayout.setWaveShow(true);*/
 //        materialRefreshLayout.setLoadMore(true);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -254,8 +256,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
             //当item被选中状态
             @Override
             public void onTabSelected(int position) {
-
-               FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                homeController.showFragment(position);
             }
 
             //当item不被选中状态
@@ -310,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
     @Override
     public void showData(Object o) {
         Log.i(TAG, o.toString());
-        materialRefreshLayout.finishRefresh();
+//        materialRefreshLayout.finishRefresh();
     }
 
     //---------------------------------------------------------------------------------------------

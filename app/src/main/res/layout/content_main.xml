@@ -17,10 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <com.bigkoo.convenientbanner.ConvenientBanner
-                android:id="@+id/picture_banner"
+                android:id="@+id/pictureBanner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="100dp"
+                app:canLoop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,6 +30,7 @@
                 android:text="Hello World!" />
 
         </LinearLayout>
+
 
     </ScrollView>
 
