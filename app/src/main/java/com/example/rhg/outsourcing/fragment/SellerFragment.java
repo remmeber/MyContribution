@@ -1,19 +1,22 @@
 package com.example.rhg.outsourcing.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.example.rhg.outsourcing.MySwipeLayout;
 import com.example.rhg.outsourcing.R;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
 
 /**
  * Created by remember on 2016/4/28.
@@ -21,7 +24,7 @@ import com.example.rhg.outsourcing.R;
 public class SellerFragment extends SuperFragment {
     private static final String TAG = "SellerFragment";
     View view;
-    SwipeRefreshLayout swipeRefreshLayout;
+    MySwipeLayout mySwipeLayout;
     RecyclerView recyclerView;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
@@ -34,8 +37,8 @@ public class SellerFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.seller_layout,container,false);
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.seller_swipe);
-        recyclerView = (RecyclerView)view.findViewById(R.id.swiperefresh);
+        mySwipeLayout = (MySwipeLayout) view.findViewById(R.id.seller_swipe);
+        recyclerView = (RecyclerView)view.findViewById(R.id.seller_recycle);
         return view;
     }
 
@@ -43,12 +46,6 @@ public class SellerFragment extends SuperFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
     }
 
     @Override

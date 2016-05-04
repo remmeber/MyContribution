@@ -17,7 +17,4 @@ public class BannerTypeModel {
         return imageUrls;
     }
 
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
-    }
 }

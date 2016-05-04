@@ -3,10 +3,10 @@
     android:id="@+id/seller_swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/seller_recycle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="seller layout"/>
+        android:layout_height="match_parent"/>
 
 </com.example.rhg.outsourcing.MySwipeLayout>

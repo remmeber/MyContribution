@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.example.rhg.outsourcing.Constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.model.BannerTypeModel;
 import com.example.rhg.outsourcing.model.FavorableTypeModel;
@@ -19,8 +21,8 @@ import com.example.rhg.outsourcing.model.HeaderTypeModel;
 import com.example.rhg.outsourcing.model.RecommendListTypeModel;
 import com.example.rhg.outsourcing.model.RecommendTextTypeModel;
 import com.example.rhg.outsourcing.model.TextTypeModel;
+import com.example.rhg.outsourcing.utils.BannerController;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -67,7 +69,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_HEADER:
                 return new HeaderTypeViewHolder(layoutInflater.inflate(R.layout.recycleheader, parent, false));
             case TYPE_BANNER:
-                return new BannerTypeViewHolder(layoutInflater.inflate(R.layout.recyclebanner, parent, false));
+                BannerTypeViewHolder bannerTypeViewHolder = new BannerTypeViewHolder(layoutInflater.inflate(R.layout.recyclebanner, parent, false));
+                return bannerTypeViewHolder;
             case TYPE_TEXT:
                 return new TextTypeViewHolder(layoutInflater.inflate(R.layout.recycletext, parent, false));
             case TYPE_FAVORABLE:
@@ -91,7 +94,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 bindViewHolderHeader((HeaderTypeViewHolder) holder, (HeaderTypeModel) data, position);
                 break;
             case TYPE_BANNER:
-                bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeModel) data, position);
+                bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeModel) data);
                 break;
             case TYPE_TEXT:
                 bindViewHolderText((TextTypeViewHolder) holder, (TextTypeModel) data, position);
@@ -116,14 +119,14 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
-    private void bindViewHolderBanner(BannerTypeViewHolder holder, BannerTypeModel data, int position) {
+    private void bindViewHolderBanner(BannerTypeViewHolder holder, BannerTypeModel data) {
         holder.convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
             @Override
             public BannerImageHolder createHolder() {
                 return new BannerImageHolder();
             }
-        }, data.getImageUrls()).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused});
-        holder.convenientBanner.startTurning(4000);
+        }, data.getImageUrls())
+                .setPageIndicator(AppConstants.imageindictors);
     }
 
     private void bindViewHolderText(TextTypeViewHolder holder, TextTypeModel data, int position) {
@@ -156,7 +159,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        Log.i("RHG", "size is:" + mData.size() + "");
         return (mData == null || mData.isEmpty()) ? 0 : mData.size();
     }
 
@@ -181,7 +183,14 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         public BannerTypeViewHolder(View itemView) {
             super(itemView);
             convenientBanner = (ConvenientBanner) itemView.findViewById(R.id.home_banner);
-
+            convenientBanner.startTurning(2000);
+            convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    onBannerClickListener.bannerClick(position);
+                }
+            });
+            BannerController.getInstance().setConvenientBanner(convenientBanner);
         }
     }
 
@@ -259,4 +268,14 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             });
         }
     }
+    //-------------------------------for banner click callback--------------------------------------
+    private OnBannerClickListener onBannerClickListener;
+    public void setBannerClickListener(OnBannerClickListener onBannerClickListener){
+        this.onBannerClickListener = onBannerClickListener;
+    }
+    public interface OnBannerClickListener{
+        public void bannerClick(int position);
+    }
+    //----------------------------------------------------------------------------------------------
+
 }

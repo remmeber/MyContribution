@@ -29,7 +29,6 @@ public class BannerImageHolder implements Holder<String> {
     @Override
     public void UpdateUI(Context context, int position, String data) {
         imageView.setImageResource(R.drawable.recommend_default_icon_2);
-        Log.i("RHG",data);
         ImageLoader.getInstance().displayImage(data,imageView);
     }
 }

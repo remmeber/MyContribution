@@ -27,6 +27,7 @@ import com.example.rhg.outsourcing.model.RecommendListTypeModel;
 import com.example.rhg.outsourcing.model.RecommendTextTypeModel;
 import com.example.rhg.outsourcing.model.TextTypeModel;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
+import com.example.rhg.outsourcing.utils.BannerController;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -40,7 +41,7 @@ import java.util.List;
 /**
  * Created by remember on 2016/5/3.
  */
-public class HomeFragmentTest extends SuperFragment {
+public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener {
     private String[] images = {
             "http://img2.3lian.com/2014/f2/37/d/40.jpg",
             "http://d.3987.com/sqmy_131219/001.jpg",
@@ -51,12 +52,10 @@ public class HomeFragmentTest extends SuperFragment {
     RecyclerView rcv;
     SwipeRefreshLayout swipeRefreshLayout;
     RecycleMultiTypeAdapter recycleMultiTypeAdapter;
-    ConvenientBanner convenientBanner;
 
     TestPresenter testPresenter;
     //itme的数据类型集合
     List<Object> mData;
-    List<String> imageUrls;
 
     public HomeFragmentTest() {
         testPresenter = new TestPresenter(this);
@@ -75,11 +74,13 @@ public class HomeFragmentTest extends SuperFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.i("RHG","onActivityCreated");
         initImageLoader();
         mData = new ArrayList<>();
-        recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(this.getContext(), mData);
         fillItemList();
-        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getContext(), mData);
+        recycleMultiTypeAdapter.setBannerClickListener(this);
+        rcv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rcv.setHasFixedSize(true);
         rcv.setAdapter(recycleMultiTypeAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -107,12 +108,14 @@ public class HomeFragmentTest extends SuperFragment {
     public void onResume() {
         super.onResume();
         Log.i("RHG","onResume");
+        BannerController.getInstance().startBanner(2000);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.i("RHG","onPause");
+        BannerController.getInstance().stopBanner();
     }
 
     @Override
@@ -137,7 +140,7 @@ public class HomeFragmentTest extends SuperFragment {
         mData.add(new RecommendTextTypeModel("RecommendText", R.color.light));
         mData.add(new RecommendListTypeModel("RecommendList", R.color.colorPrimary));
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
-        recycleMultiTypeAdapter.notifyDataSetChanged();
+
     }
     //------网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库
     private void initImageLoader() {
@@ -154,4 +157,8 @@ public class HomeFragmentTest extends SuperFragment {
         ImageLoader.getInstance().init(config);
     }
 
+    @Override
+    public void bannerClick(int position) {
+        Toast.makeText(getActivity(),"banner "+position+" is clicked",Toast.LENGTH_SHORT).show();
+    }
 }
