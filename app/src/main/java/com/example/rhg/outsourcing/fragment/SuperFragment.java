@@ -44,4 +44,5 @@ public abstract class SuperFragment extends Fragment implements BaseView {
 
 
     public abstract void showSuccess();
+
 }

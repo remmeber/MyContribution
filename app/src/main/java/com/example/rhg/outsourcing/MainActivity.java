@@ -1,6 +1,7 @@
 package com.example.rhg.outsourcing;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
@@ -72,6 +73,14 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
     //---------getdata-----------
     private TestPresenter testPresenter;
+    //--------------------------------------
+    float x = 0;
+    float y = 0;
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
         testPresenter = new TestPresenter(this);
 
-        homeController = new HomeController(this,testPresenter);
+        homeController = new HomeController(this, testPresenter);
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
         RelativeLayout toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         //----------------------对图片轮廓进行颜色填充----------------------------------------------
@@ -295,6 +304,8 @@ public class MainActivity extends AppCompatActivity implements BaseView
             }
         });*/
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
     //----------------------------单独呼出搜索页面--------------------------------------------------
@@ -313,6 +324,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
         Log.i(TAG, o.toString());
 //        materialRefreshLayout.finishRefresh();
     }
+
 
     //---------------------------------------------------------------------------------------------
     private class ExampleSpringListener extends SimpleSpringListener {
@@ -412,5 +424,30 @@ public class MainActivity extends AppCompatActivity implements BaseView
     protected void onPause() {
         super.onPause();
         mScaleSpring.removeListener(exampleSpringListener);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG,"Touch");
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                y = event.getY();
+                Log.i(TAG, " " + y);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float dy = event.getY() - y;
+                if (dy<-0.2) {
+                    fab.hide();
+                    Log.i(TAG, " hide");
+                } else {
+                    if (!fab.isShown()) {
+                        Log.i(TAG, " show");
+                        fab.show();
+                    }
+                }
+                y = event.getY();
+                break;
+        }
+        return true;
     }
 }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.rhg.outsourcing.MySwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swiperefresh" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycleview"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="wrap_content"
+            android:text="my_layout"/>
         <!--<com.bigkoo.convenientbanner.ConvenientBanner
             android:id="@+id/picture_banner"
             android:layout_width="match_parent"
@@ -18,4 +17,4 @@
             android:layout_height="wrap_content"
             android:text="Hello World!" />-->
 
-</com.example.rhg.outsourcing.MySwipeLayout>
+</LinearLayout>

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.model.BannerTypeModel;
 import com.example.rhg.outsourcing.model.FavorableTypeModel;
@@ -18,6 +20,7 @@ import com.example.rhg.outsourcing.model.RecommendListTypeModel;
 import com.example.rhg.outsourcing.model.RecommendTextTypeModel;
 import com.example.rhg.outsourcing.model.TextTypeModel;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -110,43 +113,50 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private void bindViewHolderHeader(HeaderTypeViewHolder holder, HeaderTypeModel data, int position) {
         holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(data.getColor());
+        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
     private void bindViewHolderBanner(BannerTypeViewHolder holder, BannerTypeModel data, int position) {
-        holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(data.getColor());
+        holder.convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
+            @Override
+            public BannerImageHolder createHolder() {
+                return new BannerImageHolder();
+            }
+        }, data.getImageUrls()).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused});
+        holder.convenientBanner.startTurning(4000);
     }
 
     private void bindViewHolderText(TextTypeViewHolder holder, TextTypeModel data, int position) {
         holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(data.getColor());
+        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
     private void bindViewHolderFavorable(FavorableTypeViewHolder holder, FavorableTypeModel data, int position) {
         holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(data.getColor());
+        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
     private void bindViewHolderRecommendText(RecommendTextTypeViewHolder holder, RecommendTextTypeModel data, int position) {
         holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(data.getColor());
+        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
     private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data, int position) {
         holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(data.getColor());
+        Log.i("RHG", "Color is: " + data.getColor());
+        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
         holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(data.getColor());
+        Log.i("RHG", "Color is: " + data.getColor());
+        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
 
     @Override
     public int getItemCount() {
-        Log.i("RHG","size is:"+mData.size()+"");
+        Log.i("RHG", "size is:" + mData.size() + "");
         return (mData == null || mData.isEmpty()) ? 0 : mData.size();
     }
 
@@ -166,17 +176,12 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private class BannerTypeViewHolder extends RecyclerView.ViewHolder {
-        private final Button button;
+        private ConvenientBanner convenientBanner;
 
         public BannerTypeViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.bannerButton);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "header is click", Toast.LENGTH_SHORT).show();
-                }
-            });
+            convenientBanner = (ConvenientBanner) itemView.findViewById(R.id.home_banner);
+
         }
     }
 
@@ -189,7 +194,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "header is click", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "text is click", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -204,7 +209,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "header is click", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "favorable is click", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -219,7 +224,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "header is click", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "recommendtext is click", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -234,7 +239,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "header is click", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "recommendlist is click", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -249,7 +254,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "header is click", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "footer is click", Toast.LENGTH_SHORT).show();
                 }
             });
         }

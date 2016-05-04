@@ -2,6 +2,7 @@ package com.example.rhg.outsourcing.apapter;
 
 import android.content.Context;
 import android.media.Image;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,12 +11,13 @@ import com.example.rhg.outsourcing.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import java.util.List;
+
 /**
  * Created by remember on 2016/5/3.
  */
 public class BannerImageHolder implements Holder<String> {
     ImageView imageView;
-    String[] imageUrl;
 
     @Override
     public View createView(Context context) {
@@ -26,7 +28,8 @@ public class BannerImageHolder implements Holder<String> {
 
     @Override
     public void UpdateUI(Context context, int position, String data) {
-        imageView.setImageResource(R.drawable.recommend_default_icon_1);
+        imageView.setImageResource(R.drawable.recommend_default_icon_2);
+        Log.i("RHG",data);
         ImageLoader.getInstance().displayImage(data,imageView);
     }
 }

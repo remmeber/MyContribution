@@ -59,6 +59,8 @@ public class HomeController {
         transaction.show(fragments[position]);
         Log.i(TAG,"fragment: "+position + " is show");
         transaction.hide(fragments[showMark]);
+        Log.i(TAG,"fragment: "+showMark + " is hide");
         showMark = position;
+        transaction.commitAllowingStateLoss();
     }
 }

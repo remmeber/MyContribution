@@ -11,11 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.rhg.outsourcing.R;
+
 /**
  * Created by remember on 2016/4/28.
  */
-public class ShoppingCarFragment extends Fragment {
+public class ShoppingCarFragment extends SuperFragment {
     private static final String TAG = "ShoppingCarFragment";
+    View view;
+    //-----------------根据需求创建相应的presenter----------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------
     public ShoppingCarFragment() {
         Log.i(TAG,"ShoppingCarFragment ");
     }
@@ -23,6 +29,17 @@ public class ShoppingCarFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(R.layout.shoppingcar_layout,container,false);
+        return view;
+    }
+
+    @Override
+    protected void showFailed() {
+
+    }
+
+    @Override
+    public void showSuccess() {
+
     }
 }

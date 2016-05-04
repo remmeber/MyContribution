@@ -1,30 +1,23 @@
 package com.example.rhg.outsourcing.model;
 
+import java.util.List;
+
 /**
  * Created by remember on 2016/5/3.
+ * 图片轮播数据模型
  */
 public class BannerTypeModel {
-    private String text;
-    private int color;
+    private List<String> imageUrls;
 
-    public BannerTypeModel(String text, int color) {
-        this.text = text;
-        this.color = color;
+    public BannerTypeModel(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
-    public String getText() {
-        return text;
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }
