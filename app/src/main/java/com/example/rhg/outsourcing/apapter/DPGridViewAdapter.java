@@ -7,6 +7,9 @@ import com.example.rhg.outsourcing.model.ImageModel;
 
 import java.util.List;
 
+/**
+ * GridView Adapter
+ */
 public class DPGridViewAdapter extends DPBaseAdapter<ImageModel>{
 	
 	
@@ -15,9 +18,9 @@ public class DPGridViewAdapter extends DPBaseAdapter<ImageModel>{
 	}
 
 	@Override
-	public void convert(DPAdapterViewHolder holder, ImageModel model) {
+	public void convert(DPAdapterViewHolder holder, ImageModel model,int position) {
 		holder.setImageResource(R.id.gridview_imageView, model.getImageId());
 		holder.setText(R.id.gridview_delete, model.getContent());
+		holder.setHeaderColor(R.id.VipTextHeadView,model.getHeadercolor());
 	}
-
 }

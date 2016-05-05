@@ -5,4 +5,7 @@ package com.example.rhg.outsourcing.model;
  * 用来做主页的数据模型
  */
 public class HomeModel {
+    //banner urls
+    //text content
+    //grid urls and contents
 }

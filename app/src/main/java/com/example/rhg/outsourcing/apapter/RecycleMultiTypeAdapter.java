@@ -1,12 +1,18 @@
 package com.example.rhg.outsourcing.apapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -74,7 +80,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_TEXT:
                 return new TextTypeViewHolder(layoutInflater.inflate(R.layout.recycletext, parent, false));
             case TYPE_FAVORABLE:
-                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.recyclefavorable, parent, false));
+                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.gridview_type, parent, false));
             case TYPE_RECOMMEND_TEXT:
                 return new RecommendTextTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendtext, parent, false));
             case TYPE_RECOMMEND_LIST:
@@ -97,7 +103,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeModel) data);
                 break;
             case TYPE_TEXT:
-                bindViewHolderText((TextTypeViewHolder) holder, (TextTypeModel) data, position);
+                bindViewHolderText((TextTypeViewHolder) holder, (TextTypeModel) data);
                 break;
             case TYPE_FAVORABLE:
                 bindViewHolderFavorable((FavorableTypeViewHolder) holder, (FavorableTypeModel) data, position);
@@ -129,19 +135,17 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 .setPageIndicator(AppConstants.imageindictors);
     }
 
-    private void bindViewHolderText(TextTypeViewHolder holder, TextTypeModel data, int position) {
-        holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
+    private void bindViewHolderText(TextTypeViewHolder holder, TextTypeModel data) {
+        holder.textView.setText(data.getText());
     }
 
     private void bindViewHolderFavorable(FavorableTypeViewHolder holder, FavorableTypeModel data, int position) {
-        holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
+        if(holder.dpGridViewAdapter==null)
+            holder.dpGridViewAdapter = new DPGridViewAdapter(context,data.getImageModels(),R.layout.gridview_item);
+        holder.gridView.setAdapter(holder.dpGridViewAdapter);
     }
 
     private void bindViewHolderRecommendText(RecommendTextTypeViewHolder holder, RecommendTextTypeModel data, int position) {
-        holder.button.setText(data.getText() + position);
-        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
     private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data, int position) {
@@ -195,47 +199,35 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private class TextTypeViewHolder extends RecyclerView.ViewHolder {
-        private final Button button;
+        private TextView textView;
 
         public TextTypeViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.textButton);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "text is click", Toast.LENGTH_SHORT).show();
-                }
-            });
+            textView = (TextView)itemView.findViewById(R.id.VipText);
         }
     }
 
     private class FavorableTypeViewHolder extends RecyclerView.ViewHolder {
-        private final Button button;
-
+        private final GridView gridView;
+        private DPGridViewAdapter dpGridViewAdapter;
         public FavorableTypeViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.favorableButton);
-            button.setOnClickListener(new View.OnClickListener() {
+            gridView = (GridView) itemView.findViewById(R.id.gridview);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "favorable is click", Toast.LENGTH_SHORT).show();
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(onGridItemClickListener!=null)
+                        onGridItemClickListener.gridItemClick(view,position);
                 }
             });
+            gridView.setNumColumns(3);
         }
     }
 
     private class RecommendTextTypeViewHolder extends RecyclerView.ViewHolder {
-        private final Button button;
 
         public RecommendTextTypeViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.recommendtextButton);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "recommendtext is click", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
     }
 
@@ -278,4 +270,11 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
     //----------------------------------------------------------------------------------------------
 
+    private OnGridItemClickListener onGridItemClickListener;
+    public  void setOnGridItemClickListener(OnGridItemClickListener onGridItemClickListener){
+        this.onGridItemClickListener = onGridItemClickListener;
+    }
+    public  interface OnGridItemClickListener{
+        public  void gridItemClick(View view,int position);
+    }
 }

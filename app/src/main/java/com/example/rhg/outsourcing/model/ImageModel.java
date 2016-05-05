@@ -1,11 +1,23 @@
 package com.example.rhg.outsourcing.model;
 
+import java.util.List;
+
 /**
  * Created by whiskeyfei on 15-7-24.
  */
 public class ImageModel {
     private int imageId;
+    private int headercolor;
     private String content;
+
+
+    public int getHeadercolor() {
+        return headercolor;
+    }
+
+    public void setHeadercolor(int headercolor) {
+        this.headercolor = headercolor;
+    }
 
     public int getImageId() {
         return imageId;

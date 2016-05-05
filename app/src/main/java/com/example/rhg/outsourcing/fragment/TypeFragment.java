@@ -51,10 +51,10 @@ public class TypeFragment extends Fragment {
 
     private void initData() {
         for (int i = mStart*10; i < mStart*10+mCount; i++) {
-            ImageModel model = new ImageModel();
-            model.setImageId(mImageResId[i]);
-            model.setContent(mTitle[i]);
-            mDataList.add(model);
+//            ImageModel model = new ImageModel();
+//            model.setImageId(mImageResId[i]);
+//            model.setContent(mTitle[i]);
+//            mDataList.add(model);
         }
     }
 

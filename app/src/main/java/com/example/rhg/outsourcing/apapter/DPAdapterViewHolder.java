@@ -14,14 +14,13 @@ import android.widget.TextView;
  * Created by whiskeyfei on 15-7-9.
  */
 public class DPAdapterViewHolder {
-	
-	private final Context mContext;
+    private final Context mContext;
     private final SparseArray<View> mViews;
     private int mPosition;
     private View mConvertView;
 
     public DPAdapterViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
-    	mContext = context;
+        mContext = context;
         mPosition = position;
         mViews = new SparseArray<View>();
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
@@ -45,7 +44,7 @@ public class DPAdapterViewHolder {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public <T extends View> T getViewByid(int viewId) {
+    public <T extends View> T getViewByid(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
             view = mConvertView.findViewById(viewId);
@@ -61,20 +60,20 @@ public class DPAdapterViewHolder {
     public int getPosition(){
         return mPosition;
     }
-    
+
 
     public DPAdapterViewHolder setOnTouchListener(int viewId, View.OnTouchListener listener){
-    	View view = getViewByid(viewId);
-    	view.setOnTouchListener(listener);
-    	return this;
+        View view = getViewByid(viewId);
+        view.setOnTouchListener(listener);
+        return this;
     }
-    
+
     public DPAdapterViewHolder setVisible(int viewId,boolean visible){
-    	View view = getViewByid(viewId);
-    	view.setVisibility(visible? View.VISIBLE: View.INVISIBLE);
-    	return this;
+        View view = getViewByid(viewId);
+        view.setVisibility(visible? View.VISIBLE: View.INVISIBLE);
+        return this;
     }
-    
+
     public DPAdapterViewHolder setText(int viewId,String text){
         TextView tv = getViewByid(viewId);
         tv.setText(text);
@@ -87,16 +86,21 @@ public class DPAdapterViewHolder {
         return this;
     }
 
+    public DPAdapterViewHolder setHeaderColor(int viewId,int color){
+        View header = getViewByid(viewId);
+        header.setBackgroundResource(color);
+        return this;
+    }
+
     public DPAdapterViewHolder setImageBitmap(int viewId,Bitmap bitmap){
         ImageView icon = getViewByid(viewId);
         icon.setImageBitmap(bitmap);
         return this;
     }
-    
+
     public DPAdapterViewHolder setImageDrawable(int viewId,Drawable drawable){
         ImageView icon = getViewByid(viewId);
         icon.setImageDrawable(drawable);
         return this;
     }
-
 }

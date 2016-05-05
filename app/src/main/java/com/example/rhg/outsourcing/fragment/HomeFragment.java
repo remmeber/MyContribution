@@ -134,7 +134,7 @@ public class HomeFragment extends SuperFragment {
     }
 
     @Override
-    public void showSuccess() {
+    public void showSuccess(Object o) {
         Log.i(TAG, "HomeFragment success");
         materialRefreshLayout.finishRefresh();
     }

@@ -1,30 +1,17 @@
 package com.example.rhg.outsourcing.model;
 
+import android.widget.ImageView;
+
 /**
  * Created by remember on 2016/5/3.
  */
 public class TextTypeModel {
     private String text;
-    private int color;
-
-    public TextTypeModel(String text, int color) {
+    public TextTypeModel(String text) {
         this.text = text;
-        this.color = color;
     }
 
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 }

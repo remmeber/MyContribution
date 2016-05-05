@@ -36,7 +36,7 @@ public class MyFragment extends SuperFragment {
     }
 
     @Override
-    public void showSuccess() {
+    public void showSuccess(Object o) {
 
     }
 }

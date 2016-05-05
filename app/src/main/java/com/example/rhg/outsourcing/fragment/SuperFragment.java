@@ -34,7 +34,7 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     public void showData(Object o) {
         if (o.toString().equals("success")) {
             Log.i("SuperFragment","SuperFragment success");
-            showSuccess();
+            showSuccess(o);
         }
         else
             showFailed();
@@ -43,6 +43,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     protected abstract void showFailed();
 
 
-    public abstract void showSuccess();
+    public abstract void showSuccess(Object o);
 
 }

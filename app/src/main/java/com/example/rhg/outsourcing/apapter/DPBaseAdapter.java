@@ -46,7 +46,7 @@ public abstract class DPBaseAdapter<T> extends BaseAdapter {
         final DPAdapterViewHolder holder = DPAdapterViewHolder.get(mContext, convertView, parent, mLayoutId, position);
 //        holder.setOnItemChildClickListener(mOnItemChildClickListener);
 //        holder.setOnItemChildLongClickListener(mOnItemChildLongClickListener);
-        convert(holder,getItem(position));
+        convert(holder,getItem(position),position);
         return holder.getConvertView();
     }
     
@@ -76,5 +76,5 @@ public abstract class DPBaseAdapter<T> extends BaseAdapter {
     	this.addItem(this.mDataList.size(), model);
     }
     
-	public abstract void convert(DPAdapterViewHolder holder,T t);
+	public abstract void convert(DPAdapterViewHolder holder,T t,int position);
 }

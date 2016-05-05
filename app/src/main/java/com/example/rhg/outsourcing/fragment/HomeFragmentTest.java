@@ -23,6 +23,7 @@ import com.example.rhg.outsourcing.model.BannerTypeModel;
 import com.example.rhg.outsourcing.model.FavorableTypeModel;
 import com.example.rhg.outsourcing.model.FooterTypeModel;
 import com.example.rhg.outsourcing.model.HeaderTypeModel;
+import com.example.rhg.outsourcing.model.ImageModel;
 import com.example.rhg.outsourcing.model.RecommendListTypeModel;
 import com.example.rhg.outsourcing.model.RecommendTextTypeModel;
 import com.example.rhg.outsourcing.model.TextTypeModel;
@@ -41,7 +42,9 @@ import java.util.List;
 /**
  * Created by remember on 2016/5/3.
  */
-public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener {
+public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
+        RecycleMultiTypeAdapter.OnGridItemClickListener {
+    List<ImageModel> imageModels = new ArrayList<ImageModel>();
     private String[] images = {
             "http://img2.3lian.com/2014/f2/37/d/40.jpg",
             "http://d.3987.com/sqmy_131219/001.jpg",
@@ -74,12 +77,13 @@ public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeA
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.i("RHG","onActivityCreated");
+        Log.i("RHG", "onActivityCreated");
         initImageLoader();
         mData = new ArrayList<>();
-        fillItemList();
         recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getContext(), mData);
         recycleMultiTypeAdapter.setBannerClickListener(this);
+        recycleMultiTypeAdapter.setOnGridItemClickListener(this);
+        fillItemList();
         rcv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rcv.setHasFixedSize(true);
         rcv.setAdapter(recycleMultiTypeAdapter);
@@ -95,26 +99,26 @@ public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeA
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("RHG","onStart");
+        Log.i("RHG", "onStart");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i("RHG","onStop");
+        Log.i("RHG", "onStop");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("RHG","onResume");
+        Log.i("RHG", "onResume");
         BannerController.getInstance().startBanner(2000);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("RHG","onPause");
+        Log.i("RHG", "onPause");
         BannerController.getInstance().stopBanner();
     }
 
@@ -125,7 +129,7 @@ public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeA
     }
 
     @Override
-    public void showSuccess() {
+    public void showSuccess(Object o) {
         Log.i("RHG", "HomeFragment success");
         Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
@@ -133,15 +137,39 @@ public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeA
     }
 
     private void fillItemList() {
+        for (int i = 0; i < 6; i++) {
+            ImageModel imageModel = new ImageModel();
+            imageModel.setImageId(R.drawable.recommend_default_icon_1);
+            switch (i) {
+                case 0:
+                case 3:
+                    imageModel.setHeadercolor(R.color.colorAccent);
+                    imageModel.setContent("哈哈哈哈");
+                    break;
+                case 1:
+                case 4:
+                    imageModel.setHeadercolor(R.color.colorActiveYellow);
+                    imageModel.setContent("呵呵呵呵");
+                    break;
+                case 2:
+                case 5:
+                    imageModel.setHeadercolor(R.color.colorInActive);
+                    imageModel.setContent("啊啊啊啊");
+                    break;
+            }
+
+            imageModels.add(imageModel);
+        }
         mData.add(new HeaderTypeModel("Header", R.color.cardview_shadow_start_color));
         mData.add(new BannerTypeModel(Arrays.asList(images)));//TODO 传入URL集合
-        mData.add(new TextTypeModel("Text", R.color.colorAccent));
-        mData.add(new FavorableTypeModel("Favorable", R.color.colorActiveYellow));
-        mData.add(new RecommendTextTypeModel("RecommendText", R.color.light));
+        mData.add(new TextTypeModel("aaaaa"));
+        mData.add(new FavorableTypeModel(imageModels));
+        mData.add(new RecommendTextTypeModel());
         mData.add(new RecommendListTypeModel("RecommendList", R.color.colorPrimary));
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
-
+        recycleMultiTypeAdapter.notifyDataSetChanged();
     }
+
     //------网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
@@ -157,8 +185,14 @@ public class HomeFragmentTest extends SuperFragment implements RecycleMultiTypeA
         ImageLoader.getInstance().init(config);
     }
 
+    //--------------------------------点击事件回调---------------------------------------------------
     @Override
     public void bannerClick(int position) {
-        Toast.makeText(getActivity(),"banner "+position+" is clicked",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "banner " + position + " is clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void gridItemClick(View view, int position) {
+        Toast.makeText(getActivity(), "grid " + position + " is clicked", Toast.LENGTH_SHORT).show();
     }
 }
