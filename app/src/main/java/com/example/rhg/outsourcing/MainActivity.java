@@ -1,12 +1,10 @@
 package com.example.rhg.outsourcing;
 
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,8 +19,6 @@ import android.widget.TextView;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.cjj.MaterialRefreshLayout;
-import com.cjj.MaterialRefreshListener;
 import com.example.rhg.outsourcing.View.BaseView;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.ui.HomeController;
@@ -91,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
         homeController = new HomeController(this, testPresenter);
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
+        //-----------------------------toolbar的一些设置---------------------------------------------
         RelativeLayout toolbar = (RelativeLayout) findViewById(R.id.toolbar);
         //----------------------对图片轮廓进行颜色填充----------------------------------------------
         /*ImageButton imageButton = (ImageButton)toolbar.findViewById(R.id.right_drawable);
@@ -98,9 +95,18 @@ public class MainActivity extends AppCompatActivity implements BaseView
         Drawable tintdrawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(tintdrawable,getResources().getColor(R.color.colorActiveYellow));
         imageButton.setImageDrawable(tintdrawable);*/
-        ImageButton imageButton = (ImageButton) toolbar.findViewById(R.id.right_drawable);
+        ImageButton searchButton = (ImageButton) toolbar.findViewById(R.id.right_drawable);
         Drawable drawable = getResources().getDrawable(R.mipmap.ic_search_white);
-        ImageUtils.TintFill(imageButton, drawable, getResources().getColor(R.color.colorActiveYellow));
+        ImageUtils.TintFill(searchButton, drawable, getResources().getColor(R.color.colorToolbarGreen));
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSearchViwe();
+            }
+        });
+        ImageButton mapButton = (ImageButton)toolbar.findViewById(R.id.map_button);
+        ImageUtils.TintFill(mapButton,getResources().getDrawable(R.mipmap.ic_place_white_36dp),
+                getResources().getColor(R.color.colorToolbarGreen));
         //----------------------------------------------------------------------------------------
 
         /*toolbar.setTitle("");
@@ -253,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigation
-                .setActiveColor(R.color.colorActiveYellow)
+                .setActiveColor(R.color.colorActiveGreen)
                 .setInActiveColor(R.color.colorInActive)
                 .setBarBackgroundColor(R.color.colorBackground);
         bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_home, R.string.Home))

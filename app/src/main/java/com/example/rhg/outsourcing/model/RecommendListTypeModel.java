@@ -1,30 +1,32 @@
 package com.example.rhg.outsourcing.model;
 
+import com.example.rhg.outsourcing.apapter.RecommendAdapter;
+
+import java.util.List;
+
 /**
  * Created by remember on 2016/5/3.
  */
 public class RecommendListTypeModel {
-    private String text;
-    private int color;
+    List<SellerModel> sellerModels;
+    private RecommendAdapter recommendAdapter;
+    private RecommendAdapter.OnListItemClick onListItemClick;
 
-    public RecommendListTypeModel(String text, int color) {
-        this.text = text;
-        this.color = color;
+    public List<SellerModel> getSellerModels() {
+        return sellerModels;
     }
 
-    public String getText() {
-        return text;
+    public RecommendAdapter getRecommendAdapter() {
+        return recommendAdapter;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public RecommendAdapter.OnListItemClick getOnListItemClick() {
+        return onListItemClick;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
+    public RecommendListTypeModel(List<SellerModel> sellerModels, RecommendAdapter recommendAdapter, RecommendAdapter.OnListItemClick onListItemClick) {
+        this.sellerModels = sellerModels;
+        this.recommendAdapter = recommendAdapter;
+        this.onListItemClick = onListItemClick;
     }
 }

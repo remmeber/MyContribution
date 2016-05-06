@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:background="@color/colorPrimary">
+    android:layout_height="56dp">
 
     <ImageButton
         android:id="@+id/map_button"
@@ -11,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:src="@mipmap/ic_place_white_36dp"
         android:background="@android:color/transparent"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
@@ -30,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:hint="@string/searchHint"
+        android:textColor="@color/colorSearchHint"
         android:gravity="center_vertical"
         android:textSize="20dp"
         android:background="@drawable/searchview_background"
@@ -66,6 +65,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorToolbarGreen"
             android:text="扫一扫"/>
     </LinearLayout>
 </RelativeLayout>

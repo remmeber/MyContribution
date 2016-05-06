@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="119dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="109dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="11dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_exit" />
+
+            <TextView
+                android:id="@+id/sellerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:gravity="center_vertical"
+                android:minHeight="0dp"
+                android:text="dddd"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="36dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/sellerImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/recommend_default_icon_2" />
+
+            <TextView
+                android:id="@+id/foodType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/searchview_background"
+                android:gravity="center"
+                android:text="dddd"
+                android:textColor="@color/colorFoodType"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/sellerForward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_chevron_right" />
+
+        <TextView
+            android:id="@+id/distanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="11dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="aaaaaa"
+            android:textColor="@color/colorFoodType"
+            android:textSize="12dp" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorInActive" />
+
+</LinearLayout>

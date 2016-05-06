@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="dark">#FF222222</color>
-    <color name="colorActiveYellow">#FFCC00</color>
+    <color name="colorToolbarGreen">#8DC73F</color>
+    <color name="colorActiveGreen">#8FC842</color>
     <color name="colorInActive">#BFBFBF</color>
+    <color name="colorSearchHint">#CFCFCD</color>
+    <color name="colorFoodType">#797979</color>
     <color name="colorBackground">#ECECEC</color>
+    <color name="colorRecommend">#ED4C14</color>
     <color name="light">#FFEEEEEE</color>
     <color name="white">#FFFFFF</color>
     <color name="searchShadow">#80000000</color>

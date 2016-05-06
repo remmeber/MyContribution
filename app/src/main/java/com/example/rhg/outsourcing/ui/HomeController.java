@@ -1,22 +1,17 @@
 package com.example.rhg.outsourcing.ui;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.fragment.HomeFragment;
-import com.example.rhg.outsourcing.fragment.HomeFragmentTest;
 import com.example.rhg.outsourcing.fragment.MyFragment;
 import com.example.rhg.outsourcing.fragment.SellerFragment;
 import com.example.rhg.outsourcing.fragment.ShoppingCarFragment;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.BannerController;
-
-import junit.framework.Test;
 
 /**
  * Created by remember on 2016/5/2.
@@ -38,7 +33,7 @@ public class HomeController {
     private void initFragment() {
         fragments = new Fragment[4];
 //        fragments[0] = new HomeFragment();
-        fragments[0] = new HomeFragmentTest();
+        fragments[0] = new HomeFragment();
         fragments[1] = new SellerFragment();
         fragments[2] = new MyFragment();
         fragments[3] = new ShoppingCarFragment();

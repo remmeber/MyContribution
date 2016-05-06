@@ -1,7 +1,7 @@
 package com.example.rhg.outsourcing.apapter;
 
 import android.content.Context;
-import android.media.Image;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +32,7 @@ import java.util.List;
 /**
  * Created by remember on 2016/5/3.
  */
-public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     //--------------------------------Define Item Type----------------------------------------------
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_BANNER = 1;
@@ -80,11 +78,11 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_TEXT:
                 return new TextTypeViewHolder(layoutInflater.inflate(R.layout.recycletext, parent, false));
             case TYPE_FAVORABLE:
-                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.gridview_type, parent, false));
+                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.recyclegridtype, parent, false),viewType);
             case TYPE_RECOMMEND_TEXT:
                 return new RecommendTextTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendtext, parent, false));
             case TYPE_RECOMMEND_LIST:
-                return new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendlist, parent, false));
+                return new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendlist, parent, false),viewType);
             case TYPE_FOOTER:
                 return new FooterTypeViewHolder(layoutInflater.inflate(R.layout.recyclefooter, parent, false));
             default:
@@ -106,13 +104,13 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 bindViewHolderText((TextTypeViewHolder) holder, (TextTypeModel) data);
                 break;
             case TYPE_FAVORABLE:
-                bindViewHolderFavorable((FavorableTypeViewHolder) holder, (FavorableTypeModel) data, position);
+                bindViewHolderFavorable((FavorableTypeViewHolder) holder);
                 break;
             case TYPE_RECOMMEND_TEXT:
                 bindViewHolderRecommendText((RecommendTextTypeViewHolder) holder, (RecommendTextTypeModel) data, position);
                 break;
             case TYPE_RECOMMEND_LIST:
-                bindViewHolderRecommendList((RecommendListTypeViewHolder) holder, (RecommendListTypeModel) data, position);
+                bindViewHolderRecommendList((RecommendListTypeViewHolder) holder, (RecommendListTypeModel) data);
                 break;
             case TYPE_FOOTER:
                 bindViewHolderFooter((FooterTypeViewHolder) holder, (FooterTypeModel) data, position);
@@ -139,19 +137,16 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.textView.setText(data.getText());
     }
 
-    private void bindViewHolderFavorable(FavorableTypeViewHolder holder, FavorableTypeModel data, int position) {
-        if(holder.dpGridViewAdapter==null)
-            holder.dpGridViewAdapter = new DPGridViewAdapter(context,data.getImageModels(),R.layout.gridview_item);
-        holder.gridView.setAdapter(holder.dpGridViewAdapter);
+    private void bindViewHolderFavorable(FavorableTypeViewHolder holder) {
+        holder.dpGridViewAdapter.notifyDataSetChanged();
     }
 
     private void bindViewHolderRecommendText(RecommendTextTypeViewHolder holder, RecommendTextTypeModel data, int position) {
     }
 
-    private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data, int position) {
-        holder.button.setText(data.getText() + position);
-        Log.i("RHG", "Color is: " + data.getColor());
-        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
+    private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data) {
+        holder.recommendAdapter.notifyDataSetChanged();
+        holder.recommendAdapter.setOnListItemClick(data.getOnListItemClick());
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
@@ -180,7 +175,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             });
         }
     }
-
     private class BannerTypeViewHolder extends RecyclerView.ViewHolder {
         private ConvenientBanner convenientBanner;
 
@@ -210,7 +204,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     private class FavorableTypeViewHolder extends RecyclerView.ViewHolder {
         private final GridView gridView;
         private DPGridViewAdapter dpGridViewAdapter;
-        public FavorableTypeViewHolder(View itemView) {
+        public FavorableTypeViewHolder(View itemView,int position) {
             super(itemView);
             gridView = (GridView) itemView.findViewById(R.id.gridview);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -221,6 +215,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
             });
             gridView.setNumColumns(3);
+            dpGridViewAdapter = ((FavorableTypeModel)mData.get(position)).getDpGridViewAdapter();
+            gridView.setAdapter(dpGridViewAdapter);
         }
     }
 
@@ -232,17 +228,16 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private class RecommendListTypeViewHolder extends RecyclerView.ViewHolder {
-        private final Button button;
-
-        public RecommendListTypeViewHolder(View itemView) {
+        private RecyclerView recyclerView;
+        private RecommendAdapter recommendAdapter;
+        public RecommendListTypeViewHolder(View itemView,int viewType) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.recommendlistButton);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "recommendlist is click", Toast.LENGTH_SHORT).show();
-                }
-            });
+            recyclerView = (RecyclerView)itemView.findViewById(R.id.recommendlist);
+            recyclerView.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recommendAdapter = ((RecommendListTypeModel)mData.get(viewType)).getRecommendAdapter();
+            recyclerView.setAdapter(recommendAdapter);
         }
     }
 

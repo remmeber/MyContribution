@@ -2,7 +2,6 @@ package com.example.rhg.outsourcing.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +60,7 @@ public class TypeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.gridview_type, container, false);
+        View view = inflater.inflate(R.layout.recyclegridtype, container, false);
         mGridView = (GridView) view.findViewById(R.id.gridview);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,7 +69,7 @@ public class TypeFragment extends Fragment {
             }
         });
         mGridView.setNumColumns(5);
-        mDPGridViewAdapter = new DPGridViewAdapter(getActivity(), mDataList, R.layout.gridview_item);
+        mDPGridViewAdapter = new DPGridViewAdapter(getActivity(), mDataList, R.layout.recyclegriditem);
         mGridView.setAdapter(mDPGridViewAdapter);
         return view;
     }
