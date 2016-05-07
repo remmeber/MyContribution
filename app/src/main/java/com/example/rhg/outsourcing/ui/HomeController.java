@@ -20,13 +20,19 @@ public class HomeController {
     private static final String TAG = "HomeController";
     private Fragment[] fragments;
     private FragmentActivity fragmentActivity;
+    public static FragmentManager fm;
     private TestPresenter testPresenter;
     private int showMark = 0;
 
     public HomeController(FragmentActivity fragmentActivity, TestPresenter testPresenter) {
         this.fragmentActivity = fragmentActivity;
         this.testPresenter = testPresenter;
+        fm = fragmentActivity.getSupportFragmentManager();
         initFragment();
+    }
+
+    public static FragmentManager getFm() {
+        return fm;
     }
 
     //TODO ---------------------初始化fragment------------------------------------------------------
@@ -37,7 +43,6 @@ public class HomeController {
         fragments[1] = new SellerFragment();
         fragments[2] = new MyFragment();
         fragments[3] = new ShoppingCarFragment();
-        FragmentManager fm = fragmentActivity.getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.content_fragment, fragments[0], fragments[0].getClass().getName());
         ft.add(R.id.content_fragment, fragments[1], fragments[1].getClass().getName());

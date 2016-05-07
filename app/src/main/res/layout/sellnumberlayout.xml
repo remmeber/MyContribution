@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.rhg.outsourcing.MySwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/seller_swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/seller_recycle"
+        android:id="@+id/sellNumberRecycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</com.example.rhg.outsourcing.MySwipeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

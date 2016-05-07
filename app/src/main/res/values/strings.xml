@@ -2,6 +2,8 @@
     <string name="app_name">WB</string>
     <string name="searchHint">&#160;&#160;&#160;search</string>
     <string name="Home">首页</string>
+    <string name="allstore">所有店铺</string>
+    <string name="shoppingcar">购物车</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

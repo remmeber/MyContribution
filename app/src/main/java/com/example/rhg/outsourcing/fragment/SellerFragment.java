@@ -2,7 +2,9 @@ package com.example.rhg.outsourcing.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.example.rhg.outsourcing.MySwipeLayout;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.RecommendAdapter;
-import com.example.rhg.outsourcing.model.SellerModel;
+import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
+import com.example.rhg.outsourcing.ui.HomeController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,30 +25,40 @@ import java.util.List;
  */
 public class SellerFragment extends SuperFragment {
     private static final String TAG = "SellerFragment";
-    List<SellerModel> sellerModels = new ArrayList<SellerModel>();
+    List<Fragment> fragments = new ArrayList<Fragment>();
     View view;
+    ViewPager viewPager;
+    TabLayout tabLayout;
     MySwipeLayout mySwipeLayout;
     RecyclerView recyclerView;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
     //----------------------------------------------------------------------------------------------
+
+
     public SellerFragment() {
-        Log.i(TAG,"SellerFragment");
-        for (int i =0;i<6;i++){
-            sellerModels.add(new SellerModel("哈哈","中餐","距离10m",R.drawable.recommend_default_icon_1));
-        }
+        Log.i(TAG, "SellerFragment");
+        fragments.add(new sellNumberFragment());
+        fragments.add(new DistanceFragment());
+        fragments.add(new RateScoreFragment());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.seller_layout,container,false);
-        mySwipeLayout = (MySwipeLayout) view.findViewById(R.id.seller_swipe);
-        recyclerView = (RecyclerView)view.findViewById(R.id.seller_recycle);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        RecommendAdapter recommendAdapter = new RecommendAdapter(getContext(),sellerModels);
-        recyclerView.setAdapter(recommendAdapter);
+        view = inflater.inflate(R.layout.sellerviewpagerlayout, container, false);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) view.findViewById(R.id.sellerViewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(HomeController.getFm(), fragments);
+        viewPager.setAdapter(myPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+//        recyclerView = (RecyclerView)view.findViewById(R.id.seller_recycle);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView.setHasFixedSize(true);
+//        RecommendAdapter recommendAdapter = new RecommendAdapter(getContext(),sellerModels);
+//        recyclerView.setAdapter(recommendAdapter);
         return view;
     }
 
@@ -64,5 +76,19 @@ public class SellerFragment extends SuperFragment {
     @Override
     public void showSuccess(Object o) {
 
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("positon", tabLayout.getSelectedTabPosition());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null)
+            viewPager.setCurrentItem(savedInstanceState.getInt("position"));
     }
 }

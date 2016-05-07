@@ -1,6 +1,5 @@
 package com.example.rhg.outsourcing;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
@@ -12,13 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.example.rhg.outsourcing.Constants.AppConstants;
 import com.example.rhg.outsourcing.View.BaseView;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.ui.HomeController;
@@ -38,10 +40,11 @@ import com.lapism.searchview.view.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements BaseView
+public class MainActivity extends AppCompatActivity implements BaseView, OnClickListener
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {
     private final static String TAG = "MainActivity";
+    private final static int TABKEY=0;
     HomeController homeController;
     //----------------------for rebound 弹簧效果---------------------------------------------------
     private final BaseSpringSystem mSpringSystem = SpringSystem.create();
@@ -53,6 +56,17 @@ public class MainActivity extends AppCompatActivity implements BaseView
     //---------------------------------------------------------------------------------------------
     //for refresh 用来刷新整个页面，可以动态添加HeadView和FooterView
 //    private MaterialRefreshLayout materialRefreshLayout;
+    //-----------------------------for toolbar setting----------------------------------------------
+    private RelativeLayout toolbar;
+    ImageButton toolLeftButton;
+    ImageButton toolCenterButton;
+    LinearLayout toolRightLayout;
+    TextView toolLeftText;
+    TextView toolCenterText;
+    TextView toolSwipeText;
+    ImageButton toolRightButton;
+    //---------------------------------------------------------------------------------------------
+
     //for searchView
     private SearchView searchView;
     private SearchHistoryTable msearchHistory;
@@ -87,27 +101,21 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
         homeController = new HomeController(this, testPresenter);
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
-        //-----------------------------toolbar的一些设置---------------------------------------------
-        RelativeLayout toolbar = (RelativeLayout) findViewById(R.id.toolbar);
-        //----------------------对图片轮廓进行颜色填充----------------------------------------------
-        /*ImageButton imageButton = (ImageButton)toolbar.findViewById(R.id.right_drawable);
-        Drawable drawable = getResources().getDrawable(R.mipmap.ic_search_white);
-        Drawable tintdrawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(tintdrawable,getResources().getColor(R.color.colorActiveYellow));
-        imageButton.setImageDrawable(tintdrawable);*/
-        ImageButton searchButton = (ImageButton) toolbar.findViewById(R.id.right_drawable);
-        Drawable drawable = getResources().getDrawable(R.mipmap.ic_search_white);
-        ImageUtils.TintFill(searchButton, drawable, getResources().getColor(R.color.colorToolbarGreen));
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSearchViwe();
-            }
-        });
-        ImageButton mapButton = (ImageButton)toolbar.findViewById(R.id.map_button);
-        ImageUtils.TintFill(mapButton,getResources().getDrawable(R.mipmap.ic_place_white_36dp),
-                getResources().getColor(R.color.colorToolbarGreen));
-        //----------------------------------------------------------------------------------------
+        //TODO-------------------------toolbar的一些设置---------------------------------------------
+        toolbar = (RelativeLayout) findViewById(R.id.toolbar);
+        toolCenterButton = (ImageButton) toolbar.findViewById(R.id.toolbarCenterButton);
+        toolLeftButton = (ImageButton) toolbar.findViewById(R.id.toolbarLeftButton);
+        toolLeftText = (TextView) toolbar.findViewById(R.id.toolLeftTextview);
+        toolCenterText = (TextView) toolbar.findViewById(R.id.toolbarCenterView);
+        toolRightLayout = (LinearLayout) toolbar.findViewById(R.id.toolbarRightLayout);
+        toolSwipeText = (TextView) toolRightLayout.findViewById(R.id.homeSwipeText);
+        toolRightButton = (ImageButton) toolRightLayout.findViewById(R.id.toolbarRightButton);
+        toolLeftButton.setOnClickListener(this);
+        toolRightLayout.setOnClickListener(this);
+        toolCenterText.setOnClickListener(this);
+        toolCenterButton.setOnClickListener(this);
+        dealToolbarByPosition(0);
+        //TODO--------------------------------------------------------------------------------------
 
         /*toolbar.setTitle("");
         toolbar.setSubtitle("杭州");
@@ -118,9 +126,13 @@ public class MainActivity extends AppCompatActivity implements BaseView
                 //TODO back
             }
         });*/
-        //------------------------搜索框的一些配置操作-----------------------------------------------
-        textView_search = (TextView) toolbar.findViewById(R.id.search_text);
-        textView_search.setOnClickListener(new View.OnClickListener() {
+        //------------------------------------TabLayout---------------------------------------------
+//        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+
+        setupTabLayout();
+        //TODO--------------------搜索框的一些配置操作-----------------------------------------------
+        textView_search = (TextView) toolbar.findViewById(R.id.toolbarCenterView);
+        textView_search.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSearchViwe();
@@ -173,8 +185,8 @@ public class MainActivity extends AppCompatActivity implements BaseView
             }
         });
         searchView.setAdapter(mSearchAdapter);
-        //-----------------------------------------------------------------------------------------
-        //--------------------------------弹跳特效--------------------------------------------------
+        //TODO--------------------------------------------------------------------------------------
+        //TODO-----------------------------弹跳特效--------------------------------------------------
         mScaleSpring = mSpringSystem.createSpring();
         //设置弹跳
         mScaleSpring.setSpringConfig(new SpringConfig(TENSION, FICTION));
@@ -272,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
             @Override
             public void onTabSelected(int position) {
                 homeController.showFragment(position);
+                dealToolbarByPosition(position);
             }
 
             //当item不被选中状态
@@ -312,6 +325,96 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+    }
+
+    private void dealToolbarByPosition(int position) {
+        //TODO-------------------对图片轮廓进行颜色填充----------------------------------------------
+        /*ImageButton imageButton = (ImageButton)toolbar.findViewById(R.id.right_drawable);
+        Drawable drawable = getResources().getDrawable(R.mipmap.ic_search_white);
+        Drawable tintdrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(tintdrawable,getResources().getColor(R.color.colorActiveYellow));
+        imageButton.setImageDrawable(tintdrawable);*/
+        switch (position) {
+            case 0:
+                toolbar.setTag(TABKEY, AppConstants.TypeHome);
+                toolbar.setBackgroundResource(R.color.white);
+                toolCenterButton.setVisibility(View.VISIBLE);
+                toolCenterText.setVisibility(View.VISIBLE);
+                toolLeftText.setVisibility(View.VISIBLE);
+                toolLeftButton.setVisibility(View.VISIBLE);
+                toolRightLayout.setVisibility(View.VISIBLE);
+                toolSwipeText.setVisibility(View.VISIBLE);
+                toolRightButton.setVisibility(View.VISIBLE);
+                toolCenterText.setClickable(true);
+                ImageUtils.TintFill(toolLeftButton, getResources().getDrawable(R.mipmap.ic_place_white_24dp),
+                        getResources().getColor(R.color.colorActiveGreen));
+
+                ImageUtils.TintFill(toolCenterButton, getResources().getDrawable(R.mipmap.ic_search_white),
+                        getResources().getColor(R.color.colorActiveGreen));
+                ImageUtils.TintFill(toolRightButton, getResources().getDrawable(R.mipmap.ic_search_white),
+                    getResources().getColor(R.color.colorActiveGreen));
+                toolLeftText.setText("南京");//TODO 根据定位来定
+                toolSwipeText.setText("扫一扫");
+                toolSwipeText.setTextSize(12);
+                toolSwipeText.setTextColor(getResources().getColor(R.color.colorActiveGreen));
+                toolCenterText.setText("");
+                toolCenterText.setBackgroundDrawable(getResources().getDrawable(R.drawable.searchview_background));
+                break;
+            case 1:
+                toolbar.setTag(TABKEY, AppConstants.TypeSeller);
+                toolbar.setBackgroundResource(R.color.white);
+                toolCenterButton.setVisibility(View.GONE);
+                toolCenterText.setVisibility(View.VISIBLE);
+                toolLeftText.setVisibility(View.GONE);
+                toolLeftButton.setVisibility(View.VISIBLE);
+                toolRightLayout.setVisibility(View.VISIBLE);
+                toolSwipeText.setVisibility(View.GONE);
+                toolRightButton.setVisibility(View.VISIBLE);
+                toolCenterText.setClickable(false);
+                toolSwipeText.setTextSize(12);
+                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
+                toolRightButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_search_black_24dp));
+                toolCenterText.setText(getResources().getString(R.string.allstore));
+                toolCenterText.setTextColor(getResources().getColor(R.color.black));
+                toolCenterText.setBackgroundResource(R.color.white);
+                break;
+            case 2:
+                toolbar.setTag(TABKEY, AppConstants.TypeMy);
+                toolLeftText.setVisibility(View.GONE);
+                toolCenterButton.setVisibility(View.GONE);
+                toolCenterText.setVisibility(View.GONE);
+                toolRightLayout.setVisibility(View.GONE);
+                toolLeftButton.setVisibility(View.VISIBLE);
+                toolbar.setBackgroundResource(R.color.colorToolbarGreen);
+                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
+                break;
+            case 3:
+                toolbar.setTag(TABKEY, AppConstants.TypeShoppingCar);
+                toolbar.setBackgroundResource(R.color.colorToolbarGreen);
+                toolCenterButton.setVisibility(View.GONE);
+                toolCenterText.setVisibility(View.VISIBLE);
+                toolLeftText.setVisibility(View.GONE);
+                toolLeftButton.setVisibility(View.VISIBLE);
+                toolRightLayout.setVisibility(View.VISIBLE);
+                toolRightButton.setVisibility(View.GONE);
+                toolSwipeText.setVisibility(View.VISIBLE);
+                toolCenterText.setClickable(false);
+                toolCenterText.setText(getResources().getString(R.string.shoppingcar));
+                toolCenterText.setBackgroundResource(R.color.colorActiveGreen);
+                toolSwipeText.setText("编辑");
+                toolSwipeText.setTextSize(18);
+                toolSwipeText.setTextColor(getResources().getColor(R.color.white));
+                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+    }
+
+
+    private void setupTabLayout() {
     }
 
     //----------------------------单独呼出搜索页面--------------------------------------------------
@@ -371,7 +474,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             final Snackbar snackbar = Snackbar.make(fab, item.getTitle(), Snackbar.LENGTH_SHORT);
-            snackbar.setAction("Done", new View.OnClickListener() {
+            snackbar.setAction("Done", new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     snackbar.dismiss();
@@ -434,7 +537,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.i(TAG,"Touch");
+        Log.i(TAG, "Touch");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 y = event.getY();
@@ -442,7 +545,7 @@ public class MainActivity extends AppCompatActivity implements BaseView
                 break;
             case MotionEvent.ACTION_MOVE:
                 float dy = event.getY() - y;
-                if (dy<-0.2) {
+                if (dy < -0.2) {
                     fab.hide();
                     Log.i(TAG, " hide");
                 } else {

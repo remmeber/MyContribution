@@ -1,9 +1,16 @@
 package com.example.rhg.outsourcing.apapter;
 
+import android.os.Parcelable;
+import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.rhg.outsourcing.Constants.AppConstants;
 
 import java.util.List;
 
@@ -24,12 +31,13 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return position+"";
+        return AppConstants.tabtitles[position];
     }
 
     @Override
     public int getCount() {
-        Log.i("MyPagerAdapter","size is:"+fragmentList.size());
         return fragmentList == null ? 0 : fragmentList.size();
     }
+
+
 }

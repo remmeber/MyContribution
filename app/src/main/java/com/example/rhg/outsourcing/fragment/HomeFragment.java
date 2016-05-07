@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.rhg.outsourcing.Constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
 import com.example.rhg.outsourcing.apapter.RecommendAdapter;
@@ -168,7 +169,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         mData.add(new TextTypeModel("aaaaa"));
         mData.add(new FavorableTypeModel(imageModels,new DPGridViewAdapter(getContext(),imageModels,R.layout.recyclegriditem)));
         mData.add(new RecommendTextTypeModel());
-        mData.add(new RecommendListTypeModel(sellerModels, new RecommendAdapter(getContext(), sellerModels), this));
+        mData.add(new RecommendListTypeModel(sellerModels, new RecommendAdapter(getContext(), sellerModels, AppConstants.TypeHome), this));
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
