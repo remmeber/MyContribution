@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <com.example.rhg.outsourcing.widget.MyRecycleView
         android:id="@+id/recommendlist"
-        android:isScrollContainer="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false" />
 
 </RelativeLayout>

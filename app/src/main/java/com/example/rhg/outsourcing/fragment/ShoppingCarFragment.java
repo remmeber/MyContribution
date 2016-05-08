@@ -1,11 +1,7 @@
 package com.example.rhg.outsourcing.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +25,7 @@ public class ShoppingCarFragment extends SuperFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.shoppingcar_layout,container,false);
+        view = inflater.inflate(R.layout.shoppingcarlayout,container,false);
         return view;
     }
 

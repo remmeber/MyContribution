@@ -13,6 +13,7 @@
         android:layout_height="90dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         app:border_color="@color/light"
         app:border_width="2dp" />
 
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:orientation="vertical">
 

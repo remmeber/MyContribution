@@ -18,9 +18,9 @@ import com.example.rhg.outsourcing.utils.BannerController;
  */
 public class HomeController {
     private static final String TAG = "HomeController";
+    public static FragmentManager fm;
     private Fragment[] fragments;
     private FragmentActivity fragmentActivity;
-    public static FragmentManager fm;
     private TestPresenter testPresenter;
     private int showMark = 0;
 

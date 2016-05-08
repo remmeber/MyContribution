@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.Constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
-import com.example.rhg.outsourcing.apapter.RecommendAdapter;
+import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleMultiTypeAdapter;
 import com.example.rhg.outsourcing.model.BannerTypeModel;
 import com.example.rhg.outsourcing.model.FavorableTypeModel;
@@ -41,7 +41,7 @@ import java.util.List;
  * Created by remember on 2016/5/3.
  */
 public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
-        RecycleMultiTypeAdapter.OnGridItemClickListener, RecommendAdapter.OnListItemClick {
+        RecycleMultiTypeAdapter.OnGridItemClickListener, RecycleSellerAdapter.OnListItemClick {
     List<ImageModel> imageModels = new ArrayList<ImageModel>();
     private String[] images = {
             "http://img2.3lian.com/2014/f2/37/d/40.jpg",
@@ -49,7 +49,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
             "http://img2.3lian.com/2014/f2/37/d/39.jpg",
             "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
     };
-    List<SellerModel> sellerModels = new ArrayList<SellerModel>();
+    List<SellerModel> sellRecommendModels = new ArrayList<SellerModel>();
     View view;
     RecyclerView rcv;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -139,7 +139,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     private void fillItemList() {
         for (int i = 0; i < 6; i++) {
             ImageModel imageModel = new ImageModel();
-            SellerModel sellerModel = new SellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
+            SellerModel sellRecommendModel = new SellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
 
             imageModel.setImageId(R.drawable.recommend_default_icon_1);
             switch (i) {
@@ -161,7 +161,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
                     break;
             }
 
-            sellerModels.add(sellerModel);
+            sellRecommendModels.add(sellRecommendModel);
             imageModels.add(imageModel);
         }
         mData.add(new HeaderTypeModel("Header", R.color.cardview_shadow_start_color));
@@ -169,7 +169,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         mData.add(new TextTypeModel("aaaaa"));
         mData.add(new FavorableTypeModel(imageModels,new DPGridViewAdapter(getContext(),imageModels,R.layout.recyclegriditem)));
         mData.add(new RecommendTextTypeModel());
-        mData.add(new RecommendListTypeModel(sellerModels, new RecommendAdapter(getContext(), sellerModels, AppConstants.TypeHome), this));
+        mData.add(new RecommendListTypeModel(sellRecommendModels, new RecycleSellerAdapter(getContext(), sellRecommendModels, AppConstants.TypeHome), this));
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }

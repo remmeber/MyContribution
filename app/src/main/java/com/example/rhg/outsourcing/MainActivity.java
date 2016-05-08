@@ -1,6 +1,7 @@
 package com.example.rhg.outsourcing;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
     //---------------------------------------------------------------------------------------------
     //for refresh 用来刷新整个页面，可以动态添加HeadView和FooterView
 //    private MaterialRefreshLayout materialRefreshLayout;
-    //-----------------------------for toolbar setting----------------------------------------------
+    //TODO-------------------------for toolbar setting----------------------------------------------
     private RelativeLayout toolbar;
     ImageButton toolLeftButton;
     ImageButton toolCenterButton;
@@ -103,7 +105,8 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
         //TODO-------------------------toolbar的一些设置---------------------------------------------
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
-        toolCenterButton = (ImageButton) toolbar.findViewById(R.id.toolbarCenterButton);
+
+        toolCenterButton = (ImageButton)toolbar.findViewById(R.id.toolbarCenterButton);
         toolLeftButton = (ImageButton) toolbar.findViewById(R.id.toolbarLeftButton);
         toolLeftText = (TextView) toolbar.findViewById(R.id.toolLeftTextview);
         toolCenterText = (TextView) toolbar.findViewById(R.id.toolbarCenterView);
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         toolRightButton = (ImageButton) toolRightLayout.findViewById(R.id.toolbarRightButton);
         toolLeftButton.setOnClickListener(this);
         toolRightLayout.setOnClickListener(this);
+        toolRightButton.setOnClickListener(this);
         toolCenterText.setOnClickListener(this);
         toolCenterButton.setOnClickListener(this);
         dealToolbarByPosition(0);
@@ -131,13 +135,6 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
 
         setupTabLayout();
         //TODO--------------------搜索框的一些配置操作-----------------------------------------------
-        textView_search = (TextView) toolbar.findViewById(R.id.toolbarCenterView);
-        textView_search.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSearchViwe();
-            }
-        });
         msearchHistory = new SearchHistoryTable(this);
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setVersion(SearchCodes.VERSION_MENU_ITEM);
@@ -266,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);*/
-        //-------------------------底部导航栏=-------------------------------------------------------
+        //TODO---------------------底部导航栏=-------------------------------------------------------
         bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
@@ -336,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         imageButton.setImageDrawable(tintdrawable);*/
         switch (position) {
             case 0:
-                toolbar.setTag(TABKEY, AppConstants.TypeHome);
+                toolbar.setTag(AppConstants.TypeHome);
                 toolbar.setBackgroundResource(R.color.white);
                 toolCenterButton.setVisibility(View.VISIBLE);
                 toolCenterText.setVisibility(View.VISIBLE);
@@ -361,40 +358,40 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 toolCenterText.setBackgroundDrawable(getResources().getDrawable(R.drawable.searchview_background));
                 break;
             case 1:
-                toolbar.setTag(TABKEY, AppConstants.TypeSeller);
+                toolbar.setTag(AppConstants.TypeSeller);
                 toolbar.setBackgroundResource(R.color.white);
                 toolCenterButton.setVisibility(View.GONE);
                 toolCenterText.setVisibility(View.VISIBLE);
                 toolLeftText.setVisibility(View.GONE);
-                toolLeftButton.setVisibility(View.VISIBLE);
+                toolLeftButton.setVisibility(View.GONE);
                 toolRightLayout.setVisibility(View.VISIBLE);
                 toolSwipeText.setVisibility(View.GONE);
                 toolRightButton.setVisibility(View.VISIBLE);
                 toolCenterText.setClickable(false);
                 toolSwipeText.setTextSize(12);
-                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
+//                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
                 toolRightButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_search_black_24dp));
                 toolCenterText.setText(getResources().getString(R.string.allstore));
                 toolCenterText.setTextColor(getResources().getColor(R.color.black));
                 toolCenterText.setBackgroundResource(R.color.white);
                 break;
             case 2:
-                toolbar.setTag(TABKEY, AppConstants.TypeMy);
+                toolbar.setTag(AppConstants.TypeMy);
                 toolLeftText.setVisibility(View.GONE);
                 toolCenterButton.setVisibility(View.GONE);
                 toolCenterText.setVisibility(View.GONE);
                 toolRightLayout.setVisibility(View.GONE);
-                toolLeftButton.setVisibility(View.VISIBLE);
+                toolLeftButton.setVisibility(View.GONE);
                 toolbar.setBackgroundResource(R.color.colorToolbarGreen);
-                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
+//                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
                 break;
             case 3:
-                toolbar.setTag(TABKEY, AppConstants.TypeShoppingCar);
+                toolbar.setTag(AppConstants.TypeShoppingCar);
                 toolbar.setBackgroundResource(R.color.colorToolbarGreen);
                 toolCenterButton.setVisibility(View.GONE);
                 toolCenterText.setVisibility(View.VISIBLE);
                 toolLeftText.setVisibility(View.GONE);
-                toolLeftButton.setVisibility(View.VISIBLE);
+                toolLeftButton.setVisibility(View.GONE);
                 toolRightLayout.setVisibility(View.VISIBLE);
                 toolRightButton.setVisibility(View.GONE);
                 toolSwipeText.setVisibility(View.VISIBLE);
@@ -404,13 +401,46 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 toolSwipeText.setText("编辑");
                 toolSwipeText.setTextSize(18);
                 toolSwipeText.setTextColor(getResources().getColor(R.color.white));
-                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
+//                toolLeftButton.setImageDrawable(getResources().getDrawable(R.mipmap.ic_arrow_back_black_24dp));
                 break;
         }
     }
 
     @Override
     public void onClick(View v) {
+        switch ((int)toolbar.getTag()){
+            case AppConstants.TypeHome:
+                switch (v.getId()){
+                    case R.id.toolbarLeftButton:
+                        doChangeLocation();
+                        break;
+                    case R.id.toolbarRightLayout:
+                        doSwipe();
+                        break;
+                    case R.id.toolbarCenterView:
+                        showSearchViwe();
+                        break;
+                }
+                break;
+            case AppConstants.TypeSeller:
+                if(v.getId()==R.id.toolbarRightButton)
+                    showSearchViwe();
+                break;
+            case AppConstants.TypeMy:
+                break;
+            case AppConstants.TypeShoppingCar:
+                if(v.getId()==R.id.toolbarRightLayout)
+                    Toast.makeText(this,"编辑",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    private void doSwipe() {
+        Toast.makeText(this,"扫一扫",Toast.LENGTH_SHORT).show();
+    }
+
+    private void doChangeLocation() {
+        Toast.makeText(this,"修改区域",Toast.LENGTH_SHORT).show();
     }
 
 

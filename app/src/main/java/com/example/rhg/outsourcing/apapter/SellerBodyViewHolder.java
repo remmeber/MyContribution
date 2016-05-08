@@ -12,7 +12,7 @@ import com.example.rhg.outsourcing.R;
 /**
  * Created by remember on 2016/5/6.
  */
-public class SellerViewHolder extends RecyclerView.ViewHolder {
+public class SellerBodyViewHolder extends RecyclerView.ViewHolder {
     //这四个在商家页面显示
     private View line;
     private ImageView sellerForward;
@@ -27,16 +27,16 @@ public class SellerViewHolder extends RecyclerView.ViewHolder {
     public TextView sellerDistance;
     public LinearLayout frameLayout_item;
 
-    public SellerViewHolder(View itemView, int type) {
+    public SellerBodyViewHolder(View itemView, int type) {
         super(itemView);
-        line = (View) itemView.findViewById(R.id.lineShowInsellNumberItem);
+        line = itemView.findViewById(R.id.lineShowInsellNumberItem);
         sellerForward = (ImageView) itemView.findViewById(R.id.imageshowInsellerItem);
         demandMoney = (TextView) itemView.findViewById(R.id.demandmoney);
         deliverMoney = (TextView) itemView.findViewById(R.id.delivermoney);
 
         homeFoward = (ImageView) itemView.findViewById(R.id.homeForward);
         sellerIcon = (ImageView) itemView.findViewById(R.id.sellerIcon);
-        sellerName = (TextView) itemView.findViewById(R.id.sellerName);
+        sellerName = (TextView) itemView.findViewById(R.id.storeName);
         foodType = (TextView) itemView.findViewById(R.id.foodType);
         sellerDistance = (TextView) itemView.findViewById(R.id.distanceText);
         sellerImage = (ImageView) itemView.findViewById(R.id.sellerImage);

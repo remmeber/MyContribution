@@ -89,7 +89,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="80dp"
+        android:visibility="gone"
         android:layout_marginRight="@dimen/fab_margin"
+
         android:src="@android:drawable/ic_dialog_email" />
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar

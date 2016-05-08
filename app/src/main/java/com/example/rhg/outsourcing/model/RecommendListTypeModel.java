@@ -1,6 +1,6 @@
 package com.example.rhg.outsourcing.model;
 
-import com.example.rhg.outsourcing.apapter.RecommendAdapter;
+import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
 
 import java.util.List;
 
@@ -9,24 +9,24 @@ import java.util.List;
  */
 public class RecommendListTypeModel {
     List<SellerModel> sellerModels;
-    private RecommendAdapter recommendAdapter;
-    private RecommendAdapter.OnListItemClick onListItemClick;
+    private RecycleSellerAdapter recycleSellerAdapter;
+    private RecycleSellerAdapter.OnListItemClick onListItemClick;
 
     public List<SellerModel> getSellerModels() {
         return sellerModels;
     }
 
-    public RecommendAdapter getRecommendAdapter() {
-        return recommendAdapter;
+    public RecycleSellerAdapter getRecycleSellerAdapter() {
+        return recycleSellerAdapter;
     }
 
-    public RecommendAdapter.OnListItemClick getOnListItemClick() {
+    public RecycleSellerAdapter.OnListItemClick getOnListItemClick() {
         return onListItemClick;
     }
 
-    public RecommendListTypeModel(List<SellerModel> sellerModels, RecommendAdapter recommendAdapter, RecommendAdapter.OnListItemClick onListItemClick) {
+    public RecommendListTypeModel(List<SellerModel> sellerModels, RecycleSellerAdapter recycleSellerAdapter, RecycleSellerAdapter.OnListItemClick onListItemClick) {
         this.sellerModels = sellerModels;
-        this.recommendAdapter = recommendAdapter;
+        this.recycleSellerAdapter = recycleSellerAdapter;
         this.onListItemClick = onListItemClick;
     }
 }

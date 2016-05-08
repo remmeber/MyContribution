@@ -145,8 +145,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data) {
-        holder.recommendAdapter.notifyDataSetChanged();
-        holder.recommendAdapter.setOnListItemClick(data.getOnListItemClick());
+        holder.recycleSellerAdapter.notifyDataSetChanged();
+        holder.recycleSellerAdapter.setOnListItemClick(data.getOnListItemClick());
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
@@ -229,15 +229,15 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private class RecommendListTypeViewHolder extends RecyclerView.ViewHolder {
         private RecyclerView recyclerView;
-        private RecommendAdapter recommendAdapter;
+        private RecycleSellerAdapter recycleSellerAdapter;
         public RecommendListTypeViewHolder(View itemView,int viewType) {
             super(itemView);
             recyclerView = (RecyclerView)itemView.findViewById(R.id.recommendlist);
             recyclerView.setHasFixedSize(true);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
-            recommendAdapter = ((RecommendListTypeModel)mData.get(viewType)).getRecommendAdapter();
-            recyclerView.setAdapter(recommendAdapter);
+            recycleSellerAdapter = ((RecommendListTypeModel)mData.get(viewType)).getRecycleSellerAdapter();
+            recyclerView.setAdapter(recycleSellerAdapter);
         }
     }
 

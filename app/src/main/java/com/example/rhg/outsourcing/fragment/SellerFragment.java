@@ -10,10 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.rhg.outsourcing.MySwipeLayout;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
+import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
+import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.ui.HomeController;
 
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class SellerFragment extends SuperFragment {
 //        recyclerView = (RecyclerView)view.findViewById(R.id.seller_recycle);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.setHasFixedSize(true);
-//        RecommendAdapter recommendAdapter = new RecommendAdapter(getContext(),sellerModels);
+//        RecycleSellerAdapter recommendAdapter = new RecycleSellerAdapter(getContext(),dataBySellNumberModels);
 //        recyclerView.setAdapter(recommendAdapter);
         return view;
     }
@@ -91,4 +94,5 @@ public class SellerFragment extends SuperFragment {
         if (savedInstanceState != null)
             viewPager.setCurrentItem(savedInstanceState.getInt("position"));
     }
+
 }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerlayout"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="170dp">
+    <ImageView
+        android:id="@+id/headerstoreiamge"
+        android:src="@drawable/recommend_default_icon_1"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_height="1dp"
+
+        android:background="@color/colorInActive" />
+    <RelativeLayout
+        android:id="@+id/headersellernamelayout"
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp">
+
+        <ImageView
+            android:id="@+id/headersellerIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_exit" />
+
+        <TextView
+            android:id="@+id/headerstorename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/headersellerIcon"
+            android:layout_toEndOf="@id/headersellerIcon"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center_vertical"
+            android:minHeight="0dp"
+            android:text="dddd"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:id="@+id/headerForward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_chevron_right_black_48dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            />
+
+        <View
+            android:id="@+id/headerline"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/virtureline"
+            android:layerType="software"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="6dp">
+
+        <TextView
+            android:id="@+id/headerdemandmoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bbbbbb"
+            android:textColor="@color/colorFoodType"
+            android:textSize="12dp"
+
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/headerdelivermoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="aaaaaa"
+            android:textColor="@color/colorFoodType"
+            android:textSize="12dp"
+            android:layout_marginLeft="@dimen/margin_big"
+            android:layout_marginStart="@dimen/margin_big"
+            android:layout_toRightOf="@id/headerdemandmoney"
+            android:layout_toEndOf="@id/headerdemandmoney"/>
+
+        <TextView
+            android:id="@+id/headerdistanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="aaaaaa"
+            android:textColor="@color/colorFoodType"
+            android:textSize="12dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+
+
+
+    <!--</RelativeLayout>-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_height="1dp"
+        android:background="@color/colorInActive" />
+
+</LinearLayout>

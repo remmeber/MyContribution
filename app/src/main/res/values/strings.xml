@@ -4,6 +4,21 @@
     <string name="Home">首页</string>
     <string name="allstore">所有店铺</string>
     <string name="shoppingcar">购物车</string>
+    
+    <!-- profile -->
+    <string name="myOrder">我的订单</string>
+    <string name="myPay">待付款</string>
+    <string name="myCancel">取消</string>
+    <string name="myComplete">已完成</string>
+    <string name="workerInfo">我是跑腿员</string>
+    <string name="workerSignIn">登录</string>
+    <string name="wokerSignUp">注册</string>
+    <string name="wokerAndAddrModify">修改</string>
+    <string name="addrInfo">我的地址</string>
+    <string name="addrCustome">常用</string>
+    <string name="addrAdd">添加</string>
+    <string name="modifyHeader">修改头像</string>
+    <!--- profile-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

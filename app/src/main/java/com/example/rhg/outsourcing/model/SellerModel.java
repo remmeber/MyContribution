@@ -4,20 +4,32 @@ package com.example.rhg.outsourcing.model;
  * Created by remember on 2016/5/6.
  */
 public class SellerModel {
-    private String sellerName;
+    private String storeName;
     private String foodType;
     private String sellerDistance;
-    private int imageRid;
+    private String demandMoney;
+    private String deliverMoney;
+    private int imageRid;//TODO 后期需要换成URL
 
-    public SellerModel(String sellerName, String foodType, String sellerDistance, int imageRid) {
-        this.sellerName = sellerName;
+    //TODO-------------------------for Recommend----------------------------------------------------
+    public SellerModel(String storeName, String foodType, String sellerDistance, int imageRid) {
+        this.storeName = storeName;
         this.foodType = foodType;
         this.sellerDistance = sellerDistance;
         this.imageRid = imageRid;
     }
+    //TODO--------------------------for store-------------------------------------------------------
+    public SellerModel(String storeName, String foodType, String sellerDistance, String demandMoney, String deliverMoney, int imageRid) {
+        this.storeName = storeName;
+        this.foodType = foodType;
+        this.sellerDistance = sellerDistance;
+        this.demandMoney = demandMoney;
+        this.deliverMoney = deliverMoney;
+        this.imageRid = imageRid;
+    }
 
-    public String getSellerName() {
-        return sellerName;
+    public String getStoreName() {
+        return storeName;
     }
 
     public String getFoodType() {
@@ -30,5 +42,13 @@ public class SellerModel {
 
     public int getImageRid() {
         return imageRid;
+    }
+
+    public String getDemandMoney() {
+        return demandMoney;
+    }
+
+    public String getDeliverMoney() {
+        return deliverMoney;
     }
 }
