@@ -1,7 +1,6 @@
 package com.example.rhg.outsourcing;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,8 +21,8 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.example.rhg.outsourcing.Constants.AppConstants;
-import com.example.rhg.outsourcing.View.BaseView;
+import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.view.BaseView;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.ui.HomeController;
 import com.example.rhg.outsourcing.utils.ImageUtils;
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
         //TODO-------------------------toolbar的一些设置---------------------------------------------
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
-
         toolCenterButton = (ImageButton)toolbar.findViewById(R.id.toolbarCenterButton);
         toolLeftButton = (ImageButton) toolbar.findViewById(R.id.toolbarLeftButton);
         toolLeftText = (TextView) toolbar.findViewById(R.id.toolLeftTextview);
@@ -134,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
 //        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
         setupTabLayout();
+
         //TODO--------------------搜索框的一些配置操作-----------------------------------------------
         msearchHistory = new SearchHistoryTable(this);
         searchView = (SearchView) findViewById(R.id.searchView);

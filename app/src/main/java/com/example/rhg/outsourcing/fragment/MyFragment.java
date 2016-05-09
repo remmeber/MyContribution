@@ -43,6 +43,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         TextView userName = (TextView) view.findViewById(R.id.userName);
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示
         userName.setOnClickListener(this);//TODO 如果本地有账户则直接登录，否则需要点击登录
+        userName.setTag(R.id.userName);
 
 
         //TODO-------------------------------我的订单栏---------------------------------------------
@@ -147,8 +148,11 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
             case R.id.userHeader://TODO 更改头像
                 Toast.makeText(getContext(), R.string.modifyHeader, Toast.LENGTH_SHORT).show();
                 break;
-            case 0://TODO 我的订单
-                Toast.makeText(getContext(),R.string.myOrder,Toast.LENGTH_SHORT).show();
+            case R.id.userName://TODO 点击登录
+                Toast.makeText(getContext(),R.string.userSignIn,Toast.LENGTH_SHORT).show();
+                break;
+            case 0://TODO 待付款
+                Toast.makeText(getContext(),R.string.myPay,Toast.LENGTH_SHORT).show();
                 break;
             case 1://TODO  取消
                 Toast.makeText(getContext(),R.string.myCancel,Toast.LENGTH_SHORT).show();

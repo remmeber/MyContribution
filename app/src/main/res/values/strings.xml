@@ -18,6 +18,7 @@
     <string name="addrCustome">常用</string>
     <string name="addrAdd">添加</string>
     <string name="modifyHeader">修改头像</string>
+    <string name="userSignIn">请点击登录</string>
     <!--- profile-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

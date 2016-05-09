@@ -9,8 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.rhg.outsourcing.View.BaseView;
-import com.example.rhg.outsourcing.presenter.TestPresenter;
+import com.example.rhg.outsourcing.view.BaseView;
 
 /**
  * Created by remember on 2016/5/3.

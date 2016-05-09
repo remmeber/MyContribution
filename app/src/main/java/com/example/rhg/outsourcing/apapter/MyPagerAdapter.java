@@ -1,16 +1,10 @@
 package com.example.rhg.outsourcing.apapter;
 
-import android.os.Parcelable;
-import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.example.rhg.outsourcing.Constants.AppConstants;
+import com.example.rhg.outsourcing.constants.AppConstants;
 
 import java.util.List;
 

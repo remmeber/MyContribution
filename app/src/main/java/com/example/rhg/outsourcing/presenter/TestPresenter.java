@@ -1,6 +1,6 @@
 package com.example.rhg.outsourcing.presenter;
 
-import com.example.rhg.outsourcing.View.BaseView;
+import com.example.rhg.outsourcing.view.BaseView;
 import com.example.rhg.outsourcing.model.BaseModel;
 import com.example.rhg.outsourcing.model.TestModel;
 

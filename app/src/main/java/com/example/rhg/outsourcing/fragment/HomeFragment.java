@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.rhg.outsourcing.Constants.AppConstants;
+import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;

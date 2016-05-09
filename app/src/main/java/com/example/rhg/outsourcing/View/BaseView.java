@@ -1,6 +1,4 @@
-package com.example.rhg.outsourcing.View;
-
-import java.util.Objects;
+package com.example.rhg.outsourcing.view;
 
 /**
  * Created by remember on 2016/4/28.
