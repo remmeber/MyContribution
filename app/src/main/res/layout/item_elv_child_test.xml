@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EEEEEE">
+    android:background="@color/colorPageBackground">
 
 
     <ImageView
@@ -17,7 +17,7 @@
         android:src="@mipmap/ic_uncheck" />
 
     <ImageView
-        android:id="@+id/ivGoods"
+        android:id="@+id/ivGoodsLogo"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerVertical="true"
@@ -28,7 +28,6 @@
         android:src="@drawable/recommend_default_icon_1" />
 
     <LinearLayout
-        android:id="@+id/llGoodInfo"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_alignParentEnd="true"
@@ -36,8 +35,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toEndOf="@+id/ivGoods"
-        android:layout_toRightOf="@+id/ivGoods"
+        android:layout_toEndOf="@+id/ivGoodsLogo"
+        android:layout_toRightOf="@+id/ivGoodsLogo"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:visibility="visible"
@@ -76,12 +75,14 @@
                 android:layout_toEndOf="@+id/tvPriceNew"
                 android:layout_toRightOf="@+id/tvPriceNew"
                 android:text="原先价格"
+                android:visibility="gone"
                 android:textColor="#8e8e8e"
                 android:textSize="12sp" />
             <include
                 layout="@layout/numberchangelayout"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
 

@@ -9,7 +9,7 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.fragment.HomeFragment;
 import com.example.rhg.outsourcing.fragment.MyFragment;
 import com.example.rhg.outsourcing.fragment.SellerFragment;
-import com.example.rhg.outsourcing.fragment.ShoppingCarFragment;
+import com.example.rhg.outsourcing.fragment.ShoppingCartFragment;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.BannerController;
 
@@ -42,7 +42,7 @@ public class HomeController {
         fragments[0] = new HomeFragment();
         fragments[1] = new SellerFragment();
         fragments[2] = new MyFragment();
-        fragments[3] = new ShoppingCarFragment();
+        fragments[3] = new ShoppingCartFragment();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.content_fragment, fragments[0], fragments[0].getClass().getName());
         ft.add(R.id.content_fragment, fragments[1], fragments[1].getClass().getName());

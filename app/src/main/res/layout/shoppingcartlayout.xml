@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/shoppinglayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    android:orientation="vertical">
+
+    <ExpandableListView
+        android:id="@+id/shoppinglist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:background="@color/colorSearchHint" />
+
+    <RelativeLayout
+        android:id="@+id/paybottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="60dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tvNeedPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/needPay"
+            android:textSize="@dimen/toolbar_text_large" />
+
+        <TextView
+            android:id="@+id/tvCountMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@id/tvNeedPay"
+            android:layout_toRightOf="@id/tvNeedPay"
+            android:text="@string/countMoney"
+            android:textColor="@color/colorPay"
+            android:textSize="@dimen/toolbar_text_large" />
+
+        <TextView
+            android:id="@+id/tvCountGoods"
+            android:layout_width="110dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/colorActiveGreen"
+            android:gravity="center"
+            android:text="@string/countGoods"
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_text_large" />
+    </RelativeLayout>
+</LinearLayout>

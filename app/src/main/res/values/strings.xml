@@ -20,6 +20,11 @@
     <string name="modifyHeader">修改头像</string>
     <string name="userSignIn">请点击登录</string>
     <!--- profile-->
+    <!--shoppingcart-->
+    <string name="needPay">应付金额:</string>
+    <string name="countMoney">￥%s</string>
+    <string name="countGoods">去结算</string>
+    <!--shoppingcart-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

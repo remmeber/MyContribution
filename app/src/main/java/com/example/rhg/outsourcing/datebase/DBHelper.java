@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.rhg.outsourcing.model.ShoppingCartBean;
 
@@ -37,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.i("RHG","SQL");
         String CREATE_TB_SHOPPING_CART = "create table " + Q_SHOPPING_CART + "("
                 + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + ShoppingCartBean.KEY_PRODUCT_ID + " text,"

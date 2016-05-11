@@ -3,7 +3,7 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorprofilebackground">#F1F0F8</color>
+    <color name="colorPageBackground">#F2F2F2</color>
     <color name="dark">#FF222222</color>
     <color name="colorToolbarGreen">#8DC73F</color>
     <color name="colorActiveGreen">#8FC842</color>
@@ -13,6 +13,8 @@
     <color name="colorFoodType">#797979</color>
     <color name="colorBackground">#ECECEC</color>
     <color name="colorRecommend">#ED4C14</color>
+    <color name="colorPay">#FD3F3F</color>
+    <color name="colorDel">#EE514A</color>
     <color name="light">#FFEEEEEE</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#AA000000</color>

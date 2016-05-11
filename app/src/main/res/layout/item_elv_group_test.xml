@@ -1,48 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white">
-
-    <ImageView
-        android:id="@+id/ivCheckGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:src="@mipmap/ic_uncheck"/>
-
-    <ImageView
-
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/ivCheckGroup"
-        android:src="@mipmap/ic_shop"/>
-
-    <TextView
-        android:id="@+id/tvShopNameGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/imageView2"
-        android:text="商家名称"
-        android:textColor="#003333"
-        android:textSize="12sp"/>
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <View
-        android:id="@+id/imageView4"
-        android:layout_width="1dp"
-        android:layout_height="10dp"
-        android:layout_centerVertical="true"
-        android:background="#cccccc"/>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        android:background="@color/colorSearchHint" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/ivCheckGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_uncheck" />
+
+        <ImageView
+
+            android:id="@+id/imageShopLogoGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/ivCheckGroup"
+            android:layout_toRightOf="@+id/ivCheckGroup"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_shop" />
+
+        <TextView
+            android:id="@+id/tvShopNameGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/imageShopLogoGroup"
+            android:layout_toRightOf="@+id/imageShopLogoGroup"
+            android:text="商家名称"
+            android:textColor="#003333"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imaShopForwardGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_chevron_right_black_48dp" />
+    </RelativeLayout>
+</LinearLayout>
