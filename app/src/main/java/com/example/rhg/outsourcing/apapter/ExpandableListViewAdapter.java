@@ -1,6 +1,7 @@
 package com.example.rhg.outsourcing.apapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,17 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.model.ShoppingCartBean;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
+import com.example.rhg.outsourcing.widget.SlideView;
 
 import java.util.List;
 
 /**
  * Created by remember on 2016/5/10.
  */
-public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
+public class ExpandableListViewAdapter extends BaseExpandableListAdapter implements SlideView.OnSlideListener {
     List<ShoppingCartBean> mData;
     Context context;
+    SlideView lastSlideView;
 
     public void setmData(List<ShoppingCartBean> mData) {
         this.mData = mData;
@@ -65,6 +68,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
+        Log.i("RHG","childPosition is :"+childPosition);
         return childPosition;
     }
 
@@ -98,28 +102,28 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder childViewHolder;
-        if (convertView == null) {
-            childViewHolder = new ChildViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_elv_child_test, null);
-            childViewHolder.btGoodsCheck = (ImageView) convertView.findViewById(R.id.ivCheckGood);
-            childViewHolder.goodsLogo = (ImageView) convertView.findViewById(R.id.ivGoodsLogo);
-            childViewHolder.tvGoodsName = (TextView) convertView.findViewById(R.id.tvItemChild);
-            childViewHolder.tvGoodsPrice = (TextView) convertView.findViewById(R.id.tvPriceNew);
-            childViewHolder.btReduceNum = (ImageView) convertView.findViewById(R.id.ivReduce);
-            childViewHolder.goodsCount = (TextView) convertView.findViewById(R.id.tvNum);
-            childViewHolder.btAddNum = (ImageView) convertView.findViewById(R.id.ivAdd);
-            convertView.setTag(childViewHolder);
+        SlideView slideView = (SlideView) convertView;
+        if (slideView == null) {
+            View itemView = LayoutInflater.from(context).inflate(R.layout.item_elv_child_test, null);
+            slideView = new SlideView(context);
+            slideView.setContentView(itemView);
+
+            childViewHolder = new ChildViewHolder(slideView);
+            slideView.setOnSlideListener(this);
+            slideView.setTag(childViewHolder);
         } else {
-            childViewHolder = (ChildViewHolder) convertView.getTag();
+            childViewHolder = (ChildViewHolder) slideView.getTag();
         }
         ShoppingCartBean.Goods goods = mData.get(groupPosition).getGoods().get(childPosition);
+        goods.slideView = slideView;
+        goods.slideView.shrink();
+
         boolean isChildSelected = goods.isChildSelected();
         String goodsprice = "￥" + goods.getPrice();//TODO 获得商品的价格
         String goodsNum = goods.getNumber();//TODO 获得商品的数量
         String goodsName = goods.getGoodsName();//TODO 获得商品的名字
         int goodsLogoUrl = goods.getGoodsLogoUrl();//TODO 获得商品图片的链接
 
-        childViewHolder.btGoodsCheck.setTag(groupPosition + "," + childPosition);
         childViewHolder.goodsLogo.setImageDrawable(context.getResources().getDrawable(goodsLogoUrl));
         childViewHolder.goodsLogo.setDrawingCacheEnabled(true);
         childViewHolder.tvGoodsName.setText(goodsName);
@@ -129,17 +133,29 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         childViewHolder.btGoodsCheck.setTag(groupPosition + "," + childPosition);
         childViewHolder.btReduceNum.setTag(goods);
         childViewHolder.btAddNum.setTag(goods);
+        childViewHolder.delete.setTag(goods);
+
         ShoppingCartUtil.checkItem(isChildSelected, childViewHolder.btGoodsCheck);
 
         childViewHolder.btGoodsCheck.setOnClickListener(ShortCartListener);
         childViewHolder.btReduceNum.setOnClickListener(ShortCartListener);
         childViewHolder.btAddNum.setOnClickListener(ShortCartListener);
-        return convertView;
+        childViewHolder.delete.setOnClickListener(ShortCartListener);
+        return slideView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    @Override
+    public void onSlide(View view, int status) {
+        if (lastSlideView != null && lastSlideView != view) {
+            lastSlideView.shrink();
+        }
+        if (status == SLIDE_STATUS_ON)
+            lastSlideView = (SlideView) view;
     }
 
     class GroupViewHolder {
@@ -163,6 +179,19 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         ImageView btAddNum;
         /*商品数量*/
         TextView goodsCount;
+        /*删除*/
+        ViewGroup delete;
+
+        ChildViewHolder(View view) {
+            btGoodsCheck = (ImageView) view.findViewById(R.id.ivCheckGood);
+            goodsLogo = (ImageView) view.findViewById(R.id.ivGoodsLogo);
+            tvGoodsName = (TextView) view.findViewById(R.id.tvItemChild);
+            tvGoodsPrice = (TextView) view.findViewById(R.id.tvPriceNew);
+            btReduceNum = (ImageView) view.findViewById(R.id.ivReduce);
+            btAddNum = (ImageView) view.findViewById(R.id.ivAdd);
+            goodsCount = (TextView) view.findViewById(R.id.tvNum);
+            delete = (ViewGroup) view.findViewById(R.id.holder);
+        }
     }
 
     //TODO--------------------------购物车事件监听--------------------------------------------------

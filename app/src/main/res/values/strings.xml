@@ -24,6 +24,7 @@
     <string name="needPay">应付金额:</string>
     <string name="countMoney">￥%s</string>
     <string name="countGoods">去结算</string>
+    <string name="delete">删除</string>
     <!--shoppingcart-->
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -6,7 +6,7 @@
     android:background="@color/colorPageBackground"
     android:orientation="vertical">
 
-    <ExpandableListView
+    <com.example.rhg.outsourcing.widget.MyExpandListView
         android:id="@+id/shoppinglist"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -1,5 +1,7 @@
 package com.example.rhg.outsourcing.model;
 
+import com.example.rhg.outsourcing.widget.SlideView;
+
 import java.util.List;
 
 /**
@@ -81,10 +83,15 @@ public class ShoppingCartBean {
         this.goods = goods;
     }
 
+
     /**
      * 商品类，本地用变量应该加上标志 ' _local '
      */
     public static class Goods {
+        /**
+         * 保存滑动对象
+         */
+        public SlideView slideView;
         /**
          * 数量
          */

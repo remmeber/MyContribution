@@ -13,6 +13,7 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
 import com.example.rhg.outsourcing.model.ShoppingCartBean;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
+import com.example.rhg.outsourcing.widget.MyExpandListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ShoppingCartFragment extends SuperFragment {
     View view;
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
-    ExpandableListView expandableListView;
+    MyExpandListView expandableListView;
     ExpandableListViewAdapter expandableListViewAdapter;
     TextView tvCountGoods;
     TextView tvCountMoney;
@@ -57,7 +58,7 @@ public class ShoppingCartFragment extends SuperFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.shoppingcartlayout, container, false);
-        expandableListView = (ExpandableListView) view.findViewById(R.id.shoppinglist);
+        expandableListView = (MyExpandListView) view.findViewById(R.id.shoppinglist);
         tvCountMoney = (TextView) view.findViewById(R.id.tvCountMoney);
         tvCountGoods = (TextView) view.findViewById(R.id.tvCountGoods);
         expandableListViewAdapter = new ExpandableListViewAdapter(getContext());
