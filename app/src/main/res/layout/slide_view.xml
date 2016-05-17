@@ -12,9 +12,9 @@
 
     <RelativeLayout
         android:id="@+id/holder"
-        android:layout_width="120dp"
+        android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@color/material_red"
+        android:background="@color/colorDel"
         android:clickable="true">
 
         <TextView
@@ -23,8 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:textSize="@dimen/toolbar_text_large"
             android:textColor="@color/black"
-            android:text="删除" />
+            android:text="@string/delete" />
     </RelativeLayout>
 
 </merge>

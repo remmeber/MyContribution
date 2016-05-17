@@ -17,6 +17,7 @@ public class MyExpandListView extends ExpandableListView {
     SlideView slideView;
     int mLastX;
     int mLastY;
+    int mLastPosition=-1;
 
     public MyExpandListView(Context context) {
         super(context);
@@ -29,19 +30,50 @@ public class MyExpandListView extends ExpandableListView {
     public MyExpandListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+/*
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        ExpandableListAdapter adapter = getExpandableListAdapter();
+        int x = (int) ev.getX();
+        int y = (int) ev.getY();
+        Log.i("RHG", "position : " + pointToPosition(x, y));
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Position position = getPosition(adapter, pointToPosition(x, y));
+                if (position.getChild() != -1) {
+                    ShoppingCartBean.Goods Item = (ShoppingCartBean.Goods) adapter.getChild(position.getGroup(), position.getChild());
+                    slideView = Item.slideView;
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int detalX = x - mLastX;
+                int detalY = y - mLastY;
+                mLastX = x;
+                mLastY = y;
+                return Math.abs(detalX)<=Math.abs(detalY)*2;
+        }
+        mLastX = x;
+        mLastY = y;
+        return super.onInterceptTouchEvent(ev);
+    }*/
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         ExpandableListAdapter adapter = getExpandableListAdapter();
         int x = (int) ev.getX();
         int y = (int) ev.getY();
+        int pointPosition = pointToPosition(x, y);
+        Log.i("RHG", "position : " + pointToPosition(x, y));
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Position position = getPosition(adapter, pointToPosition(x, y));
-                if(position.getChild()!=-1) {
-                    ShoppingCartBean.Goods Item = (ShoppingCartBean.Goods) adapter.getChild(position.getGroup(), position.getChild());
-                    slideView = Item.slideView;
-                }
+                Position position = getPosition(adapter, pointPosition);
+                if (pointPosition != mLastPosition)
+                    if (position.getChild() != -1) {
+                        Log.i("RHG", "DONE");
+                        ShoppingCartBean.Goods Item = (ShoppingCartBean.Goods) adapter.getChild(position.getGroup(), position.getChild());
+                        slideView = Item.slideView;
+                    } else slideView = null;
+                mLastPosition = pointPosition;
             default:
                 break;
         }

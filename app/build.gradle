@@ -29,9 +29,11 @@ dependencies {
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.0.0'
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.lapism:searchview:2.2'
-    compile 'com.cjj.materialrefeshlayout:library:1.3.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.flyco.roundview:FlycoRoundView_Lib:1.0.4@aar'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.3.4@aar'
 //    compile project(':searchview')
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

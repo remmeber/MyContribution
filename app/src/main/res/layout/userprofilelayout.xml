@@ -49,7 +49,7 @@
 
                 <include
                     android:id="@+id/profileOrder"
-                    layout="@layout/profileitem" />
+                    layout="@layout/item_profile" />
             </LinearLayout>
 
             <LinearLayout
@@ -59,7 +59,7 @@
 
                 <include
                     android:id="@+id/profileWorker"
-                    layout="@layout/profileitem" />
+                    layout="@layout/item_profile" />
             </LinearLayout>
 
             <LinearLayout
@@ -69,7 +69,7 @@
 
                 <include
                     android:id="@+id/profileAddress"
-                    layout="@layout/profileitem" />
+                    layout="@layout/item_profile" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

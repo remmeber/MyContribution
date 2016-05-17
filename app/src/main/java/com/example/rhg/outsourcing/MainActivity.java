@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,9 +23,13 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.fragment.HomeFragment;
+import com.example.rhg.outsourcing.fragment.MyFragment;
+import com.example.rhg.outsourcing.fragment.SellerFragment;
+import com.example.rhg.outsourcing.fragment.ShoppingCartFragment;
+import com.example.rhg.outsourcing.ui.FragmentController;
 import com.example.rhg.outsourcing.view.BaseView;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
-import com.example.rhg.outsourcing.ui.HomeController;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.facebook.rebound.BaseSpringSystem;
 import com.facebook.rebound.SimpleSpringListener;
@@ -45,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {
     private final static String TAG = "MainActivity";
-    private final static int TABKEY=0;
-    HomeController homeController;
+    private final static int TABKEY = 0;
+    FragmentController fragmentController;
     //----------------------for rebound 弹簧效果---------------------------------------------------
     private final BaseSpringSystem mSpringSystem = SpringSystem.create();
     private final ExampleSpringListener exampleSpringListener = new ExampleSpringListener();
@@ -99,12 +104,17 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         setContentView(R.layout.activity_main);
 
         testPresenter = new TestPresenter(this);
-
-        homeController = new HomeController(this, testPresenter);
+        Fragment[] fragments = new Fragment[4];
+//        fragments[0] = new HomeFragment();
+        fragments[0] = new HomeFragment();
+        fragments[1] = new SellerFragment();
+        fragments[2] = new MyFragment();
+        fragments[3] = new ShoppingCartFragment();
+        fragmentController = new FragmentController(getSupportFragmentManager(), testPresenter, fragments, R.id.content_fragment);
         //for toolbar:Note:all settings need to be done before setSupportActionBar;
         //TODO-------------------------toolbar的一些设置---------------------------------------------
         toolbar = (RelativeLayout) findViewById(R.id.toolbar);
-        toolCenterButton = (ImageButton)toolbar.findViewById(R.id.toolbarCenterButton);
+        toolCenterButton = (ImageButton) toolbar.findViewById(R.id.toolbarCenterButton);
         toolLeftButton = (ImageButton) toolbar.findViewById(R.id.toolbarLeftButton);
         toolLeftText = (TextView) toolbar.findViewById(R.id.toolLeftTextview);
         toolCenterText = (TextView) toolbar.findViewById(R.id.toolbarCenterView);
@@ -279,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
             //当item被选中状态
             @Override
             public void onTabSelected(int position) {
-                homeController.showFragment(position);
+                fragmentController.showFragment(position);
                 dealToolbarByPosition(position);
             }
 
@@ -348,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 ImageUtils.TintFill(toolCenterButton, getResources().getDrawable(R.mipmap.ic_search_white),
                         getResources().getColor(R.color.colorActiveGreen));
                 ImageUtils.TintFill(toolRightButton, getResources().getDrawable(R.mipmap.ic_search_white),
-                    getResources().getColor(R.color.colorActiveGreen));
+                        getResources().getColor(R.color.colorActiveGreen));
                 toolLeftText.setText("南京");//TODO 根据定位来定
                 toolSwipeText.setText("扫一扫");
                 toolSwipeText.setTextSize(12);
@@ -407,9 +417,9 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
 
     @Override
     public void onClick(View v) {
-        switch ((int)toolbar.getTag()){
+        switch ((int) toolbar.getTag()) {
             case AppConstants.TypeHome:
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.toolbarLeftButton:
                         doChangeLocation();
                         break;
@@ -422,24 +432,24 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 }
                 break;
             case AppConstants.TypeSeller:
-                if(v.getId()==R.id.toolbarRightButton)
+                if (v.getId() == R.id.toolbarRightButton)
                     showSearchViwe();
                 break;
             case AppConstants.TypeMy:
                 break;
             case AppConstants.TypeShoppingCar:
-                if(v.getId()==R.id.toolbarRightLayout)
-                    Toast.makeText(this,"编辑",Toast.LENGTH_SHORT).show();
+                if (v.getId() == R.id.toolbarRightLayout)
+                    Toast.makeText(this, "编辑", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
     private void doSwipe() {
-        Toast.makeText(this,"扫一扫",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "扫一扫", Toast.LENGTH_SHORT).show();
     }
 
     private void doChangeLocation() {
-        Toast.makeText(this,"修改区域",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "修改区域", Toast.LENGTH_SHORT).show();
     }
 
 

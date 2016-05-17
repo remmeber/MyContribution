@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/colorActiveGreen"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/tv_myorder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="我的订单"
+        android:textColor="@color/black"
+        android:textSize="@dimen/toolbar_text_large" />
+
+    <ImageView
+        android:id="@+id/iv_tab_left"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ic_chevron_left_black_48dp" />
+
+    <ImageView
+        android:id="@+id/iv_tab_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</FrameLayout>

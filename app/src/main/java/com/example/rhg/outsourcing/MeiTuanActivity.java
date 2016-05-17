@@ -75,11 +75,11 @@ public class MeiTuanActivity extends FragmentActivity implements ViewPager.OnPag
     }
 
     private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.viewpager_meituan);
+        /*mViewPager = (ViewPager) findViewById(R.id.viewpager_meituan);
         mViewPager.setOnPageChangeListener(this);
         mPonitView = (PointView) findViewById(R.id.pointview_meituan);
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), mFragmentList));
-        mPonitView.setParams(mViewPager);
+        mPonitView.setParams(mViewPager);*/
     }
 
     @Override

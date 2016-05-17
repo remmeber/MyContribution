@@ -2,7 +2,6 @@ package com.example.rhg.outsourcing.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +22,7 @@ public class SlideView extends LinearLayout {
     private Scroller mScroller;
     private OnSlideListener mOnSlideListener;
 
-    private int mHolderWidth = 120;
+    private int mHolderWidth = 80;
 
     private int mLastX = 0;
     private int mLastY = 0;
@@ -57,7 +56,7 @@ public class SlideView extends LinearLayout {
         mScroller = new Scroller(mContext);
 
         setOrientation(LinearLayout.HORIZONTAL);
-        View.inflate(mContext, R.layout.slide_view_merge, this);
+        View.inflate(mContext, R.layout.slide_view, this);
         mViewContent = (LinearLayout)findViewById(R.id.view_content);
         mHolderWidth = Math.round(TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, mHolderWidth, getResources()
@@ -81,6 +80,7 @@ public class SlideView extends LinearLayout {
             this.smoothScrollTo(0, 0);
         }
     }
+
 
     public void onRequireTouchEvent(MotionEvent event) {
         int x = (int) event.getX();

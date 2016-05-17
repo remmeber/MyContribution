@@ -1,6 +1,7 @@
 package com.example.rhg.outsourcing.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.R;
+import com.example.rhg.outsourcing.activity.OrderActivity;
 
 import org.w3c.dom.Text;
 
@@ -24,9 +26,7 @@ import org.w3c.dom.Text;
  */
 public class MyFragment extends SuperFragment implements View.OnClickListener {
     private static final String TAG = "MyFragment";
-    private static final int[] ID = {R.id.bottom_navigation, R.id.toolbarRightButton, R.id.cardView,
-            R.id.bottom_navigation_bar_container, R.id.adjust_height, R.id.action_settings, R.id.toolbar,
-            R.id.toolLeftTextview, R.id.toolbarRightLayout};
+
 
     public MyFragment() {
         Log.i(TAG, "MyFragment");
@@ -59,11 +59,11 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         TextView workerSignUp = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealcenter);
         TextView workerModify = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealright);
         //TODO---------------------------------我的地址-------------------------------------------
-        TextView addrInfo = (TextView) getViewById(view, R.id.profileAddress, R.id.profileInfo);
-        ImageView addrForward = (ImageView) getViewById(view, R.id.profileAddress, R.id.profileForward);
-        TextView addrCustome = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealleft);
-        TextView addrAdd = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealcenter);
-        TextView addrModify = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealright);
+        TextView addressInfo = (TextView) getViewById(view, R.id.profileAddress, R.id.profileInfo);
+        ImageView addressForward = (ImageView) getViewById(view, R.id.profileAddress, R.id.profileForward);
+        TextView addressCustome = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealleft);
+        TextView addressAdd = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealcenter);
+        TextView addressModify = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealright);
 
         myInfo.setText(R.string.myOrder);
 
@@ -99,22 +99,22 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         workerModify.setOnClickListener(this);
         workerModify.setTag(5);
 
-        addrInfo.setText(R.string.addrInfo);
+        addressInfo.setText(R.string.addrInfo);
 
-        addrForward.setOnClickListener(this);
-        addrForward.setTag(R.id.profileAddress);
+        addressForward.setOnClickListener(this);
+        addressForward.setTag(R.id.profileAddress);
 
-        addrCustome.setText(R.string.addrCustome);
-        addrCustome.setOnClickListener(this);
-        addrCustome.setTag(6);
+        addressCustome.setText(R.string.addrCustome);
+        addressCustome.setOnClickListener(this);
+        addressCustome.setTag(6);
 
-        addrAdd.setText(R.string.addrAdd);
-        addrAdd.setOnClickListener(this);
-        addrAdd.setTag(7);
+        addressAdd.setText(R.string.addrAdd);
+        addressAdd.setOnClickListener(this);
+        addressAdd.setTag(7);
 
-        addrModify.setText(R.string.wokerAndAddrModify);
-        addrModify.setOnClickListener(this);
-        addrModify.setTag(8);
+        addressModify.setText(R.string.wokerAndAddrModify);
+        addressModify.setOnClickListener(this);
+        addressModify.setTag(8);
         return view;
     }
 
@@ -137,7 +137,9 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
 
         switch ((int) v.getTag()) {
             case R.id.profileInfo://TODO 我的订单右箭头
-                Toast.makeText(getContext(), R.string.myOrder, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(getContext(), OrderActivity.class);
+                startActivity(intent);
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
                 Toast.makeText(getContext(), R.string.workerInfo, Toast.LENGTH_SHORT).show();

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.model.ShoppingCartBean;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
+import com.example.rhg.outsourcing.view.UIAlertView;
 import com.example.rhg.outsourcing.widget.SlideView;
 
 import java.util.List;
@@ -68,7 +69,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        Log.i("RHG","childPosition is :"+childPosition);
+        Log.i("RHG", "childPosition is :" + childPosition);
         return childPosition;
     }
 
@@ -82,7 +83,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
         GroupViewHolder groupViewHolder;
         if (convertView == null) {
             groupViewHolder = new GroupViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_elv_group_test, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_expandlistview_group, null);
             groupViewHolder.btGroupCheck = (ImageView) convertView.findViewById(R.id.ivCheckGroup);
             groupViewHolder.tvShopName = (TextView) convertView.findViewById(R.id.tvShopNameGroup);
             groupViewHolder.btForwardShop = (ImageView) convertView.findViewById(R.id.imaShopForwardGroup);
@@ -104,7 +105,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
         ChildViewHolder childViewHolder;
         SlideView slideView = (SlideView) convertView;
         if (slideView == null) {
-            View itemView = LayoutInflater.from(context).inflate(R.layout.item_elv_child_test, null);
+            View itemView = LayoutInflater.from(context).inflate(R.layout.item_expandablelistview_child, null);
             slideView = new SlideView(context);
             slideView.setContentView(itemView);
 
@@ -133,7 +134,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
         childViewHolder.btGoodsCheck.setTag(groupPosition + "," + childPosition);
         childViewHolder.btReduceNum.setTag(goods);
         childViewHolder.btAddNum.setTag(goods);
-        childViewHolder.delete.setTag(goods);
+        childViewHolder.delete.setTag(groupPosition + "," + childPosition);
 
         ShoppingCartUtil.checkItem(isChildSelected, childViewHolder.btGoodsCheck);
 
@@ -239,11 +240,65 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
                             (TextView) ((View) (v.getParent())).findViewById(R.id.tvNum));
                     setDataChange();
                     break;
+                case R.id.holder:
+                    String deleteTag = String.valueOf(v.getTag());
+                    if (deleteTag.contains(",")) {
+                        String s[] = deleteTag.split(",");
+                        int groupPosition = Integer.parseInt(s[0]);
+                        int childPosition = Integer.parseInt(s[1]);
+                        /*ToastHelper.getInstance()._toast("groupPosition: " + groupPosition
+                                + " childPosition: " + childPosition);*/
+                        showDelDialog(groupPosition, childPosition);
+                    }
+                    break;
             }
         }
 
 
     };
+
+    /**
+     * 删除弹框
+     *
+     * @param groupPosition
+     * @param childPosition
+     */
+    private void showDelDialog(final int groupPosition, final int childPosition) {
+        final UIAlertView delDialog = new UIAlertView(context, "温馨提示", "确认删除该商品吗?",
+                "取消", "确定");
+        delDialog.show();
+        delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
+                                       @Override
+                                       public void doLeft() {
+                                           delDialog.dismiss();
+                                       }
+
+                                       @Override
+                                       public void doRight() {
+                                           String productID = mData.get(groupPosition).getGoods().get(childPosition).getProductID();
+                                           ShoppingCartUtil.delGood(productID);
+                                           delGoods(groupPosition, childPosition);
+                                           setDataChange();
+                                           notifyDataSetChanged();
+                                           delDialog.dismiss();
+                                       }
+                                   }
+        );
+    }
+
+    /**
+     * 删除商品
+     *
+     * @param groupPosition
+     * @param childPosition
+     */
+    private void delGoods(int groupPosition, int childPosition) {
+        mData.get(groupPosition).getGoods().remove(childPosition);
+        if (mData.get(groupPosition).getGoods().size() == 0) {
+            mData.remove(groupPosition);
+        }
+        notifyDataSetChanged();
+    }
 
     private void setDataChange() {
         String[] infos = ShoppingCartUtil.getShoppingCount(mData);
