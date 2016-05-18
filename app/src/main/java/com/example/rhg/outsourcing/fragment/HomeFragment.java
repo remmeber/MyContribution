@@ -23,7 +23,7 @@ import com.example.rhg.outsourcing.model.HeaderTypeModel;
 import com.example.rhg.outsourcing.model.ImageModel;
 import com.example.rhg.outsourcing.model.RecommendListTypeModel;
 import com.example.rhg.outsourcing.model.RecommendTextTypeModel;
-import com.example.rhg.outsourcing.model.SellerModel;
+import com.example.rhg.outsourcing.model.BaseSellerModel;
 import com.example.rhg.outsourcing.model.TextTypeModel;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.BannerController;
@@ -49,7 +49,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
             "http://img2.3lian.com/2014/f2/37/d/39.jpg",
             "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
     };
-    List<SellerModel> sellRecommendModels = new ArrayList<SellerModel>();
+    List<BaseSellerModel> sellRecommendModels = new ArrayList<BaseSellerModel>();
     View view;
     RecyclerView rcv;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -67,7 +67,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.homerecyclelayout, container, false);
+        view = inflater.inflate(R.layout.rcv_item, container, false);
         rcv = (RecyclerView) view.findViewById(R.id.recycleview);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         return view;
@@ -139,7 +139,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     private void fillItemList() {
         for (int i = 0; i < 6; i++) {
             ImageModel imageModel = new ImageModel();
-            SellerModel sellRecommendModel = new SellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
+            BaseSellerModel sellRecommendModel = new BaseSellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
 
             imageModel.setImageId(R.drawable.recommend_default_icon_1);
             switch (i) {

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="56dp"
     android:background="@color/colorActiveGreen"
     android:fitsSystemWindows="true">
 
     <TextView
-        android:id="@+id/tv_myorder"
+        android:id="@+id/tv_center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:gravity="center"
-        android:text="我的订单"
         android:textColor="@color/black"
-        android:textSize="@dimen/toolbar_text_large" />
+        android:textSize="@dimen/toolbar_text_large"
+        tools:text="我的订单" />
 
     <ImageView
         android:id="@+id/iv_tab_left"
@@ -21,9 +23,14 @@
         android:layout_height="match_parent"
         android:src="@mipmap/ic_chevron_left_black_48dp" />
 
-    <ImageView
-        android:id="@+id/iv_tab_right"
+    <TextView
+        android:id="@+id/tv_tab_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_gravity="end"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:textSize="@dimen/toolbar_text_large"
+        tools:text="修改" />
 </FrameLayout>

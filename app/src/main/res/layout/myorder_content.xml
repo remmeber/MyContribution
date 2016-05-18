@@ -15,10 +15,13 @@
         app:tl_divider_width="1dp"
         app:tl_divider_padding="2dp"
         app:tl_divider_color="@color/colorActiveGreen"
+        app:tl_indicator_color="@color/colorActiveGreen"
         android:layout_width="match_parent"
         android:layout_height="45dp"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_myorder"
+        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

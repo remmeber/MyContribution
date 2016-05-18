@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
-import com.example.rhg.outsourcing.model.SellerModel;
+import com.example.rhg.outsourcing.model.BaseSellerModel;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 
 import java.util.ArrayList;
@@ -25,13 +25,13 @@ import java.util.List;
 public class sellNumberFragment extends SuperFragment implements RecycleSellerAdapter.OnListItemClick{
     private SwipeRefreshLayout swipeRefreshLayout;
     //TODO-------------------------------按销量排序的数据--------------------------------------------
-    List<SellerModel> dataBySellNumberModels = new ArrayList<>();
+    List<BaseSellerModel> dataBySellNumberModels = new ArrayList<>();
     TestPresenter sellertestPresenter;
 
     public sellNumberFragment() {
         for (int i = 0; i < 6; i++) {
-            SellerModel sellerModel = new SellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
-            dataBySellNumberModels.add(sellerModel);
+            BaseSellerModel baseSellerModel = new BaseSellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
+            dataBySellNumberModels.add(baseSellerModel);
         }
         sellertestPresenter = new TestPresenter(this);
     }
@@ -39,7 +39,7 @@ public class sellNumberFragment extends SuperFragment implements RecycleSellerAd
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.sellnumberlayout, container, false);
+        View view = inflater.inflate(R.layout.sellnumber_layout, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.seller_swipe);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.sellNumberRecycle);
         recyclerView.setHasFixedSize(true);

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.R;
+import com.example.rhg.outsourcing.activity.DeliverSignUp;
 import com.example.rhg.outsourcing.activity.OrderActivity;
 
 import org.w3c.dom.Text;
@@ -137,12 +138,11 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
 
         switch ((int) v.getTag()) {
             case R.id.profileInfo://TODO 我的订单右箭头
-                Intent intent = new Intent();
-                intent.setClass(getContext(), OrderActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getContext(), OrderActivity.class));
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
-                Toast.makeText(getContext(), R.string.workerInfo, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), R.string.workerInfo, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), DeliverSignUp.class));
                 break;
             case R.id.profileAddress://TODO 我的地址右箭头
                 Toast.makeText(getContext(), R.string.addrInfo, Toast.LENGTH_SHORT).show();

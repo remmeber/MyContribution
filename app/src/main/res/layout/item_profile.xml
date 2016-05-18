@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/profileForward"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -42,7 +42,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/virtureline"
+            android:background="@drawable/line_virture"
             android:layerType="software" />
     </RelativeLayout>
 
@@ -60,10 +60,10 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
-            android:background="@drawable/searchview_background"
+            android:background="@drawable/tv_search_bg"
             android:gravity="center"
             android:text=" left "
-            android:textColor="@color/colorFoodType"
+            android:textColor="@color/colorTextOrder"
             android:textSize="12dp" />
 
         <TextView
@@ -71,10 +71,10 @@
             android:layout_width="56dp"
             android:layout_height="21dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/searchview_background"
+            android:background="@drawable/tv_search_bg"
             android:gravity="center"
             android:text=" center "
-            android:textColor="@color/colorFoodType"
+            android:textColor="@color/colorTextOrder"
             android:textSize="12dp" />
 
         <TextView
@@ -86,10 +86,10 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
-            android:background="@drawable/searchview_background"
+            android:background="@drawable/tv_search_bg"
             android:gravity="center"
             android:text=" right "
-            android:textColor="@color/colorFoodType"
+            android:textColor="@color/colorTextOrder"
             android:textSize="12dp" />
     </RelativeLayout>
 </LinearLayout>

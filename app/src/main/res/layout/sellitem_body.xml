@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
-    android:layout_height="109dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <!--<RelativeLayout
@@ -16,7 +16,7 @@
         android:layout_height="22dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="11dp">
+        android:layout_marginTop="6dp">
 
         <ImageView
             android:id="@+id/sellerIcon"
@@ -34,19 +34,31 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
-            android:layout_toRightOf="@id/sellerIcon"
             android:layout_toEndOf="@id/sellerIcon"
+            android:layout_toRightOf="@id/sellerIcon"
             android:gravity="center_vertical"
             android:minHeight="0dp"
-            android:text="dddd"
-            android:textSize="16dp" />
+            android:textSize="@dimen/search_text_medium" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageshowInsellerItem"
+            android:layout_toStartOf="@+id/imageshowInsellerItem"
+            android:background="@drawable/tv_state_bg"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/search_text_medium"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imageshowInsellerItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:src="@mipmap/ic_chevron_right_black_48dp"
             android:visibility="gone" />
 
@@ -55,9 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:background="@drawable/virtureline"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/line_virture"
             android:layerType="software"
             android:visibility="gone" />
     </RelativeLayout>
@@ -65,7 +77,6 @@
     <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
         android:layout_marginStart="14dp"
@@ -76,7 +87,31 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:src="@drawable/recommend_default_icon_2" />
+
+        <TextView
+            android:id="@+id/tv_orderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/sellerImage"
+            android:layout_toRightOf="@+id/sellerImage"
+            android:textColor="@color/colorTextOrder"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_orderNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/sellerImage"
+            android:layout_toRightOf="@+id/sellerImage"
+            android:textColor="@color/colorTextOrder"
+            android:textSize="@dimen/text_small" />
 
         <TextView
             android:id="@+id/foodType"
@@ -85,58 +120,64 @@
             android:layout_alignBottom="@+id/sellerImage"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toRightOf="@+id/sellerImage"
             android:layout_toEndOf="@+id/sellerImage"
-            android:background="@drawable/searchview_background"
+            android:layout_toRightOf="@+id/sellerImage"
+            android:background="@drawable/tv_search_bg"
             android:gravity="center"
-            android:text="dddd"
-            android:textColor="@color/colorFoodType"
-            android:textSize="12dp" />
+            android:textColor="@color/colorTextOrder"
+            android:textSize="@dimen/text_small" />
 
         <ImageView
             android:id="@+id/homeForward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/distanceText"
+            android:layout_alignLeft="@+id/tv_distance"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/distanceText"
+            android:layout_alignStart="@+id/tv_distance"
             android:src="@mipmap/ic_chevron_right_black_48dp" />
 
-        <TextView
-            android:id="@+id/distanceText"
+        <include
+            layout="@layout/item_totalmoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sellerImage"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/foodType"
-            android:layout_marginRight="20dp"
             android:layout_marginEnd="20dp"
-            android:text="aaaaaa"
-            android:textColor="@color/colorFoodType"
-            android:textSize="12dp" />
+            android:layout_marginRight="20dp" />
 
         <TextView
-            android:id="@+id/demandmoney"
+            android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/delivermoney"
+            android:layout_alignBottom="@+id/sellerImage"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/colorTextOrder"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/tv_required"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_money"
             android:layout_alignLeft="@+id/homeForward"
             android:layout_alignStart="@+id/homeForward"
-            android:text="aaaaaa"
-            android:textColor="@color/colorFoodType"
-            android:textSize="12dp"
+            android:textColor="@color/colorTextOrder"
+            android:textSize="@dimen/text_small"
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/delivermoney"
+            android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/distanceText"
+            android:layout_above="@+id/tv_distance"
             android:layout_alignLeft="@+id/homeForward"
             android:layout_alignStart="@+id/homeForward"
-            android:text="aaaaaa"
-            android:textColor="@color/colorFoodType"
-            android:textSize="12dp"
+            android:textColor="@color/colorTextOrder"
+            android:textSize="@dimen/text_small"
             android:visibility="gone" />
 
     </RelativeLayout>

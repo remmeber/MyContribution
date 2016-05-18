@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -34,7 +32,6 @@ import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.facebook.rebound.BaseSpringSystem;
 import com.facebook.rebound.SimpleSpringListener;
 import com.facebook.rebound.Spring;
-import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
 import com.lapism.searchview.adapter.SearchAdapter;
@@ -81,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
     //for banner
     private ConvenientBanner convenientBanner;
     //BottomNavigationBar当前还不能隐藏(private)，修改完bug后可以修改(public)
-    private BottomNavigationBar bottomNavigation;
+//    private BottomNavigationBar bottomNavigation;
     //底部弹页
     private BottomSheetBehavior behavior;
     //浮动按钮
@@ -104,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         setContentView(R.layout.activity_main);
 
         testPresenter = new TestPresenter(this);
+
         Fragment[] fragments = new Fragment[4];
 //        fragments[0] = new HomeFragment();
         fragments[0] = new HomeFragment();
@@ -141,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         //------------------------------------TabLayout---------------------------------------------
 //        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
-        setupTabLayout();
 
         //TODO--------------------搜索框的一些配置操作-----------------------------------------------
         msearchHistory = new SearchHistoryTable(this);
@@ -170,12 +167,14 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         searchView.setOnSearchViewListener(new SearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                fab.hide();
+//                fab.hide();
+                //TODO show searchView
             }
 
             @Override
             public void onSearchViewClosed() {
-                fab.show();
+//                fab.show();
+                //TODO close searchView
             }
         });
         mSuggestionsList = new ArrayList<>();
@@ -193,9 +192,9 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         searchView.setAdapter(mSearchAdapter);
         //TODO--------------------------------------------------------------------------------------
         //TODO-----------------------------弹跳特效--------------------------------------------------
-        mScaleSpring = mSpringSystem.createSpring();
+       /* mScaleSpring = mSpringSystem.createSpring();
         //设置弹跳
-        mScaleSpring.setSpringConfig(new SpringConfig(TENSION, FICTION));
+        mScaleSpring.setSpringConfig(new SpringConfig(TENSION, FICTION));*/
 //        mScaleSpring.setVelocity(1);
         //可以作为点击事件的效果
         //-----------------------------------------------------------------------------------------
@@ -227,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         materialRefreshLayout.setWaveShow(true);*/
 //        materialRefreshLayout.setLoadMore(true);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+       /* fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -238,10 +237,10 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
 //                        Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                                .setAction("Action", null).show();
                         //for BottomSheetView
-                       /* if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                       *//* if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
                             behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                         else
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);*/
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);*//*
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
@@ -251,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 }
                 return true;
             }
-        });
+        });*/
         /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -273,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);*/
         //TODO---------------------底部导航栏=-------------------------------------------------------
-        bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
+        BottomNavigationBar bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigation
@@ -364,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 toolSwipeText.setTextSize(12);
                 toolSwipeText.setTextColor(getResources().getColor(R.color.colorActiveGreen));
                 toolCenterText.setText("");
-                toolCenterText.setBackgroundDrawable(getResources().getDrawable(R.drawable.searchview_background));
+                toolCenterText.setBackgroundDrawable(getResources().getDrawable(R.drawable.tv_search_bg));
                 break;
             case 1:
                 toolbar.setTag(AppConstants.TypeSeller);
@@ -427,6 +426,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                         doSwipe();
                         break;
                     case R.id.toolbarCenterView:
+                    case R.id.toolbarCenterButton:
                         showSearchViwe();
                         break;
                 }
@@ -443,18 +443,16 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 break;
         }
     }
-
+    //TODO 扫一扫
     private void doSwipe() {
         Toast.makeText(this, "扫一扫", Toast.LENGTH_SHORT).show();
     }
-
+    //TODO 定位
     private void doChangeLocation() {
         Toast.makeText(this, "修改区域", Toast.LENGTH_SHORT).show();
     }
 
 
-    private void setupTabLayout() {
-    }
 
     //----------------------------单独呼出搜索页面--------------------------------------------------
     private void showSearchViwe() {
@@ -474,7 +472,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
     }
 
 
-    //---------------------------------------------------------------------------------------------
+    //TODO for spring-------------------------------------------------------------------------------
     private class ExampleSpringListener extends SimpleSpringListener {
         @Override
         public void onSpringUpdate(Spring spring) {
@@ -565,37 +563,14 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        mScaleSpring.addListener(exampleSpringListener);
+//        mScaleSpring.addListener(exampleSpringListener);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mScaleSpring.removeListener(exampleSpringListener);
+//        mScaleSpring.removeListener(exampleSpringListener);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.i(TAG, "Touch");
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                y = event.getY();
-                Log.i(TAG, " " + y);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float dy = event.getY() - y;
-                if (dy < -0.2) {
-                    fab.hide();
-                    Log.i(TAG, " hide");
-                } else {
-                    if (!fab.isShown()) {
-                        Log.i(TAG, " show");
-                        fab.show();
-                    }
-                }
-                y = event.getY();
-                break;
-        }
-        return true;
-    }
+
 }

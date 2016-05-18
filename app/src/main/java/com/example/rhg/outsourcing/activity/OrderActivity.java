@@ -12,8 +12,7 @@ import android.widget.TextView;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.fragment.AllFragment;
-import com.example.rhg.outsourcing.ui.FragmentController;
+import com.example.rhg.outsourcing.fragment.AllOrderFragment;
 import com.example.rhg.outsourcing.view.BaseView;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -43,11 +42,12 @@ public class OrderActivity extends AppCompatActivity implements BaseView, View.O
     }
 
     private void initData() {
+        tvOrder.setText("我的订单");
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new AllFragment());
-        fragments.add(new AllFragment());
-        fragments.add(new AllFragment());
-        fragments.add(new AllFragment());
+        fragments.add(new AllOrderFragment());
+        fragments.add(new AllOrderFragment());
+        fragments.add(new AllOrderFragment());
+        fragments.add(new AllOrderFragment());
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),fragments, AppConstants.ORDERTITLES);
         vpOrder.setAdapter(myPagerAdapter);
         stlOrder.setViewPager(vpOrder);
@@ -55,7 +55,7 @@ public class OrderActivity extends AppCompatActivity implements BaseView, View.O
 
     private void initView() {
         ivBack = (ImageView)findViewById(R.id.iv_tab_left);
-        tvOrder = (TextView)findViewById(R.id.tv_myorder);
+        tvOrder = (TextView)findViewById(R.id.tv_center);
         stlOrder = (SlidingTabLayout)findViewById(R.id.stl_myorder);
         vpOrder = (ViewPager)findViewById(R.id.vp_myorder);
         ivBack.setOnClickListener(this);

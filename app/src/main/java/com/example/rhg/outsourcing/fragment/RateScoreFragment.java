@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
-import com.example.rhg.outsourcing.model.SellerModel;
+import com.example.rhg.outsourcing.model.BaseSellerModel;
 import com.example.rhg.outsourcing.presenter.TestPresenter;
 
 import java.util.ArrayList;
@@ -24,14 +24,14 @@ import java.util.List;
  */
 public class RateScoreFragment extends SuperFragment implements RecycleSellerAdapter.OnListItemClick{
     //TODO-------------------------------按评分排序的数据--------------------------------------------
-    List<SellerModel> dataByRateScoreModels = new ArrayList<>();
+    List<BaseSellerModel> dataByRateScoreModels = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     TestPresenter distancetestPresenter;
 
     public RateScoreFragment() {
         for (int i = 0; i < 6; i++) {
-            SellerModel sellerModel = new SellerModel("哈哈", "中餐", "距离" + 10 + i + "m", R.drawable.recommend_default_icon_1);
-            dataByRateScoreModels.add(sellerModel);
+            BaseSellerModel baseSellerModel = new BaseSellerModel("哈哈", "中餐", "距离" + 10 + i + "m", R.drawable.recommend_default_icon_1);
+            dataByRateScoreModels.add(baseSellerModel);
         }
         distancetestPresenter = new TestPresenter(this);
     }
@@ -39,7 +39,7 @@ public class RateScoreFragment extends SuperFragment implements RecycleSellerAda
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.sellnumberlayout, container, false);
+        View view = inflater.inflate(R.layout.sellnumber_layout, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.seller_swipe);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.sellNumberRecycle);
         recyclerView.setHasFixedSize(true);

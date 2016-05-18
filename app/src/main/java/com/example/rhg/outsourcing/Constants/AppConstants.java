@@ -13,6 +13,7 @@ public class AppConstants {
     //---------------------------店铺复用------------------------------------------------------------
     public static final int TypeHome = 0;
     public static final int TypeSeller = 1;
+    public static final int TypeOrder = 3;
     //---------------------------页面类型-----------------------------------------------------------
     public static final int TypeMy = 2;
     public static final int TypeShoppingCar = 3;

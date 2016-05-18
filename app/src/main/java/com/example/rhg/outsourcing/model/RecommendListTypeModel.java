@@ -8,12 +8,12 @@ import java.util.List;
  * Created by remember on 2016/5/3.
  */
 public class RecommendListTypeModel {
-    List<SellerModel> sellerModels;
+    List<BaseSellerModel> baseSellerModels;
     private RecycleSellerAdapter recycleSellerAdapter;
     private RecycleSellerAdapter.OnListItemClick onListItemClick;
 
-    public List<SellerModel> getSellerModels() {
-        return sellerModels;
+    public List<BaseSellerModel> getBaseSellerModels() {
+        return baseSellerModels;
     }
 
     public RecycleSellerAdapter getRecycleSellerAdapter() {
@@ -24,8 +24,8 @@ public class RecommendListTypeModel {
         return onListItemClick;
     }
 
-    public RecommendListTypeModel(List<SellerModel> sellerModels, RecycleSellerAdapter recycleSellerAdapter, RecycleSellerAdapter.OnListItemClick onListItemClick) {
-        this.sellerModels = sellerModels;
+    public RecommendListTypeModel(List<BaseSellerModel> baseSellerModels, RecycleSellerAdapter recycleSellerAdapter, RecycleSellerAdapter.OnListItemClick onListItemClick) {
+        this.baseSellerModels = baseSellerModels;
         this.recycleSellerAdapter = recycleSellerAdapter;
         this.onListItemClick = onListItemClick;
     }
