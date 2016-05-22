@@ -1,5 +1,6 @@
 package com.example.rhg.outsourcing.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
+import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
@@ -22,7 +25,7 @@ import java.util.List;
 /**
  * Created by remember on 2016/5/7.
  */
-public class sellNumberFragment extends SuperFragment implements RecycleSellerAdapter.OnListItemClick{
+public class sellNumberFragment extends SuperFragment implements RecycleSellerAdapter.OnListItemClick {
     private SwipeRefreshLayout swipeRefreshLayout;
     //TODO-------------------------------按销量排序的数据--------------------------------------------
     List<BaseSellerModel> dataBySellNumberModels = new ArrayList<>();
@@ -40,7 +43,7 @@ public class sellNumberFragment extends SuperFragment implements RecycleSellerAd
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sellnumber_layout, container, false);
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.seller_swipe);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.seller_swipe);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.sellNumberRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -57,6 +60,16 @@ public class sellNumberFragment extends SuperFragment implements RecycleSellerAd
     }
 
     @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
@@ -68,12 +81,26 @@ public class sellNumberFragment extends SuperFragment implements RecycleSellerAd
 
     @Override
     public void showSuccess(Object o) {
-        Toast.makeText(getContext(),o.toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), o.toString(), Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void itemClick(View v, int position) {
-        Toast.makeText(getActivity()," "+position+" is clicked ",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity()," "+position+" is clicked ",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), ShopDetailActivity.class);
+        intent.putExtra(AppConstants.KEY_PHONE,"1234567890");
+        intent.putExtra(AppConstants.KEY_ADDRESS,"江苏省南京市江宁区东南大学");
+        intent.putExtra(AppConstants.KEY_NOTE,"东南大学是一所985高校");
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID,"20160517");
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME,"荣哥土菜馆");
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO,AppConstants.images[1]);
+        startActivity(intent);
+        /*Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
+        intent.putExtra("productId","20160518");
+        intent.putExtra("productName","黄焖鸡米饭");
+        intent.putExtra("goodsPrice","￥:90");
+        startActivity(intent);*/
     }
+
 }

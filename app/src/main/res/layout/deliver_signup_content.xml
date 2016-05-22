@@ -29,7 +29,9 @@
             android:textSize="@dimen/toolbar_text_large"
             android:text="设置头像" />
     </RelativeLayout>
-
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
     <android.support.design.widget.TextInputLayout
         android:id="@+id/et_name_wrap"
         android:layout_width="match_parent"
@@ -85,7 +87,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/et_deliver_wrap"
+        android:id="@+id/et_place_wrap"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginEnd="50dp"

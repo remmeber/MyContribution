@@ -5,4 +5,23 @@
         <attr name="border_color" format="color" />
         <attr name="border_overlay" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="ShoppingCartWithNumber">
+        <attr name="tint_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="VerticalTabLayout">
+        <!--一个条目的高度-->
+        <attr name="item_height" format="dimension" />
+        <!--一个条目的宽度-->
+        <attr name="item_width" format="dimension" />
+        <!--一个条目的字体大小-->
+        <attr name="item_text_size" format="dimension" />
+        <!--一个条目的未选择的字体颜色-->
+        <attr name="item_unclick_text_color" format="color" />
+        <!--一个条目的选择的字体颜色-->
+        <attr name="item_click_text_color" format="color" />
+        <!--一个条目的未选择的背景颜色-->
+        <attr name="item_unclick_bg_color" format="color" />
+        <!--一个条目的选择的背景颜色-->
+        <attr name="item_click_bg_color" format="color" />
+    </declare-styleable>
 </resources>

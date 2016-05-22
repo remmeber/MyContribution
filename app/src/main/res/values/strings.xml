@@ -25,8 +25,23 @@
     <string name="countMoney">￥%s</string>
     <string name="countGoods">去结算</string>
     <string name="delete">删除</string>
+    <string name="enptyShoppingCart">购物车为空</string>
     <!--shoppingcart-->
 
+    <!--Merchant-->
+    <string name="addrss">地址:</string>
+    <string name="note">商家备注:</string>
+    <!--Merchant-->
+
+    <!--商品详情-->
+    <string name="goodsDetail">商品详情</string>
+    <string name="sellNumber">销量:</string>
+    <!--商品详情-->
+
+    <!--支付-->
+    <string name="tvPay">付款</string>
+    <string name="tvPayTitle">确认订单</string>
+    <!--支付-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

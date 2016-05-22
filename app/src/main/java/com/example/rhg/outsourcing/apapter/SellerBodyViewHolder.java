@@ -42,7 +42,7 @@ public class SellerBodyViewHolder extends RecyclerView.ViewHolder {
 
         homeFoward = (ImageView) itemView.findViewById(R.id.homeForward);
         sellerIcon = (ImageView) itemView.findViewById(R.id.sellerIcon);
-        sellerName = (TextView) itemView.findViewById(R.id.storeName);
+        sellerName = (TextView) itemView.findViewById(R.id.merchantName);
         foodType = (TextView) itemView.findViewById(R.id.foodType);
         sellerDistance = (TextView) itemView.findViewById(R.id.tv_distance);
         sellerImage = (ImageView) itemView.findViewById(R.id.sellerImage);

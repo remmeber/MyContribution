@@ -18,6 +18,22 @@ public class OrderModel extends BaseSellerModel {
         this.tv_totalCount = tv_totalCount;
     }
 
+    public void setTv_state(String tv_state) {
+        this.tv_state = tv_state;
+    }
+
+    public void setTv_orderTime(String tv_orderTime) {
+        this.tv_orderTime = tv_orderTime;
+    }
+
+    public void setTv_orderNumber(String tv_orderNumber) {
+        this.tv_orderNumber = tv_orderNumber;
+    }
+
+    public void setTv_totalCount(String tv_totalCount) {
+        this.tv_totalCount = tv_totalCount;
+    }
+
     public String getTv_state() {
         return tv_state;
     }

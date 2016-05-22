@@ -74,10 +74,19 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     }
 
     @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.i("RHG", "onActivityCreated");
-        initImageLoader();
         mData = new ArrayList<>();
         recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getActivity(), mData);
         recycleMultiTypeAdapter.setBannerClickListener(this);
@@ -85,7 +94,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         fillItemList();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(linearLayoutManager);
-        rcv.setHasFixedSize(true);
+        rcv.setHasFixedSize(false);
         rcv.setAdapter(recycleMultiTypeAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -174,20 +183,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
 
-    //------网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库
-    private void initImageLoader() {
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
-                showImageForEmptyUri(R.drawable.recommend_default_icon_2)
-                .cacheInMemory(true).cacheOnDisk(true).build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                getActivity()).defaultDisplayImageOptions(defaultOptions)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.LIFO).build();
-        ImageLoader.getInstance().init(config);
-    }
 
     //--------------------------------点击事件回调---------------------------------------------------
     @Override

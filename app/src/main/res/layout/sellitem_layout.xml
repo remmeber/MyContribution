@@ -5,10 +5,11 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
     android:layout_marginLeft="2dp"
-    android:layout_marginStart="2dp"
     android:layout_marginRight="2dp"
+    android:layout_marginStart="2dp"
     android:layout_marginTop="2dp"
     app:cardCornerRadius="5dp"
     app:cardElevation="4dp">
-    <include layout="@layout/sellitem_body"/>
+
+    <include layout="@layout/sellitem_body" />
 </android.support.v7.widget.CardView>

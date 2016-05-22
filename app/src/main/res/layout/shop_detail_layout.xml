@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_shop_detail_logo"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:scaleType="fitXY"
+            tools:src="@drawable/recommend_default_icon_1" />
+
+        <ImageView
+            android:id="@+id/iv_shop_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_chevron_left_black_48dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_shop_detail_logo"
+            android:background="@color/colorShop"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_social_share" />
+
+            <TextView
+                android:id="@+id/tv_shop_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:textSize="@dimen/text_large"
+                tools:text="哈哈" />
+        </LinearLayout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/stl_shop_detail"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/iv_shop_detail_logo"
+            app:tl_indicator_color="@color/colorToolbarGreen"
+            app:tl_indicator_height="6dp"
+            app:tl_indicator_width="80dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/colorToolbarGreen"
+            app:tl_textUnselectColor="@color/black"
+            app:tl_textsize="@dimen/text_medium"
+            tools:background="@color/black" />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_shop_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

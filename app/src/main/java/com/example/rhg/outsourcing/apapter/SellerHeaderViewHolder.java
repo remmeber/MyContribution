@@ -1,7 +1,6 @@
 package com.example.rhg.outsourcing.apapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +26,6 @@ public class SellerHeaderViewHolder extends RecyclerView.ViewHolder {
         headerdemandmoney = (TextView)itemView.findViewById(R.id.headerdemandmoney);
         headerdelivermoney = (TextView)itemView.findViewById(R.id.headerdelivermoney);
         headerdistance = (TextView)itemView.findViewById(R.id.headerdistanceText);
-        headerlayout = (LinearLayout)itemView.findViewById(R.id.headerlayout);
+        headerlayout = (LinearLayout)itemView.findViewById(R.id.ll_header);
     }
 }

@@ -21,13 +21,14 @@
 
     <ImageView
         android:id="@+id/ivGoodsLogo"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/ivCheckGood"
         android:layout_toRightOf="@+id/ivCheckGood"
+        android:scaleType="fitXY"
         android:src="@drawable/recommend_default_icon_1" />
 
     <LinearLayout
@@ -57,9 +58,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1">
 
             <TextView
@@ -87,7 +88,7 @@
                 android:visibility="gone" />
 
             <include
-                layout="@layout/numberchangelayout"
+                layout="@layout/add_or_reduce_layout"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

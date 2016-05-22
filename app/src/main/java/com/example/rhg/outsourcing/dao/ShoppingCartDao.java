@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
-import com.example.rhg.outsourcing.datebase.DBHelper;
+import com.example.rhg.outsourcing.datebase.ShoppingCartDBHelper;
 import com.example.rhg.outsourcing.model.ShoppingCartBean;
 
 import java.util.ArrayList;
@@ -45,8 +45,8 @@ public class ShoppingCartDao {
     }
 
     public int getGoodsCount() {
-        db = DBHelper.getInstance().getReadableDatabase();
-        cursor = db.rawQuery("select count(*) from " + DBHelper.Q_SHOPPING_CART, null);
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
+        cursor = db.rawQuery("select count(*) from " + ShoppingCartDBHelper.Q_SHOPPING_CART, null);
         int count = 0;
         //游标移到第一条记录准备获取数据
         if (cursor.moveToFirst()) {
@@ -61,8 +61,8 @@ public class ShoppingCartDao {
         if (productID == null) {
             return false;
         }
-        db = DBHelper.getInstance().getReadableDatabase();
-        cursor = db.query(DBHelper.Q_SHOPPING_CART, null, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID}, null, null, null);
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
+        cursor = db.query(ShoppingCartDBHelper.Q_SHOPPING_CART, null, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID}, null, null, null);
         boolean isExist = cursor.moveToFirst();
         close();
         return isExist;
@@ -78,11 +78,11 @@ public class ShoppingCartDao {
         if (productID == null || "".equals(productID) || num == null || "".equals(num)) {
             return;
         }
-        db = DBHelper.getInstance().getReadableDatabase();
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(ShoppingCartBean.KEY_PRODUCT_ID, productID);
         values.put(ShoppingCartBean.KEY_NUM, num);
-        db.insert(DBHelper.Q_SHOPPING_CART, null, values);
+        db.insert(ShoppingCartDBHelper.Q_SHOPPING_CART, null, values);
         close();
     }
 
@@ -95,14 +95,14 @@ public class ShoppingCartDao {
         if (productID == null) {
             return;
         }
-        db = DBHelper.getInstance().getReadableDatabase();
-        db.delete(DBHelper.Q_SHOPPING_CART, ShoppingCartBean.KEY_PRODUCT_ID + " =?", new String[]{productID});
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
+        db.delete(ShoppingCartDBHelper.Q_SHOPPING_CART, ShoppingCartBean.KEY_PRODUCT_ID + " =?", new String[]{productID});
         close();
     }
 
     public void delAllGoods() {
-        db = DBHelper.getInstance().getReadableDatabase();
-        db.delete(DBHelper.Q_SHOPPING_CART, null, null);
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
+        db.delete(ShoppingCartDBHelper.Q_SHOPPING_CART, null, null);
         close();
     }
 
@@ -110,9 +110,9 @@ public class ShoppingCartDao {
         if (goodList == null) {
             return;
         }
-        db = DBHelper.getInstance().getReadableDatabase();
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
         for (int i = 0; i < goodList.size(); i++) {
-            db.delete(DBHelper.Q_SHOPPING_CART, ShoppingCartBean.KEY_PRODUCT_ID + " =?", new String[]{goodList.get(i)});
+            db.delete(ShoppingCartDBHelper.Q_SHOPPING_CART, ShoppingCartBean.KEY_PRODUCT_ID + " =?", new String[]{goodList.get(i)});
         }
         close();
     }
@@ -127,11 +127,11 @@ public class ShoppingCartDao {
         if (productID == null || "".equals(productID) || num == null || "".equals(num)) {
             return;
         }
-        db = DBHelper.getInstance().getReadableDatabase();
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
         ContentValues values = new ContentValues();
         if (!"".equals(productID) &&!"".equals(num)) {
             values.put("num", num);
-            db.update(DBHelper.Q_SHOPPING_CART, values, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID});
+            db.update(ShoppingCartDBHelper.Q_SHOPPING_CART, values, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID});
         }
         close();
     }
@@ -140,8 +140,8 @@ public class ShoppingCartDao {
         if (productID == null) {
             return "1";
         }
-        db = DBHelper.getInstance().getReadableDatabase();
-        cursor = db.query(DBHelper.Q_SHOPPING_CART, new String[]{ShoppingCartBean.KEY_NUM}, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID}, null, null, null);
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
+        cursor = db.query(ShoppingCartDBHelper.Q_SHOPPING_CART, new String[]{ShoppingCartBean.KEY_NUM}, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID}, null, null, null);
         if (cursor.moveToFirst()) {
             return cursor.getString(0);
         }
@@ -155,9 +155,9 @@ public class ShoppingCartDao {
      * @return 购物车中的商品信息
      */
     public List<String> getProductList() {
-        db = DBHelper.getInstance().getReadableDatabase();
+        db = ShoppingCartDBHelper.getInstance().getReadableDatabase();
         List<String> mList = new ArrayList<>();
-        Cursor cursor = db.query(DBHelper.Q_SHOPPING_CART, new String[]{ShoppingCartBean.KEY_PRODUCT_ID}, null, null, null, null, null);
+        Cursor cursor = db.query(ShoppingCartDBHelper.Q_SHOPPING_CART, new String[]{ShoppingCartBean.KEY_PRODUCT_ID}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 String productID = cursor.getString(0);

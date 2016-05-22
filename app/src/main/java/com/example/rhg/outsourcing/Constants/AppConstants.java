@@ -6,10 +6,19 @@ import com.example.rhg.outsourcing.R;
  * Created by remember on 2016/5/4.
  */
 public class AppConstants {
+
+    public static final String[] images = {
+            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
+            "http://d.3987.com/sqmy_131219/001.jpg",
+            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
+            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
+    };
     public static final int[] imageindictors = new int[]{R.drawable.ic_page_indicator,
             R.drawable.ic_page_indicator_focused};
-    public static final String[] SELLTITLES = new String[]{"按销量", "按距离", "按评分"};
-    public static final String[] ORDERTITLES = new String[]{"全部", "已完成", "待付款", "已退款"};
+    public static final String[] SHOP_DETAIL_TITLES = new String[]{"菜品", "店铺详情"};
+    public static final String[] SELL_TITLES = new String[]{"按销量", "按距离", "按评分"};
+    public static final String[] ORDER_TITLES = new String[]{"全部", "已完成", "待付款", "已退款"};
+    public static final String[] SHOP_TITLES = new String[]{"热销排行", "超值套餐", "店铺优惠", "必点饮品","最新优惠"};
     //---------------------------店铺复用------------------------------------------------------------
     public static final int TypeHome = 0;
     public static final int TypeSeller = 1;
@@ -28,9 +37,18 @@ public class AppConstants {
 
 
     /**
-     * Intent传递Bean的KEY
+     * Intent/Bundle 传递Bean的KEY
      */
     public static final String KEY_INTENT_BEAN = "bean";
+    public static final String KEY_MERCHANT_NAME = "merchant_name";
+    public static final String KEY_PRODUCT_NAME = "product_name";
+    public static final String KEY_MERCHANT_ID = "merchant_id";
+    public static final String KEY_PRODUCT_ID = "product_id";
+    public static final String KEY_MERCHANT_LOGO = "merchant_logo";
+    public static final String KEY_PRODUCT_PRICE = "product_price";
+    public static final String KEY_PHONE = "phone";
+    public static final String KEY_ADDRESS = "address";
+    public static final String KEY_NOTE = "note";
 
     /**
      * 响应结果，正确

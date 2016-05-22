@@ -73,7 +73,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_HEADER:
                 return new HeaderTypeViewHolder(layoutInflater.inflate(R.layout.recycleheader, parent, false));
             case TYPE_BANNER:
-                BannerTypeViewHolder bannerTypeViewHolder = new BannerTypeViewHolder(layoutInflater.inflate(R.layout.recyclebanner, parent, false));
+                BannerTypeViewHolder bannerTypeViewHolder = new BannerTypeViewHolder(layoutInflater.inflate(R.layout.item_banner, parent, false));
                 return bannerTypeViewHolder;
             case TYPE_TEXT:
                 return new TextTypeViewHolder(layoutInflater.inflate(R.layout.recycletext, parent, false));
@@ -180,7 +180,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public BannerTypeViewHolder(View itemView) {
             super(itemView);
-            convenientBanner = (ConvenientBanner) itemView.findViewById(R.id.home_banner);
+            convenientBanner = (ConvenientBanner) itemView.findViewById(R.id.iv_banner);
             convenientBanner.startTurning(2000);
             convenientBanner.setOnItemClickListener(new OnItemClickListener() {
                 @Override

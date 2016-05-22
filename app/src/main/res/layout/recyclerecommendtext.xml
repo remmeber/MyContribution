@@ -23,7 +23,7 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:background="@drawable/recommendtext_background"
             android:text="今日推荐"
-            android:textColor="@color/colorRecommend" />
+            android:textColor="@color/colorRecommend_Red" />
 
         <ImageView
             android:id="@+id/VipImage"

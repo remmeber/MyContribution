@@ -69,7 +69,6 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        Log.i("RHG", "childPosition is :" + childPosition);
         return childPosition;
     }
 
@@ -83,7 +82,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
         GroupViewHolder groupViewHolder;
         if (convertView == null) {
             groupViewHolder = new GroupViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_expandlistview_group, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_shop_cart_group, null);
             groupViewHolder.btGroupCheck = (ImageView) convertView.findViewById(R.id.ivCheckGroup);
             groupViewHolder.tvShopName = (TextView) convertView.findViewById(R.id.tvShopNameGroup);
             groupViewHolder.btForwardShop = (ImageView) convertView.findViewById(R.id.imaShopForwardGroup);
@@ -105,7 +104,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
         ChildViewHolder childViewHolder;
         SlideView slideView = (SlideView) convertView;
         if (slideView == null) {
-            View itemView = LayoutInflater.from(context).inflate(R.layout.item_expandablelistview_child, null);
+            View itemView = LayoutInflater.from(context).inflate(R.layout.item_shop_cart_child, null);
             slideView = new SlideView(context);
             slideView.setContentView(itemView);
 
@@ -202,7 +201,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter impleme
             int clickPosition;
             switch (v.getId()) {
                 //TODO fragment中结算结算按钮
-                case R.id.tvCountGoods:
+                case R.id.tv_count:
                     if (ShoppingCartUtil.hasSelectedGoods(mData))
                         Toast.makeText(context, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
                     else

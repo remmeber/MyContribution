@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Created by remember on 2016/5/9.
- * 购物车模型
+ * 购物车模型  //todo 后期修改继承自店铺模型
  */
 public class ShoppingCartBean {
     public static final String KEY_PRODUCT_ID = "productId";

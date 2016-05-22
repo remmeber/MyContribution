@@ -1,26 +1,19 @@
 package com.example.rhg.outsourcing.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.activity.DeliverSignUp;
+import com.example.rhg.outsourcing.activity.DeliverSignUpActivity;
 import com.example.rhg.outsourcing.activity.OrderActivity;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by remember on 2016/4/28.
@@ -119,6 +112,15 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         return view;
     }
 
+    @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
 
     private View getViewById(View parent, int centerId, int targetId) {
         return parent.findViewById(centerId).findViewById(targetId);
@@ -142,7 +144,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
 //                Toast.makeText(getContext(), R.string.workerInfo, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(), DeliverSignUp.class));
+                startActivity(new Intent(getContext(), DeliverSignUpActivity.class));
                 break;
             case R.id.profileAddress://TODO 我的地址右箭头
                 Toast.makeText(getContext(), R.string.addrInfo, Toast.LENGTH_SHORT).show();

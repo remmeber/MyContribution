@@ -1,5 +1,6 @@
 package com.example.rhg.outsourcing.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rhg.outsourcing.R;
+import com.example.rhg.outsourcing.activity.PayActivity;
 import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleMultiTypeAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
@@ -42,20 +44,20 @@ public class AllOrderFragment extends SuperFragment implements RecycleSellerAdap
         testPresenter = new TestPresenter(this);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.rcv_item, container, false);
+    public int getLayoutResId() {
+        return R.layout.rcv_item;
+    }
+
+    @Override
+    protected void initView(View view) {
         rcv = (RecyclerView) view.findViewById(R.id.recycleview);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
-        return view;
 
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.i("RHG", "onActivityCreated");
+    protected void initData() {
         RecycleSellerAdapter recycleSellerAdapter = new RecycleSellerAdapter(getContext()
                 , mData, AppConstants.TypeOrder);
         recycleSellerAdapter.setOnListItemClick(this);
@@ -71,7 +73,6 @@ public class AllOrderFragment extends SuperFragment implements RecycleSellerAdap
             }
 
         });
-
     }
 
     @Override
@@ -87,6 +88,8 @@ public class AllOrderFragment extends SuperFragment implements RecycleSellerAdap
 
     @Override
     public void itemClick(View v, int position) {
-        ToastHelper.getInstance()._toast("item " + position + "is click.");
+//        ToastHelper.getInstance()._toast("item " + position + "is click.");
+        Intent intent = new Intent(getContext(), PayActivity.class);
+        startActivity(intent);
     }
 }

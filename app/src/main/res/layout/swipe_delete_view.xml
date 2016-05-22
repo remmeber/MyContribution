@@ -14,7 +14,7 @@
         android:id="@+id/holder"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@color/colorDel"
+        android:background="@color/colorDel_Red"
         android:clickable="true">
 
         <TextView

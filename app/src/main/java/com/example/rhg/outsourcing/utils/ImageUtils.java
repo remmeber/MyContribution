@@ -14,8 +14,13 @@ import com.example.rhg.outsourcing.R;
  */
 public class ImageUtils {
     public static void TintFill(ImageView v, Drawable drawable,int tint){
-        Drawable tintdrawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(tintdrawable,tint);
-        v.setImageDrawable(tintdrawable);
+        Drawable tint_drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(tint_drawable,tint);
+        v.setImageDrawable(tint_drawable);
+    }
+    public static Drawable TintWithoutFill(Drawable drawable,int tint){
+        Drawable tint_drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(tint_drawable,tint);
+        return tint_drawable;
     }
 }

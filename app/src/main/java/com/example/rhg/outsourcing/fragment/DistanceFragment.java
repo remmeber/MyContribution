@@ -58,6 +58,16 @@ public class DistanceFragment extends SuperFragment implements RecycleSellerAdap
     }
 
     @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }

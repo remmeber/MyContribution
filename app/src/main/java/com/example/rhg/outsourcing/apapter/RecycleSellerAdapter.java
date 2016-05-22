@@ -7,10 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.model.AllStoreModel;
 import com.example.rhg.outsourcing.model.BaseSellerModel;
-import com.example.rhg.outsourcing.model.HomeSellerModel;
-import com.example.rhg.outsourcing.model.OrderModel;
 
 import java.util.List;
 
@@ -48,7 +45,7 @@ public class RecycleSellerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 return new SellerBodyViewHolder(View.inflate(context, R.layout.sellitem_layout, null), type);
             } else {
                 //TODO 带卡片效果的布局
-                return new SellerHeaderViewHolder(View.inflate(context, R.layout.sellerstoreheaderitem, null));
+                return new SellerHeaderViewHolder(View.inflate(context, R.layout.all_store_header_layout, null));
             }
         }
         if (type == AppConstants.TypeOrder)
@@ -79,7 +76,7 @@ public class RecycleSellerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void bindHeaderitemViewHolder(final SellerHeaderViewHolder holder, int position) {
         BaseSellerModel data = mData.get(position);
         holder.headerstoreimage.setImageResource(data.getImageRid());
-        holder.headerstorename.setText(data.getStoreName());
+        holder.headerstorename.setText(data.getMerchantName());
         holder.headerdemandmoney.setText("满20元起");
         holder.headerdelivermoney.setText("配送费1元");
         holder.headerdistance.setText(data.getSellerDistance());
@@ -95,7 +92,7 @@ public class RecycleSellerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private void bindBodyitemViewHolder(final SellerBodyViewHolder holder, int position, int type) {
         BaseSellerModel data = mData.get(position);
-        holder.sellerName.setText(data.getStoreName());
+        holder.sellerName.setText(data.getMerchantName());
         holder.sellerImage.setImageResource(data.getImageRid());
         if (type != AppConstants.TypeOrder) {
             holder.sellerDistance.setText(data.getSellerDistance());

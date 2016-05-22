@@ -10,4 +10,6 @@
     <item name="ic_user" type="drawable">@mipmap/ic_user_white</item>
     <item name="ic_shopping_car" type="drawable">@mipmap/ic_shopping_cart_white</item>
     <item name="ic_search" type="drawable">@mipmap/ic_search_white</item>
+    <item name="ic_like" type="drawable">@mipmap/ic_like</item>
+    <item name="ic_not_like" type="drawable">@mipmap/ic_not_like</item>
 </resources>

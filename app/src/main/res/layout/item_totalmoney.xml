@@ -26,5 +26,5 @@
         android:layout_marginStart="2dp"
         android:gravity="center"
         android:text="@string/countMoney"
-        android:textColor="@color/colorRecommend" />
+        android:textColor="@color/colorRecommend_Red" />
 </LinearLayout>

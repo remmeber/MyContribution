@@ -39,14 +39,20 @@ public class FragmentController {
     //TODO ---------------------初始化fragment------------------------------------------------------
     private void initFragment(int id) {
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(id, fragments[0], fragments[0].getClass().getName());
+        for (int i=0;i<fragments.length;i++){
+            ft.add(id,fragments[i],fragments[i].getClass().getName());
+            if(i==0)
+                ft.show(fragments[i]);
+            else ft.hide(fragments[i]);
+        }
+        /*ft.add(id, fragments[0], fragments[0].getClass().getName());
         ft.add(id, fragments[1], fragments[1].getClass().getName());
         ft.add(id, fragments[2], fragments[2].getClass().getName());
         ft.add(id, fragments[3], fragments[3].getClass().getName());
         ft.show(fragments[0]);
         ft.hide(fragments[1]);
         ft.hide(fragments[2]);
-        ft.hide(fragments[3]);
+        ft.hide(fragments[3]);*/
         ft.commitAllowingStateLoss();
     }
 

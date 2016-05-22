@@ -1,18 +1,15 @@
 package com.example.rhg.outsourcing.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
 import com.example.rhg.outsourcing.model.ShoppingCartBean;
-import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.example.rhg.outsourcing.widget.MyExpandListView;
 
 import java.util.ArrayList;
@@ -23,10 +20,11 @@ import java.util.List;
  */
 public class ShoppingCartFragment extends SuperFragment {
     private static final String TAG = "ShoppingCartFragment";
-    View view;
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
     MyExpandListView expandableListView;
+    RelativeLayout rlShoppingCartEmpty;
+    RelativeLayout rlShoppingCartPay;
     ExpandableListViewAdapter expandableListViewAdapter;
     TextView tvCountGoods;
     TextView tvCountMoney;
@@ -39,13 +37,14 @@ public class ShoppingCartFragment extends SuperFragment {
         for (int i = 0; i < 6; i++) {
             ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
             shoppingCartBean.setMerchantName("iiiii");
+            shoppingCartBean.setMerID("2015051800");
             goodsList = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
                 ShoppingCartBean.Goods goods = new ShoppingCartBean.Goods();
                 goods.setGoodsLogoUrl(R.drawable.recommend_default_icon_1);
                 goods.setGoodsName("" + j);
                 goods.setPrice("" + j * 2);
-                goods.setProductID("20160510");
+                goods.setProductID("20160518");
                 goods.setNumber("1");
                 goodsList.add(goods);
             }
@@ -54,13 +53,23 @@ public class ShoppingCartFragment extends SuperFragment {
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.shoppingcartlayout, container, false);
-        expandableListView = (MyExpandListView) view.findViewById(R.id.shoppinglist);
-        tvCountMoney = (TextView) view.findViewById(R.id.tvCountMoney);
-        tvCountGoods = (TextView) view.findViewById(R.id.tvCountGoods);
+    public int getLayoutResId() {
+        return R.layout.shopping_cart_layout;
+    }
+
+
+    @Override
+    protected void initView(View view) {
+        expandableListView = (MyExpandListView) view.findViewById(R.id.list_shopping_cart);
+        tvCountMoney = (TextView) view.findViewById(R.id.tv_count_money);
+        tvCountGoods = (TextView) view.findViewById(R.id.tv_count);
+        rlShoppingCartEmpty = (RelativeLayout) view.findViewById(R.id.rl_shopping_cart_empty);
+        rlShoppingCartPay = (RelativeLayout) view.findViewById(R.id.rl_shopping_cart_pay);
+    }
+
+    @Override
+    protected void initData() {
         expandableListViewAdapter = new ExpandableListViewAdapter(getContext());
         expandableListView.setAdapter(expandableListViewAdapter);
         expandableListView.setGroupIndicator(null);
@@ -85,7 +94,6 @@ public class ShoppingCartFragment extends SuperFragment {
         if (listener != null)
             tvCountGoods.setOnClickListener(listener);
         updateListView();
-        return view;
     }
 
     private void updateListView() {
@@ -96,9 +104,13 @@ public class ShoppingCartFragment extends SuperFragment {
 
     private void showEmpty(boolean isEmpty) {
         if (isEmpty) {
+            rlShoppingCartEmpty.setVisibility(View.VISIBLE);
             expandableListView.setVisibility(View.GONE);
+            rlShoppingCartPay.setVisibility(View.GONE);
         } else {
+            rlShoppingCartEmpty.setVisibility(View.GONE);
             expandableListView.setVisibility(View.VISIBLE);
+            rlShoppingCartPay.setVisibility(View.VISIBLE);
         }
     }
 
@@ -118,4 +130,5 @@ public class ShoppingCartFragment extends SuperFragment {
     public void showSuccess(Object o) {
 
     }
+
 }

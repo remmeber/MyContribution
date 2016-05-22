@@ -57,6 +57,16 @@ public class RateScoreFragment extends SuperFragment implements RecycleSellerAda
     }
 
     @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
