@@ -101,8 +101,23 @@ public class ShopDetailActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_shop_detail_back:
+                setResult(AppConstants.BACK);
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==AppConstants.DELETE){
+            setResult(resultCode,data);//AppConstants.KEY_SHOPPING_CART
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(AppConstants.BACK);
+        super.onBackPressed();
     }
 }

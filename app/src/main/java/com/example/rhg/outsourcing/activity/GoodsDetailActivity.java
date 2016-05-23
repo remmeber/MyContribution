@@ -203,6 +203,7 @@ public class GoodsDetailActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_tab_left:
+                setResult(AppConstants.BACK);
                 finish();
                 break;
             case R.id.ll_tab_right:
@@ -239,7 +240,16 @@ public class GoodsDetailActivity extends BaseActivity {
                 ToastHelper.getInstance()._toast("分享");
                 break;
             case R.id.shopping_cart_with_number:
+                setResult(AppConstants.DELETE, new Intent().putExtra(AppConstants.KEY_DELETE,
+                        AppConstants.KEY_SHOPPING_CART));
+                finish();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(AppConstants.BACK);
+        super.onBackPressed();
     }
 }

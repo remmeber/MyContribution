@@ -1,9 +1,11 @@
 package com.example.rhg.outsourcing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
@@ -81,7 +83,8 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
     //for banner
     private ConvenientBanner convenientBanner;
     //BottomNavigationBar当前还不能隐藏(private)，修改完bug后可以修改(public)
-//    private BottomNavigationBar bottomNavigation;
+    BottomNavigationBar bottomNavigation;
+    //    private BottomNavigationBar bottomNavigation;
     //底部弹页
     private BottomSheetBehavior behavior;
     //浮动按钮
@@ -275,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);*/
         //TODO---------------------底部导航栏=-------------------------------------------------------
-        BottomNavigationBar bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
+        bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigation
@@ -298,7 +301,6 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
             //当item不被选中状态
             @Override
             public void onTabUnselected(int position) {
-
             }
 
             //当item再次被选中状态
@@ -446,15 +448,16 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
                 break;
         }
     }
+
     //TODO 扫一扫
     private void doSwipe() {
         Toast.makeText(this, "扫一扫", Toast.LENGTH_SHORT).show();
     }
+
     //TODO 定位
     private void doChangeLocation() {
         Toast.makeText(this, "修改区域", Toast.LENGTH_SHORT).show();
     }
-
 
 
     //----------------------------单独呼出搜索页面--------------------------------------------------
@@ -539,30 +542,7 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
     }
     //--------------------------------------------------------------------------------------------
 
-    /*@SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_ecit_password) {
-            // Handle the camera action
-        } else if (id == R.id.nav_persional_info) {
-
-        } else if (id == R.id.nav_info_feedback) {
-
-        } else if (id == R.id.nav_update) {
-
-        } else if (id == R.id.nav_exit) {
-
-        } else if (id == R.id.nav_about_us) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
     @Override
     protected void onResume() {
         super.onResume();
@@ -575,5 +555,11 @@ public class MainActivity extends AppCompatActivity implements BaseView, OnClick
 //        mScaleSpring.removeListener(exampleSpringListener);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == AppConstants.DELETE) {//// TODO: 商品详情返回购物车
+            bottomNavigation.selectTab(data.getExtras().getInt(AppConstants.KEY_DELETE, 0), true);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

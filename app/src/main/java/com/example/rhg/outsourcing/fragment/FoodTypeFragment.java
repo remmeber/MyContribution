@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.rhg.outsourcing.R;
@@ -102,12 +103,12 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
 
     @Override
     public void onItemClick(View v, int position) {
-        ToastHelper.getInstance()._toast("" + position);
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         intent.putExtra(AppConstants.KEY_PRODUCT_ID,"20160518");
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME,"土豆丝");
         intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,"90");
 //        intent.putExtra() //todo 传递参数
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
+
 }

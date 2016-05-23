@@ -95,7 +95,7 @@ public class sellNumberFragment extends SuperFragment implements RecycleSellerAd
         intent.putExtra(AppConstants.KEY_MERCHANT_ID,"20160517");
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME,"荣哥土菜馆");
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO,AppConstants.images[1]);
-        startActivity(intent);
+        startActivityForResult(intent,1);
         /*Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         intent.putExtra("productId","20160518");
         intent.putExtra("productName","黄焖鸡米饭");

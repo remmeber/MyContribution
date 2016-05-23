@@ -1,12 +1,13 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_pay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_pay">
+    android:background="@drawable/bg_pay"
+    android:orientation="vertical">
 
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_cancel_and_pay">
@@ -14,13 +15,15 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </ScrollView>
+    </ScrollView>-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/ll_cancel_and_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
         <Button
@@ -51,4 +54,4 @@
             android:textSize="@dimen/text_medium"
             tools:ignore="HardcodedText" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

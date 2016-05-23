@@ -35,7 +35,11 @@ public class AppConstants {
     public static final int TypeSellNum = 2;
     public static final int TypeRateScore = 3;
 
-
+    /**
+     * 页面销毁标志
+     */
+    public static final int DELETE = 0;
+    public static final int BACK = 1;
     /**
      * Intent/Bundle 传递Bean的KEY
      */
@@ -49,6 +53,8 @@ public class AppConstants {
     public static final String KEY_PHONE = "phone";
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_NOTE = "note";
+    public static final String KEY_DELETE = "delete";
+    public static final int KEY_SHOPPING_CART = 3;
 
     /**
      * 响应结果，正确

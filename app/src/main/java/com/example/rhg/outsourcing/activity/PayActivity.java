@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.view.ViewCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
@@ -40,6 +43,7 @@ public class PayActivity extends BaseActivity {
     Button btCancel;
 
     BottomSheetBehavior bottomSheetBehavior;
+    BottomSheetDialog dialog;
 
     public PayActivity() {
         expandableListViewAdapter = new ExpandableListViewAdapter(this);
@@ -110,7 +114,7 @@ public class PayActivity extends BaseActivity {
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                ViewCompat.setScaleX(bottomSheet, slideOffset);
+//                ViewCompat.setScaleX(bottomSheet, slideOffset);
             }
         });
         btPay.setOnClickListener(this);
@@ -135,6 +139,7 @@ public class PayActivity extends BaseActivity {
                 ToastHelper.getInstance()._toast("编辑");
                 break;
             case R.id.fl_pay:
+//                dialog.show();
                 if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 else
@@ -142,8 +147,12 @@ public class PayActivity extends BaseActivity {
                 break;
             case R.id.bt_pay:
                 ToastHelper.getInstance()._toast("支付");
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                dialog.dismiss();
                 break;
             case R.id.bt_cancel:
+//                dialog.dismiss();
                 if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 break;
