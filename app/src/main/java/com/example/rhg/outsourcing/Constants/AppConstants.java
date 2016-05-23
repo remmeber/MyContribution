@@ -36,10 +36,16 @@ public class AppConstants {
     public static final int TypeRateScore = 3;
 
     /**
-     * 页面销毁标志
+     * 页面调起/销毁标志
      */
-    public static final int DELETE = 0;
-    public static final int BACK = 1;
+    public static final int START_0 = 0;
+    public static final int START_1 = 1;
+    public static final int START_2 = 2;
+    public static final int START_3 = 3;
+    public static final int BACK_WITH_DELETE = 4;
+    public static final int BACK_WITHOUT_DATA = 5;
+    public static final int PAY = 6;
+
     /**
      * Intent/Bundle 传递Bean的KEY
      */
@@ -54,7 +60,7 @@ public class AppConstants {
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_NOTE = "note";
     public static final String KEY_DELETE = "delete";
-    public static final int KEY_SHOPPING_CART = 3;
+    public static final int KEY_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
 
     /**
      * 响应结果，正确

@@ -101,7 +101,7 @@ public class ShopDetailActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_shop_detail_back:
-                setResult(AppConstants.BACK);
+                setResult(AppConstants.BACK_WITHOUT_DATA);
                 finish();
                 break;
         }
@@ -109,15 +109,20 @@ public class ShopDetailActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==AppConstants.DELETE){
+        if(resultCode==AppConstants.BACK_WITH_DELETE){
             setResult(resultCode,data);//AppConstants.KEY_SHOPPING_CART
+            finish();
+            return;
+        }
+        if(resultCode==AppConstants.BACK_WITHOUT_DATA){
+            setResult(resultCode);
             finish();
         }
     }
 
     @Override
     public void onBackPressed() {
-        setResult(AppConstants.BACK);
+        setResult(AppConstants.BACK_WITHOUT_DATA);
         super.onBackPressed();
     }
 }

@@ -36,11 +36,13 @@
     <!--商品详情-->
     <string name="goodsDetail">商品详情</string>
     <string name="sellNumber">销量:</string>
+    <string name="buy">购买</string>
     <!--商品详情-->
 
     <!--支付-->
-    <string name="tvPay">付款</string>
+    <string name="tvPay">支付</string>
     <string name="tvPayTitle">确认订单</string>
+    <string name="tvSubmitOrder">提交订单</string>
     <!--支付-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

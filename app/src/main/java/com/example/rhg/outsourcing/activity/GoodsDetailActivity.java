@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import com.example.rhg.outsourcing.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.view.UIAlertView;
 import com.example.rhg.outsourcing.widget.ShoppingCartWithNumber;
 
 import java.util.Arrays;
@@ -59,6 +61,7 @@ public class GoodsDetailActivity extends BaseActivity {
     ImageView ivAdd;
     TextView tvNum;
     ShoppingCartWithNumber shoppingCartWithNumber;
+    Button btBuy;
 
     TestPresenter testPresenter;
     GoodsDetailModel goodsDetailModel;
@@ -126,6 +129,7 @@ public class GoodsDetailActivity extends BaseActivity {
         ivAdd = (ImageView) findViewById(R.id.ivAdd);
         tvNum = (TextView) findViewById(R.id.tvNum);
         shoppingCartWithNumber = (ShoppingCartWithNumber) findViewById(R.id.shopping_cart_with_number);
+        btBuy = (Button) findViewById(R.id.bt_buy);
     }
 
 
@@ -166,6 +170,7 @@ public class GoodsDetailActivity extends BaseActivity {
         ivReduce.setOnClickListener(this);
         shoppingCartWithNumber.setDrawable(R.mipmap.ic_shopping_cart_black_48dp);
         shoppingCartWithNumber.setOnClickListener(this);
+        btBuy.setOnClickListener(this);
         convenientBanner.setOnClickListener(this);
         convenientBanner.startTurning(2000);
         convenientBanner
@@ -203,7 +208,7 @@ public class GoodsDetailActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_tab_left:
-                setResult(AppConstants.BACK);
+                setResult(AppConstants.BACK_WITHOUT_DATA);
                 finish();
                 break;
             case R.id.ll_tab_right:
@@ -240,16 +245,43 @@ public class GoodsDetailActivity extends BaseActivity {
                 ToastHelper.getInstance()._toast("分享");
                 break;
             case R.id.shopping_cart_with_number:
-                setResult(AppConstants.DELETE, new Intent().putExtra(AppConstants.KEY_DELETE,
-                        AppConstants.KEY_SHOPPING_CART));
-                finish();
+                dialogShow();
+                break;
+            case R.id.bt_buy:
+                Intent intent = new Intent(GoodsDetailActivity.this,
+                        PayActivity.class);
+                                           /*todo 带上参数*/
+                startActivity(intent);
                 break;
         }
     }
 
+    private void dialogShow() {
+        final UIAlertView delDialog = new UIAlertView(this, "温馨提示", "加入购物车成功!",
+                "继续购买", "前往购物车");
+        delDialog.show();
+        delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
+                                       @Override
+                                       public void doLeft() {
+                                           delDialog.dismiss();
+                                       }
+
+                                       @Override
+                                       public void doRight() {
+                                           setResult(AppConstants.BACK_WITH_DELETE, new Intent().putExtra(
+                                                   AppConstants.KEY_DELETE,
+                                                   AppConstants.KEY_SHOPPING_CART
+                                           ));
+                                           finish();
+                                           delDialog.dismiss();
+                                       }
+                                   }
+        );
+    }
+
     @Override
     public void onBackPressed() {
-        setResult(AppConstants.BACK);
+        setResult(AppConstants.BACK_WITHOUT_DATA);
         super.onBackPressed();
     }
 }

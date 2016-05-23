@@ -1,5 +1,6 @@
 package com.example.rhg.outsourcing.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
+import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
@@ -188,16 +191,36 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     //--------------------------------点击事件回调---------------------------------------------------
     @Override
     public void bannerClick(int position) {
-        Toast.makeText(getActivity(), "banner " + position + " is clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), ShopDetailActivity.class);
+        /*todo 传递参数*/
+        intent.putExtra(AppConstants.KEY_PHONE,"1234567890");
+        intent.putExtra(AppConstants.KEY_ADDRESS,"江苏省南京市江宁区东南大学");
+        intent.putExtra(AppConstants.KEY_NOTE,"东南大学是一所985高校");
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID,"20160517");
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME,"荣哥土菜馆");
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO,AppConstants.images[3]);
+        startActivity(intent);
     }
 
     @Override
     public void gridItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "grid " + position + " is clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID,"20160518");
+        intent.putExtra(AppConstants.KEY_PRODUCT_NAME,"土豆丝");
+        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,"90");
+        startActivityForResult(intent,AppConstants.START_0);
     }
 
     @Override
     public void itemClick(View v, int position) {
-        Toast.makeText(getActivity(), "list" + position + " is clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), ShopDetailActivity.class);
+        /*todo 传递参数*/
+        intent.putExtra(AppConstants.KEY_PHONE,"1234567890");
+        intent.putExtra(AppConstants.KEY_ADDRESS,"江苏省南京市江宁区东南大学");
+        intent.putExtra(AppConstants.KEY_NOTE,"东南大学是一所985高校");
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID,"20160517");
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME,"荣哥土菜馆");
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO,AppConstants.images[1]);
+        startActivity(intent);
     }
 }
