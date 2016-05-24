@@ -18,7 +18,12 @@ import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
+import com.example.rhg.outsourcing.model.PayContent;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.widget.PayDescriptionView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by remember on 2016/5/22.
@@ -38,12 +43,13 @@ public class PayActivity extends BaseActivity {
     ExpandableListViewAdapter expandableListViewAdapter;
     ExpandableListView expandableListView;
     FrameLayout flPay;
-    LinearLayout llPay;
+    RelativeLayout llPay;
     Button btPay;
     Button btCancel;
 
     BottomSheetBehavior bottomSheetBehavior;
     BottomSheetDialog dialog;
+    PayDescriptionView payDescriptionView;
 
     public PayActivity() {
         expandableListViewAdapter = new ExpandableListViewAdapter(this);
@@ -75,9 +81,10 @@ public class PayActivity extends BaseActivity {
 
         expandableListView = (ExpandableListView) findViewById(R.id.elv_pay);
         flPay = (FrameLayout) findViewById(R.id.fl_pay);
-        llPay = (LinearLayout) findViewById(R.id.ll_pay);
-        btPay = (Button)findViewById(R.id.bt_pay);
-        btCancel = (Button)findViewById(R.id.bt_cancel);
+        llPay = (RelativeLayout) findViewById(R.id.ll_pay);
+        payDescriptionView = (PayDescriptionView) findViewById(R.id.pay_desc);
+        btPay = (Button) findViewById(R.id.bt_pay);
+        btCancel = (Button) findViewById(R.id.bt_cancel);
     }
 
     @Override
@@ -128,7 +135,6 @@ public class PayActivity extends BaseActivity {
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -140,6 +146,15 @@ public class PayActivity extends BaseActivity {
                 break;
             case R.id.fl_pay:
 //                dialog.show();
+                List<PayContent> payContentList = new ArrayList<>();
+                for (int i = 0; i < 3; i++) {
+                    PayContent payContent = new PayContent();
+                    payContent.setGoodsName("哈哈");
+                    payContent.setGoodsDescription("好吃");
+                    payContent.setGoodsPrice("11");
+                    payContentList.add(payContent);
+                }
+                payDescriptionView.setPayContentList(payContentList);
                 if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 else

@@ -48,6 +48,7 @@
             tools:ignore="HardcodedText" />
 
         <TextView
+            android:id="@+id/product_desc"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
@@ -81,4 +82,8 @@
             android:textColor="#ff6600"
             tools:ignore="HardcodedText" />
     </LinearLayout>
+    <View
+        android:background="@color/colorActiveGreen"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </LinearLayout>

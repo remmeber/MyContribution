@@ -95,6 +95,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/fl_pay" />
 
+
             <FrameLayout
                 android:id="@+id/fl_pay"
                 android:layout_width="match_parent"
@@ -122,7 +123,7 @@
     <include
         layout="@layout/pay_external"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         app:layout_behavior="@string/bottom_sheet_behavior" />
