@@ -2,23 +2,22 @@ package com.example.rhg.outsourcing.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.view.ViewCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
+import com.example.rhg.outsourcing.model.PayContent;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.view.PayDialog;
+import com.example.rhg.outsourcing.widget.PayDescriptionView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by remember on 2016/5/22.
@@ -39,14 +38,14 @@ public class PayActivity extends BaseActivity {
     ExpandableListView expandableListView;
     FrameLayout flPay;
     LinearLayout llPay;
-    Button btPay;
-    Button btCancel;
+    PayDescriptionView payDescriptionView;
 
-    BottomSheetBehavior bottomSheetBehavior;
-    BottomSheetDialog dialog;
+    List<PayContent> payContentList;
 
     public PayActivity() {
         expandableListViewAdapter = new ExpandableListViewAdapter(this);
+        payContentList = new ArrayList<>();
+
     }
 
     @Override
@@ -76,8 +75,7 @@ public class PayActivity extends BaseActivity {
         expandableListView = (ExpandableListView) findViewById(R.id.elv_pay);
         flPay = (FrameLayout) findViewById(R.id.fl_pay);
         llPay = (LinearLayout) findViewById(R.id.ll_pay);
-        btPay = (Button)findViewById(R.id.bt_pay);
-        btCancel = (Button)findViewById(R.id.bt_cancel);
+        payDescriptionView = (PayDescriptionView) findViewById(R.id.pay_content);
     }
 
     @Override
@@ -105,20 +103,6 @@ public class PayActivity extends BaseActivity {
             }
         });
         flPay.setOnClickListener(this);
-        bottomSheetBehavior = BottomSheetBehavior.from(llPay);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-//                ViewCompat.setScaleX(bottomSheet, slideOffset);
-            }
-        });
-        btPay.setOnClickListener(this);
-        btCancel.setOnClickListener(this);
 
     }
 
@@ -126,7 +110,6 @@ public class PayActivity extends BaseActivity {
     public void showData(Object o) {
 
     }
-
 
 
     @Override
@@ -139,22 +122,16 @@ public class PayActivity extends BaseActivity {
                 ToastHelper.getInstance()._toast("编辑");
                 break;
             case R.id.fl_pay:
-//                dialog.show();
-                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                else
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                break;
-            case R.id.bt_pay:
-                ToastHelper.getInstance()._toast("支付");
-                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//                dialog.dismiss();
-                break;
-            case R.id.bt_cancel:
-//                dialog.dismiss();
-                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                payContentList.clear();
+                for (int i = 0; i < 3; i++) {
+                    PayContent payContent = new PayContent();
+                    payContent.setGoodsName("哈啊哈" + i);
+                    payContent.setGoodsDescription("好吃哦");
+                    payContent.setPayMoney("" + i * 2);
+                    payContentList.add(payContent);
+                }
+                PayDialog payDialog = new PayDialog(this,payContentList);
+                payDialog.show();
                 break;
         }
     }

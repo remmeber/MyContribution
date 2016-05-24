@@ -26,7 +26,7 @@ public class UIAlertView extends Dialog {
 
     public UIAlertView(Context context, String title, String message,
                        String buttonLeftText, String buttonRightText) {
-        super(context, R.style.UIAlertViewStyle);
+        super(context, R.style.MyDialogStyle);
 
         this.context = context;
         this.title = title;

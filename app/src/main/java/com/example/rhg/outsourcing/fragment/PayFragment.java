@@ -10,7 +10,7 @@ import com.example.rhg.outsourcing.R;
 public class PayFragment extends SuperFragment {
 	@Override
 	public int getLayoutResId() {
-		return R.layout.pay_external;
+		return R.layout.pay_dialog_layout;
 	}
 
 	@Override
