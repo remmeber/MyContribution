@@ -1,63 +1,92 @@
 package com.example.rhg.outsourcing.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.activity.DeliverSignUpActivity;
+import com.example.rhg.outsourcing.activity.DeliverInfoActivity;
 import com.example.rhg.outsourcing.activity.OrderActivity;
+import com.example.rhg.outsourcing.constants.AppConstants;
 
 /**
  * Created by remember on 2016/4/28.
  */
 public class MyFragment extends SuperFragment implements View.OnClickListener {
     private static final String TAG = "MyFragment";
+    boolean hasAccount = true;
 
+    ImageView userHeader;
+    TextView userName;
+    //TODO-------------------------------我的订单栏---------------------------------------------
+    TextView myInfo;
+    ImageView myForward;
+    TextView myPay;
+    TextView myCancel;
+    TextView myComplete;
+    //TODO---------------------------------我是跑腿员-------------------------------------------
+    TextView workerInfo;
+    ImageView workerForward;
+    TextView workerSignIn;
+    TextView workerSignUp;
+    TextView workerModify;
+    //TODO---------------------------------我的地址-------------------------------------------
+    TextView addressInfo;
+    ImageView addressForward;
+    TextView addressCustome;
+    TextView addressAdd;
+    TextView addressModify;
 
     public MyFragment() {
-        Log.i(TAG, "MyFragment");
+        if (AppConstants.DEBUG)
+            Log.i(TAG, "MyFragment");
+        if(hasAccount){
+
+        }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public int getLayoutResId() {
+        return R.layout.userprofilelayout;
+    }
 
-        View view = inflater.inflate(R.layout.userprofilelayout, container, false);
-        ImageView userHeader = (ImageView) view.findViewById(R.id.userHeader);
+
+    @Override
+    protected void initView(View view) {
+        userHeader = (ImageView) view.findViewById(R.id.userHeader);
+        userName = (TextView) view.findViewById(R.id.userName);
+
+        //TODO-------------------------------我的订单栏---------------------------------------------
+        myInfo = (TextView) getViewById(view, R.id.profileOrder, R.id.profileInfo);
+        myForward = (ImageView) getViewById(view, R.id.profileOrder, R.id.profileForward);
+        myPay = (TextView) getViewById(view, R.id.profileOrder, R.id.profileDealleft);
+        myCancel = (TextView) getViewById(view, R.id.profileOrder, R.id.profileDealcenter);
+        myComplete = (TextView) getViewById(view, R.id.profileOrder, R.id.profileDealright);
+        //TODO---------------------------------我是跑腿员-------------------------------------------
+        workerInfo = (TextView) getViewById(view, R.id.profileWorker, R.id.profileInfo);
+        workerForward = (ImageView) getViewById(view, R.id.profileWorker, R.id.profileForward);
+        workerSignIn = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealleft);
+        workerSignUp = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealcenter);
+        workerModify = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealright);
+        //TODO---------------------------------我的地址-------------------------------------------
+        addressInfo = (TextView) getViewById(view, R.id.profileAddress, R.id.profileInfo);
+        addressForward = (ImageView) getViewById(view, R.id.profileAddress, R.id.profileForward);
+        addressCustome = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealleft);
+        addressAdd = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealcenter);
+        addressModify = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealright);
+    }
+
+    @Override
+    protected void initData() {
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
-        TextView userName = (TextView) view.findViewById(R.id.userName);
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示
         userName.setOnClickListener(this);//TODO 如果本地有账户则直接登录，否则需要点击登录
         userName.setTag(R.id.userName);
 
-
-        //TODO-------------------------------我的订单栏---------------------------------------------
-        TextView myInfo = (TextView) getViewById(view, R.id.profileOrder, R.id.profileInfo);
-        ImageView myForward = (ImageView) getViewById(view, R.id.profileOrder, R.id.profileForward);
-        TextView myPay = (TextView) getViewById(view, R.id.profileOrder, R.id.profileDealleft);
-        TextView myCancel = (TextView) getViewById(view, R.id.profileOrder, R.id.profileDealcenter);
-        TextView myComplete = (TextView) getViewById(view, R.id.profileOrder, R.id.profileDealright);
-        //TODO---------------------------------我是跑腿员-------------------------------------------
-        TextView workerInfo = (TextView) getViewById(view, R.id.profileWorker, R.id.profileInfo);
-        ImageView workerForward = (ImageView) getViewById(view, R.id.profileWorker, R.id.profileForward);
-        TextView workerSignIn = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealleft);
-        TextView workerSignUp = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealcenter);
-        TextView workerModify = (TextView) getViewById(view, R.id.profileWorker, R.id.profileDealright);
-        //TODO---------------------------------我的地址-------------------------------------------
-        TextView addressInfo = (TextView) getViewById(view, R.id.profileAddress, R.id.profileInfo);
-        ImageView addressForward = (ImageView) getViewById(view, R.id.profileAddress, R.id.profileForward);
-        TextView addressCustome = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealleft);
-        TextView addressAdd = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealcenter);
-        TextView addressModify = (TextView) getViewById(view, R.id.profileAddress, R.id.profileDealright);
 
         myInfo.setText(R.string.myOrder);
 
@@ -109,17 +138,6 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         addressModify.setText(R.string.wokerAndAddrModify);
         addressModify.setOnClickListener(this);
         addressModify.setTag(8);
-        return view;
-    }
-
-    @Override
-    protected void initView(View view) {
-
-    }
-
-    @Override
-    protected void initData() {
-
     }
 
     private View getViewById(View parent, int centerId, int targetId) {
@@ -144,7 +162,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
 //                Toast.makeText(getContext(), R.string.workerInfo, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(), DeliverSignUpActivity.class));
+                startActivity(new Intent(getContext(), DeliverInfoActivity.class));
                 break;
             case R.id.profileAddress://TODO 我的地址右箭头
                 Toast.makeText(getContext(), R.string.addrInfo, Toast.LENGTH_SHORT).show();
@@ -153,34 +171,34 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 Toast.makeText(getContext(), R.string.modifyHeader, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.userName://TODO 点击登录
-                Toast.makeText(getContext(),R.string.userSignIn,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.userSignIn, Toast.LENGTH_SHORT).show();
                 break;
             case 0://TODO 待付款
-                Toast.makeText(getContext(),R.string.myPay,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.myPay, Toast.LENGTH_SHORT).show();
                 break;
             case 1://TODO  取消
-                Toast.makeText(getContext(),R.string.myCancel,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.myCancel, Toast.LENGTH_SHORT).show();
                 break;
             case 2://TODO 修改
-                Toast.makeText(getContext(),R.string.myComplete,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.myComplete, Toast.LENGTH_SHORT).show();
                 break;
             case 3://TODO 登录
-                Toast.makeText(getContext(),R.string.workerSignIn,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.workerSignIn, Toast.LENGTH_SHORT).show();
                 break;
             case 4://TODO 注册
-                Toast.makeText(getContext(),R.string.wokerSignUp,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.wokerSignUp, Toast.LENGTH_SHORT).show();
                 break;
             case 5://TODO 修改
-                Toast.makeText(getContext(),R.string.wokerAndAddrModify,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
                 break;
             case 6://TODO 常用
-                Toast.makeText(getContext(),R.string.addrCustome,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.addrCustome, Toast.LENGTH_SHORT).show();
                 break;
             case 7://TODO 添加
-                Toast.makeText(getContext(),R.string.addrAdd,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.addrAdd, Toast.LENGTH_SHORT).show();
                 break;
             case 8://TODO 修改
-                Toast.makeText(getContext(),R.string.wokerAndAddrModify,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
