@@ -45,7 +45,8 @@
         <item name="android:textSize">16sp</item>
     </style>
     <!-- 仿IOS的dialog -->
-    <style name="UIAlertViewStyle" parent="@android:style/Theme.Dialog">
+    <style name="MyDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/MyDialogAnim</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -54,6 +55,11 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="MyDialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/push_button_in</item>
+        <item name="android:windowExitAnimation">@anim/push_button_out</item>
+    </style>
+
 
 
 </resources>

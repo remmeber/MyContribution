@@ -1,12 +1,16 @@
 package com.example.rhg.outsourcing.model;
 
 /**
+<<<<<<< HEAD
  * Created by remember on 2016/5/24.
+=======
+ * Created by rhg on 2016/5/23.
+>>>>>>> db94743a40f21798fbfd111c9c8cfebaa0ca6b2d
  */
 public class PayContent {
     String goodsName;
     String goodsDescription;
-    String goodsPrice;
+    String payMoney;
 
     public String getGoodsName() {
         return goodsName;
@@ -24,11 +28,16 @@ public class PayContent {
         this.goodsDescription = goodsDescription;
     }
 
-    public String getGoodsPrice() {
-        return goodsPrice;
+    public String getPayMoney() {
+        return payMoney;
     }
 
-    public void setGoodsPrice(String goodsPrice) {
-        this.goodsPrice = goodsPrice;
+    public void setPayMoney(String payMoney) {
+        this.payMoney = payMoney;
+    }
+
+    @Override
+    public String toString() {
+        return "goodsName: "+goodsName+" goodsDescription: "+" payMoney: ";
     }
 }

@@ -55,7 +55,7 @@ public class PayDescriptionView extends ScrollView {
             TextView goodsPrice = (TextView)view.findViewById(R.id.product_price);
             goodsName.setText(_temp.getGoodsName());
             goodsDesc.setText(_temp.getGoodsDescription());
-            goodsPrice.setText(_temp.getGoodsPrice());
+            goodsPrice.setText(_temp.getPayMoney());
             mLayout.addView(view, i, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
         }

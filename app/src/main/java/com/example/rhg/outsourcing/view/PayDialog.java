@@ -59,7 +59,7 @@ public class PayDialog extends Dialog implements View.OnClickListener{
 
     }
     private void initData() {
-        payDesc.setPayContents(payContentList);
+        payDesc.setPayContentList(payContentList);
         btPay.setOnClickListener(this);
         btCancel.setOnClickListener(this);
     }

@@ -1,130 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorProfile"
-        android:orientation="vertical">
-
-        <include
-            layout="@layout/toolbar_common"
-            android:layout_width="match_parent"
-            android:layout_height="56dp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_little"
-            android:background="@drawable/cv_goods_bg">
-
-            <TextView
-                android:id="@+id/tv_receiver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/margin_small"
-                android:textSize="@dimen/text_medium"
-                tools:text="收货人:某某某" />
-
-            <TextView
-                android:id="@+id/tv_receiver_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_receiver"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/margin_little"
-                android:textSize="@dimen/text_medium"
-                tools:text="联系方式:00000000" />
-
-            <TextView
-                android:id="@+id/tv_receiver_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_receiver_phone"
-                android:layout_marginEnd="80dp"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="80dp"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/margin_little"
-                android:maxLines="3"
-                android:textSize="@dimen/text_medium"
-                tools:text="收货地址:江苏省南" />
-
-            <ImageView
-                android:id="@+id/iv_edit_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_chevron_right_black_48dp"
-                tools:ignore="contentDescription" />
-
-            <TextView
-                android:id="@+id/tv_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/iv_edit_right"
-                android:layout_toStartOf="@+id/iv_edit_right"
-                android:background="@drawable/tv_state_bg"
-                android:gravity="center"
-                android:textSize="@dimen/text_large"
-                tools:text="编辑" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_small"
-                android:layout_below="@id/tv_receiver_address" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ExpandableListView
-                android:id="@+id/elv_pay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/fl_pay" />
-
-
-            <FrameLayout
-                android:id="@+id/fl_pay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:background="@color/colorActiveGreen">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:text="@string/tvSubmitOrder"
-                    android:textSize="@dimen/text_large" />
-            </FrameLayout>
-        </RelativeLayout>
-    </LinearLayout>
+    android:layout_height="match_parent"
+    android:background="@color/colorProfile"
+    android:orientation="vertical">
 
     <include
-        layout="@layout/pay_external"
+        layout="@layout/toolbar_common"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="@string/bottom_sheet_behavior" />
-</android.support.design.widget.CoordinatorLayout>
+        android:layout_height="56dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_little"
+        android:background="@drawable/cv_goods_bg">
+
+        <TextView
+            android:id="@+id/tv_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textSize="@dimen/text_medium"
+            tools:text="收货人:某某某" />
+
+        <TextView
+            android:id="@+id/tv_receiver_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_receiver"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/margin_little"
+            android:textSize="@dimen/text_medium"
+            tools:text="联系方式:00000000" />
+
+        <TextView
+            android:id="@+id/tv_receiver_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_receiver_phone"
+            android:layout_marginEnd="80dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="80dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/margin_little"
+            android:maxLines="3"
+            android:textSize="@dimen/text_medium"
+            tools:text="收货地址:江苏省南" />
+
+        <ImageView
+            android:id="@+id/iv_edit_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_chevron_right_black_48dp"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_edit_right"
+            android:layout_toStartOf="@+id/iv_edit_right"
+            android:background="@drawable/tv_state_bg"
+            android:gravity="center"
+            android:textSize="@dimen/text_large"
+            tools:text="编辑" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_small"
+            android:layout_below="@id/tv_receiver_address" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ExpandableListView
+            android:id="@+id/elv_pay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/fl_pay" />
+
+        <FrameLayout
+            android:id="@+id/fl_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/margin_little"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:background="@color/colorActiveGreen">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@string/tvSubmitOrder"
+                android:textSize="@dimen/text_large" />
+        </FrameLayout>
+    </RelativeLayout>
+</LinearLayout>
