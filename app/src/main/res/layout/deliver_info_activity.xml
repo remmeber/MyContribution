@@ -8,6 +8,6 @@
 
     <include layout="@layout/toolbar_common" />
 
-    <include layout="@layout/deliver_signup_content"/>
+    <include layout="@layout/deliver_info_content"/>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import com.example.rhg.outsourcing.R;
  * Created by remember on 2016/5/4.
  */
 public class AppConstants {
+    public static final boolean DEBUG = true;
 
     public static final String[] images = {
             "http://img2.3lian.com/2014/f2/37/d/40.jpg",
@@ -142,6 +143,7 @@ public class AppConstants {
      * SharedPreferences的key
      */
     public static final String SP_NAME_PROJECT = "FatTail";
+    public static final String SP_ACCOUNT_TYPE = "com.qhouse";
     /**
      * UMeng推送的key
      */

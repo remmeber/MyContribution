@@ -44,6 +44,11 @@
     <string name="tvPayTitle">确认订单</string>
     <string name="tvSubmitOrder">提交订单</string>
     <!--支付-->
+
+    <!--我的页面-->
+    <string name="tvCamera">相机</string>
+    <string name="tvGallery">图库</string>
+    <!--我的页面-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
