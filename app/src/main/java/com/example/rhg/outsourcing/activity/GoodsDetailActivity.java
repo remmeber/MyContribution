@@ -17,12 +17,12 @@ import com.example.rhg.outsourcing.apapter.BannerImageHolder;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.dao.LikeDao;
 import com.example.rhg.outsourcing.dao.ShoppingCartDao;
-import com.example.rhg.outsourcing.model.GoodsDetailModel;
-import com.example.rhg.outsourcing.presenter.TestPresenter;
+import com.example.rhg.outsourcing.bean.GoodsDetailModel;
+import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
-import com.example.rhg.outsourcing.view.UIAlertView;
+import com.example.rhg.outsourcing.widget.UIAlertView;
 import com.example.rhg.outsourcing.widget.ShoppingCartWithNumber;
 
 import java.util.Arrays;

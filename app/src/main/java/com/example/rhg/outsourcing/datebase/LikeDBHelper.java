@@ -3,10 +3,8 @@ package com.example.rhg.outsourcing.datebase;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.example.rhg.outsourcing.model.LikeBean;
-import com.example.rhg.outsourcing.model.ShoppingCartBean;
+import com.example.rhg.outsourcing.bean.LikeBean;
 
 /**
  * Created by remember on 2016/5/9.

@@ -5,17 +5,14 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.example.rhg.outsourcing.apapter.GoodsListAdapter;
-import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.model.GoodsDetailModel;
-import com.example.rhg.outsourcing.presenter.TestPresenter;
-import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.bean.GoodsDetailModel;
+import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

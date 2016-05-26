@@ -7,7 +7,7 @@ import android.util.Log;
 
 
 import com.example.rhg.outsourcing.impl.ImageChangeListener;
-import com.example.rhg.outsourcing.model.ImageModel;
+import com.example.rhg.outsourcing.bean.ImageModel;
 
 import java.util.List;
 

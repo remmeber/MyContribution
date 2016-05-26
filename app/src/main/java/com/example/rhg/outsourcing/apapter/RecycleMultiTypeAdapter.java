@@ -18,13 +18,13 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.model.BannerTypeModel;
-import com.example.rhg.outsourcing.model.FavorableTypeModel;
-import com.example.rhg.outsourcing.model.FooterTypeModel;
-import com.example.rhg.outsourcing.model.HeaderTypeModel;
-import com.example.rhg.outsourcing.model.RecommendListTypeModel;
-import com.example.rhg.outsourcing.model.RecommendTextTypeModel;
-import com.example.rhg.outsourcing.model.TextTypeModel;
+import com.example.rhg.outsourcing.bean.BannerTypeModel;
+import com.example.rhg.outsourcing.bean.FavorableTypeModel;
+import com.example.rhg.outsourcing.bean.FooterTypeModel;
+import com.example.rhg.outsourcing.bean.HeaderTypeModel;
+import com.example.rhg.outsourcing.bean.RecommendListTypeModel;
+import com.example.rhg.outsourcing.bean.RecommendTextTypeModel;
+import com.example.rhg.outsourcing.bean.TextTypeModel;
 import com.example.rhg.outsourcing.utils.BannerController;
 
 import java.util.List;
@@ -32,15 +32,15 @@ import java.util.List;
 /**
  * Created by remember on 2016/5/3.
  */
-public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //--------------------------------Define Item Type----------------------------------------------
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_BANNER = 1;
-    private static final int TYPE_TEXT = 2;
-    private static final int TYPE_FAVORABLE = 3;
-    private static final int TYPE_RECOMMEND_TEXT = 4;
-    private static final int TYPE_RECOMMEND_LIST = 5;
-    private static final int TYPE_FOOTER = 6;
+    public static final int TYPE_HEADER = 0;
+    public static final int TYPE_BANNER = 1;
+    public static final int TYPE_TEXT = 2;
+    public static final int TYPE_FAVORABLE = 3;
+    public static final int TYPE_RECOMMEND_TEXT = 4;
+    public static final int TYPE_RECOMMEND_LIST = 5;
+    public static final int TYPE_FOOTER = 6;
     //----------------------------------------------------------------------------------------------
     //
     private Context context;
@@ -73,16 +73,15 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_HEADER:
                 return new HeaderTypeViewHolder(layoutInflater.inflate(R.layout.recycleheader, parent, false));
             case TYPE_BANNER:
-                BannerTypeViewHolder bannerTypeViewHolder = new BannerTypeViewHolder(layoutInflater.inflate(R.layout.item_banner, parent, false));
-                return bannerTypeViewHolder;
+                return new BannerTypeViewHolder(layoutInflater.inflate(R.layout.item_banner, parent, false));
             case TYPE_TEXT:
                 return new TextTypeViewHolder(layoutInflater.inflate(R.layout.recycletext, parent, false));
             case TYPE_FAVORABLE:
-                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.recyclegridtype, parent, false),viewType);
+                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.recyclegridtype, parent, false), viewType);
             case TYPE_RECOMMEND_TEXT:
                 return new RecommendTextTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendtext, parent, false));
             case TYPE_RECOMMEND_LIST:
-                return new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendlist, parent, false),viewType);
+                return new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendlist, parent, false), viewType);
             case TYPE_FOOTER:
                 return new FooterTypeViewHolder(layoutInflater.inflate(R.layout.recyclefooter, parent, false));
             default:
@@ -124,6 +123,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindViewHolderBanner(BannerTypeViewHolder holder, BannerTypeModel data) {
+        Log.i("RHG",""+data.getImageUrls().size());
         holder.convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
             @Override
             public BannerImageHolder createHolder() {
@@ -150,7 +150,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
-        holder.button.setText(data.getText() + position);
+        holder.button.setText(data.getText());
         Log.i("RHG", "Color is: " + data.getColor());
         holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
@@ -175,6 +175,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             });
         }
     }
+
     private class BannerTypeViewHolder extends RecyclerView.ViewHolder {
         private ConvenientBanner convenientBanner;
 
@@ -197,25 +198,26 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public TextTypeViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView)itemView.findViewById(R.id.VipText);
+            textView = (TextView) itemView.findViewById(R.id.VipText);
         }
     }
 
     private class FavorableTypeViewHolder extends RecyclerView.ViewHolder {
         private final GridView gridView;
         private DPGridViewAdapter dpGridViewAdapter;
-        public FavorableTypeViewHolder(View itemView,int position) {
+
+        public FavorableTypeViewHolder(View itemView, int position) {
             super(itemView);
             gridView = (GridView) itemView.findViewById(R.id.gridview);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(onGridItemClickListener!=null)
-                        onGridItemClickListener.gridItemClick(view,position);
+                    if (onGridItemClickListener != null)
+                        onGridItemClickListener.gridItemClick(view, position);
                 }
             });
             gridView.setNumColumns(3);
-            dpGridViewAdapter = ((FavorableTypeModel)mData.get(position)).getDpGridViewAdapter();
+            dpGridViewAdapter = ((FavorableTypeModel) mData.get(position)).getDpGridViewAdapter();
             gridView.setAdapter(dpGridViewAdapter);
         }
     }
@@ -230,13 +232,14 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     private class RecommendListTypeViewHolder extends RecyclerView.ViewHolder {
         private RecyclerView recyclerView;
         private RecycleSellerAdapter recycleSellerAdapter;
-        public RecommendListTypeViewHolder(View itemView,int viewType) {
+
+        public RecommendListTypeViewHolder(View itemView, int viewType) {
             super(itemView);
-            recyclerView = (RecyclerView)itemView.findViewById(R.id.recommendlist);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.recommendlist);
             recyclerView.setHasFixedSize(true);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
-            recycleSellerAdapter = ((RecommendListTypeModel)mData.get(viewType)).getRecycleSellerAdapter();
+            recycleSellerAdapter = ((RecommendListTypeModel) mData.get(viewType)).getRecycleSellerAdapter();
             recyclerView.setAdapter(recycleSellerAdapter);
         }
     }
@@ -255,21 +258,28 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             });
         }
     }
+
     //-------------------------------for banner click callback--------------------------------------
     private OnBannerClickListener onBannerClickListener;
-    public void setBannerClickListener(OnBannerClickListener onBannerClickListener){
+
+    public void setBannerClickListener(OnBannerClickListener onBannerClickListener) {
         this.onBannerClickListener = onBannerClickListener;
     }
-    public interface OnBannerClickListener{
+
+    public interface OnBannerClickListener {
         public void bannerClick(int position);
     }
     //----------------------------------------------------------------------------------------------
 
     private OnGridItemClickListener onGridItemClickListener;
-    public  void setOnGridItemClickListener(OnGridItemClickListener onGridItemClickListener){
+
+    public void setOnGridItemClickListener(OnGridItemClickListener onGridItemClickListener) {
         this.onGridItemClickListener = onGridItemClickListener;
     }
-    public  interface OnGridItemClickListener{
-        public  void gridItemClick(View view,int position);
+
+    public interface OnGridItemClickListener {
+        public void gridItemClick(View view, int position);
     }
+
+
 }

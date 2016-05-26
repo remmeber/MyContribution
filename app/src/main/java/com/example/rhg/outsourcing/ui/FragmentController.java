@@ -1,19 +1,10 @@
 package com.example.rhg.outsourcing.ui;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.fragment.HomeFragment;
-import com.example.rhg.outsourcing.fragment.MyFragment;
-import com.example.rhg.outsourcing.fragment.SellerFragment;
-import com.example.rhg.outsourcing.fragment.ShoppingCartFragment;
-import com.example.rhg.outsourcing.presenter.TestPresenter;
-import com.example.rhg.outsourcing.utils.BannerController;
-
-import java.util.List;
+import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 
 /**
  * Created by remember on 2016/5/2.

@@ -3,19 +3,17 @@ package com.example.rhg.outsourcing.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
-import com.example.rhg.outsourcing.model.PayContent;
+import com.example.rhg.outsourcing.bean.PayContent;
 import com.example.rhg.outsourcing.utils.ToastHelper;
-import com.example.rhg.outsourcing.view.PayDialog;
+import com.example.rhg.outsourcing.widget.PayDialog;
 import com.example.rhg.outsourcing.widget.PayDescriptionView;
 
 import java.util.ArrayList;

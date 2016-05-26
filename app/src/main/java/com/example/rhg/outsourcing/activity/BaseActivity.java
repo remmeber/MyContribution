@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.example.rhg.outsourcing.view.BaseView;
+import com.example.rhg.outsourcing.mvp.view.BaseView;
 
 /**
  * Created by remember on 2016/5/18.

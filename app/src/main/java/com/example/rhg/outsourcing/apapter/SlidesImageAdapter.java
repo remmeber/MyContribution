@@ -9,7 +9,7 @@ import android.util.Log;
 import java.util.List;
 
 import com.example.rhg.outsourcing.impl.SlidesViewChangeListener;
-import com.example.rhg.outsourcing.model.ImageModel;
+import com.example.rhg.outsourcing.bean.ImageModel;
 
 /**
  * Created by whiskeyfei on 15-7-24.

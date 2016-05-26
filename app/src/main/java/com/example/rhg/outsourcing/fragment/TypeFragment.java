@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.MeiTuanActivity;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
-import com.example.rhg.outsourcing.model.ImageModel;
+import com.example.rhg.outsourcing.bean.ImageModel;
 
 import java.util.ArrayList;
 import java.util.List;

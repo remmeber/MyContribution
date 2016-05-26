@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 
 import com.example.rhg.outsourcing.datebase.ShoppingCartDBHelper;
-import com.example.rhg.outsourcing.model.ShoppingCartBean;
+import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 
 import java.util.ArrayList;
 import java.util.List;

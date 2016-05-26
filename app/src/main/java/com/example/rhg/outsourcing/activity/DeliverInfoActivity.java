@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.view.ModifyHeadDialog;
+import com.example.rhg.outsourcing.widget.ModifyHeadDialog;
 import com.example.rhg.outsourcing.widget.CircleImageView;
 
 /**

@@ -1,18 +1,16 @@
 package com.example.rhg.outsourcing.apapter;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.model.GoodsDetailModel;
+import com.example.rhg.outsourcing.bean.GoodsDetailModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

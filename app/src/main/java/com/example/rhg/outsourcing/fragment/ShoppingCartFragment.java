@@ -3,13 +3,12 @@ package com.example.rhg.outsourcing.fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
-import com.example.rhg.outsourcing.model.ShoppingCartBean;
+import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 import com.example.rhg.outsourcing.widget.MyExpandListView;
 
 import java.util.ArrayList;

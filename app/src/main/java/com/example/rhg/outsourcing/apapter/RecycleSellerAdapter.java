@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.model.BaseSellerModel;
+import com.example.rhg.outsourcing.bean.BaseSellerModel;
 
 import java.util.List;
 

@@ -14,27 +14,23 @@ import android.widget.Toast;
 
 import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.example.rhg.outsourcing.activity.ShopDetailActivity;
+import com.example.rhg.outsourcing.bean.TestBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleMultiTypeAdapter;
-import com.example.rhg.outsourcing.model.BannerTypeModel;
-import com.example.rhg.outsourcing.model.FavorableTypeModel;
-import com.example.rhg.outsourcing.model.FooterTypeModel;
-import com.example.rhg.outsourcing.model.HeaderTypeModel;
-import com.example.rhg.outsourcing.model.ImageModel;
-import com.example.rhg.outsourcing.model.RecommendListTypeModel;
-import com.example.rhg.outsourcing.model.RecommendTextTypeModel;
-import com.example.rhg.outsourcing.model.BaseSellerModel;
-import com.example.rhg.outsourcing.model.TextTypeModel;
-import com.example.rhg.outsourcing.presenter.TestPresenter;
+import com.example.rhg.outsourcing.bean.BannerTypeModel;
+import com.example.rhg.outsourcing.bean.FavorableTypeModel;
+import com.example.rhg.outsourcing.bean.FooterTypeModel;
+import com.example.rhg.outsourcing.bean.HeaderTypeModel;
+import com.example.rhg.outsourcing.bean.ImageModel;
+import com.example.rhg.outsourcing.bean.RecommendListTypeModel;
+import com.example.rhg.outsourcing.bean.RecommendTextTypeModel;
+import com.example.rhg.outsourcing.bean.BaseSellerModel;
+import com.example.rhg.outsourcing.bean.TextTypeModel;
+import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.BannerController;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,31 +63,22 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         Log.i("RHG", "HomeFragment has created");
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.rcv_item, container, false);
-        rcv = (RecyclerView) view.findViewById(R.id.recycleview);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
-        return view;
+    public int getLayoutResId() {
+        return R.layout.rcv_item;
     }
+
 
     @Override
     protected void initView(View view) {
-
+        rcv = (RecyclerView) view.findViewById(R.id.recycleview);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
     }
 
     @Override
     protected void initData() {
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.i("RHG", "onActivityCreated");
         mData = new ArrayList<>();
-        recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getActivity(), mData);
+        recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getContext(), mData);
         recycleMultiTypeAdapter.setBannerClickListener(this);
         recycleMultiTypeAdapter.setOnGridItemClickListener(this);
         fillItemList();
@@ -107,6 +94,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
             }
         });
     }
+
 
     @Override
     public void onStart() {
@@ -142,8 +130,10 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
 
     @Override
     public void showSuccess(Object o) {
-        Log.i("RHG", "HomeFragment success");
-        Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+        mData.remove(1);
+        mData.add(1,(BannerTypeModel)o);
+        recycleMultiTypeAdapter.notifyItemChanged(1);
+
         swipeRefreshLayout.setRefreshing(false);
 
     }
@@ -177,7 +167,9 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
             imageModels.add(imageModel);
         }
         mData.add(new HeaderTypeModel("Header", R.color.cardview_shadow_start_color));
-        mData.add(new BannerTypeModel(Arrays.asList(images)));//TODO 传入URL集合
+        BannerTypeModel bannerTypeModel = new BannerTypeModel();
+        bannerTypeModel.setImageUrls(Arrays.asList(images));
+        mData.add(bannerTypeModel);//TODO 传入URL集合
         mData.add(new TextTypeModel("aaaaa"));
         mData.add(new FavorableTypeModel(imageModels,new DPGridViewAdapter(getContext(),imageModels,R.layout.recyclegriditem)));
         mData.add(new RecommendTextTypeModel());

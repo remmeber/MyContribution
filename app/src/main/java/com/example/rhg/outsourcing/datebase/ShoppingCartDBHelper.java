@@ -5,8 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.rhg.outsourcing.model.LikeBean;
-import com.example.rhg.outsourcing.model.ShoppingCartBean;
+import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 
 /**
  * Created by remember on 2016/5/9.

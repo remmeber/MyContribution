@@ -1,10 +1,9 @@
 package com.example.rhg.outsourcing.apapter;
 
 import android.content.Context;
-import android.media.Image;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.model.ImageModel;
+import com.example.rhg.outsourcing.bean.ImageModel;
 
 import java.util.List;
 

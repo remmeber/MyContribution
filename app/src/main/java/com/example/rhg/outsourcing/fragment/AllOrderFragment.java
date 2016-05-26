@@ -1,26 +1,18 @@
 package com.example.rhg.outsourcing.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.PayActivity;
-import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
-import com.example.rhg.outsourcing.apapter.RecycleMultiTypeAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.model.BaseSellerModel;
-import com.example.rhg.outsourcing.model.OrderModel;
-import com.example.rhg.outsourcing.presenter.TestPresenter;
+import com.example.rhg.outsourcing.bean.BaseSellerModel;
+import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 
 import java.util.ArrayList;

@@ -9,15 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
-import com.example.rhg.outsourcing.view.BaseView;
+import com.example.rhg.outsourcing.mvp.view.BaseView;
 
 /**
  * Created by remember on 2016/5/3.
  */
-public abstract class SuperFragment extends Fragment implements BaseView{
+public abstract class SuperFragment extends Fragment implements BaseView {
     public SuperFragment() {
     }
+
     // TODO: 子类重写该方法，获取数据的统一入口
     public void receiveData(Bundle arguments) {
     }
@@ -53,7 +53,7 @@ public abstract class SuperFragment extends Fragment implements BaseView{
      * 从网络获取数据，在new的时候只加载一次，后期都需要refresh才能更新
      */
     public void loadData() {
-        Log.i("RHG","LOAD");
+        Log.i("RHG", "LOAD");
     }
 
     protected abstract void initData();
@@ -62,8 +62,7 @@ public abstract class SuperFragment extends Fragment implements BaseView{
 
     @Override
     public void showData(Object o) {
-        if (o.toString().equals("success")) {
-            Log.i("SuperFragment", "SuperFragment success");
+        if (o != null) {
             showSuccess(o);
         } else
             showFailed();

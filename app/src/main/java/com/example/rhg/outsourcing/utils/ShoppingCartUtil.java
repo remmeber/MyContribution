@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.dao.ShoppingCartDao;
-import com.example.rhg.outsourcing.model.ShoppingCartBean;
+import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 
 import java.util.List;
 
