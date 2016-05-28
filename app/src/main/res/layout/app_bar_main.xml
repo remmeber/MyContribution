@@ -7,92 +7,11 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.rhg.outsourcing.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-
-            <include layout="@layout/toolbar_home" />
-
-            <!-- <android.support.v7.widget.Toolbar
-                 android:id="@+id/toolbar"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 app:logo="@mipmap/ic_place_white_24dp"
-                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                 app:theme="@style/AppTheme.AppBarOverlay">
-                 <TextView
-                     android:id="@+id/textView_search"
-                     android:background="@color/white"
-                     android:hint="@string/searchHint"
-                     android:layout_width="240dp"
-                     android:layout_height="wrap_content"
-                     android:drawableRight="@drawable/ic_search"/>
-             </android.support.v7.widget.Toolbar>
-     -->
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <!--<include layout="@layout/content_main" />-->
     <FrameLayout
         android:id="@+id/content_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <!-- <android.support.v4.widget.NestedScrollView
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         app:layout_behavior = "@string/appbar_scrolling_view_behavior"
-         />-->
-    <!--&lt;!&ndash;<LinearLayout-->
-    <!--android:id="@+id/bottom_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--app:behavior_hideable="true"-->
-    <!--app:behavior_peekHeight="0dp"-->
-    <!--app:layout_behavior="@string/bottom_sheet_behavior">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:text="点我关闭"-->
-    <!--android:theme="@style/MyTheme" />-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@drawable/header" />-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@drawable/header" />-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@drawable/header" />-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@drawable/header" />-->
-    <!--</LinearLayout>  &ndash;&gt;-->
-
-   <!-- <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="80dp"
-        android:visibility="gone"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:src="@android:drawable/ic_dialog_email" />-->
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottom_navigation"

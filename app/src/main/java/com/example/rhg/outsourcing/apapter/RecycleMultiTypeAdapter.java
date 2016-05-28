@@ -3,7 +3,6 @@ package com.example.rhg.outsourcing.apapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +15,25 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.example.rhg.outsourcing.apapter.viewHolder.BannerImageHolder;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.bean.BannerTypeModel;
+import com.example.rhg.outsourcing.bean.BannerTypeBean;
 import com.example.rhg.outsourcing.bean.FavorableTypeModel;
 import com.example.rhg.outsourcing.bean.FooterTypeModel;
 import com.example.rhg.outsourcing.bean.HeaderTypeModel;
 import com.example.rhg.outsourcing.bean.RecommendListTypeModel;
 import com.example.rhg.outsourcing.bean.RecommendTextTypeModel;
-import com.example.rhg.outsourcing.bean.TextTypeModel;
+import com.example.rhg.outsourcing.bean.TextTypeBean;
 import com.example.rhg.outsourcing.utils.BannerController;
 
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/3.
+ *desc:复合类型recycleview 适配器
+ *author：remember
+ *time：2016/5/28 16:21
+ *email：1013773046@qq.com
  */
 public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //--------------------------------Define Item Type----------------------------------------------
@@ -56,8 +59,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     public int getItemViewType(int position) {
         Object object = mData.get(position);
         if (object instanceof HeaderTypeModel) return TYPE_HEADER;
-        if (object instanceof BannerTypeModel) return TYPE_BANNER;
-        if (object instanceof TextTypeModel) return TYPE_TEXT;
+        if (object instanceof BannerTypeBean) return TYPE_BANNER;
+        if (object instanceof TextTypeBean) return TYPE_TEXT;
         if (object instanceof FavorableTypeModel) return TYPE_FAVORABLE;
         if (object instanceof RecommendTextTypeModel) return TYPE_RECOMMEND_TEXT;
         if (object instanceof RecommendListTypeModel) return TYPE_RECOMMEND_LIST;
@@ -97,10 +100,10 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 bindViewHolderHeader((HeaderTypeViewHolder) holder, (HeaderTypeModel) data, position);
                 break;
             case TYPE_BANNER:
-                bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeModel) data);
+                bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeBean) data);
                 break;
             case TYPE_TEXT:
-                bindViewHolderText((TextTypeViewHolder) holder, (TextTypeModel) data);
+                bindViewHolderText((TextTypeViewHolder) holder, (TextTypeBean) data);
                 break;
             case TYPE_FAVORABLE:
                 bindViewHolderFavorable((FavorableTypeViewHolder) holder);
@@ -122,8 +125,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
-    private void bindViewHolderBanner(BannerTypeViewHolder holder, BannerTypeModel data) {
-        Log.i("RHG",""+data.getImageUrls().size());
+    private void bindViewHolderBanner(BannerTypeViewHolder holder, BannerTypeBean data) {
         holder.convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
             @Override
             public BannerImageHolder createHolder() {
@@ -133,8 +135,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 .setPageIndicator(AppConstants.imageindictors);
     }
 
-    private void bindViewHolderText(TextTypeViewHolder holder, TextTypeModel data) {
-        holder.textView.setText(data.getText());
+    private void bindViewHolderText(TextTypeViewHolder holder, TextTypeBean data) {
+        holder.textView.setText(data.getTitle());
     }
 
     private void bindViewHolderFavorable(FavorableTypeViewHolder holder) {
@@ -145,13 +147,12 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data) {
-        holder.recycleSellerAdapter.notifyDataSetChanged();
-        holder.recycleSellerAdapter.setOnListItemClick(data.getOnListItemClick());
+        holder.homeRecycleAdapter.notifyDataSetChanged();
+        holder.homeRecycleAdapter.setOnListItemClick(data.getOnListItemClick());
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
         holder.button.setText(data.getText());
-        Log.i("RHG", "Color is: " + data.getColor());
         holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
@@ -204,7 +205,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private class FavorableTypeViewHolder extends RecyclerView.ViewHolder {
         private final GridView gridView;
-        private DPGridViewAdapter dpGridViewAdapter;
+        private QFoodGridViewAdapter dpGridViewAdapter;
 
         public FavorableTypeViewHolder(View itemView, int position) {
             super(itemView);
@@ -231,7 +232,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private class RecommendListTypeViewHolder extends RecyclerView.ViewHolder {
         private RecyclerView recyclerView;
-        private RecycleSellerAdapter recycleSellerAdapter;
+        private HomeRecycleAdapter homeRecycleAdapter;
 
         public RecommendListTypeViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -239,8 +240,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             recyclerView.setHasFixedSize(true);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
-            recycleSellerAdapter = ((RecommendListTypeModel) mData.get(viewType)).getRecycleSellerAdapter();
-            recyclerView.setAdapter(recycleSellerAdapter);
+            homeRecycleAdapter = ((RecommendListTypeModel) mData.get(viewType)).getHomeRecycleAdapter();
+            recyclerView.setAdapter(homeRecycleAdapter);
         }
     }
 

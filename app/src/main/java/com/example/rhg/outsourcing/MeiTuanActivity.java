@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 
-import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
 import com.example.rhg.outsourcing.fragment.TypeFragment;
 import com.example.rhg.outsourcing.widget.PointView;
 
@@ -78,7 +76,7 @@ public class MeiTuanActivity extends FragmentActivity implements ViewPager.OnPag
         /*mViewPager = (ViewPager) findViewById(R.id.viewpager_meituan);
         mViewPager.setOnPageChangeListener(this);
         mPonitView = (PointView) findViewById(R.id.pointview_meituan);
-        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), mFragmentList));
+        mViewPager.setAdapter(new QFoodVpAdapter(getSupportFragmentManager(), mFragmentList));
         mPonitView.setParams(mViewPager);*/
     }
 

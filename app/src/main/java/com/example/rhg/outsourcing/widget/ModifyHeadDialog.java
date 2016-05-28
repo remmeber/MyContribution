@@ -14,8 +14,10 @@ import android.widget.Button;
 import com.example.rhg.outsourcing.R;
 
 /**
- * Created by rhg on 2016/5/24.
- * 修改头像
+ *desc:修改头像 dialog
+ *author：remember
+ *time：2016/5/28 17:04
+ *email：1013773046@qq.com
  */
 public class ModifyHeadDialog extends Dialog implements View.OnClickListener {
     Context mContext;

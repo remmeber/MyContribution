@@ -18,7 +18,7 @@
         android:textSize="@dimen/search_text_medium" />
 
     <TextView
-        android:id="@+id/tv_totalCount"
+        android:id="@+id/tv_totalMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

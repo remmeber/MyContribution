@@ -1,32 +1,41 @@
 package com.example.rhg.outsourcing.bean;
 
-import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
+import com.example.rhg.outsourcing.apapter.HomeRecycleAdapter;
 
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/3.
+ *desc:主页店铺推荐列表模型
+ *author：remember
+ *time：2016/5/28 16:38
+ *email：1013773046@qq.com
  */
 public class RecommendListTypeModel {
-    List<BaseSellerModel> baseSellerModels;
-    private RecycleSellerAdapter recycleSellerAdapter;
-    private RecycleSellerAdapter.OnListItemClick onListItemClick;
+    List<RecommendListBean> homeSellerModels;
+    private HomeRecycleAdapter homeRecycleAdapter;
+    private HomeRecycleAdapter.OnListItemClick onListItemClick;
 
-    public List<BaseSellerModel> getBaseSellerModels() {
-        return baseSellerModels;
+    public List<RecommendListBean> getHomeSellerModels() {
+        return homeSellerModels;
     }
 
-    public RecycleSellerAdapter getRecycleSellerAdapter() {
-        return recycleSellerAdapter;
+    public void setHomeSellerModels(List<RecommendListBean> homeSellerModels) {
+        this.homeSellerModels = homeSellerModels;
     }
 
-    public RecycleSellerAdapter.OnListItemClick getOnListItemClick() {
+    public HomeRecycleAdapter getHomeRecycleAdapter() {
+        return homeRecycleAdapter;
+    }
+
+    public void setHomeRecycleAdapter(HomeRecycleAdapter homeRecycleAdapter) {
+        this.homeRecycleAdapter = homeRecycleAdapter;
+    }
+
+    public HomeRecycleAdapter.OnListItemClick getOnListItemClick() {
         return onListItemClick;
     }
 
-    public RecommendListTypeModel(List<BaseSellerModel> baseSellerModels, RecycleSellerAdapter recycleSellerAdapter, RecycleSellerAdapter.OnListItemClick onListItemClick) {
-        this.baseSellerModels = baseSellerModels;
-        this.recycleSellerAdapter = recycleSellerAdapter;
+    public void setOnListItemClick(HomeRecycleAdapter.OnListItemClick onListItemClick) {
         this.onListItemClick = onListItemClick;
     }
 }

@@ -2,28 +2,21 @@ package com.example.rhg.outsourcing.mvp.presenter;
 
 import android.util.Log;
 
-import com.example.rhg.outsourcing.bean.BannerTypeModel;
-import com.example.rhg.outsourcing.bean.ImageModel;
-import com.example.rhg.outsourcing.bean.TestBean;
+import com.example.rhg.outsourcing.bean.BannerTypeBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
 import com.example.rhg.outsourcing.mvp.model.BaseModel;
 import com.example.rhg.outsourcing.mvp.model.TestModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit.Retrofit;
-import rx.Observable;
 import rx.Observer;
-import rx.Scheduler;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by remember on 2016/4/28.
+ *desc:mvp presenter 测试实现类
+ *author：remember
+ *time：2016/5/28 17:02
+ *email：1013773046@qq.com
  */
 public class TestPresenter implements Presenter {
     BaseView testView;
@@ -38,7 +31,7 @@ public class TestPresenter implements Presenter {
     public void getData() {
         testModel.getData().observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())//使用subscribeOn()指定观察者代码运行的线程；非ui线程
-                .subscribe(new Observer<BannerTypeModel>() {
+                .subscribe(new Observer<BannerTypeBean>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -50,7 +43,7 @@ public class TestPresenter implements Presenter {
                     }
 
                     @Override
-                    public void onNext(BannerTypeModel s) {
+                    public void onNext(BannerTypeBean s) {
                         if (s != null) {
                             testView.showData(s);
                         }

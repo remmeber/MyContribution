@@ -3,11 +3,13 @@ package com.example.rhg.outsourcing.fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
+import com.example.rhg.outsourcing.apapter.QFoodShoppingCartExplAdapter;
 import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 import com.example.rhg.outsourcing.widget.MyExpandListView;
 
@@ -15,7 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by remember on 2016/4/28.
+ *desc:购物车fm
+ *author：remember
+ *time：2016/5/28 16:49
+ *email：1013773046@qq.com
  */
 public class ShoppingCartFragment extends SuperFragment {
     private static final String TAG = "ShoppingCartFragment";
@@ -24,9 +29,15 @@ public class ShoppingCartFragment extends SuperFragment {
     MyExpandListView expandableListView;
     RelativeLayout rlShoppingCartEmpty;
     RelativeLayout rlShoppingCartPay;
-    ExpandableListViewAdapter expandableListViewAdapter;
+    QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
     TextView tvCountGoods;
     TextView tvCountMoney;
+
+
+    FrameLayout fl_tab;
+    TextView tbCenterTV;
+    LinearLayout tbRightLL;
+    TextView tbRightTV;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
     //----------------------------------------------------------------------------------------------
@@ -60,6 +71,11 @@ public class ShoppingCartFragment extends SuperFragment {
 
     @Override
     protected void initView(View view) {
+        fl_tab = (FrameLayout)view.findViewById(R.id.fl_tab);
+        tbCenterTV = (TextView)view.findViewById(R.id.tb_center_tv);
+        tbRightLL = (LinearLayout)view.findViewById(R.id.tb_right_ll);
+        tbRightTV = (TextView)view.findViewById(R.id.tb_right_tv);
+
         expandableListView = (MyExpandListView) view.findViewById(R.id.list_shopping_cart);
         tvCountMoney = (TextView) view.findViewById(R.id.tv_count_money);
         tvCountGoods = (TextView) view.findViewById(R.id.tv_count);
@@ -69,8 +85,12 @@ public class ShoppingCartFragment extends SuperFragment {
 
     @Override
     protected void initData() {
-        expandableListViewAdapter = new ExpandableListViewAdapter(getContext());
-        expandableListView.setAdapter(expandableListViewAdapter);
+        fl_tab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        tbCenterTV.setText(getResources().getString(R.string.shoppingcar));
+        tbRightTV.setText("编辑");
+
+        QFoodShoppingCartExplAdapter = new QFoodShoppingCartExplAdapter(getContext());
+        expandableListView.setAdapter(QFoodShoppingCartExplAdapter);
         expandableListView.setGroupIndicator(null);
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -78,7 +98,7 @@ public class ShoppingCartFragment extends SuperFragment {
                 return true;
             }
         });
-        expandableListViewAdapter.setDataChangeListener(new ExpandableListViewAdapter.DataChangeListener() {
+        QFoodShoppingCartExplAdapter.setDataChangeListener(new QFoodShoppingCartExplAdapter.DataChangeListener() {
             @Override
             public void onDataChange(String CountMoney) {
                 if (shoppingCartBeanList.size() == 0) {
@@ -89,15 +109,15 @@ public class ShoppingCartFragment extends SuperFragment {
                 tvCountMoney.setText(countMoney);
             }
         });
-        View.OnClickListener listener = expandableListViewAdapter.getShortCartListener();
+        View.OnClickListener listener = QFoodShoppingCartExplAdapter.getShortCartListener();
         if (listener != null)
             tvCountGoods.setOnClickListener(listener);
         updateListView();
     }
 
     private void updateListView() {
-        expandableListViewAdapter.setmData(shoppingCartBeanList);
-        expandableListViewAdapter.notifyDataSetChanged();
+        QFoodShoppingCartExplAdapter.setmData(shoppingCartBeanList);
+        QFoodShoppingCartExplAdapter.notifyDataSetChanged();
         expandAll(shoppingCartBeanList.size());
     }
 

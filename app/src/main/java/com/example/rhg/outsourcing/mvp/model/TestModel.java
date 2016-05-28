@@ -2,39 +2,39 @@ package com.example.rhg.outsourcing.mvp.model;
 
 import android.util.Log;
 
-import com.example.rhg.outsourcing.bean.BannerTypeModel;
-import com.example.rhg.outsourcing.bean.TestBean;
-import com.example.rhg.outsourcing.mvp.api.TestApiMamager;
+import com.example.rhg.outsourcing.bean.BannerTypeBean;
+import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
+import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
- * Created by remember on 2016/4/28.
+ *desc:mvp测试实现
+ *author：remember
+ *time：2016/5/28 17:00
+ *email：1013773046@qq.com
  */
 public class TestModel implements BaseModel {
     @Override
-    public Observable<BannerTypeModel> getData() {
-        return TestApiMamager.getInstant().getTestApiService().getResult()
-                .flatMap(new Func1<TestBean, Observable<BannerTypeModel>>() {// TODO: 类型转换
+    public Observable<BannerTypeBean> getData() {
+        return QFoodApiMamager.getInstant().getQFoodApiService().getBannerUrl()
+                .flatMap(new Func1<BannerTypeUrlBean, Observable<BannerTypeBean>>() {// TODO: 类型转换
                     @Override
-                    public Observable<BannerTypeModel> call(final TestBean testBean) {
-                        Log.i("RHG", "" + testBean.toString());
-                        return Observable.create(new Observable.OnSubscribe<BannerTypeModel>() {
+                    public Observable<BannerTypeBean> call(final BannerTypeUrlBean bannerTypeUrlBean) {
+                        Log.i("RHG", "" + bannerTypeUrlBean.toString());
+                        return Observable.create(new Observable.OnSubscribe<BannerTypeBean>() {
                             @Override
-                            public void call(Subscriber<? super BannerTypeModel> subscriber) {
-                                BannerTypeModel imageModel = new BannerTypeModel();
+                            public void call(Subscriber<? super BannerTypeBean> subscriber) {
+                                BannerTypeBean imageModel = new BannerTypeBean();
                                 List<String> imageUrls = new ArrayList<String>();
-                                int _count = Integer.valueOf(testBean.getTotal());
+                                int _count = Integer.valueOf(bannerTypeUrlBean.getTotal());
                                 for (int i = 0; i < _count; i++) {
-                                    String _imageurl = testBean.getRows().get(i).getSrc();
+                                    String _imageurl = bannerTypeUrlBean.getRows().get(i).getSrc();
                                     imageUrls.add(_imageurl);
                                     Log.i("RHG", _imageurl);
                                 }

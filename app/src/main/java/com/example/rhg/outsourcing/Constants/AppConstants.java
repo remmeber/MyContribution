@@ -3,7 +3,10 @@ package com.example.rhg.outsourcing.constants;
 import com.example.rhg.outsourcing.R;
 
 /**
- * Created by remember on 2016/5/4.
+ *desc:APP的一些常量
+ *author：remember
+ *time：2016/5/28 16:40
+ *email：1013773046@qq.com
  */
 public class AppConstants {
     public static final boolean DEBUG = true;
@@ -23,7 +26,7 @@ public class AppConstants {
     //---------------------------店铺复用------------------------------------------------------------
     public static final int TypeHome = 0;
     public static final int TypeSeller = 1;
-    public static final int TypeOrder = 3;
+    public static final int TypeOrder = 2;
     //---------------------------页面类型-----------------------------------------------------------
     public static final int TypeMy = 2;
     public static final int TypeShoppingCar = 3;
@@ -31,7 +34,7 @@ public class AppConstants {
     public static final int TypeHeader = 1;
     public static final int TypeBody = 2;
     //------------------------请求服务器使用的数据类型-------------------------------------------------
-    public static final int TypeRecommend = 0;//TODO 推荐数据
+    public static final int TypeRecommend = 0;
     public static final int TypeDistance = 1;
     public static final int TypeSellNum = 2;
     public static final int TypeRateScore = 3;

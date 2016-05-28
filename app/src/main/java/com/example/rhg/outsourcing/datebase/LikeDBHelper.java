@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.rhg.outsourcing.bean.LikeBean;
 
 /**
- * Created by remember on 2016/5/9.
+ *desc:Like数据库辅助类
+ *author：remember
+ *time：2016/5/28 16:41
+ *email：1013773046@qq.com
  */
 public class LikeDBHelper extends SQLiteOpenHelper {
     /**

@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.example.rhg.outsourcing.MySwipeLayout;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
+import com.example.rhg.outsourcing.apapter.QFoodVpAdapter;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.impl.SearchListener;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -21,44 +21,45 @@ import java.util.List;
 
 
 /**
- * Created by remember on 2016/4/28.
+ *desc:所有店铺fm
+ *author：remember
+ *time：2016/5/28 16:47
+ *email：1013773046@qq.com
  */
-public class SellerFragment extends SuperFragment {
+public class SellerFragment extends SuperFragment implements View.OnClickListener {
     private static final String TAG = "SellerFragment";
     List<Fragment> fragments = new ArrayList<Fragment>();
-    View view;
+
+    FrameLayout fl_tab;
+    TextView tbCenterTV;
+    LinearLayout tbRightLL;
+    ImageView tbRightIV;
+
     ViewPager viewPager;
     SlidingTabLayout tabLayout;
-    MySwipeLayout mySwipeLayout;
-    RecyclerView recyclerView;
+
+    SearchListener searchListener;
+
+    public void setSearchListener(SearchListener searchListener) {
+        this.searchListener = searchListener;
+    }
+
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
     //----------------------------------------------------------------------------------------------
 
 
     public SellerFragment() {
-        Log.i(TAG, "SellerFragment");
-        fragments.add(new sellNumberFragment());
-        fragments.add(new DistanceFragment());
-        fragments.add(new RateScoreFragment());
+        fragments.add(new BySellNumberFragment());
+        fragments.add(new ByDistanceFragment());
+        fragments.add(new ByRateFragment());
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.seller_viewpager_layout, container, false);
-        tabLayout = (SlidingTabLayout) view.findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) view.findViewById(R.id.sellerViewPager);
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getChildFragmentManager(), fragments, AppConstants.SELL_TITLES);
-        viewPager.setAdapter(myPagerAdapter);
-        tabLayout.setViewPager(viewPager);
-//        recyclerView = (RecyclerView)view.findViewById(R.id.seller_recycle);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setHasFixedSize(true);
-//        RecycleSellerAdapter recommendAdapter = new RecycleSellerAdapter(getContext(),dataBySellNumberModels);
-//        recyclerView.setAdapter(recommendAdapter);
-        return view;
+    public int getLayoutResId() {
+        return R.layout.seller_viewpager_layout;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -68,12 +69,22 @@ public class SellerFragment extends SuperFragment {
 
     @Override
     protected void initView(View view) {
+        fl_tab = (FrameLayout)view.findViewById(R.id.fl_tab);
+        tbCenterTV = (TextView)view.findViewById(R.id.tb_center_tv);
+        tbRightLL = (LinearLayout)view.findViewById(R.id.tb_right_ll);
+        tbRightIV = (ImageView)view.findViewById(R.id.tb_right_iv);
+        tabLayout = (SlidingTabLayout) view.findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) view.findViewById(R.id.sellerViewPager);
 
     }
 
     @Override
     protected void initData() {
-
+        tbCenterTV.setText(getResources().getString(R.string.allstore));
+        tbRightLL.setOnClickListener(this);
+        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getChildFragmentManager(), fragments, AppConstants.SELL_TITLES);
+        viewPager.setAdapter(QFoodVpAdapter);
+        tabLayout.setViewPager(viewPager);
     }
 
     @Override
@@ -99,4 +110,12 @@ public class SellerFragment extends SuperFragment {
             viewPager.setCurrentItem(savedInstanceState.getInt("position"));
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tb_right_ll:
+                searchListener.doSearch();
+                break;
+        }
+    }
 }

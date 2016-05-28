@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.bean.PayContent;
+import com.example.rhg.outsourcing.bean.PayContentBean;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ public class PayDialog extends Dialog implements View.OnClickListener{
     PayDescriptionView payDesc;
     Button btPay;
     Button btCancel;
-    List<PayContent> payContentList;
+    List<PayContentBean> payContentBeanList;
 
-    public PayDialog(Context context, List<PayContent> payContentList) {
+    public PayDialog(Context context, List<PayContentBean> payContentBeanList) {
         super(context, R.style.MyDialogStyle);
-        this.payContentList = payContentList;
+        this.payContentBeanList = payContentBeanList;
         mContext = context;
     }
 
@@ -58,7 +58,7 @@ public class PayDialog extends Dialog implements View.OnClickListener{
 
     }
     private void initData() {
-        payDesc.setPayContentList(payContentList);
+        payDesc.setPayContentBeanList(payContentBeanList);
         btPay.setOnClickListener(this);
         btCancel.setOnClickListener(this);
     }

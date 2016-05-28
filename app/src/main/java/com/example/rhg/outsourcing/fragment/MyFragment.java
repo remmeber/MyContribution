@@ -3,6 +3,7 @@ package com.example.rhg.outsourcing.fragment;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,11 +14,16 @@ import com.example.rhg.outsourcing.activity.OrderActivity;
 import com.example.rhg.outsourcing.constants.AppConstants;
 
 /**
- * Created by remember on 2016/4/28.
+ *desc:我的fm
+ *author：remember
+ *time：2016/5/28 16:44
+ *email：1013773046@qq.com
  */
 public class MyFragment extends SuperFragment implements View.OnClickListener {
     private static final String TAG = "MyFragment";
     boolean hasAccount = true;
+
+    FrameLayout flTAB;
 
     ImageView userHeader;
     TextView userName;
@@ -43,19 +49,21 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
     public MyFragment() {
         if (AppConstants.DEBUG)
             Log.i(TAG, "MyFragment");
-        if(hasAccount){
+        if (hasAccount) {
 
         }
     }
 
     @Override
     public int getLayoutResId() {
-        return R.layout.userprofilelayout;
+        return R.layout.user_profile_layout;
     }
 
 
     @Override
     protected void initView(View view) {
+        flTAB = (FrameLayout) view.findViewById(R.id.fl_tab);
+
         userHeader = (ImageView) view.findViewById(R.id.userHeader);
         userName = (TextView) view.findViewById(R.id.userName);
 
@@ -81,6 +89,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
+        flTAB.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示

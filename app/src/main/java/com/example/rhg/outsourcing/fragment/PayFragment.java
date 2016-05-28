@@ -5,7 +5,10 @@ import android.view.View;
 import com.example.rhg.outsourcing.R;
 
 /**
- * 支付宝支付
+ *desc:TODO 未使用
+ *author：remember
+ *time：2016/5/28 16:46
+ *email：1013773046@qq.com
  */
 public class PayFragment extends SuperFragment {
 	@Override

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
+import com.example.rhg.outsourcing.apapter.QFoodVpAdapter;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.fragment.ShopDetailFoodFragment;
 import com.example.rhg.outsourcing.fragment.ShopDetailFragment;
@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/20.
+ *desc:店铺详情页面
+ *author：remember
+ *time：2016/5/28 16:15
+ *email：1013773046@qq.com
  */
 public class ShopDetailActivity extends BaseActivity {
     ImageView ivBack;
@@ -85,15 +88,20 @@ public class ShopDetailActivity extends BaseActivity {
         bundle.putString(AppConstants.KEY_NOTE, merchantNote);
         fragment.setArguments(bundle);
         fragments.add(fragment);
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), fragments,
+        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
                 AppConstants.SHOP_DETAIL_TITLES);
-        viewPager.setAdapter(myPagerAdapter);
+        viewPager.setAdapter(QFoodVpAdapter);
         slidingTabLayout.setViewPager(viewPager);
         ivBack.setOnClickListener(this);
     }
 
     @Override
-    public void showData(Object o) {
+    protected void showSuccess(Object s) {
+
+    }
+
+    @Override
+    protected void showError(Object s) {
 
     }
 

@@ -3,10 +3,11 @@ package com.example.rhg.outsourcing.bean;
 import com.example.rhg.outsourcing.widget.SlideView;
 
 import java.util.List;
-
 /**
- * Created by remember on 2016/5/9.
- * 购物车模型  //todo 后期修改继承自店铺模型
+ *desc:购物车模型  //todo 后期修改继承自店铺模型
+ *author：remember
+ *time：2016/5/28 16:39
+ *email：1013773046@qq.com
  */
 public class ShoppingCartBean {
     public static final String KEY_PRODUCT_ID = "productId";

@@ -7,7 +7,10 @@ import android.support.v4.app.FragmentTransaction;
 import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 
 /**
- * Created by remember on 2016/5/2.
+ *desc:fm控制类
+ *author：remember
+ *time：2016/5/28 17:02
+ *email：1013773046@qq.com
  */
 public class FragmentController {
     private static final String TAG = "FragmentController";

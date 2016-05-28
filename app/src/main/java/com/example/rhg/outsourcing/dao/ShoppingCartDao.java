@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * SHz
+ *desc:购物车数据口DAO
+ *author：remember
+ *time：2016/5/28 16:41
+ *email：1013773046@qq.com
  */
 public class ShoppingCartDao {
 

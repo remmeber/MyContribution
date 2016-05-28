@@ -8,22 +8,25 @@ import android.util.Log;
 
 import java.util.List;
 
+import com.example.rhg.outsourcing.bean.FavorableFoodBean;
 import com.example.rhg.outsourcing.impl.SlidesViewChangeListener;
-import com.example.rhg.outsourcing.bean.ImageModel;
 
 /**
- * Created by whiskeyfei on 15-7-24.
+ *desc:todo 待使用适配器
+ *author：remember
+ *time：2016/5/28 16:21
+ *email：1013773046@qq.com
  */
 public class SlidesImageAdapter {
     private static final String TAG = "SlidesImageAdapter";
 
-    private List<ImageModel> mList;
+    private List<FavorableFoodBean> mList;
     private SlidesViewChangeListener mChangeListener;
 
     private int mCurrentPos = 0;
     private int mOldPos = 0;
 
-    private ImageModel mCurrentModel;
+    private FavorableFoodBean mCurrentModel;
     private static final long DELAYTIME = 5000;
     private static final int CHANGE_FLAG = 1;
     private boolean isStop = true;
@@ -32,7 +35,7 @@ public class SlidesImageAdapter {
         return mOldPos;
     }
 
-    private ImageModel getCurrentModel(){
+    private FavorableFoodBean getCurrentModel(){
         return mCurrentModel;
     }
 
@@ -47,7 +50,7 @@ public class SlidesImageAdapter {
         }
     };
 
-    public void setData(List<ImageModel> mList){
+    public void setData(List<FavorableFoodBean> mList){
         this.mList = mList;
         startTimer();
     }
@@ -87,18 +90,21 @@ public class SlidesImageAdapter {
     private void switchImage(){
         Log.e(TAG,"switchImage() -> mCurrentPos:" + mCurrentPos);
         int imageRsid = -1;
+        String imageUrl = "";
         String title = null;
         if (mCurrentPos >= mList.size()){
             mCurrentPos = 0;
         }
         mCurrentModel = mList.get(mCurrentPos);
         if (mCurrentModel != null){
-            imageRsid = mCurrentModel.getImageId();
-            title = mCurrentModel.getContent();
+//            imageRsid = mCurrentModel.getImageId();
+//            title = mCurrentModel.getContent();
+            imageUrl = mCurrentModel.getImageUrl();
+            title = mCurrentModel.getTitle();
         }
         mOldPos = mCurrentPos;
         mCurrentPos++;
-        mChangeListener.update(imageRsid,title, mOldPos);
+        mChangeListener.update(imageUrl,title, mOldPos);
         mHandler.sendEmptyMessageDelayed(CHANGE_FLAG, DELAYTIME);
     }
 

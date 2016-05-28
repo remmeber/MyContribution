@@ -11,14 +11,17 @@ import android.widget.Toast;
 
 import com.example.rhg.outsourcing.MeiTuanActivity;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
-import com.example.rhg.outsourcing.bean.ImageModel;
+import com.example.rhg.outsourcing.apapter.QFoodGridViewAdapter;
+import com.example.rhg.outsourcing.bean.FavorableFoodBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *desc:todo 未使用fm
+ *author：remember
+ *time：2016/5/28 16:49
+ *email：1013773046@qq.com
  */
 public class TypeFragment extends Fragment {
 
@@ -27,8 +30,8 @@ public class TypeFragment extends Fragment {
     private String[] mTitle;
     private int mStart;
     private GridView mGridView;
-    DPGridViewAdapter mDPGridViewAdapter;
-    private List<ImageModel> mDataList = new ArrayList<ImageModel>();
+    QFoodGridViewAdapter mDPGridViewAdapter;
+    private List<FavorableFoodBean> mDataList = new ArrayList<FavorableFoodBean>();
 
     public TypeFragment() {
         super();
@@ -50,7 +53,7 @@ public class TypeFragment extends Fragment {
 
     private void initData() {
         for (int i = mStart*10; i < mStart*10+mCount; i++) {
-//            ImageModel model = new ImageModel();
+//            FavorableFoodBean model = new FavorableFoodBean();
 //            model.setImageId(mImageResId[i]);
 //            model.setContent(mTitle[i]);
 //            mDataList.add(model);
@@ -69,7 +72,7 @@ public class TypeFragment extends Fragment {
             }
         });
         mGridView.setNumColumns(5);
-        mDPGridViewAdapter = new DPGridViewAdapter(getActivity(), mDataList, R.layout.recyclegriditem);
+        mDPGridViewAdapter = new QFoodGridViewAdapter(getActivity(), mDataList, R.layout.recyclegriditem);
         mGridView.setAdapter(mDPGridViewAdapter);
         return view;
     }

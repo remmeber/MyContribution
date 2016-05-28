@@ -1,7 +1,10 @@
 package com.example.rhg.outsourcing.bean;
 
 /**
- * Created by remember on 2016/5/19.
+ *desc:商品详情页点赞模型
+ *author：remember
+ *time：2016/5/28 16:33
+ *email：1013773046@qq.com
  */
 public class LikeBean {
     public static final String KEY_PRODUCT_ID = "productId";

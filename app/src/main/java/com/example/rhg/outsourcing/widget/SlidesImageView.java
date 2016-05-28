@@ -12,6 +12,7 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.SlidesImageAdapter;
 import com.example.rhg.outsourcing.impl.SlidesViewChangeListener;
 import com.example.rhg.outsourcing.utils.AnimationUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 /**
@@ -62,8 +63,8 @@ import com.example.rhg.outsourcing.utils.AnimationUtils;
     }
 
     @Override
-    public void update(int id, String title, int position) {
-        mImageView.setImageResource(id);
+    public void update(String imageUrl, String title, int position) {
+        ImageLoader.getInstance().displayImage(imageUrl,mImageView);
         AnimationUtils.alphaAnimation(mImageView, 0.0f, 1.0f, 500);
         mTextView.setText(title);
     }

@@ -5,6 +5,8 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.rhg.outsourcing.apapter.viewHolder.QFoodGridAdapterViewHolder;
+
 import java.util.List;
 
 
@@ -76,11 +78,11 @@ public abstract class DPBasePageAdapter<T> extends PagerAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        final DPAdapterViewHolder holder = DPAdapterViewHolder.get(mContext, convertView, parent, mLayoutId, position);
+        final QFoodGridAdapterViewHolder holder = QFoodGridAdapterViewHolder.get(mContext, convertView, parent, mLayoutId, position);
         convert(holder,getItem(getPosition(position)));
         return holder.getConvertView();
     }
 
-	public abstract void convert(DPAdapterViewHolder holder,T t);
+	public abstract void convert(QFoodGridAdapterViewHolder holder, T t);
 
 }

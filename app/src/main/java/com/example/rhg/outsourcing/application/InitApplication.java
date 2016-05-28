@@ -1,10 +1,15 @@
 package com.example.rhg.outsourcing.application;
 
 import android.app.Application;
+import android.app.Service;
+import android.os.Vibrator;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.datebase.LikeDBHelper;
 import com.example.rhg.outsourcing.datebase.ShoppingCartDBHelper;
+import com.example.rhg.outsourcing.locationservice.LocationService;
+import com.example.rhg.outsourcing.utils.NetUtil;
 import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -12,21 +17,38 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
 /**
- * Created by remember on 2016/5/9.
+ *desc:APP的入口，定义全局变量
+ *author：remember
+ *time：2016/5/28 16:22
+ *email：1013773046@qq.com
  */
 public class InitApplication extends Application {
     private static InitApplication initApplication;
+    public static boolean isNetworkAvailable;
+    public LocationService locationService;
+    public Vibrator mVibrator;
 
     @Override
     public void onCreate() {
+        initBDMap();
         super.onCreate();
         initApplication = this;
         initSharePreferenceUtil();
         initDBHelper();
         initToast();
         initImageLoader();
+    }
+
+    private void initBDMap() {
+        /***
+         * 初始化定位sdk，建议在Application中创建
+         */
+        locationService = new LocationService(getApplicationContext());
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        SDKInitializer.initialize(getApplicationContext());
+        if (NetUtil.isConnected(getApplicationContext()))
+            isNetworkAvailable = true;
     }
 
     private void initSharePreferenceUtil() {

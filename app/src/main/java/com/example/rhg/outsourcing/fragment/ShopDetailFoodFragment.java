@@ -10,7 +10,10 @@ import com.example.rhg.outsourcing.ui.FragmentController;
 import com.example.rhg.outsourcing.widget.VerticalTabLayout;
 
 /**
- * Created by remember on 2016/5/20.
+ *desc:店铺详情的食物类型fm，里面{@link FoodTypeFragment}展示店铺中的商品
+ *author：remember
+ *time：2016/5/28 16:48
+ *email：1013773046@qq.com
  */
 public class ShopDetailFoodFragment extends SuperFragment {
     VerticalTabLayout verticalTabLayout;

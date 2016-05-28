@@ -1,9 +1,13 @@
 package com.example.rhg.outsourcing.impl;
 
 /**
- * Created by whiskeyfei on 15-7-24.
+ *desc:todo 未使用
+ *author：remember
+ *time：2016/5/28 16:50
+ *email：1013773046@qq.com
  */
 
 public interface ImageChangeListener {
-    public void updateImage(int id, int position);
+//    public void updateImage(int id, int position);
+    public void updateImage(String imageUrl, int position);
 }

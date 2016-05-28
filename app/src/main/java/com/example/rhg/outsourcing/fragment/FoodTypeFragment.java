@@ -10,15 +10,18 @@ import android.view.View;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.example.rhg.outsourcing.apapter.GoodsListAdapter;
+import com.example.rhg.outsourcing.bean.GoodsDetailBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.bean.GoodsDetailModel;
 import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/20.
+ *desc:店铺详情中的商品类型fm，和{@link com.example.rhg.outsourcing.widget.VerticalTabLayout}一起使用
+ *author：remember
+ *time：2016/5/28 16:43
+ *email：1013773046@qq.com
  */
 public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.GoodsItemClickListener {
 
@@ -28,7 +31,7 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
             "http://img2.3lian.com/2014/f2/37/d/39.jpg",
             "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
     };
-    List<GoodsDetailModel> goodsDetailModelList;
+    List<GoodsDetailBean> goodsDetailBeanList;
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     TestPresenter testPresenter;
@@ -44,23 +47,23 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
 
     @Override
     public int getLayoutResId() {
-        return R.layout.rcv_item;
+        return R.layout.common_swipe_recycle_layout;
     }
 
     @Override
     protected void initData() {
-        goodsDetailModelList = new ArrayList<>();
+        goodsDetailBeanList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            GoodsDetailModel goodsDetailModel = new GoodsDetailModel();
-            goodsDetailModel.setImageUrls(images);
-            goodsDetailModel.setGoodsName("哈哈" + i);
-            goodsDetailModel.setGoodSellNum("" + i);
-            goodsDetailModel.setGoodsPrice(i + "0");
-            goodsDetailModelList.add(goodsDetailModel);
+            GoodsDetailBean goodsDetailBean = new GoodsDetailBean();
+            goodsDetailBean.setImageUrls(images);
+            goodsDetailBean.setGoodsName("哈哈" + i);
+            goodsDetailBean.setGoodSellNum("" + i);
+            goodsDetailBean.setGoodsPrice(i + "0");
+            goodsDetailBeanList.add(goodsDetailBean);
         }
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        GoodsListAdapter goodsListAdapter = new GoodsListAdapter(getContext(), goodsDetailModelList);
+        GoodsListAdapter goodsListAdapter = new GoodsListAdapter(getContext(), goodsDetailBeanList);
         goodsListAdapter.setGoodsItemClickListener(this);
         recyclerView.setAdapter(goodsListAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -73,9 +76,9 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
 
     @Override
     protected void initView(View view) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleview);
-        /*RecycleSellerAdapter recycleSellerAdapter = new RecycleSellerAdapter(getContext(), dataBySellNumberModels, AppConstants.TypeSeller);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);
+        recyclerView = (RecyclerView) view.findViewById(R.id.common_recycle);
+        /*RecycleAbstractAdapter recycleSellerAdapter = new RecycleAbstractAdapter(getContext(), dataBySellNumberModels, AppConstants.TypeSeller);
         recycleSellerAdapter.setOnListItemClick(this);
         recyclerView.setAdapter(recycleSellerAdapter)*/
         ;

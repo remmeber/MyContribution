@@ -8,7 +8,10 @@ import android.util.Log;
 import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 
 /**
- * Created by remember on 2016/5/9.
+ *desc:购物车数据库辅助类
+ *author：remember
+ *time：2016/5/28 16:41
+ *email：1013773046@qq.com
  */
 public class ShoppingCartDBHelper extends SQLiteOpenHelper {
     /** 数据库名称常量 */

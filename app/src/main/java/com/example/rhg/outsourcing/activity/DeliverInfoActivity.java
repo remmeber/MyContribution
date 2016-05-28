@@ -12,7 +12,10 @@ import com.example.rhg.outsourcing.widget.ModifyHeadDialog;
 import com.example.rhg.outsourcing.widget.CircleImageView;
 
 /**
- * Created by remember on 2016/5/17.
+ *desc:跑腿员信息页面
+ *author：remember
+ *time：2016/5/28 16:13
+ *email：1013773046@qq.com
  */
 public class DeliverInfoActivity extends BaseActivity{
     FrameLayout tb_common;
@@ -35,7 +38,7 @@ public class DeliverInfoActivity extends BaseActivity{
     @Override
     protected void initView() {
         tb_common = (FrameLayout)findViewById(R.id.fl_tab);
-        tvRight = (TextView) findViewById(R.id.tv_tab_right);//TODO 有待考虑
+        tvRight = (TextView) findViewById(R.id.tb_right_tv);//TODO 有待考虑
         ivLeft = (ImageView) findViewById(R.id.iv_tab_left);
 
         headView = (CircleImageView)findViewById(R.id.ci_head);
@@ -59,9 +62,15 @@ public class DeliverInfoActivity extends BaseActivity{
     }
 
     @Override
-    public void showData(Object o) {
+    protected void showSuccess(Object s) {
 
     }
+
+    @Override
+    protected void showError(Object s) {
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){

@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.ExpandableListViewAdapter;
-import com.example.rhg.outsourcing.bean.PayContent;
+import com.example.rhg.outsourcing.apapter.QFoodShoppingCartExplAdapter;
+import com.example.rhg.outsourcing.bean.PayContentBean;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.PayDialog;
 import com.example.rhg.outsourcing.widget.PayDescriptionView;
@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/22.
- * 付款页面 todo 跳到付款页面的数据都要有一个标志：来自购物车还是待付款页面。如果来自购物车，则要去掉购物车
+ *desc:付款页面 todo 跳到付款页面的数据都要有一个标志：来自购物车还是待付款页面。如果来自购物车，则要去掉购物车
  * 中的商品，标记为待付款或者完成；如果是来自待付款，则保留待付款或者完成；
+ *author：remember
+ *time：2016/5/28 16:14
+ *email：1013773046@qq.com
  */
 public class PayActivity extends BaseActivity {
     ImageView ivBack;
@@ -34,18 +36,18 @@ public class PayActivity extends BaseActivity {
     TextView tvReceiverAddress;
     ImageView ivEdit;
 
-    ExpandableListViewAdapter expandableListViewAdapter;
+    QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
     ExpandableListView expandableListView;
     FrameLayout flPay;
 
     LinearLayout llPay;
     PayDescriptionView payDescriptionView;
 
-    List<PayContent> payContentList;
+    List<PayContentBean> payContentBeanList;
 
     public PayActivity() {
-        expandableListViewAdapter = new ExpandableListViewAdapter(this);
-        payContentList = new ArrayList<>();
+        QFoodShoppingCartExplAdapter = new QFoodShoppingCartExplAdapter(this);
+        payContentBeanList = new ArrayList<>();
 
     }
 
@@ -65,7 +67,7 @@ public class PayActivity extends BaseActivity {
     @Override
     protected void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_tab_left);
-        tvCenter = (TextView) findViewById(R.id.tv_tab_center);
+        tvCenter = (TextView) findViewById(R.id.tb_center_tv);
         flTab = (FrameLayout) findViewById(R.id.fl_tab);
 
         tvReceiver = (TextView) findViewById(R.id.tv_receiver);
@@ -89,7 +91,7 @@ public class PayActivity extends BaseActivity {
         tvReceiverAddress.setText("收货地址：江苏省南京市江宁区东南大学");
         ivEdit.setOnClickListener(this);
         expandableListView.setGroupIndicator(null);
-        expandableListView.setAdapter(expandableListViewAdapter);
+        expandableListView.setAdapter(QFoodShoppingCartExplAdapter);
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -108,10 +110,14 @@ public class PayActivity extends BaseActivity {
     }
 
     @Override
-    public void showData(Object o) {
+    protected void showSuccess(Object s) {
 
     }
 
+    @Override
+    protected void showError(Object s) {
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -124,15 +130,15 @@ public class PayActivity extends BaseActivity {
                 break;
             case R.id.fl_pay:
 
-                payContentList.clear();
+                payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {
-                    PayContent payContent = new PayContent();
-                    payContent.setGoodsName("哈啊哈" + i);
-                    payContent.setGoodsDescription("好吃哦");
-                    payContent.setPayMoney("" + i * 2);
-                    payContentList.add(payContent);
+                    PayContentBean payContentBean = new PayContentBean();
+                    payContentBean.setGoodsName("哈啊哈" + i);
+                    payContentBean.setGoodsDescription("好吃哦");
+                    payContentBean.setPayMoney("" + i * 2);
+                    payContentBeanList.add(payContentBean);
                 }
-                PayDialog payDialog = new PayDialog(this,payContentList);
+                PayDialog payDialog = new PayDialog(this, payContentBeanList);
                 payDialog.show();
                 break;
         }

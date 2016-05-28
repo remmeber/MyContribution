@@ -9,7 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.bean.PayContent;
+import com.example.rhg.outsourcing.bean.PayContentBean;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by remember on 2016/5/22.
  */
 public class PayDescriptionView extends ScrollView {
-    List<PayContent> payContentList;
+    List<PayContentBean> payContentBeanList;
     LinearLayout mLayout;
     Context mContext;
 
@@ -39,14 +39,14 @@ public class PayDescriptionView extends ScrollView {
         addView(mLayout);
     }
 
-    public void setPayContentList(List<PayContent> payContentList) {
-        this.payContentList = payContentList;
+    public void setPayContentBeanList(List<PayContentBean> payContentBeanList) {
+        this.payContentBeanList = payContentBeanList;
         invalidateView();
     }
 
     private void invalidateView() {
-        for (int i = 0; i < payContentList.size(); i++) {
-            PayContent _temp = payContentList.get(i);
+        for (int i = 0; i < payContentBeanList.size(); i++) {
+            PayContentBean _temp = payContentBeanList.get(i);
             View view = View.inflate(mContext, R.layout.item_pay_content, null);
             TextView goodsName = (TextView)view.findViewById(R.id.product_subject);
             TextView goodsDesc = (TextView)view.findViewById(R.id.product_desc);

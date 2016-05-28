@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.MyPagerAdapter;
+import com.example.rhg.outsourcing.apapter.QFoodVpAdapter;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.fragment.AllOrderFragment;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/16.
+ *desc:订单页面
+ *author：remember
+ *time：2016/5/28 16:14
+ *email：1013773046@qq.com
  */
 public class OrderActivity extends BaseActivity{
     FrameLayout tb_common;
@@ -40,22 +43,27 @@ public class OrderActivity extends BaseActivity{
         fragments.add(new AllOrderFragment());
         fragments.add(new AllOrderFragment());
         fragments.add(new AllOrderFragment());
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),fragments, AppConstants.ORDER_TITLES);
-        vpOrder.setAdapter(myPagerAdapter);
+        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(),fragments, AppConstants.ORDER_TITLES);
+        vpOrder.setAdapter(QFoodVpAdapter);
         stlOrder.setViewPager(vpOrder);
     }
     @Override
     protected void initView() {
         tb_common =(FrameLayout)findViewById(R.id.fl_tab);
         ivBack = (ImageView)findViewById(R.id.iv_tab_left);
-        tvOrder = (TextView)findViewById(R.id.tv_tab_center);
+        tvOrder = (TextView)findViewById(R.id.tb_center_tv);
         stlOrder = (SlidingTabLayout)findViewById(R.id.stl_myorder);
         vpOrder = (ViewPager)findViewById(R.id.vp_myorder);
         ivBack.setOnClickListener(this);
     }
 
     @Override
-    public void showData(Object o) {
+    protected void showSuccess(Object s) {
+
+    }
+
+    @Override
+    protected void showError(Object s) {
 
     }
 

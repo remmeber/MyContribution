@@ -9,7 +9,10 @@ import com.example.rhg.outsourcing.datebase.LikeDBHelper;
 import com.example.rhg.outsourcing.bean.LikeBean;
 
 /**
- * Created by remember on 2016/5/19.
+ *desc:Like数据库DAO
+ *author：remember
+ *time：2016/5/28 16:40
+ *email：1013773046@qq.com
  */
 public class LikeDao {
     private volatile static LikeDao instance = null;

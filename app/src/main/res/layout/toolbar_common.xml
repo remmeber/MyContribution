@@ -9,7 +9,7 @@
     tools:background="@color/colorActiveGreen">
 
     <TextView
-        android:id="@+id/tv_tab_center"
+        android:id="@+id/tb_center_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
@@ -22,24 +22,24 @@
         android:id="@+id/iv_tab_left"
         android:layout_width="36dp"
         android:layout_height="match_parent"
-        android:src="@mipmap/ic_chevron_left_black_48dp" />
+        tools:src="@mipmap/ic_chevron_left_black_48dp" />
 
     <LinearLayout
-        android:id="@+id/ll_tab_right"
+        android:id="@+id/tb_right_ll"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/iv_tab_right"
+            android:id="@+id/tb_right_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             tools:src="@mipmap/ic_place_white_48dp" />
 
         <TextView
-            android:id="@+id/tv_tab_right"
+            android:id="@+id/tb_right_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"

@@ -1,218 +1,315 @@
 package com.example.rhg.outsourcing.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.example.rhg.outsourcing.activity.ShopDetailActivity;
-import com.example.rhg.outsourcing.bean.TestBean;
+import com.example.rhg.outsourcing.apapter.HomeRecycleAdapter;
+import com.example.rhg.outsourcing.application.InitApplication;
+import com.example.rhg.outsourcing.bean.FavorableFoodBean;
+import com.example.rhg.outsourcing.bean.RecommendListBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.DPGridViewAdapter;
-import com.example.rhg.outsourcing.apapter.RecycleSellerAdapter;
+import com.example.rhg.outsourcing.apapter.QFoodGridViewAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleMultiTypeAdapter;
-import com.example.rhg.outsourcing.bean.BannerTypeModel;
+import com.example.rhg.outsourcing.bean.BannerTypeBean;
 import com.example.rhg.outsourcing.bean.FavorableTypeModel;
 import com.example.rhg.outsourcing.bean.FooterTypeModel;
 import com.example.rhg.outsourcing.bean.HeaderTypeModel;
-import com.example.rhg.outsourcing.bean.ImageModel;
 import com.example.rhg.outsourcing.bean.RecommendListTypeModel;
 import com.example.rhg.outsourcing.bean.RecommendTextTypeModel;
-import com.example.rhg.outsourcing.bean.BaseSellerModel;
-import com.example.rhg.outsourcing.bean.TextTypeModel;
+import com.example.rhg.outsourcing.bean.TextTypeBean;
+import com.example.rhg.outsourcing.impl.SearchListener;
+import com.example.rhg.outsourcing.locationservice.LocationService;
+import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 import com.example.rhg.outsourcing.utils.BannerController;
+import com.example.rhg.outsourcing.utils.ImageUtils;
+import com.example.rhg.outsourcing.utils.ToastHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/3.
+ *desc:主页
+ *author：remember
+ *time：2016/5/28 16:44
+ *email：1013773046@qq.com
  */
 public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
-        RecycleMultiTypeAdapter.OnGridItemClickListener, RecycleSellerAdapter.OnListItemClick {
-    List<ImageModel> imageModels = new ArrayList<ImageModel>();
-    private String[] images = {
-            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
-            "http://d.3987.com/sqmy_131219/001.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
-            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
-    };
-    List<BaseSellerModel> sellRecommendModels = new ArrayList<BaseSellerModel>();
-    View view;
-    RecyclerView rcv;
+        RecycleMultiTypeAdapter.OnGridItemClickListener, HomeRecycleAdapter.OnListItemClick, View.OnClickListener {
+    List<FavorableFoodBean> favorableFoodBeen = new ArrayList<FavorableFoodBean>();
+    List<RecommendListBean> sellRecommendModels = new ArrayList<RecommendListBean>();
     SwipeRefreshLayout swipeRefreshLayout;
     RecycleMultiTypeAdapter recycleMultiTypeAdapter;
+
+    View view;
+    RecyclerView home_rcv;
+    /*toolbar 相关*/
+    RelativeLayout tlLeftRL;
+    ImageView tlLeftIV;
+    TextView tlLeftTV;
+    TextView tlCenterTV;
+    ImageView tlCenterIV;
+    LinearLayout tlRightLL;
+    ImageView tlRightIV;
+    TextView tlRightTV;
+    /*toolbar 相关*/
 
     TestPresenter testPresenter;
     //itme的数据类型集合
     List<Object> mData;
 
+    SearchListener searchListener;
+    MyLocationListener myLocationListener;
+    boolean isLocated;
+
     public HomeFragment() {
         testPresenter = new TestPresenter(this);
-        Log.i("RHG", "HomeFragment has created");
+        myLocationListener = new MyLocationListener(this);
     }
+
 
     @Override
     public int getLayoutResId() {
-        return R.layout.rcv_item;
+        return R.layout.home_fm_layout;
     }
 
+    public void setSearchListener(SearchListener searchListener) {
+        this.searchListener = searchListener;
+    }
 
     @Override
     protected void initView(View view) {
-        rcv = (RecyclerView) view.findViewById(R.id.recycleview);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+        tlLeftRL = (RelativeLayout) view.findViewById(R.id.home_tl_left_rl);
+        tlLeftIV = (ImageView) view.findViewById(R.id.home_tl_left_bt);
+        tlLeftTV = (TextView) view.findViewById(R.id.home_tl_left_tv);
+
+        tlCenterTV = (TextView) view.findViewById(R.id.home_tl_center_tv);
+        tlCenterIV = (ImageView) view.findViewById(R.id.home_tl_center_iv);
+
+        tlRightLL = (LinearLayout) view.findViewById(R.id.home_tl_right_ll);
+        tlRightIV = (ImageView) view.findViewById(R.id.home_tl_right_iv);
+
+        home_rcv = (RecyclerView) view.findViewById(R.id.home_recycle);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_swipe);
     }
 
     @Override
     protected void initData() {
+
+        ImageUtils.TintFill(tlLeftIV, getResources().getDrawable(R.mipmap.ic_place_white_48dp)
+                , getResources().getColor(R.color.colorActiveGreen));
+        ImageUtils.TintFill(tlCenterIV, getResources().getDrawable(R.mipmap.ic_search_white)
+                , getResources().getColor(R.color.colorActiveGreen));
+        ImageUtils.TintFill(tlRightIV, getResources().getDrawable(R.mipmap.ic_search_white)
+                , getResources().getColor(R.color.colorActiveGreen));
+        tlLeftRL.setOnClickListener(this);
+        tlCenterTV.setOnClickListener(this);
+        tlCenterIV.setOnClickListener(this);
+        tlRightLL.setOnClickListener(this);
+
         mData = new ArrayList<>();
         recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getContext(), mData);
         recycleMultiTypeAdapter.setBannerClickListener(this);
         recycleMultiTypeAdapter.setOnGridItemClickListener(this);
         fillItemList();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        rcv.setLayoutManager(linearLayoutManager);
-        rcv.setHasFixedSize(false);
-        rcv.setAdapter(recycleMultiTypeAdapter);
+        home_rcv.setLayoutManager(linearLayoutManager);
+        home_rcv.setHasFixedSize(false);
+        home_rcv.setAdapter(recycleMultiTypeAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i("RHG", "OnRefresh");
                 testPresenter.getData();
             }
         });
+    }
+
+    @Override
+    public LocationService GetMapService() {
+        return ((InitApplication) getActivity().getApplication()).locationService;
+    }
+
+    @Override
+    public void getLocation(LocationService locationService, MyLocationListener mLocationListener) {
+        mLocationListener.getLocation(locationService);
+    }
+
+    @Override
+    public MyLocationListener getLocationListener() {
+        return new MyLocationListener(this);
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("RHG", "onStart");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i("RHG", "onStop");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("RHG", "onResume");
         BannerController.getInstance().startBanner(2000);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("RHG", "onPause");
         BannerController.getInstance().stopBanner();
     }
 
     @Override
     protected void showFailed() {
-        Log.i("RHG", "HomeFragment failed");
 
     }
 
     @Override
     public void showSuccess(Object o) {
         mData.remove(1);
-        mData.add(1,(BannerTypeModel)o);
+        mData.add(1, (BannerTypeBean) o);
         recycleMultiTypeAdapter.notifyItemChanged(1);
-
         swipeRefreshLayout.setRefreshing(false);
 
     }
 
+
+    /*定位显示*/
+    @Override
+    public void showLocSuccess(String s) {
+        isLocated = true;
+        tlLeftTV.setText(s);
+    }
+
+    @Override
+    public void showLocFailed(String s) {
+        ToastHelper.getInstance()._toast(s);
+    }
+
     private void fillItemList() {
         for (int i = 0; i < 6; i++) {
-            ImageModel imageModel = new ImageModel();
-            BaseSellerModel sellRecommendModel = new BaseSellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
+            FavorableFoodBean favorableFoodBean = new FavorableFoodBean();
+//            BaseSellerModel sellRecommendModel = new BaseSellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
+            RecommendListBean recommendListBean = new RecommendListBean();
+            recommendListBean.setMerchantName("哈哈");
+            recommendListBean.setFoodType("中餐");
+            recommendListBean.setSellerDistance("距离10m");
+            recommendListBean.setImageUrl(AppConstants.images[1]);
 
-            imageModel.setImageId(R.drawable.recommend_default_icon_1);
+            favorableFoodBean.setImageUrl(AppConstants.images[0]);
             switch (i) {
                 case 0:
                 case 3:
 
-                    imageModel.setHeadercolor(R.color.colorAccent);
-                    imageModel.setContent("哈哈哈哈");
+                    favorableFoodBean.setHeadercolor(R.color.colorAccent);
+                    favorableFoodBean.setTitle("哈哈哈哈");
                     break;
                 case 1:
                 case 4:
-                    imageModel.setHeadercolor(R.color.colorActiveGreen);
-                    imageModel.setContent("呵呵呵呵");
+                    favorableFoodBean.setHeadercolor(R.color.colorActiveGreen);
+                    favorableFoodBean.setTitle("呵呵呵呵");
                     break;
                 case 2:
                 case 5:
-                    imageModel.setHeadercolor(R.color.colorInActive);
-                    imageModel.setContent("啊啊啊啊");
+                    favorableFoodBean.setHeadercolor(R.color.colorInActive);
+                    favorableFoodBean.setTitle("啊啊啊啊");
                     break;
             }
-
-            sellRecommendModels.add(sellRecommendModel);
-            imageModels.add(imageModel);
+            sellRecommendModels.add(recommendListBean);
+            favorableFoodBeen.add(favorableFoodBean);
         }
+
         mData.add(new HeaderTypeModel("Header", R.color.cardview_shadow_start_color));
-        BannerTypeModel bannerTypeModel = new BannerTypeModel();
-        bannerTypeModel.setImageUrls(Arrays.asList(images));
-        mData.add(bannerTypeModel);//TODO 传入URL集合
-        mData.add(new TextTypeModel("aaaaa"));
-        mData.add(new FavorableTypeModel(imageModels,new DPGridViewAdapter(getContext(),imageModels,R.layout.recyclegriditem)));
+        BannerTypeBean bannerTypeBean = new BannerTypeBean();
+        bannerTypeBean.setImageUrls(Arrays.asList(AppConstants.images));
+        mData.add(bannerTypeBean);
+        TextTypeBean textTypeBean = new TextTypeBean();
+        mData.add(textTypeBean);
+        mData.add(new FavorableTypeModel(favorableFoodBeen, new QFoodGridViewAdapter(getContext(), favorableFoodBeen, R.layout.recyclegriditem)));
         mData.add(new RecommendTextTypeModel());
-        mData.add(new RecommendListTypeModel(sellRecommendModels, new RecycleSellerAdapter(getContext(), sellRecommendModels, AppConstants.TypeHome), this));
+        RecommendListTypeModel recommendListTypeModel = new RecommendListTypeModel();
+        recommendListTypeModel.setOnListItemClick(this);
+        recommendListTypeModel.setHomeRecycleAdapter(new HomeRecycleAdapter(getContext(), sellRecommendModels));
+        mData.add(recommendListTypeModel);
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
 
+    //TODO 扫一扫
+    private void doSwipe() {
+        ToastHelper.getInstance()._toast("扫一扫");
+    }
 
 
     //--------------------------------点击事件回调---------------------------------------------------
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.home_tl_left_rl:
+                if (InitApplication.isNetworkAvailable)
+                    reStartLocation();
+                else ToastHelper.getInstance()._toast("请检查网络");
+                break;
+            case R.id.home_tl_center_tv:
+                searchListener.doSearch();
+                break;
+            case R.id.home_tl_center_iv:
+                searchListener.doSearch();
+                break;
+            case R.id.home_tl_right_ll:
+                doSwipe();
+                break;
+        }
+    }
+
     @Override
     public void bannerClick(int position) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         /*todo 传递参数*/
-        intent.putExtra(AppConstants.KEY_PHONE,"1234567890");
-        intent.putExtra(AppConstants.KEY_ADDRESS,"江苏省南京市江宁区东南大学");
-        intent.putExtra(AppConstants.KEY_NOTE,"东南大学是一所985高校");
-        intent.putExtra(AppConstants.KEY_MERCHANT_ID,"20160517");
-        intent.putExtra(AppConstants.KEY_MERCHANT_NAME,"荣哥土菜馆");
-        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO,AppConstants.images[3]);
+        intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
+        intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
+        intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID, "20160517");
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, "荣哥土菜馆");
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[3]);
         startActivity(intent);
     }
 
     @Override
     public void gridItemClick(View view, int position) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID,"20160518");
-        intent.putExtra(AppConstants.KEY_PRODUCT_NAME,"土豆丝");
-        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,"90");
-        startActivityForResult(intent,AppConstants.START_0);
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
+        intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
+        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");
+        startActivityForResult(intent, AppConstants.START_0);
     }
 
     @Override
     public void itemClick(View v, int position) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         /*todo 传递参数*/
-        intent.putExtra(AppConstants.KEY_PHONE,"1234567890");
-        intent.putExtra(AppConstants.KEY_ADDRESS,"江苏省南京市江宁区东南大学");
-        intent.putExtra(AppConstants.KEY_NOTE,"东南大学是一所985高校");
-        intent.putExtra(AppConstants.KEY_MERCHANT_ID,"20160517");
-        intent.putExtra(AppConstants.KEY_MERCHANT_NAME,"荣哥土菜馆");
-        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO,AppConstants.images[1]);
+        intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
+        intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
+        intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID, "20160517");
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, "荣哥土菜馆");
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[1]);
         startActivity(intent);
     }
+
 }

@@ -13,12 +13,13 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.apapter.BannerImageHolder;
+import com.example.rhg.outsourcing.apapter.viewHolder.BannerImageHolder;
+import com.example.rhg.outsourcing.bean.GoodsDetailBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.dao.LikeDao;
 import com.example.rhg.outsourcing.dao.ShoppingCartDao;
-import com.example.rhg.outsourcing.bean.GoodsDetailModel;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenterImpl;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
@@ -28,15 +29,12 @@ import com.example.rhg.outsourcing.widget.ShoppingCartWithNumber;
 import java.util.Arrays;
 
 /**
- * Created by remember on 2016/5/18.
+ *desc:商品详情页面
+ *author：remember
+ *time：2016/5/28 16:14
+ *email：1013773046@qq.com
  */
 public class GoodsDetailActivity extends BaseActivity {
-    private String[] images = {
-            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
-            "http://d.3987.com/sqmy_131219/001.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
-            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
-    };
 
     private boolean isLike;
     private String temp_productId;
@@ -63,12 +61,12 @@ public class GoodsDetailActivity extends BaseActivity {
     ShoppingCartWithNumber shoppingCartWithNumber;
     Button btBuy;
 
-    TestPresenter testPresenter;
-    GoodsDetailModel goodsDetailModel;
+    GoodsDetailBean goodsDetailBean;
+    GoodsDetailPresenter goodsDetailPresenter;
 
     public GoodsDetailActivity() {
-        testPresenter = new TestPresenter(this);
-        goodsDetailModel = new GoodsDetailModel();
+        goodsDetailPresenter = new GoodsDetailPresenterImpl(this);
+        goodsDetailBean = new GoodsDetailBean();
         //TODO 测试数据
         LikeDao likeDao = LikeDao.getInstance();
         likeDao.saveGoodsLikeInfo("20160518", 1).saveGoodsLikeInfo("20160519", 1)
@@ -78,9 +76,9 @@ public class GoodsDetailActivity extends BaseActivity {
             if (_num == 1)
                 isLike = true;
         }
-        /*goodsDetailModel = new GoodsDetailModel("20160518", images, isLike,
+        /*goodsDetailBean = new GoodsDetailBean("20160518", images, isLike,
                 "黄焖鸡米饭", "销量:90", "很好吃", "￥:16");*/
-        goodsDetailModel.setLike(isLike);
+        goodsDetailBean.setLike(isLike);
         //todo 模拟购物车数量数据库
         ShoppingCartUtil.addGoodToCart("20160518", "3");
         ShoppingCartUtil.addGoodToCart("20160519", "3");
@@ -93,13 +91,13 @@ public class GoodsDetailActivity extends BaseActivity {
     public void dataReceive(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            String _temp = bundle.getString(AppConstants.KEY_PRODUCT_ID);
-            goodsDetailModel.setProductId(_temp);
-            _temp = bundle.getString(AppConstants.KEY_PRODUCT_NAME);
-            goodsDetailModel.setGoodsName(_temp);
+            String _temp = bundle.getString(AppConstants.KEY_PRODUCT_ID, null);
+            goodsDetailBean.setProductId(_temp);
+            _temp = bundle.getString(AppConstants.KEY_PRODUCT_NAME, null);
+            goodsDetailBean.setGoodsName(_temp);
             _temp = "￥:";
-            _temp += bundle.getString(AppConstants.KEY_PRODUCT_PRICE);
-            goodsDetailModel.setGoodsPrice(_temp);
+            _temp += bundle.getString(AppConstants.KEY_PRODUCT_PRICE, null);
+            goodsDetailBean.setGoodsPrice(_temp);
         }
     }
 
@@ -112,11 +110,11 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         tb_common = (FrameLayout) findViewById(R.id.fl_tab);
-        tvCenter = (TextView) findViewById(R.id.tv_tab_center);
-        tvRight = (TextView) findViewById(R.id.tv_tab_right);
-        ivRight = (ImageView) findViewById(R.id.iv_tab_right);
+        tvCenter = (TextView) findViewById(R.id.tb_center_tv);
+        tvRight = (TextView) findViewById(R.id.tb_right_tv);
+        ivRight = (ImageView) findViewById(R.id.tb_right_iv);
         ivLeft = (ImageView) findViewById(R.id.iv_tab_left);
-        llTabRight = (LinearLayout) findViewById(R.id.ll_tab_right);
+        llTabRight = (LinearLayout) findViewById(R.id.tb_right_ll);
 
         convenientBanner = (ConvenientBanner) findViewById(R.id.iv_banner);
         ivLike = (ImageView) findViewById(R.id.iv_like);
@@ -144,11 +142,12 @@ public class GoodsDetailActivity extends BaseActivity {
                 getResources().getColor(R.color.colorActiveGreen));
         drawable_not_like = ImageUtils.TintWithoutFill(getResources().getDrawable(R.mipmap.ic_not_like),
                 getResources().getColor(R.color.colorActiveGreen));
+        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_black_48dp));
         tvRight.setText("杭州");//TODO 根据定位来决定
         tvCenter.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
         ShoppingCartDao shoppingCartDao = ShoppingCartDao.getInstance();
-        String _productId = goodsDetailModel.getProductId();
+        String _productId = goodsDetailBean.getProductId();
         if (shoppingCartDao.isExistGood(_productId)) {
             String _num = shoppingCartDao.getNumByProductID(_productId);
             tvNum.setText(_num);
@@ -157,7 +156,7 @@ public class GoodsDetailActivity extends BaseActivity {
             tvNum.setText("0");
             shoppingCartWithNumber.setNum("0");
         }
-        if (goodsDetailModel.isLike())
+        if (goodsDetailBean.isLike())
             ivLike.setImageDrawable(drawable_like);
         else
             ivLike.setImageDrawable(drawable_not_like);
@@ -175,33 +174,37 @@ public class GoodsDetailActivity extends BaseActivity {
         convenientBanner.startTurning(2000);
         convenientBanner
                 .setPageIndicator(AppConstants.imageindictors);
-        testPresenter.getData();
+        goodsDetailPresenter.getGoodsInfo();
     }
 
     //todo 从服务器获得的数据
     @Override
-    public void showData(Object o) {
-        ToastHelper.getInstance()._toast(o.toString());
-        goodsDetailModel.setGoodsDescription("很好吃");
-        goodsDetailModel.setGoodSellNum("99");
-        goodsDetailModel.setImageUrls(images);
-
-        bindData(goodsDetailModel);
+    protected void showSuccess(Object s) {
+        GoodsDetailBean _bean = (GoodsDetailBean) s;
+        goodsDetailBean.setGoodsDescription(_bean.getGoodsDescription());
+        goodsDetailBean.setGoodSellNum(_bean.getGoodSellNum());
+        goodsDetailBean.setImageUrls(_bean.getImageUrls());
+        bindData(goodsDetailBean);
     }
 
-    private void bindData(GoodsDetailModel goodsDetailModel) {
+    @Override
+    protected void showError(Object s) {
+
+    }
+
+    private void bindData(GoodsDetailBean goodsDetailBean) {
         convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
 
             @Override
             public BannerImageHolder createHolder() {
                 return new BannerImageHolder();
             }
-        }, Arrays.asList(goodsDetailModel.getImageUrls()));
-        tvGoodsName.setText(goodsDetailModel.getGoodsName());
-        String _temp = getResources().getString(R.string.sellNumber) + goodsDetailModel.getGoodSellNum();
+        }, Arrays.asList(goodsDetailBean.getImageUrls()));
+        tvGoodsName.setText(goodsDetailBean.getGoodsName());
+        String _temp = getResources().getString(R.string.sellNumber) + goodsDetailBean.getGoodSellNum();
         tvSellNumber.setText(_temp);
-        tvDescriptionContent.setText(goodsDetailModel.getGoodsDescription());
-        tvPriceNumber.setText(goodsDetailModel.getGoodsPrice());
+        tvDescriptionContent.setText(goodsDetailBean.getGoodsDescription());
+        tvPriceNumber.setText(goodsDetailBean.getGoodsPrice());
     }
 
     @Override
@@ -211,7 +214,7 @@ public class GoodsDetailActivity extends BaseActivity {
                 setResult(AppConstants.BACK_WITHOUT_DATA);
                 finish();
                 break;
-            case R.id.ll_tab_right:
+            case R.id.tb_right_ll:
                 ToastHelper.getInstance()._toast("修改定位");
                 break;
             case R.id.ivReduce:
@@ -231,14 +234,14 @@ public class GoodsDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_like:
                 LikeDao likeDao = LikeDao.getInstance();
-                if (goodsDetailModel.isLike()) {
+                if (goodsDetailBean.isLike()) {
                     ivLike.setImageDrawable(drawable_not_like);
-                    goodsDetailModel.setLike(false);
-                    likeDao.updateLike(goodsDetailModel.getProductId(), 0);
+                    goodsDetailBean.setLike(false);
+                    likeDao.updateLike(goodsDetailBean.getProductId(), 0);
                 } else {
                     ivLike.setImageDrawable(drawable_like);
-                    goodsDetailModel.setLike(true);
-                    likeDao.updateLike(goodsDetailModel.getProductId(), 1);
+                    goodsDetailBean.setLike(true);
+                    likeDao.updateLike(goodsDetailBean.getProductId(), 1);
                 }
                 break;
             case R.id.iv_share:

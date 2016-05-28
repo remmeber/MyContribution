@@ -1,12 +1,10 @@
 package com.example.rhg.outsourcing.mvp.presenter;
 
-import com.example.rhg.outsourcing.bean.TestBean;
-
-import rx.Observable;
-import rx.Observer;
-
 /**
- * Created by remember on 2016/4/28.
+ *desc:mvp presenter 测试
+ *author：remember
+ *time：2016/5/28 17:02
+ *email：1013773046@qq.com
  */
 public interface Presenter {
     public void getData();

@@ -8,7 +8,10 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.constants.AppConstants;
 
 /**
- * Created by remember on 2016/5/21.
+ *desc:店铺详情fm
+ *author：remember
+ *time：2016/5/28 16:49
+ *email：1013773046@qq.com
  */
 public class ShopDetailFragment extends SuperFragment {
     TextView tvPhoneNumber;

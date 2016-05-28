@@ -1,7 +1,10 @@
 package com.example.rhg.outsourcing.bean;
 
 /**
- * Created by remember on 2016/5/3.
+ *desc:主页列表头部
+ *author：remember
+ *time：2016/5/28 16:32
+ *email：1013773046@qq.com
  */
 public class HeaderTypeModel {
     private String text;
