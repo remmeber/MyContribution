@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.MeiTuanActivity;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.QFoodGridViewAdapter;
-import com.example.rhg.outsourcing.bean.FavorableFoodBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class TypeFragment extends Fragment {
     private int mStart;
     private GridView mGridView;
     QFoodGridViewAdapter mDPGridViewAdapter;
-    private List<FavorableFoodBean> mDataList = new ArrayList<FavorableFoodBean>();
+    private List<FavorableFoodUrlBean> mDataList = new ArrayList<FavorableFoodUrlBean>();
 
     public TypeFragment() {
         super();
@@ -53,7 +53,7 @@ public class TypeFragment extends Fragment {
 
     private void initData() {
         for (int i = mStart*10; i < mStart*10+mCount; i++) {
-//            FavorableFoodBean model = new FavorableFoodBean();
+//            FavorableFoodUrlBean model = new FavorableFoodUrlBean();
 //            model.setImageId(mImageResId[i]);
 //            model.setContent(mTitle[i]);
 //            mDataList.add(model);
@@ -72,7 +72,7 @@ public class TypeFragment extends Fragment {
             }
         });
         mGridView.setNumColumns(5);
-        mDPGridViewAdapter = new QFoodGridViewAdapter(getActivity(), mDataList, R.layout.recyclegriditem);
+        mDPGridViewAdapter = new QFoodGridViewAdapter(getActivity(), R.layout.recyclegriditem);
         mGridView.setAdapter(mDPGridViewAdapter);
         return view;
     }

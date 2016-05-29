@@ -1,6 +1,6 @@
 package com.example.rhg.outsourcing.mvp.model;
 
-import com.example.rhg.outsourcing.bean.BannerTypeBean;
+import com.example.rhg.outsourcing.bean.HomeBean;
 
 import rx.Observable;
 
@@ -12,5 +12,6 @@ import rx.Observable;
  */
 public interface BaseModel {
     // TODO: 返回目标数据
-    Observable<BannerTypeBean> getData();
+//    Observable<BannerTypeBean> getData();
+    Observable<HomeBean> getData();
 }

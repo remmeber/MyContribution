@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,8 +15,10 @@ import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.apapter.HomeRecycleAdapter;
 import com.example.rhg.outsourcing.application.InitApplication;
-import com.example.rhg.outsourcing.bean.FavorableFoodBean;
-import com.example.rhg.outsourcing.bean.RecommendListBean;
+import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
+import com.example.rhg.outsourcing.bean.HomeBean;
+import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.QFoodGridViewAdapter;
@@ -36,19 +39,25 @@ import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- *desc:主页
- *author：remember
- *time：2016/5/28 16:44
- *email：1013773046@qq.com
+ * desc:主页
+ * author：remember
+ * time：2016/5/28 16:44
+ * email：1013773046@qq.com
  */
 public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
         RecycleMultiTypeAdapter.OnGridItemClickListener, HomeRecycleAdapter.OnListItemClick, View.OnClickListener {
-    List<FavorableFoodBean> favorableFoodBeen = new ArrayList<FavorableFoodBean>();
-    List<RecommendListBean> sellRecommendModels = new ArrayList<RecommendListBean>();
+    FavorableTypeModel favorableTypeModel;
+    List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodBeen = new ArrayList<>();
+
+    BannerTypeBean bannerTypeBean;
+    List<BannerTypeUrlBean.BannerEntity> bannerTypeBeanList = new ArrayList<>();
+
+    RecommendListTypeModel recommendListTypeModel;
+    List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntityList = new ArrayList<>();
+
     SwipeRefreshLayout swipeRefreshLayout;
     RecycleMultiTypeAdapter recycleMultiTypeAdapter;
 
@@ -76,6 +85,9 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     public HomeFragment() {
         testPresenter = new TestPresenter(this);
         myLocationListener = new MyLocationListener(this);
+        favorableTypeModel = new FavorableTypeModel();
+        bannerTypeBean = new BannerTypeBean();
+        recommendListTypeModel = new RecommendListTypeModel();
     }
 
 
@@ -175,14 +187,17 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
 
     @Override
     protected void showFailed() {
-
     }
 
     @Override
     public void showSuccess(Object o) {
-        mData.remove(1);
-        mData.add(1, (BannerTypeBean) o);
+        HomeBean _homeBean = (HomeBean) o;
+        bannerTypeBean.setBannerEntityList(_homeBean.getBannerEntityList());
+        favorableTypeModel.setFavorableFoodBeen(_homeBean.getFavorableFoodEntityList());
+        recommendListTypeModel.setRecommendShopBeanEntity(_homeBean.getRecommendShopBeanEntityList());
         recycleMultiTypeAdapter.notifyItemChanged(1);
+        recycleMultiTypeAdapter.notifyItemChanged(3);
+        recycleMultiTypeAdapter.notifyItemChanged(5);
         swipeRefreshLayout.setRefreshing(false);
 
     }
@@ -202,49 +217,62 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
 
     private void fillItemList() {
         for (int i = 0; i < 6; i++) {
-            FavorableFoodBean favorableFoodBean = new FavorableFoodBean();
+            FavorableFoodUrlBean.FavorableFoodEntity favorableFoodBean = new FavorableFoodUrlBean.FavorableFoodEntity();
+            BannerTypeUrlBean.BannerEntity bannerEntity = new BannerTypeUrlBean.BannerEntity();
+            bannerEntity.setID("" + i);
+            bannerEntity.setSrc(AppConstants.images[2]);
 //            BaseSellerModel sellRecommendModel = new BaseSellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
-            RecommendListBean recommendListBean = new RecommendListBean();
-            recommendListBean.setMerchantName("哈哈");
-            recommendListBean.setFoodType("中餐");
-            recommendListBean.setSellerDistance("距离10m");
-            recommendListBean.setImageUrl(AppConstants.images[1]);
+            RecommendListUrlBean.RecommendShopBeanEntity recommendShopBeanEntity = new RecommendListUrlBean.RecommendShopBeanEntity();
+            recommendShopBeanEntity.setName("哈哈");
+//            recommendShopBeanEntity.setFoodType("中餐");
+            recommendShopBeanEntity.setDistance("距离10m");
+            recommendShopBeanEntity.setSrc(AppConstants.images[1]);
 
-            favorableFoodBean.setImageUrl(AppConstants.images[0]);
+            favorableFoodBean.setSrc(AppConstants.images[0]);
             switch (i) {
                 case 0:
                 case 3:
 
-                    favorableFoodBean.setHeadercolor(R.color.colorAccent);
+//                    favorableFoodBean.set(R.color.colorAccent);
                     favorableFoodBean.setTitle("哈哈哈哈");
                     break;
                 case 1:
                 case 4:
-                    favorableFoodBean.setHeadercolor(R.color.colorActiveGreen);
+//                    favorableFoodBean.setHeadercolor(R.color.colorActiveGreen);
                     favorableFoodBean.setTitle("呵呵呵呵");
                     break;
                 case 2:
                 case 5:
-                    favorableFoodBean.setHeadercolor(R.color.colorInActive);
+//                    favorableFoodBean.setHeadercolor(R.color.colorInActive);
                     favorableFoodBean.setTitle("啊啊啊啊");
                     break;
             }
-            sellRecommendModels.add(recommendListBean);
+            recommendShopBeanEntityList.add(recommendShopBeanEntity);
             favorableFoodBeen.add(favorableFoodBean);
+            bannerTypeBeanList.add(bannerEntity);
         }
 
         mData.add(new HeaderTypeModel("Header", R.color.cardview_shadow_start_color));
-        BannerTypeBean bannerTypeBean = new BannerTypeBean();
-        bannerTypeBean.setImageUrls(Arrays.asList(AppConstants.images));
+//        BannerTypeBean bannerTypeBean = new BannerTypeBean();
+//        bannerTypeBean.setImageUrls(Arrays.asList(AppConstants.images));
+
+        bannerTypeBean.setBannerEntityList(bannerTypeBeanList);
         mData.add(bannerTypeBean);
         TextTypeBean textTypeBean = new TextTypeBean();
         mData.add(textTypeBean);
-        mData.add(new FavorableTypeModel(favorableFoodBeen, new QFoodGridViewAdapter(getContext(), favorableFoodBeen, R.layout.recyclegriditem)));
+
+        favorableTypeModel.setDpGridViewAdapter(new QFoodGridViewAdapter(getContext(),
+                R.layout.recyclegriditem));
+        favorableTypeModel.setFavorableFoodBeen(favorableFoodBeen);
+        mData.add(favorableTypeModel);
+
         mData.add(new RecommendTextTypeModel());
-        RecommendListTypeModel recommendListTypeModel = new RecommendListTypeModel();
+
         recommendListTypeModel.setOnListItemClick(this);
-        recommendListTypeModel.setHomeRecycleAdapter(new HomeRecycleAdapter(getContext(), sellRecommendModels));
+        recommendListTypeModel.setHomeRecycleAdapter(new HomeRecycleAdapter(getContext()));
+        recommendListTypeModel.setRecommendShopBeanEntity(recommendShopBeanEntityList);
         mData.add(recommendListTypeModel);
+
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
@@ -278,16 +306,17 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     }
 
     @Override
-    public void bannerClick(int position) {
-        Intent intent = new Intent(getContext(), ShopDetailActivity.class);
-        /*todo 传递参数*/
+    public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
+        Log.i("RHG", bannerEntity.getID() + ", " + bannerEntity.getSrc());
+        /*Intent intent = new Intent(getContext(), ShopDetailActivity.class);
+        *//*todo 传递参数*//*
         intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
         intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
         intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, "20160517");
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, "荣哥土菜馆");
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[3]);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override

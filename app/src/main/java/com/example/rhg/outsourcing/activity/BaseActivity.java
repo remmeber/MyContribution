@@ -26,6 +26,8 @@ import com.example.rhg.outsourcing.mvp.view.BaseView;
 import com.example.rhg.outsourcing.utils.NetUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 
+import butterknife.ButterKnife;
+
 /**
  *desc:工程的基类，所有的子Activity都要继承它
  *author：remember
@@ -44,6 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         dataReceive(getIntent());
         setContentView(getLayoutResId());
         initView();
@@ -111,6 +114,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onPause();
 
         unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     BroadcastReceiver receiver = new BroadcastReceiver() {

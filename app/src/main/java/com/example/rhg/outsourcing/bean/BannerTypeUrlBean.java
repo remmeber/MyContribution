@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BannerTypeUrlBean {
     String total;
-    List<ResultEntity> rows;
+    List<BannerEntity> rows;
 
     public String getTotal() {
         return total;
@@ -20,15 +20,15 @@ public class BannerTypeUrlBean {
         this.total = total;
     }
 
-    public List<ResultEntity> getRows() {
+    public List<BannerEntity> getRows() {
         return rows;
     }
 
-    public void setRows(List<ResultEntity> rows) {
+    public void setRows(List<BannerEntity> rows) {
         this.rows = rows;
     }
 
-    public static class ResultEntity {
+    public static class BannerEntity {
 
         String ID;
         String Title;

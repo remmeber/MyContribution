@@ -6,7 +6,7 @@ import android.os.Message;
 import android.util.Log;
 
 
-import com.example.rhg.outsourcing.bean.FavorableFoodBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.impl.ImageChangeListener;
 
 import java.util.List;
@@ -20,13 +20,13 @@ import java.util.List;
 public class TimerImageAdapter {
     private static final String TAG = "TimerImageAdapter";
 
-    private List<FavorableFoodBean> mList;
+    private List<FavorableFoodUrlBean.FavorableFoodEntity> mList;
     ImageChangeListener mImageChangeListener;
 
     private int mCurrentPos = 0;
     private int mOldPos = 0;
 
-    private FavorableFoodBean mCurrentModel;
+    private FavorableFoodUrlBean.FavorableFoodEntity mCurrentModel;
     private static final long DELAYTIME = 5000;
     private static final int CHANGE_FLAG = 1;
     private boolean isStop = true;
@@ -35,7 +35,7 @@ public class TimerImageAdapter {
         return mOldPos;
     }
 
-    private FavorableFoodBean getCurrentModel(){
+    private FavorableFoodUrlBean.FavorableFoodEntity getCurrentModel(){
         return mCurrentModel;
     }
 
@@ -50,7 +50,7 @@ public class TimerImageAdapter {
         }
     };
 
-    public void setData(List<FavorableFoodBean> mList){
+    public void setData(List<FavorableFoodUrlBean.FavorableFoodEntity> mList){
         this.mList = mList;
 //        startTimer();
     }
@@ -97,7 +97,7 @@ public class TimerImageAdapter {
         mCurrentModel = mList.get(mCurrentPos);
         if (mCurrentModel != null){
 //            imageRsid = mCurrentModel.getImageId();
-            imageUrl = mCurrentModel.getImageUrl();
+            imageUrl = mCurrentModel.getSrc();
         }
         mOldPos = mCurrentPos;
         mCurrentPos++;

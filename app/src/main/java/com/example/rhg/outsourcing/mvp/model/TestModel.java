@@ -1,26 +1,65 @@
 package com.example.rhg.outsourcing.mvp.model;
 
-import android.util.Log;
-
-import com.example.rhg.outsourcing.bean.BannerTypeBean;
 import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
+import com.example.rhg.outsourcing.bean.HomeBean;
+import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.rhg.outsourcing.mvp.api.QFoodApiService;
 
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.functions.Func3;
 
 /**
- *desc:mvp测试实现
- *author：remember
- *time：2016/5/28 17:00
- *email：1013773046@qq.com
+ * desc:mvp测试实现
+ * author：remember
+ * time：2016/5/28 17:00
+ * email：1013773046@qq.com
  */
 public class TestModel implements BaseModel {
+
     @Override
+    public Observable<HomeBean> getData() {
+        QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
+        return Observable.zip(qFoodApiService.getBannerUrl(), qFoodApiService.getFavorableFood(),
+                qFoodApiService.getRecommendList(),
+                new Func3<BannerTypeUrlBean, FavorableFoodUrlBean, RecommendListUrlBean, HomeBean>() {
+                    @Override
+                    public HomeBean call(BannerTypeUrlBean bannerTypeUrlBean,
+                                         FavorableFoodUrlBean favorableFoodUrlBean,
+                                         RecommendListUrlBean recommendListUrlBean
+                    ) {
+                        HomeBean _homeBean = new HomeBean();
+                        _homeBean.setBannerEntityList(bannerTypeUrlBean.getRows());
+                        _homeBean.setFavorableFoodEntityList(favorableFoodUrlBean.getRows());
+                        _homeBean.setRecommendShopBeanEntityList(recommendListUrlBean.getRows());
+                        return _homeBean;
+                    }
+                });
+        /*return QFoodApiMamager.getInstant().getQFoodApiService().getFavorableFood()
+                .flatMap(new Func1<FavorableFoodUrlBean, Observable<List<FavorableFoodUrlBean.FavorableFoodEntity>>>() {
+                    @Override
+                    public Observable<List<FavorableFoodUrlBean.FavorableFoodEntity>> call(final FavorableFoodUrlBean favorableFoodBean) {
+                        return Observable.create(new Observable.OnSubscribe<List<FavorableFoodUrlBean.FavorableFoodEntity>>() {
+                            @Override
+                            public void call(Subscriber<? super List<FavorableFoodUrlBean.FavorableFoodEntity>> subscriber) {
+                                int _count = Integer.valueOf(favorableFoodBean.getTotal());
+                                Log.i("RHG",""+_count);
+                                List<FavorableFoodUrlBean.FavorableFoodEntity> rowsBeanList = new ArrayList<FavorableFoodUrlBean.FavorableFoodEntity>();
+                                for (int i = 0; i < _count; i++) {
+                                    rowsBeanList.add(favorableFoodBean.getRows().get(i));
+                                }
+                                subscriber.onNext(rowsBeanList);
+                            }
+                        });
+                    }
+                });*/
+    }
+}
+
+
+   /* @Override
     public Observable<BannerTypeBean> getData() {
         return QFoodApiMamager.getInstant().getQFoodApiService().getBannerUrl()
                 .flatMap(new Func1<BannerTypeUrlBean, Observable<BannerTypeBean>>() {// TODO: 类型转换
@@ -44,7 +83,7 @@ public class TestModel implements BaseModel {
                         });
                     }
                 });
-    }
+}*/
     /*@Override
     public Observable<Object> GetData() {
         return Observable.just("1").flatMap(new Func1<String, Observable<Object>>() {
@@ -72,5 +111,5 @@ public class TestModel implements BaseModel {
                 return null;
             }
         });
-    }*/
-}
+    }
+}*/

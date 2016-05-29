@@ -9,14 +9,13 @@ import java.util.List;
  *email：1013773046@qq.com
  */
 public class BannerTypeBean {
-    private List<String> imageUrls;
+    private List<BannerTypeUrlBean.BannerEntity> bannerEntityList;
 
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
+    public List<BannerTypeUrlBean.BannerEntity> getBannerEntityList() {
+        return bannerEntityList;
     }
 
-    public List<String> getImageUrls() {
-        return imageUrls;
+    public void setBannerEntityList(List<BannerTypeUrlBean.BannerEntity> bannerEntityList) {
+        this.bannerEntityList = bannerEntityList;
     }
-
 }

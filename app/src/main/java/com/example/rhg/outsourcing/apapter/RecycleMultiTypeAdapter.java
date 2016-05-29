@@ -3,6 +3,7 @@ package com.example.rhg.outsourcing.apapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.example.rhg.outsourcing.apapter.viewHolder.BannerImageHolder;
+import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.bean.BannerTypeBean;
@@ -27,13 +29,14 @@ import com.example.rhg.outsourcing.bean.RecommendTextTypeModel;
 import com.example.rhg.outsourcing.bean.TextTypeBean;
 import com.example.rhg.outsourcing.utils.BannerController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- *desc:复合类型recycleview 适配器
- *author：remember
- *time：2016/5/28 16:21
- *email：1013773046@qq.com
+ * desc:复合类型recycleview 适配器
+ * author：remember
+ * time：2016/5/28 16:21
+ * email：1013773046@qq.com
  */
 public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //--------------------------------Define Item Type----------------------------------------------
@@ -125,22 +128,46 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
-    private void bindViewHolderBanner(BannerTypeViewHolder holder, BannerTypeBean data) {
+    private void bindViewHolderBanner(BannerTypeViewHolder holder, final BannerTypeBean data) {
+        List<String> images = new ArrayList<>();
+        List<BannerTypeUrlBean.BannerEntity> _bannerEntity = data.getBannerEntityList();
+        int _count = _bannerEntity.size();
+        for (int i = 0; i < _count; i++) {
+            images.add(_bannerEntity.get(i).getSrc());
+        }
         holder.convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
             @Override
             public BannerImageHolder createHolder() {
                 return new BannerImageHolder();
             }
-        }, data.getImageUrls())
+        }, images)
                 .setPageIndicator(AppConstants.imageindictors);
+        holder.convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                onBannerClickListener.bannerClick(position, data.getBannerEntityList().get(position));
+            }
+        });
     }
 
     private void bindViewHolderText(TextTypeViewHolder holder, TextTypeBean data) {
         holder.textView.setText(data.getTitle());
     }
 
+    @SuppressWarnings("NewApi")
     private void bindViewHolderFavorable(FavorableTypeViewHolder holder) {
         holder.dpGridViewAdapter.notifyDataSetChanged();
+        if (onGridItemClickListener != null) {
+            if (!holder.gridView.hasOnClickListeners()) {
+                holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        onGridItemClickListener.gridItemClick(view, position);
+                    }
+                });
+            }
+        }
+
     }
 
     private void bindViewHolderRecommendText(RecommendTextTypeViewHolder holder, RecommendTextTypeModel data, int position) {
@@ -184,12 +211,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             super(itemView);
             convenientBanner = (ConvenientBanner) itemView.findViewById(R.id.iv_banner);
             convenientBanner.startTurning(2000);
-            convenientBanner.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    onBannerClickListener.bannerClick(position);
-                }
-            });
             BannerController.getInstance().setConvenientBanner(convenientBanner);
         }
     }
@@ -210,13 +231,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         public FavorableTypeViewHolder(View itemView, int position) {
             super(itemView);
             gridView = (GridView) itemView.findViewById(R.id.gridview);
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (onGridItemClickListener != null)
-                        onGridItemClickListener.gridItemClick(view, position);
-                }
-            });
             gridView.setNumColumns(3);
             dpGridViewAdapter = ((FavorableTypeModel) mData.get(position)).getDpGridViewAdapter();
             gridView.setAdapter(dpGridViewAdapter);
@@ -260,6 +274,16 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        Log.i("RHG", "attach:" + holder.getAdapterPosition());
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        Log.i("RHG", "detach:" + holder.getAdapterPosition());
+    }
+
     //-------------------------------for banner click callback--------------------------------------
     private OnBannerClickListener onBannerClickListener;
 
@@ -268,7 +292,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public interface OnBannerClickListener {
-        public void bannerClick(int position);
+        public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
     }
     //----------------------------------------------------------------------------------------------
 

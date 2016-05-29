@@ -4,24 +4,30 @@ import android.content.Context;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.viewHolder.QFoodGridAdapterViewHolder;
-import com.example.rhg.outsourcing.bean.FavorableFoodBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 
 import java.util.List;
 
 /**
  * GridView Adapter
  */
-public class QFoodGridViewAdapter extends QFoodBaseAdapter<FavorableFoodBean> {
+public class QFoodGridViewAdapter extends QFoodBaseAdapter<FavorableFoodUrlBean.FavorableFoodEntity> {
+    List<FavorableFoodUrlBean.FavorableFoodEntity> list;
 
+    public QFoodGridViewAdapter(Context context, int layoutId) {
+        super(context, layoutId);
+    }
 
-    public QFoodGridViewAdapter(Context context, List<FavorableFoodBean> list, int layoutId) {
-        super(context, list, layoutId);
+    public void setList(List<FavorableFoodUrlBean.FavorableFoodEntity> list) {
+        this.list = list;
+        if (this.list != null)
+            setmDataList(this.list);
     }
 
     @Override
-    public void convert(QFoodGridAdapterViewHolder holder, FavorableFoodBean model, int position) {
-        holder.setImageUrl(R.id.gridview_imageView, model.getImageUrl());
+    public void convert(QFoodGridAdapterViewHolder holder, FavorableFoodUrlBean.FavorableFoodEntity model, int position) {
+        holder.setImageUrl(R.id.gridview_imageView, model.getSrc());
         holder.setText(R.id.gridview_delete, model.getTitle());
-        holder.setHeaderColor(R.id.VipTextHeadView, model.getHeadercolor());
+//        holder.setHeaderColor(R.id.VipTextHeadView, mContext.getResources().getColor(R.color.black));
     }
 }

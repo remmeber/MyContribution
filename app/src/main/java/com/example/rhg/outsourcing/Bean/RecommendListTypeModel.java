@@ -5,22 +5,24 @@ import com.example.rhg.outsourcing.apapter.HomeRecycleAdapter;
 import java.util.List;
 
 /**
- *desc:主页店铺推荐列表模型
- *author：remember
- *time：2016/5/28 16:38
- *email：1013773046@qq.com
+ * desc:主页店铺推荐列表模型
+ * author：remember
+ * time：2016/5/28 16:38
+ * email：1013773046@qq.com
  */
 public class RecommendListTypeModel {
-    List<RecommendListBean> homeSellerModels;
+    List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity;
     private HomeRecycleAdapter homeRecycleAdapter;
     private HomeRecycleAdapter.OnListItemClick onListItemClick;
 
-    public List<RecommendListBean> getHomeSellerModels() {
-        return homeSellerModels;
+    public List<RecommendListUrlBean.RecommendShopBeanEntity> getRecommendShopBeanEntity() {
+        return recommendShopBeanEntity;
     }
 
-    public void setHomeSellerModels(List<RecommendListBean> homeSellerModels) {
-        this.homeSellerModels = homeSellerModels;
+    public void setRecommendShopBeanEntity(List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity) {
+        this.recommendShopBeanEntity = recommendShopBeanEntity;
+        if (this.homeRecycleAdapter != null)
+            homeRecycleAdapter.setRecommendListBean(this.recommendShopBeanEntity);
     }
 
     public HomeRecycleAdapter getHomeRecycleAdapter() {

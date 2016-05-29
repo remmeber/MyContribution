@@ -13,18 +13,21 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.QFoodShoppingCartExplAdapter;
 import com.example.rhg.outsourcing.bean.PayContentBean;
 import com.example.rhg.outsourcing.utils.ToastHelper;
-import com.example.rhg.outsourcing.widget.PayDialog;
 import com.example.rhg.outsourcing.widget.PayDescriptionView;
+import com.example.rhg.outsourcing.widget.PayDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
- *desc:付款页面 todo 跳到付款页面的数据都要有一个标志：来自购物车还是待付款页面。如果来自购物车，则要去掉购物车
+ * desc:付款页面 todo 跳到付款页面的数据都要有一个标志：来自购物车还是待付款页面。如果来自购物车，则要去掉购物车
  * 中的商品，标记为待付款或者完成；如果是来自待付款，则保留待付款或者完成；
- *author：remember
- *time：2016/5/28 16:14
- *email：1013773046@qq.com
+ * author：remember
+ * time：2016/5/28 16:14
+ * email：1013773046@qq.com
  */
 public class PayActivity extends BaseActivity {
     ImageView ivBack;
@@ -42,7 +45,6 @@ public class PayActivity extends BaseActivity {
 
     LinearLayout llPay;
     PayDescriptionView payDescriptionView;
-
     List<PayContentBean> payContentBeanList;
 
     public PayActivity() {
@@ -142,5 +144,12 @@ public class PayActivity extends BaseActivity {
                 payDialog.show();
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

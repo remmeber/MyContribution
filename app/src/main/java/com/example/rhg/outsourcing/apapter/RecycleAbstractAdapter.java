@@ -2,6 +2,7 @@ package com.example.rhg.outsourcing.apapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -10,11 +11,12 @@ import com.example.rhg.outsourcing.apapter.viewHolder.HeaderViewHolder;
 import com.example.rhg.outsourcing.constants.AppConstants;
 
 import java.util.List;
+
 /**
- *desc:适配器扩展数据抽象类
- *author：remember
- *time：2016/5/28 16:21
- *email：1013773046@qq.com
+ * desc:适配器扩展数据抽象类
+ * author：remember
+ * time：2016/5/28 16:21
+ * email：1013773046@qq.com
  */
 public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
@@ -22,6 +24,17 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
     private int type = -1;
     private boolean hasHead;
     private boolean hasFooter;
+
+    public RecycleAbstractAdapter(Context context) {
+        this.context = context;
+        this.type = getDisplayType();
+        this.hasHead = getHasHead();
+        this.hasFooter = getHasFooter();
+    }
+
+    public void setmData(List<T> mData) {
+        this.mData = mData;
+    }
 
     public RecycleAbstractAdapter(Context context, List<T> mData) {
         this.context = context;
@@ -60,6 +73,7 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
             return new HeaderViewHolder(View.inflate(context, getLayoutResId(viewType), null), type);
         return new BodyViewHolder(View.inflate(context, getLayoutResId(viewType), null), type);
     }
+
     protected abstract int getLayoutResId(int viewType);
 
 
@@ -79,6 +93,16 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
                 break;
         }
 
+    }
+
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        Log.i("RHG", "recyleAbstract:" + holder.getAdapterPosition());
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        Log.i("RHG", "recyleAbstract:" + holder.getAdapterPosition());
     }
 
     private void bindHeaderItemViewHolder(HeaderViewHolder holder, int position, int type) {

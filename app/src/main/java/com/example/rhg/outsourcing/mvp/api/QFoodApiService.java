@@ -1,6 +1,6 @@
 package com.example.rhg.outsourcing.mvp.api;
 
-import com.example.rhg.outsourcing.bean.FavorableFoodBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
 import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.bean.TextTypeBean;
@@ -26,7 +26,7 @@ public interface QFoodApiService {
     Observable<TextTypeBean> getMessage();
 
     @GET("json/food.html")
-    Observable<FavorableFoodBean> getFavorableFood();
+    Observable<FavorableFoodUrlBean> getFavorableFood();
 
     @GET("json/restaurant.html")
     Observable<RecommendListUrlBean> getRecommendList();

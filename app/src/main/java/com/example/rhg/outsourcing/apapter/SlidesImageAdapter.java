@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.List;
 
-import com.example.rhg.outsourcing.bean.FavorableFoodBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.impl.SlidesViewChangeListener;
 
 /**
@@ -20,13 +20,13 @@ import com.example.rhg.outsourcing.impl.SlidesViewChangeListener;
 public class SlidesImageAdapter {
     private static final String TAG = "SlidesImageAdapter";
 
-    private List<FavorableFoodBean> mList;
+    private List<FavorableFoodUrlBean.FavorableFoodEntity> mList;
     private SlidesViewChangeListener mChangeListener;
 
     private int mCurrentPos = 0;
     private int mOldPos = 0;
 
-    private FavorableFoodBean mCurrentModel;
+    private FavorableFoodUrlBean.FavorableFoodEntity mCurrentModel;
     private static final long DELAYTIME = 5000;
     private static final int CHANGE_FLAG = 1;
     private boolean isStop = true;
@@ -35,7 +35,7 @@ public class SlidesImageAdapter {
         return mOldPos;
     }
 
-    private FavorableFoodBean getCurrentModel(){
+    private FavorableFoodUrlBean.FavorableFoodEntity getCurrentModel(){
         return mCurrentModel;
     }
 
@@ -50,7 +50,7 @@ public class SlidesImageAdapter {
         }
     };
 
-    public void setData(List<FavorableFoodBean> mList){
+    public void setData(List<FavorableFoodUrlBean.FavorableFoodEntity> mList){
         this.mList = mList;
         startTimer();
     }
@@ -99,7 +99,7 @@ public class SlidesImageAdapter {
         if (mCurrentModel != null){
 //            imageRsid = mCurrentModel.getImageId();
 //            title = mCurrentModel.getContent();
-            imageUrl = mCurrentModel.getImageUrl();
+            imageUrl = mCurrentModel.getSrc();
             title = mCurrentModel.getTitle();
         }
         mOldPos = mCurrentPos;

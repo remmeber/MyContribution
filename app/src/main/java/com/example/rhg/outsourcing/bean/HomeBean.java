@@ -1,5 +1,7 @@
 package com.example.rhg.outsourcing.bean;
 
+import java.util.List;
+
 /**
  *desc:整个主页的数据模型，网络请求后，需要将所有的数据都整合到该类中
  *author：remember
@@ -7,49 +9,33 @@ package com.example.rhg.outsourcing.bean;
  *email：1013773046@qq.com
  */
 public class HomeBean {
-    BannerTypeBean bannerTypeBean;
+    List<BannerTypeUrlBean.BannerEntity> bannerEntityList;
     TextTypeBean textTypeBean;
-    FavorableTypeModel favorableTypeModel;
+    List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodEntityList;
     RecommendTextTypeModel recommendTextTypeModel;
-    RecommendListTypeModel recommendListTypeModel;
+    List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntityList;
 
-    public BannerTypeBean getBannerTypeBean() {
-        return bannerTypeBean;
+    public List<BannerTypeUrlBean.BannerEntity> getBannerEntityList() {
+        return bannerEntityList;
     }
 
-    public void setBannerTypeBean(BannerTypeBean bannerTypeBean) {
-        this.bannerTypeBean = bannerTypeBean;
+    public void setBannerEntityList(List<BannerTypeUrlBean.BannerEntity> bannerEntityList) {
+        this.bannerEntityList = bannerEntityList;
     }
 
-    public TextTypeBean getTextTypeBean() {
-        return textTypeBean;
+    public List<FavorableFoodUrlBean.FavorableFoodEntity> getFavorableFoodEntityList() {
+        return favorableFoodEntityList;
     }
 
-    public void setTextTypeBean(TextTypeBean textTypeBean) {
-        this.textTypeBean = textTypeBean;
+    public void setFavorableFoodEntityList(List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodEntityList) {
+        this.favorableFoodEntityList = favorableFoodEntityList;
     }
 
-    public FavorableTypeModel getFavorableTypeModel() {
-        return favorableTypeModel;
+    public List<RecommendListUrlBean.RecommendShopBeanEntity> getRecommendShopBeanEntityList() {
+        return recommendShopBeanEntityList;
     }
 
-    public void setFavorableTypeModel(FavorableTypeModel favorableTypeModel) {
-        this.favorableTypeModel = favorableTypeModel;
-    }
-
-    public RecommendTextTypeModel getRecommendTextTypeModel() {
-        return recommendTextTypeModel;
-    }
-
-    public void setRecommendTextTypeModel(RecommendTextTypeModel recommendTextTypeModel) {
-        this.recommendTextTypeModel = recommendTextTypeModel;
-    }
-
-    public RecommendListTypeModel getRecommendListTypeModel() {
-        return recommendListTypeModel;
-    }
-
-    public void setRecommendListTypeModel(RecommendListTypeModel recommendListTypeModel) {
-        this.recommendListTypeModel = recommendListTypeModel;
+    public void setRecommendShopBeanEntityList(List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntityList) {
+        this.recommendShopBeanEntityList = recommendShopBeanEntityList;
     }
 }
