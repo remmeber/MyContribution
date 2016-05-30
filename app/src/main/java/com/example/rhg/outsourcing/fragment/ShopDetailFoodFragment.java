@@ -42,7 +42,7 @@ public class ShopDetailFoodFragment extends SuperFragment {
         fragments[2] = new FoodTypeFragment();
         fragments[3] = new FoodTypeFragment();
         fragments[4] = new FoodTypeFragment();
-        fragmentController = new FragmentController(getChildFragmentManager(),null,fragments,R.id.fl_shop_detail);
+        fragmentController = new FragmentController(getChildFragmentManager(),fragments,R.id.fl_shop_detail);
         verticalTabLayout.setOnVerticalTabClickListener(new VerticalTabLayout.VerticalTabClickListener() {
             @Override
             public void onVerticalTabClick(int position) {

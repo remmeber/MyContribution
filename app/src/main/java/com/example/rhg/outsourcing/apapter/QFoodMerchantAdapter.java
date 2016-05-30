@@ -17,8 +17,15 @@ import java.util.List;
  */
 public class QFoodMerchantAdapter extends RecycleAbstractAdapter<QFoodAllSellerBean> {
 
+
+
     public QFoodMerchantAdapter(Context context, List<QFoodAllSellerBean> mData) {
         super(context, mData);
+    }
+
+    public void setSuperContext(Context context){
+        setContext(context);
+
     }
 
     @Override

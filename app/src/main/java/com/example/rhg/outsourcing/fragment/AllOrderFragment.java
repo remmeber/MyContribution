@@ -60,12 +60,12 @@ public class AllOrderFragment extends SuperFragment implements QFoodOrderAdapter
 
     @Override
     protected void initData() {
-        QFoodOrderAdapter QFoodOrderAdapter = new QFoodOrderAdapter(getContext(), mData);
-        QFoodOrderAdapter.setOnListItemClick(this);
+        QFoodOrderAdapter qFoodOrderAdapter = new QFoodOrderAdapter(getContext(), mData);
+        qFoodOrderAdapter.setOnListItemClick(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(linearLayoutManager);
         rcv.setHasFixedSize(true);
-        rcv.setAdapter(QFoodOrderAdapter);
+        rcv.setAdapter(qFoodOrderAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

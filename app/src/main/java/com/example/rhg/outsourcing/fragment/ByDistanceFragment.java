@@ -1,10 +1,12 @@
 package com.example.rhg.outsourcing.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,11 +18,12 @@ import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- *desc:所有店铺的按距离fm
- *author：remember
- *time：2016/5/28 16:42
- *email：1013773046@qq.com
+ * desc:所有店铺的按距离fm
+ * author：remember
+ * time：2016/5/28 16:42
+ * email：1013773046@qq.com
  */
 public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAdapter.OnListItemClick {
 
@@ -29,6 +32,14 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
     private SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     TestPresenter distancetestPresenter;
+    QFoodMerchantAdapter qFoodMerchantAdapter;
+    Context context = getContext();
+
+    public void setContext(Context context) {
+        this.context = context;
+        if (qFoodMerchantAdapter != null)
+            qFoodMerchantAdapter.setSuperContext(context);
+    }
 
     public ByDistanceFragment() {
         for (int i = 0; i < 6; i++) {
@@ -61,9 +72,9 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
     protected void initData() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        QFoodMerchantAdapter QFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(),dataByDistanceModels);
-        QFoodMerchantAdapter.setOnListItemClick(this);
-        recyclerView.setAdapter(QFoodMerchantAdapter);
+        qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataByDistanceModels);
+        qFoodMerchantAdapter.setOnListItemClick(this);
+        recyclerView.setAdapter(qFoodMerchantAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -73,13 +84,20 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
+        qFoodMerchantAdapter.setOnListItemClick(this);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        qFoodMerchantAdapter.setOnListItemClick(null);
     }
 
     @Override
     protected void showFailed() {
-
     }
 
     @Override

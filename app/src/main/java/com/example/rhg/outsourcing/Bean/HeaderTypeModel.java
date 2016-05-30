@@ -10,6 +10,9 @@ public class HeaderTypeModel {
     private String text;
     private int color;
 
+    public HeaderTypeModel() {
+    }
+
     public HeaderTypeModel(String text, int color) {
         this.text = text;
         this.color = color;

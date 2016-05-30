@@ -53,6 +53,7 @@ public class DeliverInfoActivity extends BaseActivity{
     protected void initData() {
         tb_common.setBackgroundResource(R.color.colorActiveGreen);
         tvRight.setText("编辑");
+        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_black_48dp));
         ivLeft.setOnClickListener(this);
 
         headView.setOnClickListener(this);

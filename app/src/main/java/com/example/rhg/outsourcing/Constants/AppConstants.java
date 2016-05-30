@@ -3,10 +3,10 @@ package com.example.rhg.outsourcing.constants;
 import com.example.rhg.outsourcing.R;
 
 /**
- *desc:APP的一些常量
- *author：remember
- *time：2016/5/28 16:40
- *email：1013773046@qq.com
+ * desc:APP的一些常量
+ * author：remember
+ * time：2016/5/28 16:40
+ * email：1013773046@qq.com
  */
 public class AppConstants {
     public static final boolean DEBUG = true;
@@ -17,12 +17,12 @@ public class AppConstants {
             "http://img2.3lian.com/2014/f2/37/d/39.jpg",
             "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
     };
-    public static final int[] imageindictors = new int[]{R.drawable.ic_page_indicator,
+    public static final int[] IMAGE_INDICTORS = new int[]{R.drawable.ic_page_indicator,
             R.drawable.ic_page_indicator_focused};
     public static final String[] SHOP_DETAIL_TITLES = new String[]{"菜品", "店铺详情"};
     public static final String[] SELL_TITLES = new String[]{"按销量", "按距离", "按评分"};
     public static final String[] ORDER_TITLES = new String[]{"全部", "已完成", "待付款", "已退款"};
-    public static final String[] SHOP_TITLES = new String[]{"热销排行", "超值套餐", "店铺优惠", "必点饮品","最新优惠"};
+    public static final String[] SHOP_TITLES = new String[]{"热销排行", "超值套餐", "店铺优惠", "必点饮品", "最新优惠"};
     //---------------------------店铺复用------------------------------------------------------------
     public static final int TypeHome = 0;
     public static final int TypeSeller = 1;
@@ -39,6 +39,9 @@ public class AppConstants {
     public static final int TypeSellNum = 2;
     public static final int TypeRateScore = 3;
 
+    /*SP KEY*/
+    public static final String SP_LOCATION = "sp_location";
+    /*SP KEY*/
     /**
      * 页面调起/销毁标志
      */

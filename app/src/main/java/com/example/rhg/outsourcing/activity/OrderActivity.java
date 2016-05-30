@@ -43,9 +43,10 @@ public class OrderActivity extends BaseActivity{
         fragments.add(new AllOrderFragment());
         fragments.add(new AllOrderFragment());
         fragments.add(new AllOrderFragment());
-        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(),fragments, AppConstants.ORDER_TITLES);
-        vpOrder.setAdapter(QFoodVpAdapter);
-        stlOrder.setViewPager(vpOrder);
+        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(),fragments, AppConstants.ORDER_TITLES,
+                vpOrder,stlOrder);
+        /*vpOrder.setAdapter(QFoodVpAdapter);
+        stlOrder.setViewPager(vpOrder);*/
     }
     @Override
     protected void initView() {

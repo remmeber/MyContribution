@@ -3,7 +3,6 @@ package com.example.rhg.outsourcing.apapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.example.rhg.outsourcing.apapter.viewHolder.BannerImageHolder;
 import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.bean.BannerTypeBean;
@@ -109,7 +109,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 bindViewHolderText((TextTypeViewHolder) holder, (TextTypeBean) data);
                 break;
             case TYPE_FAVORABLE:
-                bindViewHolderFavorable((FavorableTypeViewHolder) holder);
+                bindViewHolderFavorable((FavorableTypeViewHolder) holder, (FavorableTypeModel) data);
                 break;
             case TYPE_RECOMMEND_TEXT:
                 bindViewHolderRecommendText((RecommendTextTypeViewHolder) holder, (RecommendTextTypeModel) data, position);
@@ -124,25 +124,25 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindViewHolderHeader(HeaderTypeViewHolder holder, HeaderTypeModel data, int position) {
-        holder.button.setText(data.getText() + position);
+        holder.button.setText(data.getText());
         holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
     private void bindViewHolderBanner(BannerTypeViewHolder holder, final BannerTypeBean data) {
         List<String> images = new ArrayList<>();
         List<BannerTypeUrlBean.BannerEntity> _bannerEntity = data.getBannerEntityList();
-        int _count = _bannerEntity.size();
+        int _count = _bannerEntity == null ? 0 : _bannerEntity.size();
         for (int i = 0; i < _count; i++) {
             images.add(_bannerEntity.get(i).getSrc());
         }
-        holder.convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
+        convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
             @Override
             public BannerImageHolder createHolder() {
                 return new BannerImageHolder();
             }
         }, images)
-                .setPageIndicator(AppConstants.imageindictors);
-        holder.convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+                .setPageIndicator(AppConstants.IMAGE_INDICTORS);
+        convenientBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 onBannerClickListener.bannerClick(position, data.getBannerEntityList().get(position));
@@ -155,14 +155,15 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @SuppressWarnings("NewApi")
-    private void bindViewHolderFavorable(FavorableTypeViewHolder holder) {
+    private void bindViewHolderFavorable(FavorableTypeViewHolder holder,
+                                         final FavorableTypeModel favorableFoodEntity) {
         holder.dpGridViewAdapter.notifyDataSetChanged();
         if (onGridItemClickListener != null) {
             if (!holder.gridView.hasOnClickListeners()) {
                 holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        onGridItemClickListener.gridItemClick(view, position);
+                        onGridItemClickListener.gridItemClick(view,favorableFoodEntity.getFavorableFoodBeen().get(position));
                     }
                 });
             }
@@ -204,14 +205,26 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    private ConvenientBanner<String> convenientBanner;
+    BannerController bannerController = new BannerController();
+
+    public void stopBanner() {
+        bannerController.stopBanner();
+        bannerController.setConvenientBanner(null);
+    }
+
+    public void startBanner() {
+        bannerController.startBanner(2000);
+        bannerController.setConvenientBanner(convenientBanner);
+    }
+
     private class BannerTypeViewHolder extends RecyclerView.ViewHolder {
-        private ConvenientBanner convenientBanner;
 
         public BannerTypeViewHolder(View itemView) {
             super(itemView);
             convenientBanner = (ConvenientBanner) itemView.findViewById(R.id.iv_banner);
             convenientBanner.startTurning(2000);
-            BannerController.getInstance().setConvenientBanner(convenientBanner);
+            bannerController.setConvenientBanner(convenientBanner);
         }
     }
 
@@ -274,15 +287,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-        Log.i("RHG", "attach:" + holder.getAdapterPosition());
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
-        Log.i("RHG", "detach:" + holder.getAdapterPosition());
-    }
 
     //-------------------------------for banner click callback--------------------------------------
     private OnBannerClickListener onBannerClickListener;
@@ -303,7 +307,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public interface OnGridItemClickListener {
-        public void gridItemClick(View view, int position);
+        public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity);
     }
 
 

@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *desc:店铺详情页面
- *author：remember
- *time：2016/5/28 16:15
- *email：1013773046@qq.com
+ * desc:店铺详情页面
+ * author：remember
+ * time：2016/5/28 16:15
+ * email：1013773046@qq.com
  */
 public class ShopDetailActivity extends BaseActivity {
     ImageView ivBack;
@@ -38,13 +38,13 @@ public class ShopDetailActivity extends BaseActivity {
     String merchantPhone;
     String merchantAddress;
     String merchantNote;
+    Bundle bundle;
 
     @Override
     public void dataReceive(Intent intent) {
         /*此ACTIVITY会接收上一个ACTIVITY的消息*/
         if (intent != null) {
-            Log.i("RHG", "IS NOT NULL");
-            Bundle bundle = intent.getExtras();
+            bundle = intent.getExtras();
             merchantName = bundle.getString(AppConstants.KEY_MERCHANT_NAME);
             merchantId = bundle.getString(AppConstants.KEY_MERCHANT_ID);
             shopLogoUrl = bundle.getString(AppConstants.KEY_MERCHANT_LOGO);
@@ -52,7 +52,6 @@ public class ShopDetailActivity extends BaseActivity {
             merchantAddress = bundle.getString(AppConstants.KEY_ADDRESS, "无");
             merchantNote = bundle.getString(AppConstants.KEY_NOTE, "无");
         } else {
-            Log.i("RHG", "IS NULL");
             merchantName = "东大东食府";
             merchantId = "20160517";
             shopLogoUrl = "http://img2.3lian.com/2014/f2/37/d/40.jpg";
@@ -89,9 +88,9 @@ public class ShopDetailActivity extends BaseActivity {
         fragment.setArguments(bundle);
         fragments.add(fragment);
         QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
-                AppConstants.SHOP_DETAIL_TITLES);
-        viewPager.setAdapter(QFoodVpAdapter);
-        slidingTabLayout.setViewPager(viewPager);
+                AppConstants.SHOP_DETAIL_TITLES, viewPager, slidingTabLayout);
+        /*viewPager.setAdapter(QFoodVpAdapter);
+        slidingTabLayout.setViewPager(viewPager);*/
         ivBack.setOnClickListener(this);
     }
 
@@ -109,6 +108,7 @@ public class ShopDetailActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_shop_detail_back:
+                bundle = null;
                 setResult(AppConstants.BACK_WITHOUT_DATA);
                 finish();
                 break;
@@ -117,20 +117,21 @@ public class ShopDetailActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==AppConstants.BACK_WITH_DELETE){
-            setResult(resultCode,data);//AppConstants.KEY_SHOPPING_CART
+        if (resultCode == AppConstants.BACK_WITH_DELETE) {
+            setResult(resultCode, data);//AppConstants.KEY_SHOPPING_CART
             finish();
             return;
         }
-        if(resultCode==AppConstants.BACK_WITHOUT_DATA){
-            setResult(resultCode);
-            finish();
+        if (resultCode == AppConstants.BACK_WITHOUT_DATA) {
+            /*setResult(resultCode);
+            finish();*/
         }
     }
 
     @Override
     public void onBackPressed() {
         setResult(AppConstants.BACK_WITHOUT_DATA);
+        bundle = null;
         super.onBackPressed();
     }
 }

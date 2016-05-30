@@ -25,14 +25,16 @@ import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
 import com.example.rhg.outsourcing.utils.NetUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.widget.LoadingDialog;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
 /**
- *desc:工程的基类，所有的子Activity都要继承它
- *author：remember
- *time：2016/5/28 16:13
- *email：1013773046@qq.com
+ * desc:工程的基类，所有的子Activity都要继承它
+ * author：remember
+ * time：2016/5/28 16:13
+ * email：1013773046@qq.com
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseView, View.OnClickListener {
     private static final String ACTION_NETWORK_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
@@ -46,21 +48,29 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        InitApplication.getInstance().addActivity(this);
+        RefWatcher refWatcher = InitApplication.getRefWatcher(this);
+        refWatcher.watch(this);
+        loadingData();
+        setContentView(getLayoutResId());
         ButterKnife.bind(this);
         dataReceive(getIntent());
-        setContentView(getLayoutResId());
         initView();
-        initData();
         firstLoc();
+        initData();
 //        bindData(loadData());
     }
+
+    public void loadingData() {
+    }
+
 
     private void firstLoc() {
         if ((locationService = GetMapService()) != null) {
             if ((mLocationListener = getLocationListener()) != null) {
                 locationService.registerListener(mLocationListener);
                 locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-                getLocation(locationService, mLocationListener);
+                mLocationListener.getLocation(locationService);
             }
         }
     }
@@ -78,7 +88,15 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
 
     public void reStartLocation() {
-        getLocation(locationService, mLocationListener);
+        if (locationService == null)
+            locationService = GetMapService();
+        if (mLocationListener == null) {
+            Log.d("RHG", "Location listener is null");
+            locationService.registerListener(mLocationListener = getLocationListener());
+            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+        } else {
+            mLocationListener.getLocation(locationService);
+        }
         if (AppConstants.DEBUG)
             Log.i("RHG", "重启定位");
     }
@@ -112,13 +130,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onPause() {
         super.onPause();
-
         unregisterReceiver(receiver);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        InitApplication.getInstance().removeActivity(this);
         ButterKnife.unbind(this);
     }
 
@@ -154,20 +172,29 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
+    public void onBackPressed() {
+        if (InitApplication.getInstance().getAcitivityCount() == 1) {
+            InitApplication.getInstance().exit();
+            return;
+        }
+        finish();
+    }
+
+    @Override
     public void showData(Object o) {
         if (o instanceof String) {
             String _str = (String) o;
             if (_str.contains("location")) {
                 String[] location_str = _str.split(",");
                 if (location_str[1].equals("error"))
-                    showError(location_str[2]);
+                    showLocFailed(location_str[2]);
                 else {
                     if (locationService != null) {
                         locationService.stop();
                         if (AppConstants.DEBUG)
                             Log.i("RHG", "停止定位");
                     }
-                    showSuccess(location_str[2]);
+                    showLocSuccess(location_str[2]);
                 }
             } else {
                 showSuccess(_str);
@@ -176,6 +203,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
         showSuccess(o);
 
+    }
+    public void showLocSuccess(String s) {
+    }
+
+    public void showLocFailed(String s) {
     }
 
     protected abstract void showSuccess(Object s);

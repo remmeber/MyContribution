@@ -16,14 +16,15 @@ import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
 import com.example.rhg.outsourcing.utils.NetUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.squareup.leakcanary.RefWatcher;
 
 import retrofit.http.GET;
 
 /**
- *desc:所有fm的基类
- *author：remember
- *time：2016/5/28 16:45
- *email：1013773046@qq.com
+ * desc:所有fm的基类
+ * author：remember
+ * time：2016/5/28 16:45
+ * email：1013773046@qq.com
  */
 public abstract class SuperFragment extends Fragment implements BaseView {
     //TODO 百度地图
@@ -40,6 +41,9 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        RefWatcher refWatcher = InitApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         initView(view);
@@ -55,8 +59,8 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.i("RHG", "onActivity");
-        startLoc();
         loadData();
+        startLoc();
         fillData();
     }
 
@@ -69,8 +73,10 @@ public abstract class SuperFragment extends Fragment implements BaseView {
             if ((mLocationListener = getLocationListener()) != null) {
                 locationService.registerListener(mLocationListener);
                 locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-                getLocation(locationService, mLocationListener);
+//                getLocation(locationService, mLocationListener);
+                mLocationListener.getLocation(locationService);
             }
+
         }
     }
 
@@ -78,10 +84,13 @@ public abstract class SuperFragment extends Fragment implements BaseView {
         if (locationService == null)
             locationService = GetMapService();
         if (mLocationListener == null) {
+            Log.d("RHG", "Location listener is null");
             locationService.registerListener(mLocationListener = getLocationListener());
             locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+        } else {
+//        getLocation(locationService, mLocationListener);
+            mLocationListener.getLocation(locationService);
         }
-        getLocation(locationService, mLocationListener);
     }
 
     public MyLocationListener getLocationListener() {

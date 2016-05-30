@@ -1,9 +1,11 @@
 package com.example.rhg.outsourcing.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *desc:所有店铺的按销量
- *author：remember
- *time：2016/5/28 16:42
- *email：1013773046@qq.com
+ * desc:所有店铺的按销量
+ * author：remember
+ * time：2016/5/28 16:42
+ * email：1013773046@qq.com
  */
 public class BySellNumberFragment extends SuperFragment implements QFoodMerchantAdapter.OnListItemClick {
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -29,6 +31,14 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
     //TODO-------------------------------按销量排序的数据--------------------------------------------
     List<QFoodAllSellerBean> dataBySellNumberModels = new ArrayList<>();
     TestPresenter sellertestPresenter;
+    private Context context;
+    QFoodMerchantAdapter qFoodMerchantAdapter;
+
+    public void setContext(Context context) {
+        this.context = context;
+        if (qFoodMerchantAdapter != null)
+            qFoodMerchantAdapter.setSuperContext(context);
+    }
 
     public BySellNumberFragment() {
         for (int i = 0; i < 6; i++) {
@@ -59,16 +69,28 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
     protected void initData() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        QFoodMerchantAdapter QFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(),dataBySellNumberModels);
-        QFoodMerchantAdapter.setOnListItemClick(this);
-        recyclerView.setAdapter(QFoodMerchantAdapter);
+        qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
+        qFoodMerchantAdapter.setOnListItemClick(this);
+        recyclerView.setAdapter(qFoodMerchantAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 sellertestPresenter.getData();
             }
         });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        qFoodMerchantAdapter.setOnListItemClick(this);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        qFoodMerchantAdapter.setOnListItemClick(null);
     }
 
     @Override

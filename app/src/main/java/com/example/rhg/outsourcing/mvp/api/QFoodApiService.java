@@ -20,8 +20,6 @@ public interface QFoodApiService {
     @GET("json/head.html")
     Observable<BannerTypeUrlBean> getBannerUrl();
 
-    /*@GET("json/order.html")
-    Observable<OrderBean> getOrder();*/
     @GET("json/message.html")
     Observable<TextTypeBean> getMessage();
 
@@ -32,5 +30,6 @@ public interface QFoodApiService {
     Observable<RecommendListUrlBean> getRecommendList();
     /*首页API*/
 
-
+    /*@GET("json/order.html")
+    Observable<OrderBean> getOrder();*/
 }

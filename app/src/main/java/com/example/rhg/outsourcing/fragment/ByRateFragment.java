@@ -1,8 +1,10 @@
 package com.example.rhg.outsourcing.fragment;
 
+import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,17 +19,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *desc:所有店铺的按评价fm
- *author：remember
- *time：2016/5/28 16:43
- *email：1013773046@qq.com
+ * desc:所有店铺的按评价fm
+ * author：remember
+ * time：2016/5/28 16:43
+ * email：1013773046@qq.com
  */
-public class ByRateFragment extends SuperFragment implements RecycleAbstractAdapter.OnListItemClick{
+public class ByRateFragment extends SuperFragment implements RecycleAbstractAdapter.OnListItemClick {
     //TODO-------------------------------按评分排序的数据--------------------------------------------
     List<QFoodAllSellerBean> dataByRateScoreModels = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     TestPresenter distancetestPresenter;
     private RecyclerView recyclerView;
+    Context context;
+    QFoodMerchantAdapter qFoodMerchantAdapter;
+
+    public void setContext(Context context) {
+        this.context = context;
+        if (qFoodMerchantAdapter != null)
+            qFoodMerchantAdapter.setSuperContext(context);
+    }
 
     public ByRateFragment() {
         for (int i = 0; i < 6; i++) {
@@ -58,9 +68,9 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     protected void initData() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        QFoodMerchantAdapter QFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(),dataByRateScoreModels);
-        QFoodMerchantAdapter.setOnListItemClick(this);
-        recyclerView.setAdapter(QFoodMerchantAdapter);
+        qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataByRateScoreModels);
+        qFoodMerchantAdapter.setOnListItemClick(this);
+        recyclerView.setAdapter(qFoodMerchantAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -71,6 +81,20 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     }
 
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        qFoodMerchantAdapter.setOnListItemClick(this);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        qFoodMerchantAdapter.setOnListItemClick(null);
+    }
+
     @Override
     protected void showFailed() {
 
@@ -78,12 +102,12 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
 
     @Override
     public void showSuccess(Object o) {
-        Toast.makeText(getContext(),o.toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), o.toString(), Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void itemClick(View v, int position) {
-        Toast.makeText(getActivity()," "+position+" is clicked ",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), " " + position + " is clicked ", Toast.LENGTH_SHORT).show();
     }
 }

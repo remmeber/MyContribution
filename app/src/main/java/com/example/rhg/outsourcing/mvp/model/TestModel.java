@@ -4,12 +4,14 @@ import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
 import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.bean.HomeBean;
 import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
+import com.example.rhg.outsourcing.bean.TextTypeBean;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiService;
 
 import rx.Observable;
 import rx.functions.Func2;
 import rx.functions.Func3;
+import rx.functions.Func4;
 
 /**
  * desc:mvp测试实现
@@ -23,17 +25,19 @@ public class TestModel implements BaseModel {
     public Observable<HomeBean> getData() {
         QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
         return Observable.zip(qFoodApiService.getBannerUrl(), qFoodApiService.getFavorableFood(),
-                qFoodApiService.getRecommendList(),
-                new Func3<BannerTypeUrlBean, FavorableFoodUrlBean, RecommendListUrlBean, HomeBean>() {
+                qFoodApiService.getRecommendList(),qFoodApiService.getMessage(),
+                new Func4<BannerTypeUrlBean, FavorableFoodUrlBean, RecommendListUrlBean,TextTypeBean, HomeBean>() {
                     @Override
                     public HomeBean call(BannerTypeUrlBean bannerTypeUrlBean,
                                          FavorableFoodUrlBean favorableFoodUrlBean,
-                                         RecommendListUrlBean recommendListUrlBean
+                                         RecommendListUrlBean recommendListUrlBean,
+                                         TextTypeBean textTypeBean
                     ) {
                         HomeBean _homeBean = new HomeBean();
                         _homeBean.setBannerEntityList(bannerTypeUrlBean.getRows());
                         _homeBean.setFavorableFoodEntityList(favorableFoodUrlBean.getRows());
                         _homeBean.setRecommendShopBeanEntityList(recommendListUrlBean.getRows());
+                        _homeBean.setTextTypeBean(textTypeBean);
                         return _homeBean;
                     }
                 });

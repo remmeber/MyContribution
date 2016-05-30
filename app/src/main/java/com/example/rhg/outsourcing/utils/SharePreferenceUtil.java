@@ -12,7 +12,6 @@ public class SharePreferenceUtil {
     private SharedPreferences spInfo;
 
     public SharePreferenceUtil() {
-
     }
 
     public static SharePreferenceUtil getInstance() {
@@ -26,7 +25,7 @@ public class SharePreferenceUtil {
      * 必须初始化
      */
     public void init(Context context) {
-        this.spInfo = context.getSharedPreferences("user_info", 0);
+        this.spInfo = context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
     }
 
     /**
@@ -40,15 +39,25 @@ public class SharePreferenceUtil {
         return sharePreferenceUtil;
     }
 
-    public SharedPreferences.Editor getEditor() {
-        return this.spInfo.edit();
-    }
-
-    public SharedPreferences getSP() {
-        return this.spInfo;
-    }
 
     public SharePreferenceUtil(Context paramContext) {
         this.spInfo = paramContext.getSharedPreferences("user_info", 0);
+    }
+
+    private SharedPreferences.Editor getEditor() {
+        return this.spInfo.edit();
+    }
+
+    private SharedPreferences getSP() {
+        return this.spInfo;
+    }
+
+    public void putString(String key, String string) {
+        getEditor().putString(key, string);
+        getEditor().commit();
+    }
+
+    public String getString(String key) {
+        return getSP().getString(key, "");
     }
 }

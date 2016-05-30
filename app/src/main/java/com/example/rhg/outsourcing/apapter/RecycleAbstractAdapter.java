@@ -25,8 +25,14 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
     private boolean hasHead;
     private boolean hasFooter;
 
+    public void setContext(Context context) {
+        this.context = context;
+        Log.i("RHG", "CURRENT NULL IS :" + context);
+    }
+
     public RecycleAbstractAdapter(Context context) {
         this.context = context;
+
         this.type = getDisplayType();
         this.hasHead = getHasHead();
         this.hasFooter = getHasFooter();
@@ -93,16 +99,6 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
                 break;
         }
 
-    }
-
-    @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-        Log.i("RHG", "recyleAbstract:" + holder.getAdapterPosition());
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
-        Log.i("RHG", "recyleAbstract:" + holder.getAdapterPosition());
     }
 
     private void bindHeaderItemViewHolder(HeaderViewHolder holder, int position, int type) {

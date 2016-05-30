@@ -2,7 +2,9 @@ package com.example.rhg.outsourcing.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -14,29 +16,40 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.viewHolder.BannerImageHolder;
+import com.example.rhg.outsourcing.application.InitApplication;
 import com.example.rhg.outsourcing.bean.GoodsDetailBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.dao.LikeDao;
 import com.example.rhg.outsourcing.dao.ShoppingCartDao;
+import com.example.rhg.outsourcing.locationservice.LocationService;
+import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenter;
 import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenterImpl;
 import com.example.rhg.outsourcing.utils.ImageUtils;
+import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.widget.LoadingDialog;
 import com.example.rhg.outsourcing.widget.UIAlertView;
 import com.example.rhg.outsourcing.widget.ShoppingCartWithNumber;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.Arrays;
 
 /**
- *desc:商品详情页面
- *author：remember
- *time：2016/5/28 16:14
- *email：1013773046@qq.com
+ * desc:商品详情页面
+ * author：remember
+ * time：2016/5/28 16:14
+ * email：1013773046@qq.com
  */
 public class GoodsDetailActivity extends BaseActivity {
 
     private boolean isLike;
+    private boolean isNeedLoc;
+    private String location;
+    private MyLocationListener myLocationListener;
     private String temp_productId;
 
     Drawable drawable_like;
@@ -48,7 +61,7 @@ public class GoodsDetailActivity extends BaseActivity {
     ImageView ivLeft;
     LinearLayout llTabRight;
 
-    ConvenientBanner convenientBanner;
+    ConvenientBanner<String> convenientBanner;
     ImageView ivLike;
     ImageView ivShare;
     TextView tvGoodsName;
@@ -64,9 +77,16 @@ public class GoodsDetailActivity extends BaseActivity {
     GoodsDetailBean goodsDetailBean;
     GoodsDetailPresenter goodsDetailPresenter;
 
+
     public GoodsDetailActivity() {
         goodsDetailPresenter = new GoodsDetailPresenterImpl(this);
+        myLocationListener = new MyLocationListener(this);
         goodsDetailBean = new GoodsDetailBean();
+        /*TODO 页面销毁需要置空，否则会出现内存泄漏*/
+        location = SharePreferenceUtil.getInstance().getString(AppConstants.SP_LOCATION);
+        if (TextUtils.isEmpty(location)) {
+            isNeedLoc = true;
+        }
         //TODO 测试数据
         LikeDao likeDao = LikeDao.getInstance();
         likeDao.saveGoodsLikeInfo("20160518", 1).saveGoodsLikeInfo("20160519", 1)
@@ -85,12 +105,32 @@ public class GoodsDetailActivity extends BaseActivity {
         ShoppingCartUtil.addGoodToCart("20160522", "3");
     }
 
+    Bundle bundle;
+    LoadingDialog loadingDialog;
+
+    @Override
+    public LocationService GetMapService() {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
+        if (isNeedLoc) {
+            return InitApplication.getInstance().locationService;
+        }
+        return super.GetMapService();
+    }
+
+    @Override
+    public MyLocationListener getLocationListener() {
+        if (isNeedLoc)
+            return new MyLocationListener(this);
+        return super.getLocationListener();
+    }
+
 
     //todo Intent 传递接收的数据
     @Override
     public void dataReceive(Intent intent) {
         if (intent != null) {
-            Bundle bundle = intent.getExtras();
+            bundle = intent.getExtras();
             String _temp = bundle.getString(AppConstants.KEY_PRODUCT_ID, null);
             goodsDetailBean.setProductId(_temp);
             _temp = bundle.getString(AppConstants.KEY_PRODUCT_NAME, null);
@@ -115,7 +155,6 @@ public class GoodsDetailActivity extends BaseActivity {
         ivRight = (ImageView) findViewById(R.id.tb_right_iv);
         ivLeft = (ImageView) findViewById(R.id.iv_tab_left);
         llTabRight = (LinearLayout) findViewById(R.id.tb_right_ll);
-
         convenientBanner = (ConvenientBanner) findViewById(R.id.iv_banner);
         ivLike = (ImageView) findViewById(R.id.iv_like);
         ivShare = (ImageView) findViewById(R.id.iv_share);
@@ -134,6 +173,7 @@ public class GoodsDetailActivity extends BaseActivity {
     //todo 对本地数据进行绑定
     @Override
     protected void initData() {
+//        goodsDetailPresenter.getGoodsInfo();
         ImageUtils.TintFill(ivRight, getResources().getDrawable(R.mipmap.ic_place_white_48dp),
                 getResources().getColor(R.color.colorActiveGreen));
         ImageUtils.TintFill(ivShare, getResources().getDrawable(R.mipmap.ic_social_share),
@@ -143,7 +183,7 @@ public class GoodsDetailActivity extends BaseActivity {
         drawable_not_like = ImageUtils.TintWithoutFill(getResources().getDrawable(R.mipmap.ic_not_like),
                 getResources().getColor(R.color.colorActiveGreen));
         ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_black_48dp));
-        tvRight.setText("杭州");//TODO 根据定位来决定
+        tvRight.setText(location);//TODO 根据定位来决定
         tvCenter.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
         ShoppingCartDao shoppingCartDao = ShoppingCartDao.getInstance();
@@ -173,8 +213,20 @@ public class GoodsDetailActivity extends BaseActivity {
         convenientBanner.setOnClickListener(this);
         convenientBanner.startTurning(2000);
         convenientBanner
-                .setPageIndicator(AppConstants.imageindictors);
+                .setPageIndicator(AppConstants.IMAGE_INDICTORS);
         goodsDetailPresenter.getGoodsInfo();
+    }
+
+    @Override
+    public void showLocSuccess(String s) {
+        tvRight.setText(s);
+        SharePreferenceUtil.getInstance().putString(AppConstants.SP_LOCATION, s);
+        goodsDetailPresenter.getGoodsInfo();
+    }
+
+    @Override
+    public void showLocFailed(String s) {
+
     }
 
     //todo 从服务器获得的数据
@@ -184,6 +236,8 @@ public class GoodsDetailActivity extends BaseActivity {
         goodsDetailBean.setGoodsDescription(_bean.getGoodsDescription());
         goodsDetailBean.setGoodSellNum(_bean.getGoodSellNum());
         goodsDetailBean.setImageUrls(_bean.getImageUrls());
+        loadingDialog.setmContext(null);
+        loadingDialog.dismiss();
         bindData(goodsDetailBean);
     }
 
@@ -211,6 +265,7 @@ public class GoodsDetailActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_tab_left:
+                bundle = null;
                 setResult(AppConstants.BACK_WITHOUT_DATA);
                 finish();
                 break;
@@ -284,7 +339,19 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        bundle = null;
         setResult(AppConstants.BACK_WITHOUT_DATA);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        location = null;
+        super.onDestroy();
     }
 }

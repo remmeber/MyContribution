@@ -16,12 +16,10 @@ public class FragmentController {
     private static final String TAG = "FragmentController";
     public  FragmentManager fm;
     private Fragment[] fragments;
-    private TestPresenter testPresenter;
     private int showMark = 0;
 
-    public FragmentController(FragmentManager fm, TestPresenter testPresenter ,Fragment[] fragments,int id) {
+    public FragmentController(FragmentManager fm ,Fragment[] fragments,int id) {
         this.fm = fm;
-        this.testPresenter = testPresenter;
         this.fragments = fragments;
         initFragment(id);
     }
