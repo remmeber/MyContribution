@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -21,6 +22,14 @@ public class QFoodLoadingCircle extends View {
     private ValueAnimator valueAnimator;
     private boolean init = false;
     private float radiu = 10;
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            start();
+            invalidate();
+        }
+    };
 
     public QFoodLoadingCircle(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,6 +40,7 @@ public class QFoodLoadingCircle extends View {
         super(context);
         init();
     }
+
 
     private void init() {
         paint = new Paint();
@@ -82,14 +92,12 @@ public class QFoodLoadingCircle extends View {
         } else {
             valueAnimator.start();
         }
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                start();
-                invalidate();
-            }
-        }, valueAnimator.getDuration());
+        handler.postDelayed(runnable, valueAnimator.getDuration());
         invalidate();
+    }
+
+    public void stop() {
+        handler.removeCallbacks(runnable);
     }
 
     //分段函数

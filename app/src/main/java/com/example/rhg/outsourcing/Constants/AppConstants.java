@@ -68,6 +68,11 @@ public class AppConstants {
     public static final String KEY_NOTE = "note";
     public static final String KEY_DELETE = "delete";
     public static final int KEY_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
+    /*for headImage*/
+    public static final int CODE_GALLERY_REQUEST = 10;//TODO:From Local
+    public static final int CODE_GALLERY_REQUEST_KITKAT = 20;//TODO:From Local
+    public static final int CODE_CAMERA_REQUEST = 11;//TODO: From Camera
+    public static final int CODE_RESULT_REQUEST = 12;//TODO:From Crop
 
     /**
      * 响应结果，正确

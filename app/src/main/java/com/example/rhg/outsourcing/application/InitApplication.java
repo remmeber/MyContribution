@@ -15,6 +15,7 @@ import com.example.rhg.outsourcing.locationservice.LocationService;
 import com.example.rhg.outsourcing.utils.NetUtil;
 import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.widget.LoadingDialog;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -36,6 +37,22 @@ public class InitApplication extends Application {
     private static InitApplication initApplication;
     public static boolean isNetworkAvailable;
     private HashMap<String, WeakReference<BaseActivity>> activityList = new HashMap<String, WeakReference<BaseActivity>>();
+    private HashMap<String, WeakReference<Object>> objectList = new HashMap<>();
+
+    public void addObject(Object object) {
+        if (null != object) {
+            Log.i("RHG", "********* add Object " + object.getClass().getName());
+            objectList.put(object.getClass().getName(), new WeakReference<>(object));
+
+        }
+    }
+
+    public void removeObject(Object object) {
+        if (null != object) {
+            Log.i("RHG", "********* remove Activity " + object.getClass().getName());
+            objectList.remove(object.getClass().getName());
+        }
+    }
 
     public void addActivity(BaseActivity activity) {
         if (null != activity) {
@@ -64,7 +81,6 @@ public class InitApplication extends Application {
                 activity.get().finish();
             }
         }
-
         System.exit(0);
         android.os.Process.killProcess(android.os.Process.myPid());
     }

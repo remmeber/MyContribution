@@ -12,17 +12,21 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.rhg.outsourcing.R;
+import com.example.rhg.outsourcing.mvp.presenter.ChoosePicPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.ChoosePicPresenterImpl;
+import com.example.rhg.outsourcing.mvp.view.BaseView;
 
 /**
- *desc:修改头像 dialog
- *author：remember
- *time：2016/5/28 17:04
- *email：1013773046@qq.com
+ * desc:修改头像 dialog
+ * author：remember
+ * time：2016/5/28 17:04
+ * email：1013773046@qq.com
  */
 public class ModifyHeadDialog extends Dialog implements View.OnClickListener {
     Context mContext;
     Button btCamera;
     Button btGallery;
+    ChoosePicPresenter choosePicPresenter;
 
     public ModifyHeadDialog(Context context) {
         super(context, R.style.MyDialogStyle);
@@ -66,13 +70,29 @@ public class ModifyHeadDialog extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.bt_camera:
                 /*调起相机*/
+                if (choosePicListener != null)
+                    choosePicListener.chooseFromCamera();
                 dismiss();
-
                 break;
             case R.id.bt_gallery:
+                if (choosePicListener != null)
+                    choosePicListener.chooseFromGallery();
                 dismiss();
                 break;
         }
+    }
+
+
+    public interface ChoosePicListener {
+        public void chooseFromGallery();
+
+        public void chooseFromCamera();
+    }
+
+    private ChoosePicListener choosePicListener;
+
+    public void setChoosePicListener(ChoosePicListener choosePicListener) {
+        this.choosePicListener = choosePicListener;
     }
 
     @Override

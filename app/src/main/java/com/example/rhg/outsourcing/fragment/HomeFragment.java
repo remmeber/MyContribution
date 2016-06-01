@@ -202,7 +202,6 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     public void showSuccess(Object o) {
         HomeBean _homeBean = (HomeBean) o;
         /*set null */
-        loadingDialog.setmContext(null);
         loadingDialog.dismiss();
 
         bannerTypeBean.setBannerEntityList(_homeBean.getBannerEntityList());

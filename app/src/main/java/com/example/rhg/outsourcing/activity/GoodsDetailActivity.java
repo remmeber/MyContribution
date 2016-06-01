@@ -2,7 +2,6 @@ package com.example.rhg.outsourcing.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,11 +29,8 @@ import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
-import com.example.rhg.outsourcing.widget.UIAlertView;
 import com.example.rhg.outsourcing.widget.ShoppingCartWithNumber;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.example.rhg.outsourcing.widget.UIAlertView;
 
 import java.util.Arrays;
 
@@ -236,7 +232,6 @@ public class GoodsDetailActivity extends BaseActivity {
         goodsDetailBean.setGoodsDescription(_bean.getGoodsDescription());
         goodsDetailBean.setGoodSellNum(_bean.getGoodSellNum());
         goodsDetailBean.setImageUrls(_bean.getImageUrls());
-        loadingDialog.setmContext(null);
         loadingDialog.dismiss();
         bindData(goodsDetailBean);
     }
