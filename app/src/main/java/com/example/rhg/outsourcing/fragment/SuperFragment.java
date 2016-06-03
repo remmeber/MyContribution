@@ -58,7 +58,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.i("RHG", "onActivity");
         loadData();
         startLoc();
         fillData();
@@ -116,7 +115,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
      * 从网络获取数据，在new的时候只加载一次，后期都需要refresh才能更新
      */
     public void loadData() {
-        Log.i("RHG", "LOAD");
     }
 
     protected abstract void initData();
@@ -135,8 +133,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
                     showLocSuccess(location_str[2]);
                 if (locationService != null) {
                     locationService.stop();
-                    if (AppConstants.DEBUG)
-                        Log.i("RHG", "停止定位");
                 }
             } else {
                 showSuccess(_str);

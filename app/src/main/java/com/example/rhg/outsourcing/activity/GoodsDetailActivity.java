@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -80,6 +81,8 @@ public class GoodsDetailActivity extends BaseActivity {
         goodsDetailBean = new GoodsDetailBean();
         /*TODO 页面销毁需要置空，否则会出现内存泄漏*/
         location = SharePreferenceUtil.getInstance().getString(AppConstants.SP_LOCATION);
+        Log.i("RHG", "location : " + location);
+
         if (TextUtils.isEmpty(location)) {
             isNeedLoc = true;
         }
@@ -170,7 +173,7 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
 //        goodsDetailPresenter.getGoodsInfo();
-        ImageUtils.TintFill(ivRight, getResources().getDrawable(R.mipmap.ic_place_white_48dp),
+        ImageUtils.TintFill(ivRight, getResources().getDrawable(R.mipmap.ic_place_white),
                 getResources().getColor(R.color.colorActiveGreen));
         ImageUtils.TintFill(ivShare, getResources().getDrawable(R.mipmap.ic_social_share),
                 getResources().getColor(R.color.colorActiveGreen));
@@ -178,7 +181,7 @@ public class GoodsDetailActivity extends BaseActivity {
                 getResources().getColor(R.color.colorActiveGreen));
         drawable_not_like = ImageUtils.TintWithoutFill(getResources().getDrawable(R.mipmap.ic_not_like),
                 getResources().getColor(R.color.colorActiveGreen));
-        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_black_48dp));
+        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_blackp));
         tvRight.setText(location);//TODO 根据定位来决定
         tvCenter.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量

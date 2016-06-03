@@ -58,6 +58,14 @@ public class SellerFragment extends SuperFragment implements View.OnClickListene
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (hidden)
+            Log.i("RHG", "SELLER:hide");
+        else
+            Log.i("RHG", "SELLER:show");
+    }
+
+    @Override
     public int getLayoutResId() {
         return R.layout.seller_viewpager_layout;
     }
@@ -70,12 +78,12 @@ public class SellerFragment extends SuperFragment implements View.OnClickListene
         tbRightIV = (ImageView) view.findViewById(R.id.tb_right_iv);
         tabLayout = (SlidingTabLayout) view.findViewById(R.id.tabLayout);
         viewPager = (ViewPager) view.findViewById(R.id.sellerViewPager);
-
     }
 
     @Override
     protected void initData() {
         tbCenterTV.setText(getResources().getString(R.string.allstore));
+        fl_tab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbRightLL.setOnClickListener(this);
         QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getChildFragmentManager(), fragments,
                 AppConstants.SELL_TITLES, viewPager, tabLayout);

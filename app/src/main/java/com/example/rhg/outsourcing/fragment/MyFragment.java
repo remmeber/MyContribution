@@ -149,6 +149,14 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         addressModify.setTag(8);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (hidden)
+            Log.i("RHG", "My:hide");
+        else
+            Log.i("RHG", "My:show");
+    }
+
     private View getViewById(View parent, int centerId, int targetId) {
         return parent.findViewById(centerId).findViewById(targetId);
     }

@@ -70,7 +70,7 @@ public class AllOrderFragment extends SuperFragment implements QFoodOrderAdapter
             @Override
             public void onRefresh() {
                 Log.i("RHG", "OnRefresh");
-                testPresenter.getData();
+                testPresenter.getData("restaurants",0);
             }
 
         });

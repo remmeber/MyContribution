@@ -12,9 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.mvp.presenter.ChoosePicPresenter;
-import com.example.rhg.outsourcing.mvp.presenter.ChoosePicPresenterImpl;
-import com.example.rhg.outsourcing.mvp.view.BaseView;
+import com.example.rhg.outsourcing.mvp.presenter.UploadAndSaveImagePresenter;
 
 /**
  * desc:修改头像 dialog
@@ -26,7 +24,7 @@ public class ModifyHeadDialog extends Dialog implements View.OnClickListener {
     Context mContext;
     Button btCamera;
     Button btGallery;
-    ChoosePicPresenter choosePicPresenter;
+    UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
 
     public ModifyHeadDialog(Context context) {
         super(context, R.style.MyDialogStyle);

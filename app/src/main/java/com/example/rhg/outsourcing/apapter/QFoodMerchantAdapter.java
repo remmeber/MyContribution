@@ -6,6 +6,7 @@ import android.view.View;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.viewHolder.BodyViewHolder;
 import com.example.rhg.outsourcing.apapter.viewHolder.HeaderViewHolder;
+import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.bean.QFoodAllSellerBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -15,18 +16,16 @@ import java.util.List;
 /**
  * Created by remember on 2016/5/28.
  */
-public class QFoodMerchantAdapter extends RecycleAbstractAdapter<QFoodAllSellerBean> {
+public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean.MerchantBean> {
 
 
 
-    public QFoodMerchantAdapter(Context context, List<QFoodAllSellerBean> mData) {
+    public QFoodMerchantAdapter(Context context, List<MerchantUrlBean.MerchantBean> mData) {
         super(context, mData);
     }
 
-    public void setSuperContext(Context context){
-        setContext(context);
 
-    }
+
 
     @Override
     public boolean getHasHead() {
@@ -46,12 +45,12 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<QFoodAllSellerB
     }
 
     @Override
-    public void bindHeadData(final HeaderViewHolder holder, QFoodAllSellerBean data, int type) {
-        ImageLoader.getInstance().displayImage(data.getImageUrl(), holder.headerstoreimage);
-        holder.headerstorename.setText(data.getMerchantName());
-        holder.headerdemandmoney.setText("满20元起");
-        holder.headerdelivermoney.setText("配送费1元");
-        holder.headerdistance.setText(data.getSellerDistance());
+    public void bindHeadData(final HeaderViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
+        ImageLoader.getInstance().displayImage(data.getPic(), holder.headerstoreimage);
+        holder.headerstorename.setText(data.getName());
+        holder.headerdemandmoney.setText(data.getDelivery());
+        holder.headerdelivermoney.setText(data.getFee());
+        holder.headerdistance.setText(data.getDistance());
         holder.headerlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,13 +61,13 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<QFoodAllSellerB
     }
 
     @Override
-    protected void bindBodyData(final BodyViewHolder holder, QFoodAllSellerBean data, int type) {
-        holder.sellerName.setText(data.getMerchantName());
-        ImageLoader.getInstance().displayImage(data.getImageUrl(), holder.sellerImage);
-        holder.sellerDistance.setText(data.getSellerDistance());
-        holder.foodType.setText(data.getFoodType());
-        holder.deliverMoney.setText("配送费1元");
-        holder.demandMoney.setText("满20元起");
+    protected void bindBodyData(final BodyViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
+        holder.sellerName.setText(data.getName());
+        ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
+        holder.sellerDistance.setText(data.getDistance());
+        holder.foodType.setText(data.getStyle());
+        holder.deliverMoney.setText(data.getFee());
+        holder.demandMoney.setText(data.getDelivery());
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

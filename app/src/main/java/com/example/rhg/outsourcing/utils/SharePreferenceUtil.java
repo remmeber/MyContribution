@@ -40,7 +40,7 @@ public class SharePreferenceUtil {
     }
 
 
-    public SharePreferenceUtil(Context paramContext) {
+    private SharePreferenceUtil(Context paramContext) {
         this.spInfo = paramContext.getSharedPreferences("user_info", 0);
     }
 
@@ -53,8 +53,7 @@ public class SharePreferenceUtil {
     }
 
     public void putString(String key, String string) {
-        getEditor().putString(key, string);
-        getEditor().commit();
+        getEditor().putString(key, string).commit();
     }
 
     public String getString(String key) {

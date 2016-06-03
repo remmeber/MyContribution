@@ -13,19 +13,23 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alipay.security.mobile.module.commonutils.LOG;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.mvp.presenter.UploadAndSaveImagePresenter;
+import com.example.rhg.outsourcing.mvp.presenter.UploadAndSaveImagePresenterImpl;
+import com.example.rhg.outsourcing.utils.DataUtil;
+import com.example.rhg.outsourcing.utils.ImageUtils;
+import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.ModifyHeadDialog;
 import com.example.rhg.outsourcing.widget.CircleImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 
@@ -48,6 +52,10 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     Button bt_save;
     Button bt_exit;
 
+    UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
+    String imageStr = "";
+
+
     @Override
     public int getLayoutResId() {
         return R.layout.deliver_info_activity;
@@ -56,7 +64,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     @Override
     protected void initView() {
         tb_common = (FrameLayout) findViewById(R.id.fl_tab);
-        tvRight = (TextView) findViewById(R.id.tb_right_tv);//TODO 有待考虑
+        tvRight = (TextView) findViewById(R.id.tb_right_tv);
         ivLeft = (ImageView) findViewById(R.id.iv_tab_left);
 
         headView = (CircleImageView) findViewById(R.id.ci_head);
@@ -69,20 +77,28 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     }
 
     protected void initData() {
+        uploadAndSaveImagePresenter = new UploadAndSaveImagePresenterImpl(this);
         tb_common.setBackgroundResource(R.color.colorActiveGreen);
         tvRight.setText("编辑");
-        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_black_48dp));
+        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_blackp));
         ivLeft.setOnClickListener(this);
 
         headView.setOnClickListener(this);
         et_name_wrap.setError("");
         bt_save.setOnClickListener(this);
         bt_exit.setOnClickListener(this);
+        imageStr = SharePreferenceUtil.getInstance().getString(AppConstants.SP_HEAD_IMAGE);
+        /*从本地获取头像URI*/
+        if (!"".equals(imageStr)) {
+            ImageLoader.getInstance().displayImage(imageStr, headView);
+        } else {
+            uploadAndSaveImagePresenter.UploadAndSaveImage();
+        }
     }
 
     @Override
     protected void showSuccess(Object s) {
-
+//        ImageLoader.getInstance().displayImage((String) s, headView);
     }
 
     @Override
@@ -112,9 +128,9 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     @Override
     final public void chooseFromGallery() {
         Intent intentFromGallery = new Intent();
+        intentFromGallery.addCategory(Intent.CATEGORY_OPENABLE);
         intentFromGallery.setType("image/*");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Log.i("RHG", "KITKAT");
             intentFromGallery.setAction(Intent.ACTION_OPEN_DOCUMENT);
             startActivityForResult(intentFromGallery, AppConstants.CODE_GALLERY_REQUEST_KITKAT);
         } else {
@@ -123,9 +139,18 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
         }
     }
 
+    Uri fileUri = null;
+
     @Override
     final public void chooseFromCamera() {
-        Intent intentFromCamera = new Intent();
+// create Intent to take a picture and return control to the calling application
+        Intent intentFromCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        fileUri = Uri.fromFile(new File(AppConstants.f_Path, DataUtil.getDataForImageName())); // create a file to save the image
+        intentFromCamera.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+
+        // start the image capture Intent
+        startActivityForResult(intentFromCamera, AppConstants.CODE_CAMERA_REQUEST);
 
     }
 
@@ -141,23 +166,27 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
                 cropRawPic(data.getData());
                 break;
             case AppConstants.CODE_GALLERY_REQUEST_KITKAT:
-                String _path = getPath(data.getData());
+                String _path = getImagePath(data.getData());
                 if (_path == null) break;
                 File file = new File(_path);
                 cropRawPic(Uri.fromFile(file));
                 break;
             case AppConstants.CODE_CAMERA_REQUEST:
+                cropRawPic(fileUri);
                 break;
             case AppConstants.CODE_RESULT_REQUEST:
                 Bitmap photo = data.getExtras().getParcelable("data");
-                headView.setImageBitmap(photo);
+                Uri _uri = ImageUtils.getImageUri(photo);
+                /*TODO 将图片传服务器，服务器返回相应的URL，保存本地*/
+
+                ImageLoader.getInstance().displayImage(_uri.toString(), headView);
                 break;
         }
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Nullable
-    private String getPath(Uri uri) {
+    private String getImagePath(Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (isKitKat && DocumentsContract.isDocumentUri(this, uri)) {//TODO 可能会导致内存溢出
             if (isExternalStorageDocument(uri)) {
@@ -172,11 +201,9 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
                         , Long.valueOf(id));
                 return getDataColumn(this, contentUri, null, null);
             } else if (isMediaDocument(uri)) {
-                Log.i("RHG", "Media Document");
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
-                Log.i("RHG", "type: " + type);
 
                 Uri contentUri = null;
                 if ("image".equals(type)) {
@@ -190,7 +217,6 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
                 final String[] selectionArgs = new String[]{split[1]};
                 return getDataColumn(this, contentUri, selection, selectionArgs);
             } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-                Log.i("RHG", "content");
                 if (isGooglePhotosUri(uri)) {
                     return uri.getLastPathSegment();
                 }
@@ -219,13 +245,10 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
             cursor = context.getContentResolver().query(contentUri, projection, selection, selectionArgs, null);
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndex(column);
-                Log.i("RHG", "index:" + index);
-                Log.i("RHG", "index:" + cursor.getInt(index));
-
                 return cursor.getString(index);
             }
         } catch (Exception e) {
-            Log.i("RHG", e.getMessage());
+            e.printStackTrace();
         } finally {
             if (cursor != null)
                 cursor.close();
@@ -252,16 +275,15 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     private void cropRawPic(Uri data) {
         Intent intent = new Intent(CROP);
         intent.setDataAndType(data, "image/*");
-
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         intent.putExtra("outputX", 300);
         intent.putExtra("outputY", 300);
         intent.putExtra("return-data", true);
-        Log.i("RHG", "DONE1");
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
         startActivityForResult(intent, AppConstants.CODE_RESULT_REQUEST);
-        Log.i("RHG", "DONE2");
     }
 
 

@@ -1,12 +1,11 @@
 package com.example.rhg.outsourcing.mvp.presenter;
 
 import com.example.rhg.outsourcing.bean.HomeBean;
-import com.example.rhg.outsourcing.bean.MerchantUrlBean;
-import com.example.rhg.outsourcing.mvp.view.BaseView;
 import com.example.rhg.outsourcing.mvp.model.BaseModel;
+import com.example.rhg.outsourcing.mvp.model.HomeModel;
+import com.example.rhg.outsourcing.mvp.model.HomeModelImpl;
 import com.example.rhg.outsourcing.mvp.model.TestModel;
-
-import java.util.List;
+import com.example.rhg.outsourcing.mvp.view.BaseView;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,20 +17,20 @@ import rx.schedulers.Schedulers;
  * time：2016/5/28 17:02
  * email：1013773046@qq.com
  */
-public class TestPresenter implements Presenter {
+public class HomePresenterImpl implements HomePresenter {
     BaseView testView;
-    BaseModel testModel;
+    HomeModel testModel;
 
-    public TestPresenter(BaseView baseView) {
+    public HomePresenterImpl(BaseView baseView) {
         testView = baseView;
-        testModel = new TestModel();
+        testModel = new HomeModelImpl();
     }
 
     @Override
-    public void getData(String table, int page) {
-        testModel.getData(table,page).observeOn(AndroidSchedulers.mainThread())
+    public void getHomeData() {
+        testModel.getHomeData().observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<MerchantUrlBean.MerchantBean>>() {
+                .subscribe(new Observer<HomeBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -43,8 +42,8 @@ public class TestPresenter implements Presenter {
                     }
 
                     @Override
-                    public void onNext(List<MerchantUrlBean.MerchantBean> merchantBeanList) {
-                        testView.showData(merchantBeanList);
+                    public void onNext(HomeBean homeBean) {
+                        testView.showData(homeBean);
                     }
                 });
 

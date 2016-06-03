@@ -5,16 +5,15 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
-import com.example.rhg.outsourcing.bean.QFoodAllSellerBean;
+import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,27 +28,17 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
     private SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     //TODO-------------------------------按销量排序的数据--------------------------------------------
-    List<QFoodAllSellerBean> dataBySellNumberModels = new ArrayList<>();
+    List<MerchantUrlBean.MerchantBean> dataBySellNumberModels = new ArrayList<>();
     TestPresenter sellertestPresenter;
-    private Context context;
+    LoadingDialog loadingDialog;
     QFoodMerchantAdapter qFoodMerchantAdapter;
 
     public void setContext(Context context) {
-        this.context = context;
         if (qFoodMerchantAdapter != null)
-            qFoodMerchantAdapter.setSuperContext(context);
+            qFoodMerchantAdapter.setContext(context);
     }
 
     public BySellNumberFragment() {
-        for (int i = 0; i < 6; i++) {
-//            BaseSellerModel baseSellerModel = new BaseSellerModel("哈哈", "中餐", "距离10m", R.drawable.recommend_default_icon_1);
-            QFoodAllSellerBean QFoodAllSellerBean = new QFoodAllSellerBean();
-            QFoodAllSellerBean.setMerchantName("哈啊哈");
-            QFoodAllSellerBean.setFoodType("中餐");
-            QFoodAllSellerBean.setSellerDistance("距离20m");
-            QFoodAllSellerBean.setImageUrl(AppConstants.images[2]);
-            dataBySellNumberModels.add(QFoodAllSellerBean);
-        }
         sellertestPresenter = new TestPresenter(this);
     }
 
@@ -75,9 +64,17 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                sellertestPresenter.getData();
+                sellertestPresenter.getData("restaurants", 0);
             }
         });
+    }
+
+    @Override
+    public void loadData() {
+        super.loadData();
+        /*loadingDialog = new LoadingDialog(getContext());
+        loadingDialog.show();*/
+        sellertestPresenter.getData("restaurants", 0);
     }
 
     @Override
@@ -100,8 +97,9 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
 
     @Override
     public void showSuccess(Object o) {
-        Toast.makeText(getContext(), o.toString(), Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
+        qFoodMerchantAdapter.setmData((List<MerchantUrlBean.MerchantBean>) o);
+        qFoodMerchantAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -12,29 +12,30 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.apapter.HomeRecycleAdapter;
-import com.example.rhg.outsourcing.application.InitApplication;
-import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
-import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
-import com.example.rhg.outsourcing.bean.HomeBean;
-import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
-import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.QFoodGridViewAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleMultiTypeAdapter;
+import com.example.rhg.outsourcing.application.InitApplication;
 import com.example.rhg.outsourcing.bean.BannerTypeBean;
+import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
+import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.bean.FavorableTypeModel;
 import com.example.rhg.outsourcing.bean.FooterTypeModel;
 import com.example.rhg.outsourcing.bean.HeaderTypeModel;
+import com.example.rhg.outsourcing.bean.HomeBean;
 import com.example.rhg.outsourcing.bean.RecommendListTypeModel;
+import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.bean.RecommendTextTypeModel;
 import com.example.rhg.outsourcing.bean.TextTypeBean;
+import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.impl.SearchListener;
 import com.example.rhg.outsourcing.locationservice.LocationService;
 import com.example.rhg.outsourcing.locationservice.MyLocationListener;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.HomePresenter;
+import com.example.rhg.outsourcing.mvp.presenter.HomePresenterImpl;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
@@ -78,7 +79,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     TextView tlRightTV;
     /*toolbar 相关*/
 
-    TestPresenter testPresenter;
+    HomePresenter homePresenter;
     //itme的数据类型集合
     List<Object> mData;
 
@@ -88,7 +89,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     boolean isLocated;
 
     public HomeFragment() {
-        testPresenter = new TestPresenter(this);
+        homePresenter = new HomePresenterImpl(this);
         myLocationListener = new MyLocationListener(this);
         favorableTypeModel = new FavorableTypeModel();
         bannerTypeBean = new BannerTypeBean();
@@ -123,8 +124,16 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (hidden)
+            Log.i("RHG", "Home:hide");
+        else
+            Log.i("RHG", "Home:show");
+    }
+
+    @Override
     protected void initData() {
-        ImageUtils.TintFill(tlLeftIV, getResources().getDrawable(R.mipmap.ic_place_white_48dp)
+        ImageUtils.TintFill(tlLeftIV, getResources().getDrawable(R.mipmap.ic_place_white)
                 , getResources().getColor(R.color.colorActiveGreen));
         ImageUtils.TintFill(tlCenterIV, getResources().getDrawable(R.mipmap.ic_search_white)
                 , getResources().getColor(R.color.colorActiveGreen));
@@ -150,7 +159,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
                 if (TextUtils.isEmpty(tlLeftTV.getText()) || "null".equals(tlLeftTV.getText())) {
                     reStartLocation();
                 }
-                testPresenter.getData();
+                homePresenter.getHomeData();
             }
         });
     }
@@ -223,7 +232,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         isLocated = true;
         tlLeftTV.setText(s);
         SharePreferenceUtil.getInstance().putString(AppConstants.SP_LOCATION, s);
-        testPresenter.getData();
+        homePresenter.getHomeData();
     }
 
     @Override

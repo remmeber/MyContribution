@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_tab"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="81dp"
     tools:background="@color/colorActiveGreen">
 
     <TextView
         android:id="@+id/tb_center_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:textColor="@color/black"
@@ -21,13 +22,15 @@
         android:id="@+id/iv_tab_left"
         android:layout_width="36dp"
         android:layout_height="match_parent"
-        tools:src="@mipmap/ic_chevron_left_black_48dp" />
+        android:layout_marginTop="25dp"
+        tools:src="@mipmap/ic_chevron_left_blackp" />
 
     <LinearLayout
         android:id="@+id/tb_right_ll"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        android:layout_marginTop="25dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -35,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            tools:src="@mipmap/ic_place_white_48dp" />
+            tools:src="@mipmap/ic_place_whit" />
 
         <TextView
             android:id="@+id/tb_right_tv"

@@ -1,24 +1,14 @@
 package com.example.rhg.outsourcing.mvp.model;
 
-import android.util.Log;
-
 import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
 import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.bean.HomeBean;
-import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.bean.TextTypeBean;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiService;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.functions.Func3;
 import rx.functions.Func4;
 
 /**
@@ -27,20 +17,26 @@ import rx.functions.Func4;
  * time：2016/5/28 17:00
  * email：1013773046@qq.com
  */
-public class TestModel implements BaseModel {
+public class HomeModelImpl implements HomeModel {
 
     @Override
-    public Observable<List<MerchantUrlBean.MerchantBean>> getData(String table, int page) {
-        return QFoodApiMamager.getInstant().getQFoodApiService().getAllShop(table, page)
-                .flatMap(new Func1<MerchantUrlBean, Observable<List<MerchantUrlBean.MerchantBean>>>() {
+    public Observable<HomeBean> getHomeData() {
+        QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
+        return Observable.zip(qFoodApiService.getBannerUrl(), qFoodApiService.getFavorableFood(),
+                qFoodApiService.getRecommendList(),qFoodApiService.getMessage(),
+                new Func4<BannerTypeUrlBean, FavorableFoodUrlBean, RecommendListUrlBean,TextTypeBean, HomeBean>() {
                     @Override
-                    public Observable<List<MerchantUrlBean.MerchantBean>> call(final MerchantUrlBean merchantUrlBean) {
-                        return Observable.create(new Observable.OnSubscribe<List<MerchantUrlBean.MerchantBean>>() {
-                            @Override
-                            public void call(Subscriber<? super List<MerchantUrlBean.MerchantBean>> subscriber) {
-                                subscriber.onNext(merchantUrlBean.getRows());
-                            }
-                        });
+                    public HomeBean call(BannerTypeUrlBean bannerTypeUrlBean,
+                                         FavorableFoodUrlBean favorableFoodUrlBean,
+                                         RecommendListUrlBean recommendListUrlBean,
+                                         TextTypeBean textTypeBean
+                    ) {
+                        HomeBean _homeBean = new HomeBean();
+                        _homeBean.setBannerEntityList(bannerTypeUrlBean.getRows());
+                        _homeBean.setFavorableFoodEntityList(favorableFoodUrlBean.getRows());
+                        _homeBean.setRecommendShopBeanEntityList(recommendListUrlBean.getRows());
+                        _homeBean.setTextTypeBean(textTypeBean);
+                        return _homeBean;
                     }
                 });
         /*return QFoodApiMamager.getInstant().getQFoodApiService().getFavorableFood()

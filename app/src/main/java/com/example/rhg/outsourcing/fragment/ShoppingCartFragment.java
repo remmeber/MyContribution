@@ -115,6 +115,14 @@ public class ShoppingCartFragment extends SuperFragment {
         updateListView();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (hidden)
+            Log.i("RHG", "Shoppingcart:hide");
+        else
+            Log.i("RHG", "Shoppingcart:show");
+    }
+
     private void updateListView() {
         QFoodShoppingCartExplAdapter.setmData(shoppingCartBeanList);
         QFoodShoppingCartExplAdapter.notifyDataSetChanged();

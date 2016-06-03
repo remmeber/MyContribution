@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleAbstractAdapter;
+import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.bean.QFoodAllSellerBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public class ByRateFragment extends SuperFragment implements RecycleAbstractAdapter.OnListItemClick {
     //TODO-------------------------------按评分排序的数据--------------------------------------------
-    List<QFoodAllSellerBean> dataByRateScoreModels = new ArrayList<>();
+    List<MerchantUrlBean.MerchantBean> dataByRateScoreModels = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     TestPresenter distancetestPresenter;
     private RecyclerView recyclerView;
@@ -36,18 +37,10 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     public void setContext(Context context) {
         this.context = context;
         if (qFoodMerchantAdapter != null)
-            qFoodMerchantAdapter.setSuperContext(context);
+            qFoodMerchantAdapter.setContext(context);
     }
 
     public ByRateFragment() {
-        for (int i = 0; i < 6; i++) {
-            QFoodAllSellerBean QFoodAllSellerBean = new QFoodAllSellerBean();
-            QFoodAllSellerBean.setMerchantName("哈啊哈");
-            QFoodAllSellerBean.setFoodType("中餐");
-            QFoodAllSellerBean.setSellerDistance("距离20m");
-            QFoodAllSellerBean.setImageUrl(AppConstants.images[2]);
-            dataByRateScoreModels.add(QFoodAllSellerBean);
-        }
         distancetestPresenter = new TestPresenter(this);
     }
 
@@ -65,6 +58,12 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     }
 
     @Override
+    public void loadData() {
+        super.loadData();
+        distancetestPresenter.getData("restaurants", 2);
+    }
+
+    @Override
     protected void initData() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -74,12 +73,11 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                distancetestPresenter.getData();
+                distancetestPresenter.getData("restaurants", 2);
             }
         });
 
     }
-
 
 
     @Override
@@ -102,8 +100,9 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
 
     @Override
     public void showSuccess(Object o) {
-        Toast.makeText(getContext(), o.toString(), Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
+        qFoodMerchantAdapter.setmData((List<MerchantUrlBean.MerchantBean>) o);
+        qFoodMerchantAdapter.notifyDataSetChanged();
     }
 
     @Override

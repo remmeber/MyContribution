@@ -11,10 +11,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
+import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.bean.QFoodAllSellerBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,32 +30,22 @@ import java.util.List;
 public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAdapter.OnListItemClick {
 
     //TODO-------------------------------按距离排序的数据--------------------------------------------
-    List<QFoodAllSellerBean> dataByDistanceModels = new ArrayList<>();
+    List<MerchantUrlBean.MerchantBean> dataByDistanceModels = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
-    TestPresenter distancetestPresenter;
+    TestPresenter sellertestPresenter;
     QFoodMerchantAdapter qFoodMerchantAdapter;
     Context context = getContext();
 
     public void setContext(Context context) {
         this.context = context;
         if (qFoodMerchantAdapter != null)
-            qFoodMerchantAdapter.setSuperContext(context);
+            qFoodMerchantAdapter.setContext(context);
     }
 
     public ByDistanceFragment() {
-        for (int i = 0; i < 6; i++) {
-//            BaseSellerModel baseSellerModel = new BaseSellerModel("哈哈", "中餐", "距离"+10+i+"m", R.drawable.recommend_default_icon_1);
-            QFoodAllSellerBean QFoodAllSellerBean = new QFoodAllSellerBean();
-            QFoodAllSellerBean.setMerchantName("哈啊哈");
-            QFoodAllSellerBean.setFoodType("中餐");
-            QFoodAllSellerBean.setSellerDistance("距离10" + i + "m");
-            QFoodAllSellerBean.setImageUrl(AppConstants.images[3]);
-            QFoodAllSellerBean.setDemandMoney("满10元起送");
-            QFoodAllSellerBean.setDeliverMoney("配送费10元");
-            dataByDistanceModels.add(QFoodAllSellerBean);
-        }
-        distancetestPresenter = new TestPresenter(this);
+
+        sellertestPresenter = new TestPresenter(this);
     }
 
     @Override
@@ -67,6 +59,14 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
         recyclerView = (RecyclerView) view.findViewById(R.id.common_recycle);
 
     }
+    LoadingDialog loadingDialog;
+    @Override
+    public void loadData() {
+        super.loadData();
+        /*loadingDialog = new LoadingDialog(getContext());
+        loadingDialog.show();*/
+        sellertestPresenter.getData("restaurants", 0);
+    }
 
     @Override
     protected void initData() {
@@ -78,7 +78,7 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                distancetestPresenter.getData();
+                sellertestPresenter.getData("restaurants", 0);
             }
         });
     }
@@ -102,8 +102,9 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
 
     @Override
     public void showSuccess(Object o) {
-        Toast.makeText(getContext(), o.toString(), Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
+        qFoodMerchantAdapter.setmData((List<MerchantUrlBean.MerchantBean>) o);
+        qFoodMerchantAdapter.notifyDataSetChanged();
     }
 
     @Override

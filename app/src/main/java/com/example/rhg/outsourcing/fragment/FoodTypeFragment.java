@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *desc:店铺详情中的商品类型fm，和{@link com.example.rhg.outsourcing.widget.VerticalTabLayout}一起使用
- *author：remember
- *time：2016/5/28 16:43
- *email：1013773046@qq.com
+ * desc:店铺详情中的商品类型fm，和{@link com.example.rhg.outsourcing.widget.VerticalTabLayout}一起使用
+ * author：remember
+ * time：2016/5/28 16:43
+ * email：1013773046@qq.com
  */
 public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.GoodsItemClickListener {
 
@@ -69,7 +69,7 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                testPresenter.getData();
+                testPresenter.getData("restaurants", 0);
             }
         });
     }
@@ -88,7 +88,7 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
     public void loadData() {
         super.loadData();
         swipeRefreshLayout.setRefreshing(true);
-        testPresenter.getData();
+        testPresenter.getData("restaurants", 0);
     }
 
     @Override
@@ -104,11 +104,11 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
     @Override
     public void onItemClick(View v, int position) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID,"20160518");
-        intent.putExtra(AppConstants.KEY_PRODUCT_NAME,"土豆丝");
-        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,"90");
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
+        intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
+        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");
 //        intent.putExtra() //todo 传递参数
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
 
 }

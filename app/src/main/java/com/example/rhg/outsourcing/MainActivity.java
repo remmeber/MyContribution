@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
 
     //for searchView
     private SearchView searchView;
-    private SearchHistoryTable msearchHistory;
+    private SearchHistoryTable mSearchHistory;
     private List<SearchItem> mSuggestionsList;
     //BottomNavigationBar
     BottomNavigationBar bottomNavigation;
@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
         //TODO--------------------------------------------------------------------------------------
 
         //TODO--------------------搜索框的一些配置操作-----------------------------------------------
-        msearchHistory = new SearchHistoryTable(this);
+        mSearchHistory = new SearchHistoryTable(this);
         searchView.setVersion(SearchCodes.VERSION_MENU_ITEM);
         searchView.setStyle(SearchCodes.STYLE_MENU_ITEM_CLASSIC);
         searchView.setTheme(SearchCodes.THEME_LIGHT);
@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.hide(false);
-                msearchHistory.addItem(new SearchItem(query));
+                mSearchHistory.addItem(new SearchItem(query));
                 return false;
             }
 
@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
                 searchView.hide(false);
                 TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
                 CharSequence text = textView.getText();
-                msearchHistory.addItem(new SearchItem(text));
+                mSearchHistory.addItem(new SearchItem(text));
             }
         });
         searchView.setAdapter(mSearchAdapter);
@@ -179,7 +179,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
     //----------------------------单独呼出搜索页面--------------------------------------------------
     private void showSearchViwe() {
         mSuggestionsList.clear();
-        mSuggestionsList.addAll(msearchHistory.getAllItems());
+        mSuggestionsList.addAll(mSearchHistory.getAllItems());
         mSuggestionsList.add(new SearchItem("Google"));
         mSuggestionsList.add(new SearchItem("Android"));
         searchView.show(true);

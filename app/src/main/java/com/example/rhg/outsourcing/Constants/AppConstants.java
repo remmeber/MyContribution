@@ -1,5 +1,7 @@
 package com.example.rhg.outsourcing.constants;
 
+import android.os.Environment;
+
 import com.example.rhg.outsourcing.R;
 
 /**
@@ -10,6 +12,7 @@ import com.example.rhg.outsourcing.R;
  */
 public class AppConstants {
     public static final boolean DEBUG = true;
+    public static final String f_Path = Environment.getExternalStorageDirectory() + "/QFood";
 
     public static final String[] images = {
             "http://img2.3lian.com/2014/f2/37/d/40.jpg",
@@ -41,6 +44,7 @@ public class AppConstants {
 
     /*SP KEY*/
     public static final String SP_LOCATION = "sp_location";
+    public static final String SP_HEAD_IMAGE = "sp_head_image";
     /*SP KEY*/
     /**
      * 页面调起/销毁标志
@@ -73,6 +77,7 @@ public class AppConstants {
     public static final int CODE_GALLERY_REQUEST_KITKAT = 20;//TODO:From Local
     public static final int CODE_CAMERA_REQUEST = 11;//TODO: From Camera
     public static final int CODE_RESULT_REQUEST = 12;//TODO:From Crop
+    public static final String HEAD_IMAGE_NAME = "head_image.png";
 
     /**
      * 响应结果，正确

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="56dp">
+    android:layout_height="81dp">
 
 
     <RelativeLayout
@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_little"
-        android:layout_marginStart="@dimen/margin_little">
+        android:layout_marginStart="@dimen/margin_little"
+        android:layout_marginTop="25dp">
 
         <ImageView
             android:id="@+id/home_tl_left_bt"
@@ -21,7 +22,7 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             tools:ignore="contentDescription"
-            tools:src="@mipmap/ic_place_white_48dp" />
+            tools:src="@mipmap/ic_place_whit" />
 
         <TextView
             android:id="@+id/home_tl_left_tv"
@@ -43,6 +44,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="25dp"
         android:layout_toEndOf="@id/home_tl_left_rl"
         android:layout_toLeftOf="@+id/home_tl_right_ll"
         android:layout_toRightOf="@id/home_tl_left_rl"
@@ -57,11 +59,10 @@
         android:id="@+id/home_tl_center_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_toLeftOf="@+id/home_tl_right_ll"
-        android:layout_toStartOf="@+id/home_tl_right_ll"
+        android:layout_alignBottom="@+id/home_tl_center_tv"
+        android:layout_alignEnd="@+id/home_tl_center_tv"
+        android:layout_alignRight="@+id/home_tl_center_tv"
+        android:layout_alignTop="@+id/home_tl_center_tv"
         android:background="@android:color/transparent"
         tools:ignore="contentDescription"
         tools:src="@mipmap/ic_search_black_24dp" />
@@ -74,6 +75,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="25dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
