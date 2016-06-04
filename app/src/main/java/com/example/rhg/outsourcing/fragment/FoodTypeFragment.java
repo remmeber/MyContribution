@@ -10,9 +10,12 @@ import android.view.View;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.example.rhg.outsourcing.apapter.GoodsListAdapter;
-import com.example.rhg.outsourcing.bean.GoodsDetailBean;
+import com.example.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.impl.SwipeRefreshListener;
+import com.example.rhg.outsourcing.mvp.presenter.ShopDetailPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.TestPresenter1;
+import com.example.rhg.outsourcing.mvp.presenter.ShopDetailPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,20 +27,17 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.GoodsItemClickListener {
-
-    private String[] images = {
-            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
-            "http://d.3987.com/sqmy_131219/001.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
-            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
-    };
-    List<GoodsDetailBean> goodsDetailBeanList;
+//    private int tag;
+    List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
+    GoodsListAdapter goodsListAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshListener swipeRefreshListener;
     RecyclerView recyclerView;
-    TestPresenter testPresenter;
+    ShopDetailPresenter shopDetailPresenter;
+
 
     public FoodTypeFragment() {
-        testPresenter = new TestPresenter(this);
+        shopDetailPresenter = new ShopDetailPresenterImpl(this);
     }
 
     @Override
@@ -52,25 +52,28 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
 
     @Override
     protected void initData() {
-        goodsDetailBeanList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        if (shopDetailBeanList == null)
+            shopDetailBeanList = new ArrayList<>();
+        /*for (int i = 0; i < 4; i++) {
             GoodsDetailBean goodsDetailBean = new GoodsDetailBean();
             goodsDetailBean.setImageUrls(images);
             goodsDetailBean.setGoodsName("哈哈" + i);
             goodsDetailBean.setGoodSellNum("" + i);
             goodsDetailBean.setGoodsPrice(i + "0");
             goodsDetailBeanList.add(goodsDetailBean);
-        }
+        }*/
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        GoodsListAdapter goodsListAdapter = new GoodsListAdapter(getContext(), goodsDetailBeanList);
+        goodsListAdapter = new GoodsListAdapter(getContext(), shopDetailBeanList);
         goodsListAdapter.setGoodsItemClickListener(this);
         recyclerView.setAdapter(goodsListAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                testPresenter.getData("restaurants", 0);
+                if (swipeRefreshListener != null)
+                    swipeRefreshListener.startRefresh();
             }
+
         });
     }
 
@@ -84,12 +87,6 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
         ;
     }
 
-    @Override
-    public void loadData() {
-        super.loadData();
-        swipeRefreshLayout.setRefreshing(true);
-        testPresenter.getData("restaurants", 0);
-    }
 
     @Override
     protected void showFailed() {
@@ -99,16 +96,44 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
     @Override
     public void showSuccess(Object o) {
         swipeRefreshLayout.setRefreshing(false);
+        shopDetailBeanList = (List<ShopDetailUriBean.ShopDetailBean>) o;
+        if (goodsListAdapter != null) {
+            goodsListAdapter.setShopDetailBeanList(shopDetailBeanList);
+            goodsListAdapter.notifyDataSetChanged();
+        }
     }
+
 
     @Override
     public void onItemClick(View v, int position) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
+        /*intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
-        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");
+        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, shopDetailBeanList.get(position).getID());
 //        intent.putExtra() //todo 传递参数
         startActivityForResult(intent, 1);
     }
 
+    public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
+        this.shopDetailBeanList = shopDetailBeanList;
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
+        if (goodsListAdapter != null) {
+            goodsListAdapter.setShopDetailBeanList(shopDetailBeanList);
+            goodsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void setSwipeRefreshListener(SwipeRefreshListener swipeRefreshListener) {
+        this.swipeRefreshListener = swipeRefreshListener;
+    }
+/*
+    public int getFragmentTag() {
+        return tag;
+    }
+
+    public void setFragmentTag(int tag) {
+        this.tag = tag;
+    }*/
 }

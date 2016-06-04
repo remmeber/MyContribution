@@ -1,9 +1,11 @@
 package com.example.rhg.outsourcing.mvp.presenter;
 
-import com.example.rhg.outsourcing.bean.HomeBean;
-import com.example.rhg.outsourcing.mvp.model.HomeModel;
-import com.example.rhg.outsourcing.mvp.model.HomeModelImpl;
+import com.example.rhg.outsourcing.bean.MerchantUrlBean;
+import com.example.rhg.outsourcing.mvp.model.MerchantsModel;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
+import com.example.rhg.outsourcing.mvp.model.MerchantsModelImpl;
+
+import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -15,20 +17,20 @@ import rx.schedulers.Schedulers;
  * time：2016/5/28 17:02
  * email：1013773046@qq.com
  */
-public class HomePresenterImpl implements HomePresenter {
+public class MerchantsPresenterImpl implements MerchantsPresenter {
     BaseView testView;
-    HomeModel testModel;
+    MerchantsModel testModel;
 
-    public HomePresenterImpl(BaseView baseView) {
+    public MerchantsPresenterImpl(BaseView baseView) {
         testView = baseView;
-        testModel = new HomeModelImpl();
+        testModel = new MerchantsModelImpl();
     }
 
     @Override
-    public void getHomeData() {
-        testModel.getHomeData().observeOn(AndroidSchedulers.mainThread())
+    public void getMerchants(String table, int page) {
+        testModel.getMerchants(table,page).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<HomeBean>() {
+                .subscribe(new Observer<List<MerchantUrlBean.MerchantBean>>() {
                     @Override
                     public void onCompleted() {
 
@@ -40,8 +42,8 @@ public class HomePresenterImpl implements HomePresenter {
                     }
 
                     @Override
-                    public void onNext(HomeBean homeBean) {
-                        testView.showData(homeBean);
+                    public void onNext(List<MerchantUrlBean.MerchantBean> merchantBeanList) {
+                        testView.showData(merchantBeanList);
                     }
                 });
 

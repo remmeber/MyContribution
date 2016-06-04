@@ -12,7 +12,8 @@ import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
     RecyclerView recyclerView;
     //TODO-------------------------------按销量排序的数据--------------------------------------------
     List<MerchantUrlBean.MerchantBean> dataBySellNumberModels = new ArrayList<>();
-    TestPresenter sellertestPresenter;
+    MerchantsPresenter sellertestPresenter;
     LoadingDialog loadingDialog;
     QFoodMerchantAdapter qFoodMerchantAdapter;
 
@@ -39,7 +40,7 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
     }
 
     public BySellNumberFragment() {
-        sellertestPresenter = new TestPresenter(this);
+        sellertestPresenter = new MerchantsPresenterImpl(this);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                sellertestPresenter.getData("restaurants", 0);
+                sellertestPresenter.getMerchants("restaurants", 0);
             }
         });
     }
@@ -74,7 +75,7 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
         super.loadData();
         /*loadingDialog = new LoadingDialog(getContext());
         loadingDialog.show();*/
-        sellertestPresenter.getData("restaurants", 0);
+        sellertestPresenter.getMerchants("restaurants", 0);
     }
 
     @Override
@@ -97,21 +98,24 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
 
     @Override
     public void showSuccess(Object o) {
+        dataBySellNumberModels = (List<MerchantUrlBean.MerchantBean>) o;
         swipeRefreshLayout.setRefreshing(false);
-        qFoodMerchantAdapter.setmData((List<MerchantUrlBean.MerchantBean>) o);
+        qFoodMerchantAdapter.setmData(dataBySellNumberModels);
         qFoodMerchantAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void itemClick(View v, int position) {
-//        Toast.makeText(getActivity()," "+position+" is clicked ",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
+        MerchantUrlBean.MerchantBean merchantBean = dataBySellNumberModels.get(position);
+        /*目前后台还没有加入这是三个字段*/
         intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
         intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
         intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
-        intent.putExtra(AppConstants.KEY_MERCHANT_ID, "20160517");
-        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, "荣哥土菜馆");
-        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[1]);
+
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID, merchantBean.getID());
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME,merchantBean.getName());
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, merchantBean.getPic());
         startActivityForResult(intent, 1);
         /*Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         intent.putExtra("productId","20160518");

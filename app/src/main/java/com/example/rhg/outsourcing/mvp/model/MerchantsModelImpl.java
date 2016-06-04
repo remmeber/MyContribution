@@ -1,25 +1,13 @@
 package com.example.rhg.outsourcing.mvp.model;
 
-import android.util.Log;
-
-import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
-import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
-import com.example.rhg.outsourcing.bean.HomeBean;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
-import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
-import com.example.rhg.outsourcing.bean.TextTypeBean;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
-import com.example.rhg.outsourcing.mvp.api.QFoodApiService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.functions.Func3;
-import rx.functions.Func4;
 
 /**
  * desc:mvp测试实现
@@ -27,10 +15,10 @@ import rx.functions.Func4;
  * time：2016/5/28 17:00
  * email：1013773046@qq.com
  */
-public class TestModel implements BaseModel {
+public class MerchantsModelImpl implements MerchantsModel {
 
     @Override
-    public Observable<List<MerchantUrlBean.MerchantBean>> getData(String table, int page) {
+    public Observable<List<MerchantUrlBean.MerchantBean>> getMerchants(String table, int page) {
         return QFoodApiMamager.getInstant().getQFoodApiService().getAllShop(table, page)
                 .flatMap(new Func1<MerchantUrlBean, Observable<List<MerchantUrlBean.MerchantBean>>>() {
                     @Override

@@ -3,7 +3,7 @@ package com.example.rhg.outsourcing.bean;
 import java.util.List;
 
 /**
- *desc:店铺模型  保存该店铺所有的商品信息 todo 还未使用
+ *desc:店铺模型  保存该店铺所有的商品信息
  *author：remember
  *time：2016/5/28 16:33
  *email：1013773046@qq.com

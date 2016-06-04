@@ -1,21 +1,16 @@
 package com.example.rhg.outsourcing.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
-import com.example.rhg.outsourcing.bean.QFoodAllSellerBean;
-import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -33,7 +28,7 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
     List<MerchantUrlBean.MerchantBean> dataByDistanceModels = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
-    TestPresenter sellertestPresenter;
+    MerchantsPresenterImpl sellertestPresenter;
     QFoodMerchantAdapter qFoodMerchantAdapter;
     Context context = getContext();
 
@@ -45,7 +40,7 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
 
     public ByDistanceFragment() {
 
-        sellertestPresenter = new TestPresenter(this);
+        sellertestPresenter = new MerchantsPresenterImpl(this);
     }
 
     @Override
@@ -65,7 +60,7 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
         super.loadData();
         /*loadingDialog = new LoadingDialog(getContext());
         loadingDialog.show();*/
-        sellertestPresenter.getData("restaurants", 0);
+        sellertestPresenter.getMerchants("restaurants", 0);
     }
 
     @Override
@@ -78,7 +73,7 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                sellertestPresenter.getData("restaurants", 0);
+                sellertestPresenter.getMerchants("restaurants", 0);
             }
         });
     }

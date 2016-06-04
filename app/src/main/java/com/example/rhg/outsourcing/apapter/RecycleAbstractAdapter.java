@@ -27,7 +27,6 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
 
     public void setContext(Context context) {
         this.context = context;
-        Log.i("RHG", "CURRENT NULL IS :" + context);
     }
 
     public RecycleAbstractAdapter(Context context) {

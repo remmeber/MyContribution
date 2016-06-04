@@ -5,27 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.Poi;
-import com.baidu.mapapi.map.BaiduMap;
 import com.example.rhg.outsourcing.application.InitApplication;
-import com.example.rhg.outsourcing.bean.GoodsDetailBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.locationservice.LocationService;
 import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
 import com.example.rhg.outsourcing.utils.NetUtil;
-import com.example.rhg.outsourcing.utils.ToastHelper;
-import com.example.rhg.outsourcing.widget.LoadingDialog;
 import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
@@ -51,12 +42,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         InitApplication.getInstance().addActivity(this);
         RefWatcher refWatcher = InitApplication.getRefWatcher(this);
         refWatcher.watch(this);
-        loadingData();
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
         dataReceive(getIntent());
-        initView();
         firstLoc();
+        loadingData();
+        initView();
         initData();
 //        bindData(loadData());
     }

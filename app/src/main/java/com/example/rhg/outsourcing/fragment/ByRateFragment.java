@@ -4,17 +4,14 @@ import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
 import com.example.rhg.outsourcing.apapter.RecycleAbstractAdapter;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
-import com.example.rhg.outsourcing.bean.QFoodAllSellerBean;
-import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,7 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     //TODO-------------------------------按评分排序的数据--------------------------------------------
     List<MerchantUrlBean.MerchantBean> dataByRateScoreModels = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
-    TestPresenter distancetestPresenter;
+    MerchantsPresenterImpl distancetestPresenter;
     private RecyclerView recyclerView;
     Context context;
     QFoodMerchantAdapter qFoodMerchantAdapter;
@@ -41,7 +38,7 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     }
 
     public ByRateFragment() {
-        distancetestPresenter = new TestPresenter(this);
+        distancetestPresenter = new MerchantsPresenterImpl(this);
     }
 
     @Override
@@ -60,7 +57,7 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     @Override
     public void loadData() {
         super.loadData();
-        distancetestPresenter.getData("restaurants", 2);
+        distancetestPresenter.getMerchants("restaurants", 2);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                distancetestPresenter.getData("restaurants", 2);
+                distancetestPresenter.getMerchants("restaurants", 2);
             }
         });
 

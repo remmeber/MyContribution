@@ -19,6 +19,8 @@
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
         app:search_hint="@string/searchHint" />
 
 

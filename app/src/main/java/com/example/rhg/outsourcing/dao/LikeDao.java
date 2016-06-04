@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.rhg.outsourcing.datebase.LikeDBHelper;
-import com.example.rhg.outsourcing.bean.LikeBean;
 
 /**
  *desc:Like数据库DAO

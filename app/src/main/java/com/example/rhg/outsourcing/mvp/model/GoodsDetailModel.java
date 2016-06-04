@@ -1,6 +1,6 @@
 package com.example.rhg.outsourcing.mvp.model;
 
-import com.example.rhg.outsourcing.bean.GoodsDetailBean;
+import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
 
 import rx.Observable;
 
@@ -11,6 +11,6 @@ import rx.Observable;
  *email：1013773046@qq.com
  */
 public interface GoodsDetailModel {
-    Observable<GoodsDetailBean> getGoodsDetail();
+    Observable<GoodsDetailUrlBean.GoodsDetailBean> getGoodsDetail(String foodmessage, String foodId);
 }
 

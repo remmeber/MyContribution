@@ -10,7 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.bean.GoodsDetailBean;
+import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
+import com.example.rhg.outsourcing.bean.ShopDetailUriBean;
+import com.example.rhg.outsourcing.constants.AppConstants;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -20,11 +22,15 @@ import java.util.List;
  */
 public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
-    List<GoodsDetailBean> goodsDetailBeanList;
+    List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
 
-    public GoodsListAdapter(Context context, List<GoodsDetailBean> goodsDetailBeanList) {
+    public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
+        this.shopDetailBeanList = shopDetailBeanList;
+    }
+
+    public GoodsListAdapter(Context context, List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
         this.context = context;
-        this.goodsDetailBeanList = goodsDetailBeanList;
+        this.shopDetailBeanList = shopDetailBeanList;
     }
 
     @Override
@@ -37,16 +43,17 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         GoodsDetailViewHolder goodsDetailViewHolder = (GoodsDetailViewHolder) holder;
-        GoodsDetailBean goodsDetailBean = goodsDetailBeanList.get(position);
-        bindData(goodsDetailViewHolder, goodsDetailBean);
+        ShopDetailUriBean.ShopDetailBean shopDetailBean = shopDetailBeanList.get(position);
+        bindData(goodsDetailViewHolder, shopDetailBean);
     }
 
-    private void bindData(final GoodsDetailViewHolder goodsDetailViewHolder, GoodsDetailBean goodsDetailBean) {
-        ImageLoader.getInstance().displayImage(goodsDetailBean.getImageUrls()[0],
+    private void bindData(final GoodsDetailViewHolder goodsDetailViewHolder,
+                          ShopDetailUriBean.ShopDetailBean shopDetailBean) {
+        ImageLoader.getInstance().displayImage(AppConstants.images[0],
                 goodsDetailViewHolder.goodsImage);
-        goodsDetailViewHolder.goodsName.setText(goodsDetailBean.getGoodsName());
-        goodsDetailViewHolder.goodsPrice.setText(goodsDetailBean.getGoodsPrice());
-        goodsDetailViewHolder.goodsSellNum.setText(goodsDetailBean.getGoodSellNum());
+        goodsDetailViewHolder.goodsName.setText(shopDetailBean.getName());
+        goodsDetailViewHolder.goodsPrice.setText(shopDetailBean.getPrice());
+        goodsDetailViewHolder.goodsSellNum.setText(shopDetailBean.getMonthlySales());
         goodsDetailViewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +65,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return goodsDetailBeanList == null ? 0 : goodsDetailBeanList.size();
+        return shopDetailBeanList == null ? 0 : shopDetailBeanList.size();
     }
 
 

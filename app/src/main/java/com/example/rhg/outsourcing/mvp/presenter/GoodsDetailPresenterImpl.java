@@ -1,10 +1,11 @@
 package com.example.rhg.outsourcing.mvp.presenter;
 
-import com.example.rhg.outsourcing.bean.GoodsDetailBean;
+import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
 import com.example.rhg.outsourcing.mvp.model.GoodsDetailModel;
 import com.example.rhg.outsourcing.mvp.model.GoodsDetailModelImpl;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
 
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -26,10 +27,10 @@ public class GoodsDetailPresenterImpl implements GoodsDetailPresenter {
     }
 
     @Override
-    public void getGoodsInfo() {
-        goodsDetailModel.getGoodsDetail().observeOn(AndroidSchedulers.mainThread())
+    public void getGoodsInfo(String foodmessage, String foodId) {
+        goodsDetailModel.getGoodsDetail(foodmessage,foodId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<GoodsDetailBean>() {
+                .subscribe(new Observer<GoodsDetailUrlBean.GoodsDetailBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -41,7 +42,7 @@ public class GoodsDetailPresenterImpl implements GoodsDetailPresenter {
                     }
 
                     @Override
-                    public void onNext(GoodsDetailBean goodsDetailBean) {
+                    public void onNext(GoodsDetailUrlBean.GoodsDetailBean goodsDetailBean) {
                         baseView.showData(goodsDetailBean);
                     }
                 });

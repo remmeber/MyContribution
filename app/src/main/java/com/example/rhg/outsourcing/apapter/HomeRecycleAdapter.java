@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.viewHolder.BodyViewHolder;
-import com.example.rhg.outsourcing.bean.RecommendListBean;
 import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.nostra13.universalimageloader.core.ImageLoader;

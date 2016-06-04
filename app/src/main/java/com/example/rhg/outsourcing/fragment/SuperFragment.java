@@ -47,7 +47,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         initView(view);
-        initData();
         return view;
     }
 
@@ -58,8 +57,9 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadData();
         startLoc();
+        loadData();
+        initData();
         fillData();
     }
 
@@ -83,7 +83,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
         if (locationService == null)
             locationService = GetMapService();
         if (mLocationListener == null) {
-            Log.d("RHG", "Location listener is null");
             locationService.registerListener(mLocationListener = getLocationListener());
             locationService.setLocationOption(locationService.getDefaultLocationClientOption());
         } else {

@@ -1,5 +1,7 @@
 package com.example.rhg.outsourcing.bean;
 
+import java.util.List;
+
 /**
  *desc:订单的网络请求数据模型
  *author：remember
@@ -7,76 +9,114 @@ package com.example.rhg.outsourcing.bean;
  *email：1013773046@qq.com
  */
 public class OrderUrlBean {
-    String ID;
-    String Purchanser;
-    String OTime;
-    String Deliver;
-    String Oaddress;
-    String Style;
-    String Price;
-    String Food;
 
-    public String getID() {
-        return ID;
+    /**
+     * total : 1
+     * rows : [{"ID":"1","Client":"1","Receiver":"R1","Address":"杭州下沙","Phone":"138383838538","Price":"40","Style":"待接单","Otime":"2016-05-29 17:12:53"}]
+     */
+
+    private int total;
+    /**
+     * ID : 1
+     * Client : 1
+     * Receiver : R1
+     * Address : 杭州下沙
+     * Phone : 138383838538
+     * Price : 40
+     * Style : 待接单
+     * Otime : 2016-05-29 17:12:53
+     */
+
+    private List<OrderBean> rows;
+
+    public int getTotal() {
+        return total;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
-    public String getPurchanser() {
-        return Purchanser;
+    public List<OrderBean> getRows() {
+        return rows;
     }
 
-    public void setPurchanser(String purchanser) {
-        Purchanser = purchanser;
+    public void setRows(List<OrderBean> rows) {
+        this.rows = rows;
     }
 
-    public String getOTime() {
-        return OTime;
-    }
+    public static class OrderBean {
+        private String ID;
+        private String Client;
+        private String Receiver;
+        private String Address;
+        private String Phone;
+        private String Price;
+        private String Style;
+        private String Otime;
 
-    public void setOTime(String OTime) {
-        this.OTime = OTime;
-    }
+        public String getID() {
+            return ID;
+        }
 
-    public String getDeliver() {
-        return Deliver;
-    }
+        public void setID(String ID) {
+            this.ID = ID;
+        }
 
-    public void setDeliver(String deliver) {
-        Deliver = deliver;
-    }
+        public String getClient() {
+            return Client;
+        }
 
-    public String getOaddress() {
-        return Oaddress;
-    }
+        public void setClient(String Client) {
+            this.Client = Client;
+        }
 
-    public void setOaddress(String oaddress) {
-        Oaddress = oaddress;
-    }
+        public String getReceiver() {
+            return Receiver;
+        }
 
-    public String getStyle() {
-        return Style;
-    }
+        public void setReceiver(String Receiver) {
+            this.Receiver = Receiver;
+        }
 
-    public void setStyle(String style) {
-        Style = style;
-    }
+        public String getAddress() {
+            return Address;
+        }
 
-    public String getPrice() {
-        return Price;
-    }
+        public void setAddress(String Address) {
+            this.Address = Address;
+        }
 
-    public void setPrice(String price) {
-        Price = price;
-    }
+        public String getPhone() {
+            return Phone;
+        }
 
-    public String getFood() {
-        return Food;
-    }
+        public void setPhone(String Phone) {
+            this.Phone = Phone;
+        }
 
-    public void setFood(String food) {
-        Food = food;
+        public String getPrice() {
+            return Price;
+        }
+
+        public void setPrice(String Price) {
+            this.Price = Price;
+        }
+
+        public String getStyle() {
+            return Style;
+        }
+
+        public void setStyle(String Style) {
+            this.Style = Style;
+        }
+
+        public String getOtime() {
+            return Otime;
+        }
+
+        public void setOtime(String Otime) {
+            this.Otime = Otime;
+        }
     }
 }

@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter;
-
 /**
  *desc:fm控制类
  *author：remember

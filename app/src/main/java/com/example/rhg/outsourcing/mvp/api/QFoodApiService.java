@@ -1,22 +1,27 @@
 package com.example.rhg.outsourcing.mvp.api;
 
+import com.example.rhg.outsourcing.bean.AddressBean;
 import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
+import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
+import com.example.rhg.outsourcing.bean.HotGoodsSearchUrlBean;
+import com.example.rhg.outsourcing.bean.HotGoodsUrlBean;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
+import com.example.rhg.outsourcing.bean.OrderUrlBean;
 import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
+import com.example.rhg.outsourcing.bean.SearchUrlBean;
+import com.example.rhg.outsourcing.bean.ShopDetailUriBean;
+import com.example.rhg.outsourcing.bean.SignInBean;
 import com.example.rhg.outsourcing.bean.TextTypeBean;
-import com.squareup.okhttp.RequestBody;
 
 
 import java.io.File;
-import java.util.List;
 
+import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
-import retrofit.http.Multipart;
 import retrofit.http.POST;
-import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
@@ -42,26 +47,35 @@ public interface QFoodApiService {
     Observable<RecommendListUrlBean> getRecommendList();
 
     /*所有店铺*/
-    @GET("Table/Json.php")
+    @FormUrlEncoded
+    @POST("Table/Json.php")
 //table : restaurants,order：0.按销量 1.按距离 2.按评分
-    Observable<MerchantUrlBean> getAllShop(@Query("Table") String table,
-                                                              @Query("Order") int order);
+    Observable<MerchantUrlBean> getAllShop(@Field("Table") String table,
+                                           @Field("Order") int order);
+
+    /*店铺详情*/
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    //table:food; merchantId:商家Id号
+    Observable<ShopDetailUriBean> getShopDetail(@Field("Table") String food,
+                                                @Field("Restaurant") int merchantId);
 
     /*商品详情*/
-    @GET("Table/Json.php")
-//table:foodmessage restaurant:id号
-    Observable<String> getGoodsDetail(@Query("Table") String table,
-                                      @Query("Restaurant") int id);
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+//table:foodmessage Foodid:food id号
+    Observable<GoodsDetailUrlBean> getGoodsDetail(@Field("Table") String table,
+                                                  @Field("Foodid") int foodId);
 
     /*订单详情*/
-    @GET("Table/json.php")
-    //order:
-    Observable<String> getOrderDetail(@Query("Table") String order,
-                                      @Query("Client") int id,
-                                      @Query("Style") int style);
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    //order:foodmessage;userId:用户ID;style:0.全部、1.待付款、2.进行中、3.已完成、、4.已退款
+    Observable<OrderUrlBean> getOrderDetail(@Field("Table") String order,
+                                            @Field("Client") String userId,
+                                            @Field("Style") String style);
 
     /*upload head image*/
-    @Multipart
     @FormUrlEncoded
     @POST("Clientpic.php")
     //return: success error
@@ -74,17 +88,38 @@ public interface QFoodApiService {
     Observable<String> getHeadImage(@Path("userName") String userName);
 
     /*user sign in*/
-    @GET("Table/Json.php")
-    Observable<String> userSignIn(@Query("Table") String client,
-                                  @Query("Client") String userName,
-                                  @Query("Pwd") String pwd);
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<SignInBean> userSignIn(@Query("Table") String client,
+                                      @Query("Client") String userName,
+                                      @Query("Pwd") String pwd);
 
-    @GET("JsonSQL/AddAddress.php")
-    Observable<String> addAddress(@Query("Client") String userName,
-                                  @Query("Pwd") String pwd,
-                                  @Query("Name") String name,
-                                  @Query("Phone") String phone,
-                                  @Query("Address") String address);
-    /*@GET("json/order.html")
-    Observable<OrderBean> getOrder();*/
+    /*添加地址*/
+    @FormUrlEncoded
+    @POST("JsonSQL/AddAddress.php")
+    Observable<String> addAddress(@Body AddressBean addressBean);
+    /*Observable<String> addAddress(@Field("Client") String userName,
+                                  @Field("Pwd") String pwd,
+                                  @Field("Name") String name,
+                                  @Field("Phone") String phone,
+                                  @Field("Address") String address);*/
+
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<SearchUrlBean> getSearchResult(@Field("Table") String searchRestaurants,
+                                              @Field("Restaurantkey") String searchContent,
+                                              @Field("Order") String style);
+
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
+    Observable<HotGoodsUrlBean> getHotGoods(@Field("Table") String hotFood,
+                                            @Field("Order") String style);
+
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
+    Observable<HotGoodsSearchUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
+                                                           @Field("Hotfoodkey") String searchContent,
+                                                           @Field("Order") String style);
 }

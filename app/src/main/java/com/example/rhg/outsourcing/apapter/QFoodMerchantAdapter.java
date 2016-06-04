@@ -7,7 +7,6 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.viewHolder.BodyViewHolder;
 import com.example.rhg.outsourcing.apapter.viewHolder.HeaderViewHolder;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
-import com.example.rhg.outsourcing.bean.QFoodAllSellerBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

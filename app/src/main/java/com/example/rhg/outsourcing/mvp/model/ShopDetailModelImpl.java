@@ -1,15 +1,13 @@
 package com.example.rhg.outsourcing.mvp.model;
 
-import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
-import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
-import com.example.rhg.outsourcing.bean.HomeBean;
-import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
-import com.example.rhg.outsourcing.bean.TextTypeBean;
+import com.example.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
-import com.example.rhg.outsourcing.mvp.api.QFoodApiService;
+
+import java.util.List;
 
 import rx.Observable;
-import rx.functions.Func4;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * desc:mvp测试实现
@@ -17,26 +15,22 @@ import rx.functions.Func4;
  * time：2016/5/28 17:00
  * email：1013773046@qq.com
  */
-public class HomeModelImpl implements HomeModel {
+public class ShopDetailModelImpl implements ShopDetailModel {
 
     @Override
-    public Observable<HomeBean> getHomeData() {
-        QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
-        return Observable.zip(qFoodApiService.getBannerUrl(), qFoodApiService.getFavorableFood(),
-                qFoodApiService.getRecommendList(),qFoodApiService.getMessage(),
-                new Func4<BannerTypeUrlBean, FavorableFoodUrlBean, RecommendListUrlBean,TextTypeBean, HomeBean>() {
+    public Observable<List<ShopDetailUriBean.ShopDetailBean>> getShopDetail(String table, String merchantId) {
+        return QFoodApiMamager.getInstant().getQFoodApiService().getShopDetail(table, Integer.valueOf(merchantId))
+                .flatMap(new Func1<ShopDetailUriBean, Observable<List<ShopDetailUriBean.ShopDetailBean>>>() {
+
                     @Override
-                    public HomeBean call(BannerTypeUrlBean bannerTypeUrlBean,
-                                         FavorableFoodUrlBean favorableFoodUrlBean,
-                                         RecommendListUrlBean recommendListUrlBean,
-                                         TextTypeBean textTypeBean
-                    ) {
-                        HomeBean _homeBean = new HomeBean();
-                        _homeBean.setBannerEntityList(bannerTypeUrlBean.getRows());
-                        _homeBean.setFavorableFoodEntityList(favorableFoodUrlBean.getRows());
-                        _homeBean.setRecommendShopBeanEntityList(recommendListUrlBean.getRows());
-                        _homeBean.setTextTypeBean(textTypeBean);
-                        return _homeBean;
+                    public Observable<List<ShopDetailUriBean.ShopDetailBean>>
+                    call(final ShopDetailUriBean shopDetailUriBean) {
+                        return Observable.create(new Observable.OnSubscribe<List<ShopDetailUriBean.ShopDetailBean>>() {
+                            @Override
+                            public void call(Subscriber<? super List<ShopDetailUriBean.ShopDetailBean>> subscriber) {
+                                subscriber.onNext(shopDetailUriBean.getRows());
+                            }
+                        });
                     }
                 });
         /*return QFoodApiMamager.getInstant().getQFoodApiService().getFavorableFood()
@@ -62,7 +56,7 @@ public class HomeModelImpl implements HomeModel {
 
 
    /* @Override
-    public Observable<BannerTypeBean> () {
+    public Observable<BannerTypeBean> getData() {
         return QFoodApiMamager.getInstant().getQFoodApiService().getBannerUrl()
                 .flatMap(new Func1<BannerTypeUrlBean, Observable<BannerTypeBean>>() {// TODO: 类型转换
                     @Override

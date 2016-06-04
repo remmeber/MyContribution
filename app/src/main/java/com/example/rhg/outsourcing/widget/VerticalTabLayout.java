@@ -171,6 +171,10 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
         }
     }
 
+    public int getCurrentPosition() {
+        return lastPosition;
+    }
+
 
     private int dip2px(float dpValue) {
         final float scale = mContext.getResources().getDisplayMetrics().density;

@@ -79,6 +79,13 @@ public class AppConstants {
     public static final int CODE_RESULT_REQUEST = 12;//TODO:From Crop
     public static final String HEAD_IMAGE_NAME = "head_image.png";
 
+
+    /*后台交互信息*/
+    public static final String TABLE_CLIENT = "client";
+    public static final String TABLE_FOODMESSAGE = "foodmessage";
+    public static final String TABLE_FOOD = "food";
+    public static final String TABLE_RESTAURANTS = "restaurants";
+    public static final String TABLE_ORDER = "order";
     /**
      * 响应结果，正确
      */

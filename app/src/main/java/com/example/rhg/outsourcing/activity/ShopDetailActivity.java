@@ -46,14 +46,15 @@ public class ShopDetailActivity extends BaseActivity {
         if (intent != null) {
             bundle = intent.getExtras();
             merchantName = bundle.getString(AppConstants.KEY_MERCHANT_NAME);
-            merchantId = bundle.getString(AppConstants.KEY_MERCHANT_ID);
+            merchantId = bundle.getString(AppConstants.KEY_MERCHANT_ID, "");
             shopLogoUrl = bundle.getString(AppConstants.KEY_MERCHANT_LOGO);
+
             merchantPhone = bundle.getString(AppConstants.KEY_PHONE, "无");
             merchantAddress = bundle.getString(AppConstants.KEY_ADDRESS, "无");
             merchantNote = bundle.getString(AppConstants.KEY_NOTE, "无");
         } else {
             merchantName = "东大东食府";
-            merchantId = "20160517";
+            merchantId = "";
             shopLogoUrl = "http://img2.3lian.com/2014/f2/37/d/40.jpg";
         }
     }
@@ -62,6 +63,7 @@ public class ShopDetailActivity extends BaseActivity {
     public int getLayoutResId() {
         return R.layout.shop_detail_layout;
     }
+
 
     @Override
     protected void initView() {
@@ -73,15 +75,23 @@ public class ShopDetailActivity extends BaseActivity {
     }
 
     @Override
+    public void loadingData() {
+        /*TODO 加载数据*/
+    }
+
+    @Override
     protected void initData() {
         tvShopName.setText(merchantName);
         ImageLoader.getInstance().displayImage(shopLogoUrl, ivShopLogo);
         Fragment fragment;
+        Bundle bundle = new Bundle();
         List<Fragment> fragments = new ArrayList<>();
         fragment = new ShopDetailFoodFragment();
+        bundle.putString(AppConstants.KEY_MERCHANT_ID, merchantId);
+        fragment.setArguments(bundle);
         fragments.add(fragment);
         fragment = new ShopDetailFragment();
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putString(AppConstants.KEY_PHONE, merchantPhone);
         bundle.putString(AppConstants.KEY_ADDRESS, merchantAddress);
         bundle.putString(AppConstants.KEY_NOTE, merchantNote);

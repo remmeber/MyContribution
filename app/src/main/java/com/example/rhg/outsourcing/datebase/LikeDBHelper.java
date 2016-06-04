@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.rhg.outsourcing.bean.LikeBean;
-
 /**
  *desc:Like数据库辅助类
  *author：remember

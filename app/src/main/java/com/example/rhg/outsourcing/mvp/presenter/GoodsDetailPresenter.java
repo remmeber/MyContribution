@@ -7,5 +7,5 @@ package com.example.rhg.outsourcing.mvp.presenter;
  *email：1013773046@qq.com
  */
 public interface GoodsDetailPresenter {
-    public void getGoodsInfo();
+    public void getGoodsInfo(String foodmessage, String foodId);
 }

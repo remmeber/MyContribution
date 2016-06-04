@@ -301,9 +301,9 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     @Override
     public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
-        intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
-        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
+        /*intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
+        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
         startActivityForResult(intent, AppConstants.START_0);
     }
 
