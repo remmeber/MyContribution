@@ -17,16 +17,16 @@ import rx.schedulers.Schedulers;
  */
 public class HomePresenterImpl implements HomePresenter {
     BaseView testView;
-    HomeModel testModel;
+    HomeModel homeModel;
 
     public HomePresenterImpl(BaseView baseView) {
         testView = baseView;
-        testModel = new HomeModelImpl();
+        homeModel = new HomeModelImpl();
     }
 
     @Override
     public void getHomeData() {
-        testModel.getHomeData().observeOn(AndroidSchedulers.mainThread())
+        homeModel.getHomeData().observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<HomeBean>() {
                     @Override
@@ -44,26 +44,5 @@ public class HomePresenterImpl implements HomePresenter {
                         testView.showData(homeBean);
                     }
                 });
-
-        /*testModel.getData().observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())//使用subscribeOn()指定观察者代码运行的线程；非ui线程
-                .subscribe(new Observer<BannerTypeBean>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (AppConstants.DEBUG)
-                            Log.i("RHG", e.toString());
-                    }
-
-                    @Override
-                    public void onNext(BannerTypeBean s) {
-                        if (s != null) {
-                            testView.showData(s);
-                        }
-                    }
-                });*/
     }
 }

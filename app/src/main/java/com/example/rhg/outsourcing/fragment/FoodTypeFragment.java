@@ -14,7 +14,6 @@ import com.example.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.impl.SwipeRefreshListener;
 import com.example.rhg.outsourcing.mvp.presenter.ShopDetailPresenter;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter1;
 import com.example.rhg.outsourcing.mvp.presenter.ShopDetailPresenterImpl;
 
 import java.util.ArrayList;

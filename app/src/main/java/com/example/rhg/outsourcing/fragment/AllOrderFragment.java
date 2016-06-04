@@ -11,8 +11,8 @@ import com.example.rhg.outsourcing.activity.PayActivity;
 import com.example.rhg.outsourcing.apapter.QFoodOrderAdapter;
 import com.example.rhg.outsourcing.bean.OrderUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenter1;
-import com.example.rhg.outsourcing.mvp.presenter.TestPresenterImpl;
+import com.example.rhg.outsourcing.mvp.presenter.OrderDetailPresenter;
+import com.example.rhg.outsourcing.mvp.presenter.OrderDetailPresenterImpl;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -30,12 +30,12 @@ public class AllOrderFragment extends SuperFragment implements QFoodOrderAdapter
     SwipeRefreshLayout swipeRefreshLayout;
     List<OrderUrlBean.OrderBean> orderBeanList = new ArrayList<>();
     LoadingDialog loadingDialog;
-    TestPresenter1 testPresenter;
+    OrderDetailPresenter testPresenter;
     String userId;
     String style;
 
     public AllOrderFragment() {
-        testPresenter = new TestPresenterImpl(this);
+        testPresenter = new OrderDetailPresenterImpl(this);
         userId = "1";
         style = "3";
     }

@@ -19,16 +19,16 @@ import rx.schedulers.Schedulers;
  */
 public class ShopDetailPresenterImpl implements ShopDetailPresenter {
     BaseView testView;
-    ShopDetailModel testModel;
+    ShopDetailModel shopDetailModel;
 
     public ShopDetailPresenterImpl(BaseView baseView) {
         testView = baseView;
-        testModel = new ShopDetailModelImpl();
+        shopDetailModel = new ShopDetailModelImpl();
     }
 
     @Override
     public void getShopDetail(String table, String merchantId) {
-        testModel.getShopDetail(table,merchantId).observeOn(AndroidSchedulers.mainThread())
+        shopDetailModel.getShopDetail(table,merchantId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<ShopDetailUriBean.ShopDetailBean>>() {
                     @Override
@@ -46,26 +46,5 @@ public class ShopDetailPresenterImpl implements ShopDetailPresenter {
                         testView.showData(shopDetailBeen);
                     }
                 });
-
-        /*testModel.getData().observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())//使用subscribeOn()指定观察者代码运行的线程；非ui线程
-                .subscribe(new Observer<BannerTypeBean>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (AppConstants.DEBUG)
-                            Log.i("RHG", e.toString());
-                    }
-
-                    @Override
-                    public void onNext(BannerTypeBean s) {
-                        if (s != null) {
-                            testView.showData(s);
-                        }
-                    }
-                });*/
     }
 }

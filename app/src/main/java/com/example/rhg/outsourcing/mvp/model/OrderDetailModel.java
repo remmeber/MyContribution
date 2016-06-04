@@ -13,8 +13,8 @@ import rx.Observable;
  *time：2016/5/28 16:54
  *email：1013773046@qq.com
  */
-public interface TestModel1 {
+public interface OrderDetailModel {
     // TODO: 返回目标数据
     Observable<List<OrderUrlBean.OrderBean>>
-    getData(String table, String userId, String style);
+    getOrderDetail(String table, String userId, String style);
 }
