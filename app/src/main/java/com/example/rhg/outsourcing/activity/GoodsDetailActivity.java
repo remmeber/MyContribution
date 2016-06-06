@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -20,23 +19,20 @@ import com.example.rhg.outsourcing.apapter.viewHolder.BannerImageHolder;
 import com.example.rhg.outsourcing.application.InitApplication;
 import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
-import com.example.rhg.outsourcing.dao.LikeDao;
-import com.example.rhg.outsourcing.dao.ShoppingCartDao;
+import com.example.rhg.outsourcing.datebase.AccountDao;
 import com.example.rhg.outsourcing.locationservice.LocationService;
 import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenter;
 import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenterImpl;
 import com.example.rhg.outsourcing.utils.ImageUtils;
-import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
+import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
 import com.example.rhg.outsourcing.widget.ShoppingCartWithNumber;
 import com.example.rhg.outsourcing.widget.UIAlertView;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.TimerTask;
 
 /**
  * desc:商品详情页面
@@ -90,7 +86,7 @@ public class GoodsDetailActivity extends BaseActivity {
         goodsDetailPresenter = new GoodsDetailPresenterImpl(this);
         myLocationListener = new MyLocationListener(this);
         /*TODO 页面销毁需要置空，否则会出现内存泄漏*/
-        location = SharePreferenceUtil.getInstance().getString(AppConstants.SP_LOCATION);
+        location = AccountUtil.getInstance().getLocation();
         if (TextUtils.isEmpty(location)) {
             isNeedLoc = true;
         }
@@ -161,7 +157,7 @@ public class GoodsDetailActivity extends BaseActivity {
         tvCenter = (TextView) findViewById(R.id.tb_center_tv);
         tvRight = (TextView) findViewById(R.id.tb_right_tv);
         ivRight = (ImageView) findViewById(R.id.tb_right_iv);
-        ivLeft = (ImageView) findViewById(R.id.iv_tab_left);
+        ivLeft = (ImageView) findViewById(R.id.tb_left_iv);
         llTabRight = (LinearLayout) findViewById(R.id.tb_right_ll);
         convenientBanner = (ConvenientBanner) findViewById(R.id.iv_banner);
 //        ivLike = (ImageView) findViewById(R.id.iv_like);
@@ -194,10 +190,10 @@ public class GoodsDetailActivity extends BaseActivity {
         tvRight.setText(location);//TODO 根据定位来决定
         tvCenter.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
-        ShoppingCartDao shoppingCartDao = ShoppingCartDao.getInstance();
+        AccountDao accountDao = AccountDao.getInstance();
         String _productId = String.valueOf(foodId);
-        if (shoppingCartDao.isExistGood(_productId)) {
-            String _num = shoppingCartDao.getNumByProductID(_productId);
+        if (accountDao.isExistGood(_productId)) {
+            String _num = accountDao.getNumByProductID(_productId);
             tvNum.setText(_num);
             shoppingCartWithNumber.setNum(_num);
         } else {
@@ -224,7 +220,7 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     public void showLocSuccess(String s) {
         tvRight.setText(s);
-        SharePreferenceUtil.getInstance().putString(AppConstants.SP_LOCATION, s);
+        AccountUtil.getInstance().setLocation(s);
     }
 
     @Override
@@ -274,7 +270,7 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_tab_left:
+            case R.id.tb_left_iv:
                 bundle = null;
                 setResult(AppConstants.BACK_WITHOUT_DATA);
                 finish();

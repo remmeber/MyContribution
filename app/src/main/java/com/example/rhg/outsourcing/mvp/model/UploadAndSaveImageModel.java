@@ -1,5 +1,6 @@
 package com.example.rhg.outsourcing.mvp.model;
 
+import java.io.File;
 import java.util.List;
 
 import rx.Observable;
@@ -9,5 +10,5 @@ import rx.Observable;
  * 邮箱：1013773046@qq.com
  */
 public interface UploadAndSaveImageModel {
-    Observable<String> LoadAndSaveImage();
+    Observable<String> UploadAndSaveImage(File file, String userName, String pwd);
 }

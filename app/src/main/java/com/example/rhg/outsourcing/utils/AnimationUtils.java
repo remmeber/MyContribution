@@ -6,7 +6,10 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 /**
- * Created by whiskeyfei on 15-7-24.
+ * desc:动画类
+ * author：remember
+ * time：2016/6/5 13:51
+ * email：1013773046@qq.com
  */
 public class AnimationUtils {
     public static void alphaAnimation(final View view, float start, float end, long time) {

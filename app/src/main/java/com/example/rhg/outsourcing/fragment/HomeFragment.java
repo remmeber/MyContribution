@@ -37,7 +37,7 @@ import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.presenter.HomePresenter;
 import com.example.rhg.outsourcing.mvp.presenter.HomePresenterImpl;
 import com.example.rhg.outsourcing.utils.ImageUtils;
-import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
+import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
 
@@ -231,7 +231,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     public void showLocSuccess(String s) {
         isLocated = true;
         tlLeftTV.setText(s);
-        SharePreferenceUtil.getInstance().putString(AppConstants.SP_LOCATION, s);
+        AccountUtil.getInstance().setLocation(s);
         homePresenter.getHomeData();
     }
 
@@ -311,7 +311,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     public void itemClick(View v, int position) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         /*todo 传递参数*/
-        intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
+        intent.putExtra(AppConstants.KEY_OR_SP_PHONE, "1234567890");
         intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
         intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, "20160517");

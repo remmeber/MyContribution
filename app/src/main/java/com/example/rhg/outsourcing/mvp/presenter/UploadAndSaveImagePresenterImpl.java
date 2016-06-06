@@ -1,8 +1,12 @@
 package com.example.rhg.outsourcing.mvp.presenter;
 
+import android.util.Log;
+
 import com.example.rhg.outsourcing.mvp.model.UploadAndSaveImageModel;
 import com.example.rhg.outsourcing.mvp.model.UploadAndSaveImageModelImpl;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
+
+import java.io.File;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,8 +27,8 @@ public class UploadAndSaveImagePresenterImpl implements UploadAndSaveImagePresen
     }
 
     @Override
-    public void UploadAndSaveImage() {
-        uploadAndSaveImageModel.LoadAndSaveImage().observeOn(AndroidSchedulers.mainThread())
+    public void UploadAndSaveImage(File file, String userName, String pwd) {
+        uploadAndSaveImageModel.UploadAndSaveImage(file, userName, pwd).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override
@@ -33,17 +37,15 @@ public class UploadAndSaveImagePresenterImpl implements UploadAndSaveImagePresen
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.i("RHG", e.getMessage());
                     }
 
                     @Override
-                    public void onNext(String url) {
-                        baseView.showData(url);
+                    public void onNext(String message) {
+                        Log.i("RHG", message);
+                        baseView.showData(message);
                     }
                 });
     }
 
-    @Override
-    public void getPicFromCamera() {
-
-    }
 }

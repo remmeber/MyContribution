@@ -13,6 +13,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -21,11 +22,12 @@ import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.mvp.api.QFoodApi;
 import com.example.rhg.outsourcing.mvp.presenter.UploadAndSaveImagePresenter;
 import com.example.rhg.outsourcing.mvp.presenter.UploadAndSaveImagePresenterImpl;
+import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.DataUtil;
 import com.example.rhg.outsourcing.utils.ImageUtils;
-import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.ModifyHeadDialog;
 import com.example.rhg.outsourcing.widget.CircleImageView;
@@ -65,7 +67,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     protected void initView() {
         tb_common = (FrameLayout) findViewById(R.id.fl_tab);
         tvRight = (TextView) findViewById(R.id.tb_right_tv);
-        ivLeft = (ImageView) findViewById(R.id.iv_tab_left);
+        ivLeft = (ImageView) findViewById(R.id.tb_left_iv);
 
         headView = (CircleImageView) findViewById(R.id.ci_head);
         et_name_wrap = (TextInputLayout) findViewById(R.id.et_name_wrap);
@@ -87,18 +89,24 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
         et_name_wrap.setError("");
         bt_save.setOnClickListener(this);
         bt_exit.setOnClickListener(this);
-        imageStr = SharePreferenceUtil.getInstance().getString(AppConstants.SP_HEAD_IMAGE);
+        imageStr = AccountUtil.getInstance().getHeadImageUrl();
         /*从本地获取头像URI*/
+//        if (AccountUtil.getInstance().hasAccount()) {
         if (!"".equals(imageStr)) {
             ImageLoader.getInstance().displayImage(imageStr, headView);
         } else {
-            uploadAndSaveImagePresenter.UploadAndSaveImage();
+            imageStr = QFoodApi.BASE_URL + "Pic/ClientPic/" +
+                    /*AccountUtil.getInstance().getUserID()*/"19216801" + ".jpg";
+            ImageLoader.getInstance().displayImage(imageStr, headView);
         }
+         /*}else {
+            ToastHelper.getInstance()._toast("请登录");
+        }*/
     }
 
     @Override
     protected void showSuccess(Object s) {
-//        ImageLoader.getInstance().displayImage((String) s, headView);
+        ImageLoader.getInstance().displayImage((String) s, headView);
     }
 
     @Override
@@ -109,7 +117,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_tab_left:
+            case R.id.tb_left_iv:
                 finish();
                 break;
             case R.id.bt_save:
@@ -146,7 +154,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
 // create Intent to take a picture and return control to the calling application
         Intent intentFromCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        fileUri = Uri.fromFile(new File(AppConstants.f_Path, DataUtil.getDataForImageName())); // create a file to save the image
+        fileUri = Uri.fromFile(new File(AppConstants.f_Path, DataUtil.getData())); // create a file to save the image
         intentFromCamera.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
 
         // start the image capture Intent
@@ -178,8 +186,14 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
                 Bitmap photo = data.getExtras().getParcelable("data");
                 Uri _uri = ImageUtils.getImageUri(photo);
                 /*TODO 将图片传服务器，服务器返回相应的URL，保存本地*/
-
-                ImageLoader.getInstance().displayImage(_uri.toString(), headView);
+//                ImageLoader.getInstance().displayImage(_uri.toString(), headView);
+                Log.i("RHG", _uri.getPath());
+                File _file = new File(_uri.getPath());
+                /*if (_file.exists()) {
+                    Log.i("RHG", "文件存在" + _file.getName());
+                } else
+                    Log.i("RHG", "文件不存在");*/
+                uploadAndSaveImagePresenter.UploadAndSaveImage(_file, "19216801", "123");
                 break;
         }
     }

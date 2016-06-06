@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_address"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_little"
+    android:background="@drawable/cv_goods_bg">
+
+    <ImageView
+        android:id="@+id/checkImage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignLeft="@+id/view"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/view"
+        android:background="@android:color/transparent"
+        tools:ignore="contentDescription"
+        tools:src="@mipmap/unchecked" />
+
+    <TextView
+        android:id="@+id/tv_address_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/checkImage"
+        android:layout_alignTop="@+id/checkImage"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_toEndOf="@+id/checkImage"
+        android:layout_toRightOf="@+id/checkImage"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_large"
+        tools:text="收货人:方莹" />
+
+    <TextView
+        android:id="@+id/tv_address_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_address_receiver"
+        android:layout_alignTop="@id/tv_address_receiver"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_toEndOf="@id/tv_address_receiver"
+        android:layout_toRightOf="@id/tv_address_receiver"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_large"
+        tools:text="1111111111" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/checkImage"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/margin_small"
+        android:background="@drawable/line_virture"
+        android:layerType="software" />
+
+    <TextView
+        android:id="@+id/tv_address_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_address_receiver"
+        android:layout_alignStart="@id/tv_address_receiver"
+        android:layout_below="@+id/view"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/margin_small"
+        android:maxLines="3"
+        android:textSize="@dimen/text_large"
+        tools:text="收货地址:江苏省南京市江宁区秣周东路无线谷" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_little"
+        android:layout_below="@+id/tv_address_content" />
+
+</RelativeLayout>

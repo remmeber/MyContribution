@@ -7,33 +7,23 @@ package com.example.rhg.outsourcing.bean;
 public class AddressBean {
 
     /**
-     * Client :
-     * Pwd :
+     * CreateTime：
      * Name :
      * Phone :
      * Address :
      */
 
-    private String Client;
-    private String Pwd;
+    private String CreateTime;
     private String Name;
     private String Phone;
     private String Address;
 
-    public String getClient() {
-        return Client;
+    public String getCreateTime() {
+        return CreateTime;
     }
 
-    public void setClient(String Client) {
-        this.Client = Client;
-    }
-
-    public String getPwd() {
-        return Pwd;
-    }
-
-    public void setPwd(String Pwd) {
-        this.Pwd = Pwd;
+    public void setCreateTime(String createTime) {
+        CreateTime = createTime;
     }
 
     public String getName() {

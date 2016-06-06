@@ -49,7 +49,7 @@ public class ShopDetailActivity extends BaseActivity {
             merchantId = bundle.getString(AppConstants.KEY_MERCHANT_ID, "");
             shopLogoUrl = bundle.getString(AppConstants.KEY_MERCHANT_LOGO);
 
-            merchantPhone = bundle.getString(AppConstants.KEY_PHONE, "无");
+            merchantPhone = bundle.getString(AppConstants.KEY_OR_SP_PHONE, "无");
             merchantAddress = bundle.getString(AppConstants.KEY_ADDRESS, "无");
             merchantNote = bundle.getString(AppConstants.KEY_NOTE, "无");
         } else {
@@ -92,15 +92,13 @@ public class ShopDetailActivity extends BaseActivity {
         fragments.add(fragment);
         fragment = new ShopDetailFragment();
         bundle = new Bundle();
-        bundle.putString(AppConstants.KEY_PHONE, merchantPhone);
+        bundle.putString(AppConstants.KEY_OR_SP_PHONE, merchantPhone);
         bundle.putString(AppConstants.KEY_ADDRESS, merchantAddress);
         bundle.putString(AppConstants.KEY_NOTE, merchantNote);
         fragment.setArguments(bundle);
         fragments.add(fragment);
         QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
                 AppConstants.SHOP_DETAIL_TITLES, viewPager, slidingTabLayout);
-        /*viewPager.setAdapter(QFoodVpAdapter);
-        slidingTabLayout.setViewPager(viewPager);*/
         ivBack.setOnClickListener(this);
     }
 

@@ -19,7 +19,7 @@
         tools:text="我的订单" />
 
     <ImageView
-        android:id="@+id/iv_tab_left"
+        android:id="@+id/tb_left_iv"
         android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            tools:src="@mipmap/ic_place_whit" />
+            tools:src="@mipmap/ic_place_white" />
 
         <TextView
             android:id="@+id/tb_right_tv"

@@ -30,21 +30,16 @@ public class AppConstants {
     public static final int TypeHome = 0;
     public static final int TypeSeller = 1;
     public static final int TypeOrder = 2;
-    //---------------------------页面类型-----------------------------------------------------------
-    public static final int TypeMy = 2;
-    public static final int TypeShoppingCar = 3;
     //---------------------------所有店铺页面中的header和body-----------------------------------------
     public static final int TypeHeader = 1;
     public static final int TypeBody = 2;
-    //------------------------请求服务器使用的数据类型-------------------------------------------------
-    public static final int TypeRecommend = 0;
-    public static final int TypeDistance = 1;
-    public static final int TypeSellNum = 2;
-    public static final int TypeRateScore = 3;
 
     /*SP KEY*/
-    public static final String SP_LOCATION = "sp_location";
+    public static final String SP_LOCATION = "location";
     public static final String SP_HEAD_IMAGE = "sp_head_image";
+    public static final String SP_USER_ID = "user_id";
+    public static final String SP_USER_NAME = "user_name";
+    public static final String SP_PASSWORD = "password";
     /*SP KEY*/
     /**
      * 页面调起/销毁标志
@@ -67,7 +62,7 @@ public class AppConstants {
     public static final String KEY_PRODUCT_ID = "product_id";
     public static final String KEY_MERCHANT_LOGO = "merchant_logo";
     public static final String KEY_PRODUCT_PRICE = "product_price";
-    public static final String KEY_PHONE = "phone";
+    public static final String KEY_OR_SP_PHONE = "phone";
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_NOTE = "note";
     public static final String KEY_DELETE = "delete";
@@ -79,6 +74,11 @@ public class AppConstants {
     public static final int CODE_RESULT_REQUEST = 12;//TODO:From Crop
     public static final String HEAD_IMAGE_NAME = "head_image.png";
 
+    /*Address*/
+    public static final String NAME_FOR_ADDRESS = "address_name";
+    public static final String PHONE_FOR_ADDRESS = "address_phone";
+    public static final String ADDRESS_CONTENT = "address_content";
+    public static final String ADDRESS_CREATE_TIME = "address_time";
 
     /*后台交互信息*/
     public static final String TABLE_CLIENT = "client";
@@ -86,6 +86,7 @@ public class AppConstants {
     public static final String TABLE_FOOD = "food";
     public static final String TABLE_RESTAURANTS = "restaurants";
     public static final String TABLE_ORDER = "order";
+
     /**
      * 响应结果，正确
      */

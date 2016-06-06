@@ -109,7 +109,7 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         MerchantUrlBean.MerchantBean merchantBean = dataBySellNumberModels.get(position);
         /*目前后台还没有加入这是三个字段*/
-        intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
+        intent.putExtra(AppConstants.KEY_OR_SP_PHONE, "1234567890");
         intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
         intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
 

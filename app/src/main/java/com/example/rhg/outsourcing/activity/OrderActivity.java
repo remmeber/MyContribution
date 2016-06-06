@@ -51,7 +51,7 @@ public class OrderActivity extends BaseActivity{
     @Override
     protected void initView() {
         tb_common =(FrameLayout)findViewById(R.id.fl_tab);
-        ivBack = (ImageView)findViewById(R.id.iv_tab_left);
+        ivBack = (ImageView)findViewById(R.id.tb_left_iv);
         tvOrder = (TextView)findViewById(R.id.tb_center_tv);
         stlOrder = (SlidingTabLayout)findViewById(R.id.stl_myorder);
         vpOrder = (ViewPager)findViewById(R.id.vp_myorder);
@@ -71,7 +71,7 @@ public class OrderActivity extends BaseActivity{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_tab_left:
+            case R.id.tb_left_iv:
                 //TODO do back
                 finish();
                 break;

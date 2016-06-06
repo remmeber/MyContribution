@@ -19,7 +19,8 @@ public class ShopDetailModelImpl implements ShopDetailModel {
 
     @Override
     public Observable<List<ShopDetailUriBean.ShopDetailBean>> getShopDetail(String table, String merchantId) {
-        return QFoodApiMamager.getInstant().getQFoodApiService().getShopDetail(table, Integer.valueOf(merchantId))
+        return QFoodApiMamager.getInstant().getQFoodApiService().
+                getShopDetail(table, Integer.valueOf(merchantId))
                 .flatMap(new Func1<ShopDetailUriBean, Observable<List<ShopDetailUriBean.ShopDetailBean>>>() {
 
                     @Override

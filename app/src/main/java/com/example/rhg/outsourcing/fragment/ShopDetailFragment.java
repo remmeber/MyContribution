@@ -26,7 +26,7 @@ public class ShopDetailFragment extends SuperFragment {
         String _address = getResources().getString(R.string.addrss);
         String _note = getResources().getString(R.string.note);
         if (arguments != null) {
-            phoneNumber = arguments.getString(AppConstants.KEY_PHONE);
+            phoneNumber = arguments.getString(AppConstants.KEY_OR_SP_PHONE);
             String _temp = arguments.getString(AppConstants.KEY_ADDRESS);
             if (_temp == null || "".equals(_temp))
                 Address = _address + "无";

@@ -21,22 +21,24 @@ import java.io.IOError;
 import java.io.IOException;
 
 /**
- *desc:图片工具
- *author：remember
- *time：2016/6/2 9:39
- *email：1013773046@qq.com
+ * desc:图片工具
+ * author：remember
+ * time：2016/6/2 9:39
+ * email：1013773046@qq.com
  */
 public class ImageUtils {
-    public static void TintFill(ImageView v, Drawable drawable,int tint){
+    public static void TintFill(ImageView v, Drawable drawable, int tint) {
         Drawable tint_drawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(tint_drawable,tint);
+        DrawableCompat.setTint(tint_drawable, tint);
         v.setImageDrawable(tint_drawable);
     }
-    public static Drawable TintWithoutFill(Drawable drawable,int tint){
+
+    public static Drawable TintWithoutFill(Drawable drawable, int tint) {
         Drawable tint_drawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(tint_drawable,tint);
+        DrawableCompat.setTint(tint_drawable, tint);
         return tint_drawable;
     }
+
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static Uri getImageUri(Bitmap bitmap) {
@@ -45,7 +47,7 @@ public class ImageUtils {
         if (!file.exists()) {
             file.mkdir();
         }
-        File _file = new File(AppConstants.f_Path, DataUtil.getDataForImageName());
+        File _file = new File(AppConstants.f_Path, DataUtil.getData() + ".png");
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(_file);

@@ -4,7 +4,7 @@
     <string name="Home">首页</string>
     <string name="allstore">所有店铺</string>
     <string name="shoppingcar">购物车</string>
-    
+
     <!-- profile -->
     <string name="myOrder">我的订单</string>
     <string name="myPay">待付款</string>
@@ -49,13 +49,17 @@
     <string name="tvCamera">相机</string>
     <string name="tvGallery">图库</string>
     <!--我的页面-->
+
+    <!--收货地址-->
+    <string name="address">收货地址</string>
+    <!--收货地址-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="user_name">口remember</string>
-    
+
     <string name="action_edit_password">修改密码</string>
     <string name="action_personal_info">个人信息</string>
     <string name="action_info_feedback">意见反馈</string>

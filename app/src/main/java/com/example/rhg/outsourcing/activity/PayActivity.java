@@ -19,7 +19,6 @@ import com.example.rhg.outsourcing.widget.PayDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -68,7 +67,7 @@ public class PayActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ivBack = (ImageView) findViewById(R.id.iv_tab_left);
+        ivBack = (ImageView) findViewById(R.id.tb_left_iv);
         tvCenter = (TextView) findViewById(R.id.tb_center_tv);
         flTab = (FrameLayout) findViewById(R.id.fl_tab);
 
@@ -124,7 +123,7 @@ public class PayActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_tab_left:
+            case R.id.tb_left_iv:
                 finish();
                 break;
             case R.id.iv_edit_right:

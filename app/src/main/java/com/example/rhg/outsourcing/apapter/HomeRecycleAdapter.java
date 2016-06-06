@@ -12,7 +12,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/28.
+ *desc:主页推荐商家适配器
+ *author：remember
+ *time：2016/6/5 18:10
+ *email：1013773046@qq.com
  */
 public class HomeRecycleAdapter extends RecycleAbstractAdapter<RecommendListUrlBean.RecommendShopBeanEntity> {
     List<RecommendListUrlBean.RecommendShopBeanEntity> recommendListBean;

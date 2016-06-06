@@ -9,22 +9,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.R;
+import com.example.rhg.outsourcing.activity.AddressActivity;
 import com.example.rhg.outsourcing.activity.DeliverInfoActivity;
 import com.example.rhg.outsourcing.activity.OrderActivity;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.utils.AccountUtil;
+import com.example.rhg.outsourcing.utils.ToastHelper;
 
 /**
- *desc:我的fm
- *author：remember
- *time：2016/5/28 16:44
- *email：1013773046@qq.com
+ * desc:我的fm
+ * author：remember
+ * time：2016/5/28 16:44
+ * email：1013773046@qq.com
  */
 public class MyFragment extends SuperFragment implements View.OnClickListener {
-    private static final String TAG = "MyFragment";
     boolean hasAccount = true;
 
     FrameLayout flTAB;
-
     ImageView userHeader;
     TextView userName;
     //TODO-------------------------------我的订单栏---------------------------------------------
@@ -46,12 +47,10 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
     TextView addressAdd;
     TextView addressModify;
 
-    public MyFragment() {
-        if (AppConstants.DEBUG)
-            Log.i(TAG, "MyFragment");
-        if (hasAccount) {
+    boolean isSignIn;
 
-        }
+    public MyFragment() {
+
     }
 
     @Override
@@ -92,6 +91,10 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         flTAB.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
+        if (AccountUtil.getInstance().hasAccount()) {
+            userName.setText("账户存在");
+            isSignIn = true;
+        } else userName.setText("请登录");
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示
         userName.setOnClickListener(this);//TODO 如果本地有账户则直接登录，否则需要点击登录
         userName.setTag(R.id.userName);
@@ -173,16 +176,17 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        Intent intent = new Intent();
         switch ((int) v.getTag()) {
             case R.id.profileInfo://TODO 我的订单右箭头
                 startActivity(new Intent(getContext(), OrderActivity.class));
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
 //                Toast.makeText(getContext(), R.string.workerInfo, Toast.LENGTH_SHORT).show();
+//                if (isSignIn)
                 startActivity(new Intent(getContext(), DeliverInfoActivity.class));
-                break;
-            case R.id.profileAddress://TODO 我的地址右箭头
-                Toast.makeText(getContext(), R.string.addrInfo, Toast.LENGTH_SHORT).show();
+                /*else
+                    ToastHelper.getInstance()._toast("请登录");*/
                 break;
             case R.id.userHeader://TODO 更改头像
                 Toast.makeText(getContext(), R.string.modifyHeader, Toast.LENGTH_SHORT).show();
@@ -208,14 +212,18 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
             case 5://TODO 修改
                 Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.profileAddress://TODO 我的地址右箭头
+                /*Toast.makeText(getContext(), R.string.addrInfo, Toast.LENGTH_SHORT).show();
+                break;*/
             case 6://TODO 常用
-                Toast.makeText(getContext(), R.string.addrCustome, Toast.LENGTH_SHORT).show();
-                break;
+                /*Toast.makeText(getContext(), R.string.addrCustome, Toast.LENGTH_SHORT).show();
+                break;*/
             case 7://TODO 添加
-                Toast.makeText(getContext(), R.string.addrAdd, Toast.LENGTH_SHORT).show();
-                break;
+//                break;
             case 8://TODO 修改
-                Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
+                intent.setClass(getActivity(), AddressActivity.class);
+                startActivity(intent);
+//                Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -9,13 +9,11 @@ import android.util.Log;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.BaseActivity;
-import com.example.rhg.outsourcing.datebase.LikeDBHelper;
-import com.example.rhg.outsourcing.datebase.ShoppingCartDBHelper;
+import com.example.rhg.outsourcing.datebase.AccountDBHelper;
 import com.example.rhg.outsourcing.locationservice.LocationService;
+import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.NetUtil;
-import com.example.rhg.outsourcing.utils.SharePreferenceUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
-import com.example.rhg.outsourcing.widget.LoadingDialog;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -102,7 +100,7 @@ public class InitApplication extends Application {
         super.onCreate();
         refWatcher = LeakCanary.install(this);
         initApplication = this;
-        initSharePreferenceUtil();
+        initAccountUtil();
         initDBHelper();
         initToast();
         initImageLoader();
@@ -119,8 +117,8 @@ public class InitApplication extends Application {
             isNetworkAvailable = true;
     }
 
-    private void initSharePreferenceUtil() {
-        SharePreferenceUtil.getInstance().init(getApplicationContext());
+    private void initAccountUtil() {
+        AccountUtil.getInstance().init(getApplicationContext());
     }
 
     private void initToast() {
@@ -128,8 +126,8 @@ public class InitApplication extends Application {
     }
 
     private void initDBHelper() {
-        ShoppingCartDBHelper.init(getApplicationContext());
-        LikeDBHelper.init(getApplicationContext());
+        AccountDBHelper.init(getApplicationContext());
+//        LikeDBHelper.init(getApplicationContext());
     }
 
     public static InitApplication getInstance() {

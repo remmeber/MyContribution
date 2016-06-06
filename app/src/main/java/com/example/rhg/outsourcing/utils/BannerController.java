@@ -5,7 +5,10 @@ import android.util.Log;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 
 /**
- * Created by remember on 2016/5/4.
+ * desc:轮播工具
+ * author：remember
+ * time：2016/6/5 13:51
+ * email：1013773046@qq.com
  */
 public class BannerController {
     ConvenientBanner convenientBanner;

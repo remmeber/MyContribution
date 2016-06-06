@@ -4,13 +4,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
-import com.example.rhg.outsourcing.dao.ShoppingCartDao;
+import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.datebase.AccountDBHelper;
+import com.example.rhg.outsourcing.datebase.AccountDao;
 import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/10.
+ * desc:购物车工具类
+ * author：remember
+ * time：2016/6/5 13:50
+ * email：1013773046@qq.com
  */
 public class ShoppingCartUtil {
     /**
@@ -152,7 +157,7 @@ public class ShoppingCartUtil {
      * @param num       此商品的数量
      */
     public static void addGoodToCart(String productID, String num) {
-        ShoppingCartDao.getInstance().saveShoppingInfo(productID, num);
+        AccountDao.getInstance().saveShoppingInfo(productID, num);
     }
 
     /**
@@ -161,15 +166,20 @@ public class ShoppingCartUtil {
      * @param productID 规格ID
      */
     public static void delGood(String productID) {
-        ShoppingCartDao.getInstance().deleteShoppingInfo(productID);
+        AccountDao.getInstance().deleteItemInTableById(AccountDBHelper.Q_SHOPPING_CART_TABLE,
+                ShoppingCartBean.KEY_PRODUCT_ID, productID);
     }
 
-    /** 删除全部商品 */
+    /**
+     * 删除全部商品
+     */
     public static void delAllGoods() {
-        ShoppingCartDao.getInstance().delAllGoods();
+        AccountDao.getInstance().deleteAllItemInTable(AccountDBHelper.Q_SHOPPING_CART_TABLE);
     }
 
-    /** 增减数量，操作通用，数据不通用 */
+    /**
+     * 增减数量，操作通用，数据不通用
+     */
     public static void addOrReduceGoodsNum(boolean isPlus, ShoppingCartBean.Goods goods, TextView tvNum) {
         String currentNum = goods.getNumber().trim();
         String num = "1";
@@ -196,18 +206,18 @@ public class ShoppingCartUtil {
      * @param num
      */
     public static void updateGoodsNumber(String productID, String num) {
-        ShoppingCartDao.getInstance().updateGoodsNum(productID, num);
+        AccountDao.getInstance().updateGoodsNum(productID, num);
     }
 
     /**
      * 查询购物车商品总数量
-     * <p/>
+     * <p>
      * 统一使用该接口，而就行是通过何种方式获取数据，数据库、SP、文件、网络，都可以
      *
      * @return
      */
     public static int getGoodsCount() {
-        return ShoppingCartDao.getInstance().getGoodsCount();
+        return AccountDao.getInstance().getTableCountByName(AccountDBHelper.Q_SHOPPING_CART_TABLE);
     }
 
     /**
@@ -216,10 +226,12 @@ public class ShoppingCartUtil {
      * @return
      */
     public static List<String> getAllProductID() {
-        return ShoppingCartDao.getInstance().getProductList();
+        return AccountDao.getInstance().getProductList();
     }
 
-    /** 由于这次服务端没有保存商品数量，需要此步骤来处理数量（非通用部分） */
+    /**
+     * 由于这次服务端没有保存商品数量，需要此步骤来处理数量（非通用部分）
+     */
     public static void updateShopList(List<ShoppingCartBean> list) {
         if (list == null) {
             return;
@@ -239,7 +251,7 @@ public class ShoppingCartUtil {
                     continue;
                 }
                 String productID = goods.getProductID();
-                String num = ShoppingCartDao.getInstance().getNumByProductID(productID);
+                String num = AccountDao.getInstance().getNumByProductID(productID);
                 list.get(i).getGoods().get(j).setNumber(num);
             }
         }

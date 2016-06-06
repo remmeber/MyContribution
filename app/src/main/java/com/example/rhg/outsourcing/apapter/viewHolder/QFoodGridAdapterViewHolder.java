@@ -48,7 +48,7 @@ public class QFoodGridAdapterViewHolder {
      * @param <T>
      * @return
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("checked")
     public <T extends View> T getViewByid(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {

@@ -1,6 +1,5 @@
 package com.example.rhg.outsourcing.mvp.api;
 
-import com.example.rhg.outsourcing.bean.AddressBean;
 import com.example.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.example.rhg.outsourcing.bean.BannerTypeUrlBean;
 import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
@@ -12,12 +11,12 @@ import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.bean.SearchUrlBean;
 import com.example.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.example.rhg.outsourcing.bean.SignInBean;
+import com.example.rhg.outsourcing.bean.TestBean;
 import com.example.rhg.outsourcing.bean.TextTypeBean;
 
 
 import java.io.File;
 
-import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -79,30 +78,30 @@ public interface QFoodApiService {
     @FormUrlEncoded
     @POST("Clientpic.php")
     //return: success error
-    Observable<String> upLoadHeadImage(@Field("Pic") File file,
-                                       @Field("Client") String userName,
-                                       @Field("Pwd") String pwd);
+    Observable<TestBean> UploadHeadImage(@Field("Pic") File file,
+                                         @Field("Client") String userName,
+                                         @Field("Pwd") String pwd);
 
     /*get head image*/
-    @GET("Pic/ClientPic/{userName}.jpg")
+    @POST("Pic/ClientPic/{userName}.jpg")
     Observable<String> getHeadImage(@Path("userName") String userName);
 
     /*user sign in*/
     @FormUrlEncoded
     @POST("Table/Json.php")
-    Observable<SignInBean> userSignIn(@Query("Table") String client,
-                                      @Query("Client") String userName,
-                                      @Query("Pwd") String pwd);
+    Observable<SignInBean> userSignIn(@Field("Table") String client,
+                                      @Field("Client") String userName,
+                                      @Field("Pwd") String pwd);
 
     /*添加地址*/
     @FormUrlEncoded
     @POST("JsonSQL/AddAddress.php")
-    Observable<String> addAddress(@Body AddressBean addressBean);
-    /*Observable<String> addAddress(@Field("Client") String userName,
+//    Observable<String> addAddress(@Body AddressBean addressUrlBean);
+    Observable<String> addAddress(@Field("Client") String userName,
                                   @Field("Pwd") String pwd,
                                   @Field("Name") String name,
                                   @Field("Phone") String phone,
-                                  @Field("Address") String address);*/
+                                  @Field("Address") String address);
 
     @FormUrlEncoded
     @POST("Table/Json.php")

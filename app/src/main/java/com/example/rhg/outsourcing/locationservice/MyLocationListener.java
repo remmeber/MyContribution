@@ -31,8 +31,6 @@ public class MyLocationListener implements BDLocationListener {
 
     @Override
     public void onReceiveLocation(BDLocation location) {
-        // TODO Auto-generated method stub
-        Log.i("RHG", "Location callback");
         if (null != location && location.getLocType() != BDLocation.TypeServerError) {
             String sb ="location," ;
             /*sb.append("time : ");
