@@ -2,6 +2,7 @@ package com.example.rhg.outsourcing.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,7 +58,7 @@ public class SlideView extends LinearLayout {
 
         setOrientation(LinearLayout.HORIZONTAL);
         View.inflate(mContext, R.layout.swipe_delete_view, this);
-        mViewContent = (LinearLayout)findViewById(R.id.view_content);
+        mViewContent = (LinearLayout) findViewById(R.id.view_content);
         mHolderWidth = Math.round(TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, mHolderWidth, getResources()
                         .getDisplayMetrics()));
@@ -81,8 +82,9 @@ public class SlideView extends LinearLayout {
         }
     }
 
+    private boolean isConsume;
 
-    public void onRequireTouchEvent(MotionEvent event) {
+    public boolean onRequireTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
         int scrollX = getScrollX();
@@ -102,6 +104,7 @@ public class SlideView extends LinearLayout {
                 int deltaX = x - mLastX;
                 int deltaY = y - mLastY;
                 if (Math.abs(deltaX) < Math.abs(deltaY) * TAN) {
+                    isConsume = false;
                     break;
                 }
                 int newScrollX = scrollX - deltaX;
@@ -113,6 +116,7 @@ public class SlideView extends LinearLayout {
                     }
                     this.scrollTo(newScrollX, 0);
                 }
+                isConsume = true;
                 break;
             }
             case MotionEvent.ACTION_UP: {
@@ -133,6 +137,8 @@ public class SlideView extends LinearLayout {
         }
         mLastX = x;
         mLastY = y;
+        Log.i("RHG", "return:" + isConsume);
+        return isConsume;
     }
 
     private void smoothScrollTo(int destX, int destY) {

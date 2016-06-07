@@ -18,7 +18,6 @@ import com.example.rhg.outsourcing.utils.NetUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.squareup.leakcanary.RefWatcher;
 
-import retrofit.http.GET;
 
 /**
  * desc:所有fm的基类

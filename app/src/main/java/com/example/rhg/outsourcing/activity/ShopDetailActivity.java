@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -66,7 +65,7 @@ public class ShopDetailActivity extends BaseActivity {
 
 
     @Override
-    protected void initView() {
+    protected void initView(View view) {
         ivBack = (ImageView) findViewById(R.id.iv_shop_detail_back);
         ivShopLogo = (ImageView) findViewById(R.id.iv_shop_detail_logo);
         tvShopName = (TextView) findViewById(R.id.tv_shop_detail_name);

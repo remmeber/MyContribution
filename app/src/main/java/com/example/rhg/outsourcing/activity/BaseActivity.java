@@ -1,5 +1,6 @@
 package com.example.rhg.outsourcing.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +10,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.application.InitApplication;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.locationservice.LocationService;
@@ -42,14 +46,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         InitApplication.getInstance().addActivity(this);
         RefWatcher refWatcher = InitApplication.getRefWatcher(this);
         refWatcher.watch(this);
+
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
         dataReceive(getIntent());
         firstLoc();
         loadingData();
-        initView();
+        initView(getRootView(this));
         initData();
 //        bindData(loadData());
+    }
+
+    View getRootView(Activity context) {
+        return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);
     }
 
     public void loadingData() {
@@ -152,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         return 0;
     }
 
-    protected abstract void initView();
+    protected abstract void initView(View view);
 
     protected abstract void initData();
 
@@ -195,6 +204,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         showSuccess(o);
 
     }
+
     public void showLocSuccess(String s) {
     }
 

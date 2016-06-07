@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 /**
- *desc:
- *author：remember
- *time：2016/5/28 17:03
- *email：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/5/28 17:03
+ * email：1013773046@qq.com
  */
 public class MySwipeLayout extends SwipeRefreshLayout {
 
@@ -23,17 +23,38 @@ public class MySwipeLayout extends SwipeRefreshLayout {
         super(context, attrs);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-//        if (super.onTouchEvent(ev))
-            Log.i("RHG", "处理情况： "+super.onTouchEvent(ev));
-        return false;
-    }
+
+    int lastX;
+    int lastY;
+    boolean isHorizontalSwipe;
 
     @Override
-    public boolean onInterceptHoverEvent(MotionEvent event) {
-        if (super.onInterceptHoverEvent(event))
-            Log.i("RHG", "在SwipeLayout处被拦截");
+    public boolean onInterceptTouchEvent(MotionEvent e) {
+        int currentX = (int) e.getRawX();
+        int currentY = (int) e.getRawY();
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                isHorizontalSwipe = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (Math.abs(currentY - lastY) <= 1) {
+                    if (Math.abs(currentX - lastX) > 2)
+                        isHorizontalSwipe = true;
+                    break;
+                }
+                if (Math.abs(currentX - lastX) / Math.abs(currentY - lastY) > 2) {
+                    isHorizontalSwipe = true;
+                } else {
+                    isHorizontalSwipe = false;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+
+                break;
+        }
+        lastX = currentX;
+        lastY = currentY;
         return false;
     }
 }

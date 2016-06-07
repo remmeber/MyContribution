@@ -37,7 +37,7 @@ public class UploadAndSaveImagePresenterImpl implements UploadAndSaveImagePresen
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("RHG", e.getMessage());
+                        Log.i("RHG", "error: " + e.getMessage() + "," + e.getCause());
                     }
 
                     @Override

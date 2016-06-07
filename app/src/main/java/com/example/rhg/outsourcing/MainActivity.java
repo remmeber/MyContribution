@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
     }
 
     @Override
-    protected void initView() {
+    protected void initView(View view) {
         searchView = (SearchView) findViewById(R.id.searchView);
         bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
     }

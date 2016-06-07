@@ -3,6 +3,7 @@ package com.example.rhg.outsourcing.activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -12,9 +13,9 @@ import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.AddressAdapter;
-import com.example.rhg.outsourcing.bean.AddressBean;
 import com.example.rhg.outsourcing.bean.AddressLocalBean;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.example.rhg.outsourcing.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +57,14 @@ public class AddressActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
-        View toolbar = getLayoutInflater().inflate(R.layout.toolbar_common,null);
-        tb_common = (FrameLayout) toolbar.findViewById(R.id.fl_tab);
-        tbRight_ll = (LinearLayout) toolbar.findViewById(R.id.tb_right_ll);
-        tvCenter = (TextView) toolbar.findViewById(R.id.tb_center_tv);
-        ivLeft = (ImageView) toolbar.findViewById(R.id.tb_left_iv);
+    protected void initView(View view) {
+        tb_common = (FrameLayout) view.findViewById(R.id.address_include);
+        tbRight_ll = (LinearLayout) view.findViewById(R.id.address_include)
+                .findViewById(R.id.tb_right_ll);
+        tvCenter = (TextView) view.findViewById(R.id.address_include)
+                .findViewById(R.id.tb_center_tv);
+        ivLeft = (ImageView) view.findViewById(R.id.address_include)
+                .findViewById(R.id.tb_left_iv);
 
         srlAddress = (SwipeRefreshLayout) findViewById(R.id.srl_address);
         rcyAddress = (RecyclerView) findViewById(R.id.rcy_address);
@@ -73,7 +76,14 @@ public class AddressActivity extends BaseActivity {
         tb_common.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbRight_ll.setVisibility(View.GONE);
         tvCenter.setText(getResources().getString(R.string.address));
+        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_blackp));
         ivLeft.setOnClickListener(this);
+
+        rcyAddress.addItemDecoration(new RecycleViewDivider(this,
+                        16,
+                        getResources().getColor(R.color.colorSearchHint)
+                )
+        );
         rcyAddress.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcyAddress.setLayoutManager(linearLayoutManager);
@@ -103,6 +113,9 @@ public class AddressActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.bt_add_new_address:
                 ToastHelper.getInstance()._toast("增加地址");
+                break;
+            case R.id.tb_left_iv:
+                finish();
                 break;
         }
     }

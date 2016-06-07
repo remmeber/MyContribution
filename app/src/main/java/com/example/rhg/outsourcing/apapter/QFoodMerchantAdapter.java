@@ -13,7 +13,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/28.
+ *desc:
+ *author：remember
+ *time：2016/6/6 14:14
+ *email：1013773046@qq.com
  */
 public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean.MerchantBean> {
 

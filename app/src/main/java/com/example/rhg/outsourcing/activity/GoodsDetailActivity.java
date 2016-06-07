@@ -152,7 +152,7 @@ public class GoodsDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(View view) {
         tb_common = (FrameLayout) findViewById(R.id.fl_tab);
         tvCenter = (TextView) findViewById(R.id.tb_center_tv);
         tvRight = (TextView) findViewById(R.id.tb_right_tv);

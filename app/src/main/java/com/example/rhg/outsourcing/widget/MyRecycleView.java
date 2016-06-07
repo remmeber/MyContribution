@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -27,8 +28,30 @@ public class MyRecycleView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
+    int lastX;
+    int lastY;
+    boolean isVerticalSwipe;
+
     @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        return false;
+    public boolean onInterceptTouchEvent(MotionEvent e) {
+        int currentX = (int) e.getRawX();
+        int currentY = (int) e.getRawY();
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (Math.abs(currentY - lastY) / Math.abs(currentX - lastX) > 2) {
+                    isVerticalSwipe = true;
+                    Log.i("RHG", "拦截");
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                break;
+        }
+        lastX = currentX;
+        lastY = currentY;
+        return isVerticalSwipe;
     }
 }

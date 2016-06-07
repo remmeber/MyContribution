@@ -1,5 +1,7 @@
 package com.example.rhg.outsourcing.fragment;
 
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -12,20 +14,22 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.QFoodShoppingCartExplAdapter;
 import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 import com.example.rhg.outsourcing.widget.MyExpandListView;
+import com.example.rhg.outsourcing.widget.MySwipeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *desc:购物车fm
- *author：remember
- *time：2016/5/28 16:49
- *email：1013773046@qq.com
+ * desc:购物车fm
+ * author：remember
+ * time：2016/5/28 16:49
+ * email：1013773046@qq.com
  */
 public class ShoppingCartFragment extends SuperFragment {
     private static final String TAG = "ShoppingCartFragment";
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
+    MySwipeLayout swipeLayout;
     MyExpandListView expandableListView;
     RelativeLayout rlShoppingCartEmpty;
     RelativeLayout rlShoppingCartPay;
@@ -71,11 +75,12 @@ public class ShoppingCartFragment extends SuperFragment {
 
     @Override
     protected void initView(View view) {
-        fl_tab = (FrameLayout)view.findViewById(R.id.fl_tab);
-        tbCenterTV = (TextView)view.findViewById(R.id.tb_center_tv);
-        tbRightLL = (LinearLayout)view.findViewById(R.id.tb_right_ll);
-        tbRightTV = (TextView)view.findViewById(R.id.tb_right_tv);
+        fl_tab = (FrameLayout) view.findViewById(R.id.shopping_include);
+        tbCenterTV = (TextView) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_center_tv);
+        tbRightLL = (LinearLayout) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_right_ll);
+        tbRightTV = (TextView) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_right_tv);
 
+        swipeLayout = (MySwipeLayout) view.findViewById(R.id.sl_shopping_cart);
         expandableListView = (MyExpandListView) view.findViewById(R.id.list_shopping_cart);
         tvCountMoney = (TextView) view.findViewById(R.id.tv_count_money);
         tvCountGoods = (TextView) view.findViewById(R.id.tv_count);
@@ -89,6 +94,17 @@ public class ShoppingCartFragment extends SuperFragment {
         tbCenterTV.setText(getResources().getString(R.string.shoppingcar));
         tbRightTV.setText("编辑");
 
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
         QFoodShoppingCartExplAdapter = new QFoodShoppingCartExplAdapter(getContext());
         expandableListView.setAdapter(QFoodShoppingCartExplAdapter);
         expandableListView.setGroupIndicator(null);

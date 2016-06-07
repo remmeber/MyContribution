@@ -66,7 +66,7 @@ public class PayActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(View view) {
         ivBack = (ImageView) findViewById(R.id.tb_left_iv);
         tvCenter = (TextView) findViewById(R.id.tb_center_tv);
         flTab = (FrameLayout) findViewById(R.id.fl_tab);

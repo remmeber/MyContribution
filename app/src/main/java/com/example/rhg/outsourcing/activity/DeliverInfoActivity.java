@@ -35,6 +35,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
 /**
  * desc:跑腿员信息页面
  * author：remember
@@ -64,7 +67,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
     }
 
     @Override
-    protected void initView() {
+    protected void initView(View view) {
         tb_common = (FrameLayout) findViewById(R.id.fl_tab);
         tvRight = (TextView) findViewById(R.id.tb_right_tv);
         ivLeft = (ImageView) findViewById(R.id.tb_left_iv);

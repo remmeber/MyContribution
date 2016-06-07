@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/checkImage"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_alignLeft="@+id/view"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/view"
+        android:layout_marginTop="@dimen/margin_little"
         android:background="@android:color/transparent"
         tools:ignore="contentDescription"
         tools:src="@mipmap/unchecked" />
@@ -29,7 +30,7 @@
         android:layout_toEndOf="@+id/checkImage"
         android:layout_toRightOf="@+id/checkImage"
         android:gravity="center_vertical"
-        android:textSize="@dimen/text_large"
+        android:textSize="@dimen/text_medium"
         tools:text="收货人:方莹" />
 
     <TextView
@@ -43,7 +44,7 @@
         android:layout_toEndOf="@id/tv_address_receiver"
         android:layout_toRightOf="@id/tv_address_receiver"
         android:gravity="center_vertical"
-        android:textSize="@dimen/text_large"
+        android:textSize="@dimen/text_medium"
         tools:text="1111111111" />
 
     <View
@@ -67,9 +68,9 @@
         android:layout_below="@+id/view"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_little"
         android:maxLines="3"
-        android:textSize="@dimen/text_large"
+        android:textSize="@dimen/text_medium"
         tools:text="收货地址:江苏省南京市江宁区秣周东路无线谷" />
 
     <TextView

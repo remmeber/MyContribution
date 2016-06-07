@@ -3,8 +3,6 @@ package com.example.rhg.outsourcing.activity;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import retrofit.Retrofit;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  *desc:测试页面
@@ -14,7 +12,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class TestActivity extends BaseActivity {
     @Override
-    protected void initView() {
+    protected void initView(View view) {
 
     }
 

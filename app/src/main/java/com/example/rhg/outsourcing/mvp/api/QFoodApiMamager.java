@@ -5,21 +5,22 @@ import android.util.Log;
 import com.example.rhg.outsourcing.application.InitApplication;
 import com.example.rhg.outsourcing.utils.NetUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.CacheControl;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * desc:service管理类
@@ -39,17 +40,32 @@ public class QFoodApiMamager {
     }
 
     private QFoodApiMamager() {
-        OkHttpClient okHttpClient = new OkHttpClient();
+        /*OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient.Builder builder= okHttpClient.newBuilder();
         File cacheFile = new File(InitApplication.getInstance().getExternalCacheDir(), "QFood_Cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
-        okHttpClient.setCache(cache);
-        okHttpClient.setReadTimeout(5000, TimeUnit.MILLISECONDS);
-        okHttpClient.interceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        builder.cache(cache);*/
+       /* HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(signingInterceptor)
+                .addInterceptor(loggingInterceptor)
+                .build();*/
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Response response = chain.proceed(chain.request());
+//                        Log.i("RHG", chain.request().body().toString());
+                        return response;
+                    }
+                }).build();
         Retrofit retrofit = new Retrofit.Builder()
 //                .client(ProgressHelper.addProgress(builder).build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(QFoodApi.BASE_URL)
+                .client(okHttpClient)
                 .build();
         this.QFoodApiService = retrofit.create(QFoodApiService.class);
     }
@@ -60,8 +76,9 @@ public class QFoodApiMamager {
 
     private final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
-        public Response intercept(Chain chain) throws IOException {
+        public Response intercept(Interceptor.Chain chain) throws IOException {
             Request request = chain.request();
+            Log.i("RHG", request.body().toString());
             if (!NetUtil.isConnected(InitApplication.getInstance())) {
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)

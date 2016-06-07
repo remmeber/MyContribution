@@ -10,13 +10,16 @@ import android.widget.ExpandableListView;
 import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 
 /**
- * Created by remember on 2016/5/15.
+ * desc:
+ * author：remember
+ * time：2016/6/7 15:58
+ * email：1013773046@qq.com
  */
 public class MyExpandListView extends ExpandableListView {
     SlideView slideView;
     int mLastX;
     int mLastY;
-    int mLastPosition=-1;
+    int mLastPosition = -1;
 
     public MyExpandListView(Context context) {
         super(context);
@@ -32,7 +35,8 @@ public class MyExpandListView extends ExpandableListView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        ExpandableListAdapter adapter = getExpandableListAdapter();
+        ExpandableListAdapter
+                adapter = getExpandableListAdapter();
         int x = (int) ev.getX();
         int y = (int) ev.getY();
         int pointPosition = pointToPosition(x, y);
@@ -48,10 +52,19 @@ public class MyExpandListView extends ExpandableListView {
             default:
                 break;
         }
+        /*boolean isConsume = false;
         if (slideView != null) {
-            slideView.onRequireTouchEvent(ev);
+            isConsume = slideView.onRequireTouchEvent(ev);
         }
-        return super.onTouchEvent(ev);
+        if (isConsume)
+            return true;
+        else super.onTouchEvent(ev);*/
+        /*if (slideView.onRequireTouchEvent(ev)) {
+            return true;
+        } else
+            return super.onTouchEvent(ev);*/
+
+        return slideView != null && (slideView.onRequireTouchEvent(ev) || super.onTouchEvent(ev));
     }
 
     /**

@@ -49,7 +49,7 @@ public class OrderActivity extends BaseActivity{
         stlOrder.setViewPager(vpOrder);*/
     }
     @Override
-    protected void initView() {
+    protected void initView(View view) {
         tb_common =(FrameLayout)findViewById(R.id.fl_tab);
         ivBack = (ImageView)findViewById(R.id.tb_left_iv);
         tvOrder = (TextView)findViewById(R.id.tb_center_tv);

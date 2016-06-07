@@ -6,9 +6,6 @@ import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
 
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;

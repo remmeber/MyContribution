@@ -11,7 +11,7 @@ public class TestBean {
      * msg : Client鏈畾涔�,Pwd鏈畾涔�,Pic鏈畾涔�,
      */
 
-    private int result;
+    /*private int result;
     private String msg;
 
     public int getResult() {
@@ -28,5 +28,14 @@ public class TestBean {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }*/
+    String msg;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String Msg) {
+        this.msg = Msg;
     }
 }

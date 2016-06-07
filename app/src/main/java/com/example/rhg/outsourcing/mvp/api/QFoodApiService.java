@@ -17,12 +17,15 @@ import com.example.rhg.outsourcing.bean.TextTypeBean;
 
 import java.io.File;
 
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -75,12 +78,12 @@ public interface QFoodApiService {
                                             @Field("Style") String style);
 
     /*upload head image*/
-    @FormUrlEncoded
-    @POST("Clientpic.php")
+    @Multipart
+    @POST("Clientpic2.php")
     //return: success error
-    Observable<TestBean> UploadHeadImage(@Field("Pic") File file,
-                                         @Field("Client") String userName,
-                                         @Field("Pwd") String pwd);
+    Observable<TestBean > UploadHeadImage(@Part MultipartBody.Part file,
+                                         @Part("Client") RequestBody userName,
+                                         @Part("Pwd") RequestBody pwd);
 
     /*get head image*/
     @POST("Pic/ClientPic/{userName}.jpg")
