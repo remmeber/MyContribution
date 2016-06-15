@@ -8,12 +8,16 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 /**
- * desc:
+ * desc: 暂时未使用
  * author：remember
  * time：2016/5/28 17:03
  * email：1013773046@qq.com
  */
 public class MySwipeLayout extends SwipeRefreshLayout {
+    int lastX;
+    int lastY;
+    boolean isHorizontalSwipe;
+
 
     public MySwipeLayout(Context context) {
         super(context);
@@ -23,10 +27,6 @@ public class MySwipeLayout extends SwipeRefreshLayout {
         super(context, attrs);
     }
 
-
-    int lastX;
-    int lastY;
-    boolean isHorizontalSwipe;
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent e) {
@@ -55,6 +55,7 @@ public class MySwipeLayout extends SwipeRefreshLayout {
         }
         lastX = currentX;
         lastY = currentY;
-        return false;
+        super.onInterceptTouchEvent(e);
+        return isHorizontalSwipe;
     }
 }

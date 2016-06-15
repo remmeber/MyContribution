@@ -22,7 +22,12 @@ import android.widget.ImageView;
 
 import com.example.rhg.outsourcing.R;
 
-
+/**
+ * desc:圆形头像
+ * author：remember
+ * time：2016/6/11 14:04
+ * email：1013773046@qq.com
+ */
 public class CircleImageView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;

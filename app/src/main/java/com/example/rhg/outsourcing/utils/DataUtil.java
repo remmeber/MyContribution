@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * 作者：rememberon 2016/6/2
- * 邮箱：1013773046@qq.com
+ * desc:日期工具类
+ * author：remember
+ * time：2016/6/11 14:10
+ * email：1013773046@qq.com
  */
 public class DataUtil {
 

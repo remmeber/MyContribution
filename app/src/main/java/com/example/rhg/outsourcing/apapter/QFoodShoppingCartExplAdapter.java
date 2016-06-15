@@ -18,10 +18,10 @@ import com.example.rhg.outsourcing.widget.SlideView;
 import java.util.List;
 
 /**
- *desc:购物车列表适配器
- *author：remember
- *time：2016/5/28 16:19
- *email：1013773046@qq.com
+ * desc:购物车列表适配器
+ * author：remember
+ * time：2016/5/28 16:19
+ * email：1013773046@qq.com
  */
 public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter implements SlideView.OnSlideListener {
     List<ShoppingCartBean> mData;
@@ -153,6 +153,10 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
     @Override
     public void onSlide(View view, int status) {
+        /*if (lastSlideView == view && status == SLIDE_STATUS_ON) {
+            lastSlideView.shrink();
+            return;
+        }*/
         if (lastSlideView != null && lastSlideView != view) {
             lastSlideView.shrink();
         }

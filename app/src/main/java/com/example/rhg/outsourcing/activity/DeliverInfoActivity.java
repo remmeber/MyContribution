@@ -29,14 +29,11 @@ import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.DataUtil;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.ToastHelper;
-import com.example.rhg.outsourcing.widget.ModifyHeadDialog;
+import com.example.rhg.outsourcing.widget.ModifyHeadImageDialog;
 import com.example.rhg.outsourcing.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 /**
  * desc:跑腿员信息页面
@@ -44,7 +41,7 @@ import okhttp3.RequestBody;
  * time：2016/5/28 16:13
  * email：1013773046@qq.com
  */
-public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialog.ChoosePicListener {
+public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImageDialog.ChoosePicListener {
     FrameLayout tb_common;
     TextView tvRight;
     ImageView ivLeft;
@@ -129,9 +126,9 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadDialo
                 finish();
                 break;
             case R.id.ci_head:
-                ModifyHeadDialog modifyHeadDialog = new ModifyHeadDialog(this);
-                modifyHeadDialog.show();
-                modifyHeadDialog.setChoosePicListener(this);
+                ModifyHeadImageDialog modifyHeadImageDialog = new ModifyHeadImageDialog(this);
+                modifyHeadImageDialog.show();
+                modifyHeadImageDialog.setChoosePicListener(this);
                 break;
         }
     }

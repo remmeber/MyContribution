@@ -3,6 +3,7 @@ package com.example.rhg.outsourcing.mvp.model;
 import android.util.Log;
 
 import com.example.rhg.outsourcing.bean.TestBean;
+import com.example.rhg.outsourcing.mvp.api.MyRequestBody;
 import com.example.rhg.outsourcing.mvp.api.QFoodApiMamager;
 
 import java.io.File;

@@ -6,7 +6,7 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 /**
- * desc:动画类
+ * desc:动画工具类
  * author：remember
  * time：2016/6/5 13:51
  * email：1013773046@qq.com

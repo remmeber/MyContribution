@@ -74,8 +74,10 @@
         tools:text="收货地址:江苏省南京市江宁区秣周东路无线谷" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_little"
         android:layout_below="@+id/tv_address_content" />
+
 
 </RelativeLayout>

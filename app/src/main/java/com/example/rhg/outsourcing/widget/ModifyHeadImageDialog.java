@@ -20,13 +20,13 @@ import com.example.rhg.outsourcing.mvp.presenter.UploadAndSaveImagePresenter;
  * time：2016/5/28 17:04
  * email：1013773046@qq.com
  */
-public class ModifyHeadDialog extends Dialog implements View.OnClickListener {
+public class ModifyHeadImageDialog extends Dialog implements View.OnClickListener {
     Context mContext;
     Button btCamera;
     Button btGallery;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
 
-    public ModifyHeadDialog(Context context) {
+    public ModifyHeadImageDialog(Context context) {
         super(context, R.style.MyDialogStyle);
         mContext = context;
     }

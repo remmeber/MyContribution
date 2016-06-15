@@ -18,6 +18,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.BufferedSink;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -55,9 +57,11 @@ public class QFoodApiMamager {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Response response = chain.proceed(chain.request());
-//                        Log.i("RHG", chain.request().body().toString());
-                        return response;
+                        Request request = chain.request();
+//                        Response response = chain.proceed(request);
+                        /*BufferedSink bufferedSink = new Buffer();
+                        Log.i("RHG", request.body().writeTo(bufferedSink));*/
+                        return chain.proceed(request);
                     }
                 }).build();
         Retrofit retrofit = new Retrofit.Builder()

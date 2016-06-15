@@ -81,7 +81,7 @@ public interface QFoodApiService {
     @Multipart
     @POST("Clientpic2.php")
     //return: success error
-    Observable<TestBean > UploadHeadImage(@Part MultipartBody.Part file,
+    Observable<TestBean> UploadHeadImage(@Part MultipartBody.Part file,
                                          @Part("Client") RequestBody userName,
                                          @Part("Pwd") RequestBody pwd);
 

@@ -13,8 +13,7 @@ import android.widget.TextView;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.QFoodShoppingCartExplAdapter;
 import com.example.rhg.outsourcing.bean.ShoppingCartBean;
-import com.example.rhg.outsourcing.widget.MyExpandListView;
-import com.example.rhg.outsourcing.widget.MySwipeLayout;
+import com.example.rhg.outsourcing.widget.SwipeDeleteExpandListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,8 @@ public class ShoppingCartFragment extends SuperFragment {
     private static final String TAG = "ShoppingCartFragment";
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
-    MySwipeLayout swipeLayout;
-    MyExpandListView expandableListView;
+    SwipeRefreshLayout swipeLayout;
+    SwipeDeleteExpandListView expandableListView;
     RelativeLayout rlShoppingCartEmpty;
     RelativeLayout rlShoppingCartPay;
     QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
@@ -80,8 +79,8 @@ public class ShoppingCartFragment extends SuperFragment {
         tbRightLL = (LinearLayout) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_right_ll);
         tbRightTV = (TextView) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_right_tv);
 
-        swipeLayout = (MySwipeLayout) view.findViewById(R.id.sl_shopping_cart);
-        expandableListView = (MyExpandListView) view.findViewById(R.id.list_shopping_cart);
+        swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.sl_shopping_cart);
+        expandableListView = (SwipeDeleteExpandListView) view.findViewById(R.id.list_shopping_cart);
         tvCountMoney = (TextView) view.findViewById(R.id.tv_count_money);
         tvCountGoods = (TextView) view.findViewById(R.id.tv_count);
         rlShoppingCartEmpty = (RelativeLayout) view.findViewById(R.id.rl_shopping_cart_empty);
@@ -93,10 +92,10 @@ public class ShoppingCartFragment extends SuperFragment {
         fl_tab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbCenterTV.setText(getResources().getString(R.string.shoppingcar));
         tbRightTV.setText("编辑");
-
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.i("RHG", "refresh is done");
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

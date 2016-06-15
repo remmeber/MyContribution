@@ -6,6 +6,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
@@ -19,20 +20,19 @@ public class SlideView extends LinearLayout {
 
     private Context mContext;
     private LinearLayout mViewContent;
-    private RelativeLayout mHolder;
+    int state = OnSlideListener.SLIDE_STATUS_OFF;
     private Scroller mScroller;
     private OnSlideListener mOnSlideListener;
+    boolean slide = false;
 
     private int mHolderWidth = 80;
-
-    private int mLastX = 0;
-    private int mLastY = 0;
     private static final int TAN = 2;
 
     public interface OnSlideListener {
         public static final int SLIDE_STATUS_OFF = 0;
         public static final int SLIDE_STATUS_START_SCROLL = 1;
         public static final int SLIDE_STATUS_ON = 2;
+        public static final int SLIDE_STATE_UPDATE = 3;
 
         /**
          * @param view   current SlideView
@@ -64,6 +64,16 @@ public class SlideView extends LinearLayout {
                         .getDisplayMetrics()));
     }
 
+    /**
+     * desc:设置滑动的宽度
+     * author：remember
+     * time：2016/6/11 14:12
+     * email：1013773046@qq.com
+     */
+    public void setmHolderWidth(int mHolderWidth) {
+        this.mHolderWidth = mHolderWidth;
+    }
+
     public void setButtonText(CharSequence text) {
         ((TextView) findViewById(R.id.delete)).setText(text);
     }
@@ -76,58 +86,89 @@ public class SlideView extends LinearLayout {
         mOnSlideListener = onSlideListener;
     }
 
+    public OnSlideListener getmOnSlideListener() {
+        return mOnSlideListener;
+    }
+
+    public int getState() {
+        return state;
+    }
+
     public void shrink() {
         if (getScrollX() != 0) {
             this.smoothScrollTo(0, 0);
+            state = OnSlideListener.SLIDE_STATUS_OFF;
+            slide = false;
         }
     }
 
-    private boolean isConsume;
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
 
-    public boolean onRequireTouchEvent(MotionEvent event) {
+        return false;
+    }
+
+    private boolean isConsume;
+    int downX;
+    int downY;
+
+    /*public boolean onRequireTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
         int scrollX = getScrollX();
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
+                downX = x;
+                downY = y;
+                isConsume = false;
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
                 }
                 if (mOnSlideListener != null) {
-                    mOnSlideListener.onSlide(this,
-                            OnSlideListener.SLIDE_STATUS_START_SCROLL);
+                    mOnSlideListener.onSlide(this, state);
+                }
+                if (state == OnSlideListener.SLIDE_STATUS_ON) {
+                    shrink();
                 }
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
-                int deltaX = x - mLastX;
-                int deltaY = y - mLastY;
-                if (Math.abs(deltaX) < Math.abs(deltaY) * TAN) {
-                    isConsume = false;
+                int deltaX = x - downX;
+                int deltaY = y - downY;
+//                    Log.i("RHG", "downX:" + Math.abs(deltaX) + ",downY:" + Math.abs(deltaY));
+                if (Math.abs(deltaX) * TAN < Math.abs(deltaY)) {
+                    isConsume = (state == OnSlideListener.SLIDE_STATUS_START_SCROLL);
+                   *//* if (state == OnSlideListener.SLIDE_STATUS_START_SCROLL)
+                        isConsume = true;
+                    else
+                        isConsume = false;*//*
                     break;
-                }
-                int newScrollX = scrollX - deltaX;
-                if (deltaX != 0) {
-                    if (newScrollX < 0) {
-                        newScrollX = 0;
-                    } else if (newScrollX > mHolderWidth) {
-                        newScrollX = mHolderWidth;
+                } else if (Math.abs(deltaY) * TAN < Math.abs(deltaX)) {
+                    state = OnSlideListener.SLIDE_STATUS_START_SCROLL;
+                    int newScrollX = scrollX - deltaX;
+                    if (deltaX != 0) {
+                        if (newScrollX < 0) {
+                            newScrollX = 0;
+                        } else if (newScrollX > mHolderWidth) {
+                            newScrollX = mHolderWidth;
+                        }
+                        this.scrollTo(newScrollX, 0);
                     }
-                    this.scrollTo(newScrollX, 0);
+                    isConsume = true;
                 }
-                isConsume = true;
                 break;
             }
+            case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP: {
                 int newScrollX = 0;
-                if (scrollX - mHolderWidth * 0.75 > 0) {
+                if (scrollX - mHolderWidth * 0.4 > 0) {
                     newScrollX = mHolderWidth;
                 }
                 this.smoothScrollTo(newScrollX, 0);
                 if (mOnSlideListener != null) {
                     mOnSlideListener.onSlide(this,
-                            newScrollX == 0 ? OnSlideListener.SLIDE_STATUS_OFF
+                            state = newScrollX == 0 ? OnSlideListener.SLIDE_STATUS_OFF
                                     : OnSlideListener.SLIDE_STATUS_ON);
                 }
                 break;
@@ -135,10 +176,39 @@ public class SlideView extends LinearLayout {
             default:
                 break;
         }
-        mLastX = x;
-        mLastY = y;
-        Log.i("RHG", "return:" + isConsume);
+        downX = x;
+        downY = y;
         return isConsume;
+    }*/
+
+    public void onRequireTouchEvent(MotionEvent event, MotionEvent event1) {
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        downX = (int) event1.getX();
+        downY = (int) event1.getY();
+        int scrollX = getScrollX();
+
+
+        int deltaX = x - downX;
+
+        int newScrollX = scrollX - deltaX;
+        if (deltaX != 0) {
+            if (newScrollX < 0) {
+                newScrollX = 0;
+            } else if (newScrollX > mHolderWidth) {
+                newScrollX = mHolderWidth;
+            }
+            this.scrollTo(newScrollX, 0);
+        }
+        if (scrollX - mHolderWidth * 0.4 > 0) {
+            newScrollX = mHolderWidth;
+        } else newScrollX = 0;
+        this.smoothScrollTo(newScrollX, 0);
+        if (mOnSlideListener != null) {
+            mOnSlideListener.onSlide(this,
+                    state = newScrollX == 0 ? OnSlideListener.SLIDE_STATUS_OFF
+                            : OnSlideListener.SLIDE_STATUS_ON);
+        }
     }
 
     private void smoothScrollTo(int destX, int destY) {
@@ -156,5 +226,4 @@ public class SlideView extends LinearLayout {
             postInvalidate();
         }
     }
-
 }

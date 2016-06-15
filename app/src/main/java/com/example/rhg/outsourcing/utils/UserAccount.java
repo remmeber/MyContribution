@@ -10,7 +10,10 @@ import android.text.TextUtils;
 import com.google.android.gms.auth.GoogleAuthUtil;
 
 /**
- * Created by rhg on 2016/5/24.
+ * desc:用户账户类，作为参考 TODO 未使用
+ * author：remember
+ * time：2016/6/11 14:05
+ * email：1013773046@qq.com
  */
 public class UserAccount {
 
