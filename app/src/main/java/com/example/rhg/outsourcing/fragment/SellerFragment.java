@@ -34,7 +34,6 @@ public class SellerFragment extends SuperFragment implements View.OnClickListene
 
     FrameLayout fl_tab;
     TextView tbCenterTV;
-    LinearLayout tbRightLL;
     ImageView tbRightIV;
 
     ViewPager viewPager;
@@ -74,7 +73,6 @@ public class SellerFragment extends SuperFragment implements View.OnClickListene
     protected void initView(View view) {
         fl_tab = (FrameLayout) view.findViewById(R.id.fl_tab);
         tbCenterTV = (TextView) view.findViewById(R.id.tb_center_tv);
-        tbRightLL = (LinearLayout) view.findViewById(R.id.tb_right_ll);
         tbRightIV = (ImageView) view.findViewById(R.id.tb_right_iv);
         tabLayout = (SlidingTabLayout) view.findViewById(R.id.tabLayout);
         viewPager = (ViewPager) view.findViewById(R.id.sellerViewPager);
@@ -84,7 +82,8 @@ public class SellerFragment extends SuperFragment implements View.OnClickListene
     protected void initData() {
         tbCenterTV.setText(getResources().getString(R.string.allstore));
         fl_tab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
-        tbRightLL.setOnClickListener(this);
+        tbRightIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_black));
+        tbRightIV.setOnClickListener(this);
         QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getChildFragmentManager(), fragments,
                 AppConstants.SELL_TITLES, viewPager, tabLayout);
         qFoodVpAdapter.setOnExtraPageChangeListener(new QFoodVpAdapter.OnExtraPageChangeListener() {

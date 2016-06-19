@@ -3,20 +3,23 @@ package com.example.rhg.outsourcing.bean;
 import com.example.rhg.outsourcing.widget.SlideView;
 
 /**
- * 作者：rememberon 2016/6/5
- * 邮箱：1013773046@qq.com
+ *desc:
+ *author：remember
+ *time：2016/6/17 20:11
+ *email：1013773046@qq.com
  */
 public class AddressLocalBean extends AddressBean {
-    SlideView slideView;
 
     boolean isChecked;
 
-    public SlideView getSlideView() {
-        return slideView;
+    private String CreateTime;
+
+    public String getCreateTime() {
+        return CreateTime;
     }
 
-    public void setSlideView(SlideView slideView) {
-        this.slideView = slideView;
+    public void setCreateTime(String createTime) {
+        CreateTime = createTime;
     }
 
     public boolean isChecked() {

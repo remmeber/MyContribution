@@ -13,18 +13,10 @@ public class AddressBean {
      * Address :
      */
 
-    private String CreateTime;
     private String Name;
     private String Phone;
     private String Address;
 
-    public String getCreateTime() {
-        return CreateTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        CreateTime = createTime;
-    }
 
     public String getName() {
         return Name;

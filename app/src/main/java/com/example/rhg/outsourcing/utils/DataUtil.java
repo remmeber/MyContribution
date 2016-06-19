@@ -12,10 +12,10 @@ import java.util.Locale;
  */
 public class DataUtil {
 
-    public static String getData() {
+    public static String getCurrentTime() {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyyMMdd_HHmmss", Locale.ENGLISH);
+                "yyyyMMddHHmmss", Locale.ENGLISH);
         return dateFormat.format(date);
     }
 /*

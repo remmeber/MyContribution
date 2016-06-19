@@ -13,7 +13,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -56,10 +55,12 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
 
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
     String imageStr = "";
+    String userID = "19216801";
+    String passWord = "123";
 
 
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutResId() {
         return R.layout.deliver_info_activity;
     }
 
@@ -82,7 +83,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
         uploadAndSaveImagePresenter = new UploadAndSaveImagePresenterImpl(this);
         tb_common.setBackgroundResource(R.color.colorActiveGreen);
         tvRight.setText("编辑");
-        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_blackp));
+        ivLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         ivLeft.setOnClickListener(this);
 
         headView.setOnClickListener(this);
@@ -96,8 +97,9 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
             ImageLoader.getInstance().displayImage(imageStr, headView);
         } else {
             imageStr = QFoodApi.BASE_URL + "Pic/ClientPic/" +
-                    /*AccountUtil.getInstance().getUserID()*/"19216801" + ".jpg";
+                    /*AccountUtil.getInstance().getUserID()*/userID + ".jpg";
             ImageLoader.getInstance().displayImage(imageStr, headView);
+            AccountUtil.getInstance().setHeadImageUrl(imageStr);
         }
          /*}else {
             ToastHelper.getInstance()._toast("请登录");
@@ -151,15 +153,10 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
 
     @Override
     final public void chooseFromCamera() {
-// create Intent to take a picture and return control to the calling application
         Intent intentFromCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        fileUri = Uri.fromFile(new File(AppConstants.f_Path, DataUtil.getData())); // create a file to save the image
+        fileUri = Uri.fromFile(new File(AppConstants.f_Path, DataUtil.getCurrentTime())); // create a file to save the image
         intentFromCamera.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
-
-        // start the image capture Intent
         startActivityForResult(intentFromCamera, AppConstants.CODE_CAMERA_REQUEST);
-
     }
 
     @Override
@@ -186,14 +183,15 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
                 Bitmap photo = data.getExtras().getParcelable("data");
                 Uri _uri = ImageUtils.getImageUri(photo);
                 /*TODO 将图片传服务器，服务器返回相应的URL，保存本地*/
-//                ImageLoader.getInstance().displayImage(_uri.toString(), headView);
-                Log.i("RHG", _uri.getPath());
+                ImageLoader.getInstance().displayImage(_uri.toString(), headView);
                 File _file = new File(_uri.getPath());
                 /*if (_file.exists()) {
                     Log.i("RHG", "文件存在" + _file.getName());
                 } else
                     Log.i("RHG", "文件不存在");*/
-                uploadAndSaveImagePresenter.UploadAndSaveImage(_file, "19216801", "123");
+                uploadAndSaveImagePresenter.UploadAndSaveImage(_file, userID, passWord);
+                ImageLoader.getInstance().clearMemoryCache();
+                ImageLoader.getInstance().clearDiskCache();
                 break;
         }
     }

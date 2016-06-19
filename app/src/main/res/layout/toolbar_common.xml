@@ -5,7 +5,8 @@
     android:id="@+id/fl_tab"
     android:layout_width="match_parent"
     android:layout_height="81dp"
-    tools:background="@color/colorActiveGreen">
+    tools:background="@color/colorActiveGreen"
+    tools:ignore="contentDescription">
 
     <TextView
         android:id="@+id/tb_center_tv"
@@ -20,10 +21,10 @@
 
     <ImageView
         android:id="@+id/tb_left_iv"
-        android:layout_width="36dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
-        tools:src="@mipmap/ic_chevron_left_blackp" />
+        tools:src="@drawable/ic_chevron_left_black" />
 
     <LinearLayout
         android:id="@+id/tb_right_ll"
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            tools:src="@mipmap/ic_place_white" />
+            tools:src="@drawable/ic_location" />
 
         <TextView
             android:id="@+id/tb_right_tv"
@@ -51,5 +52,25 @@
             android:textSize="@dimen/toolbar_text_large"
             tools:text="修改" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/search_et"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/margin_little"
+        android:layout_marginLeft="@dimen/margin_huge"
+        android:layout_marginRight="@dimen/margin_little"
+        android:layout_marginStart="@dimen/margin_huge"
+        android:layout_marginTop="35dp"
+        android:background="@null"
+        android:drawableEnd="@drawable/ic_search_black"
+        android:drawablePadding="@dimen/margin_little"
+        android:drawableRight="@drawable/ic_search_black"
+        android:hint="@string/searchActivityHint"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        android:textColorHint="@color/colorTextOrder"
+        android:visibility="gone" />
 
 </FrameLayout>

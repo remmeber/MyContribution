@@ -11,10 +11,20 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.AddressActivity;
 import com.example.rhg.outsourcing.activity.DeliverInfoActivity;
+import com.example.rhg.outsourcing.activity.NewAddressActivity;
 import com.example.rhg.outsourcing.activity.OrderActivity;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.impl.SignInListener;
+import com.example.rhg.outsourcing.third.UmengUtil;
 import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.utils.L;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
 
 /**
  * desc:我的fm
@@ -48,6 +58,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
     TextView addressModify;
 
     boolean isSignIn;
+    UMShareAPI mShareAPI;
 
     public MyFragment() {
 
@@ -182,7 +193,6 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), OrderActivity.class));
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
-//                Toast.makeText(getContext(), R.string.workerInfo, Toast.LENGTH_SHORT).show();
 //                if (isSignIn)
                 startActivity(new Intent(getContext(), DeliverInfoActivity.class));
                 /*else
@@ -192,7 +202,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 Toast.makeText(getContext(), R.string.modifyHeader, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.userName://TODO 点击登录
-                Toast.makeText(getContext(), R.string.userSignIn, Toast.LENGTH_SHORT).show();
+                doLogin();
                 break;
             case 0://TODO 待付款
                 Toast.makeText(getContext(), R.string.myPay, Toast.LENGTH_SHORT).show();
@@ -213,18 +223,45 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.profileAddress://TODO 我的地址右箭头
-                /*Toast.makeText(getContext(), R.string.addrInfo, Toast.LENGTH_SHORT).show();
-                break;*/
-            case 6://TODO 常用
-                /*Toast.makeText(getContext(), R.string.addrCustome, Toast.LENGTH_SHORT).show();
-                break;*/
-            case 7://TODO 添加
-//                break;
-            case 8://TODO 修改
+                /*获取所有地址*/
                 intent.setClass(getActivity(), AddressActivity.class);
                 startActivity(intent);
-//                Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
+                break;
+            case 6://TODO 常用
+                break;
+            case 7://TODO 添加
+                intent.setClass(getActivity(), NewAddressActivity.class);
+                startActivity(intent);
+                break;
+            case 8://TODO 修改
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        signUtil.onActivityResult(requestCode, resultCode, data);
+    }
+
+    UmengUtil signUtil = null;
+
+    /*TODO 登录*/
+    private void doLogin() {
+        signUtil = new UmengUtil(getActivity());
+        signUtil.SignIn(SHARE_MEDIA.QQ, new SignInListener() {
+            @Override
+            public void signSuccess(Map<String, String> infoMap) {
+                userName.setText(infoMap.get(AppConstants.USERNAME_QQ));
+                ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_QQ),
+                        userHeader);
+                signUtil.setActivity(null);
+            }
+
+            @Override
+            public void signFail(String errorMessage) {
+                ToastHelper.getInstance()._toast(errorMessage);
+            }
+        });
     }
 }

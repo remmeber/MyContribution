@@ -28,6 +28,8 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     public static final String Q_SHOPPING_CART_TABLE = "q_shopping_cart_table";
     /*地址表*/
     public static final String Q_ADDRESS_TABLE = "q_address_table";
+    /*搜索历史记录表*/
+    public static final String Q_SEARCH_HISTORY_TABLE = "q_search_history_table";
     /*收藏表*/
 //    public static final String Q_LIKE = "Q_like";
 
@@ -67,6 +69,13 @@ public class AccountDBHelper extends SQLiteOpenHelper {
                 + ShoppingCartBean.KEY_NUM + " text"
                 + ");";
         db.execSQL(CREATE_TB_SHOPPING_CART);
+
+        String CREATE_TB_SEARCH_HISTORY = "create table " + Q_SEARCH_HISTORY_TABLE + "("
+                + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "searched text,"
+                + "num INTEGER"
+                + ");";
+        db.execSQL(CREATE_TB_SEARCH_HISTORY);
     }
 
     @Override

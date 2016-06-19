@@ -76,6 +76,14 @@
             android:name=".activity.AddressActivity"
             android:configChanges="orientation|screenSize" />
 
+        <activity
+            android:name=".activity.NewAddressActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:configChanges="orientation|screenSize" />
+
+
         <!-- alipay sdk begin -->
         <activity
             android:name=".pay.PayDemoActivity"
@@ -95,10 +103,55 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
+        <!--微信-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--微信-->
+
+        <!--QQ-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105473854" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--QQ-->
+
+        <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="ijOaztzOP7BulWMvV2ViIgqXMKLeC6UF" />
-        //TODO:开发者申请的key
+        <!--百度地图-->
+        <!--Umeng KEY-->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.UMDefault" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5760ff5be0f55a3d1f0010f1" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="WB" />
+        <!--Umeng KEY-->
+
+        <!--TODO:开发者申请的key-->
 
         <meta-data
             android:name="com.google.android.gms.version"

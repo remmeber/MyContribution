@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:src="@drawable/ic_user_icon" />
+        android:src="@drawable/ic_user" />
 
     <TextView
         android:id="@+id/id_user_name"

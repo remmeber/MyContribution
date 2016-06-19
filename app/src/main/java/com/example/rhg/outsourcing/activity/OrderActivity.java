@@ -30,7 +30,7 @@ public class OrderActivity extends BaseActivity{
     ViewPager vpOrder;
 
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutResId() {
         return R.layout.myorder_layout;
     }
 
@@ -43,7 +43,8 @@ public class OrderActivity extends BaseActivity{
         fragments.add(new AllOrderFragment());
         fragments.add(new AllOrderFragment());
         fragments.add(new AllOrderFragment());
-        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(),fragments, AppConstants.ORDER_TITLES,
+        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(),fragments,
+                AppConstants.ORDER_TITLES,
                 vpOrder,stlOrder);
         /*vpOrder.setAdapter(QFoodVpAdapter);
         stlOrder.setViewPager(vpOrder);*/

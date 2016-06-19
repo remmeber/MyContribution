@@ -3,8 +3,10 @@ package com.example.rhg.outsourcing.bean;
 import java.util.List;
 
 /**
- * 作者：rememberon 2016/6/4
- * 邮箱：1013773046@qq.com
+ *desc:
+ *author：remember 
+ *time：2016/6/17 14:48
+ *email：1013773046@qq.com
  */
 public class UserBean {
 

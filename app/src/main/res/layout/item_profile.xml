@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/userprofile"
     android:layout_width="match_parent"
     android:layout_height="80dp"
@@ -22,18 +23,18 @@
             android:background="@color/colorActiveGreen"
             android:gravity="center"
             android:minHeight="0dp"
-            android:text="dddd"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="@dimen/text_big"
+            tools:text="dddd" />
 
         <ImageView
             android:id="@+id/profileForward"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_chevron_right_black_48dp" />
+            android:src="@drawable/ic_chevron_right_black" />
 
         <View
             android:id="@+id/headerline"
@@ -62,9 +63,9 @@
             android:layout_marginStart="32dp"
             android:background="@drawable/tv_search_bg"
             android:gravity="center"
-            android:text=" left "
             android:textColor="@color/colorTextOrder"
-            android:textSize="12dp" />
+            android:textSize="@dimen/text_small"
+            tools:text=" left " />
 
         <TextView
             android:id="@+id/profileDealcenter"
@@ -73,9 +74,9 @@
             android:layout_centerInParent="true"
             android:background="@drawable/tv_search_bg"
             android:gravity="center"
-            android:text=" center "
             android:textColor="@color/colorTextOrder"
-            android:textSize="12dp" />
+            android:textSize="@dimen/text_medium"
+            tools:text=" center " />
 
         <TextView
             android:id="@+id/profileDealright"
@@ -88,8 +89,8 @@
             android:layout_marginRight="32dp"
             android:background="@drawable/tv_search_bg"
             android:gravity="center"
-            android:text=" right "
             android:textColor="@color/colorTextOrder"
-            android:textSize="12dp" />
+            android:textSize="@dimen/text_medium"
+            tools:text=" right " />
     </RelativeLayout>
 </LinearLayout>

@@ -3,12 +3,14 @@ package com.example.rhg.outsourcing;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.rhg.outsourcing.activity.BaseActivity;
+import com.example.rhg.outsourcing.activity.SearchActivity;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.fragment.HomeFragment;
 import com.example.rhg.outsourcing.fragment.MyFragment;
@@ -52,9 +54,9 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
     //---------------------------------------------------------------------------------------------
 
     //for searchView
-    private SearchView searchView;
+   /* private SearchView searchView;
     private SearchHistoryTable mSearchHistory;
-    private List<SearchItem> mSuggestionsList;
+    private List<SearchItem> mSuggestionsList;*/
     //BottomNavigationBar
     BottomNavigationBar bottomNavigation;
 
@@ -66,7 +68,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
 
     @Override
     protected void initView(View view) {
-        searchView = (SearchView) findViewById(R.id.searchView);
+//        searchView = (SearchView) findViewById(R.id.searchView);
         bottomNavigation = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
     }
 
@@ -83,7 +85,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
                 fragments, R.id.content_fragment);
         //TODO--------------------------------------------------------------------------------------
 
-        //TODO--------------------搜索框的一些配置操作-----------------------------------------------
+        /*//TODO--------------------搜索框的一些配置操作-----------------------------------------------
         mSearchHistory = new SearchHistoryTable(this);
         searchView.setVersion(SearchCodes.VERSION_MENU_ITEM);
         searchView.setStyle(SearchCodes.STYLE_MENU_ITEM_CLASSIC);
@@ -91,12 +93,12 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
         searchView.setDivider(false);
         searchView.setVoice(false);
         searchView.setAnimationDuration(300);
-        searchView.setShadowColor(ContextCompat.getColor(this, R.color.searchShadow));
+        searchView.setShadowColor(getResources().getColor(R.color.white));
 //        searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchView.hide(false);
+//                searchView.hide(false);
                 mSearchHistory.addItem(new SearchItem(query));
                 return false;
             }
@@ -109,14 +111,12 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
         searchView.setOnSearchViewListener(new SearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-//                fab.hide();
-                //TODO show searchView
+
             }
 
             @Override
             public void onSearchViewClosed() {
-//                fab.show();
-                //TODO close searchView
+
             }
         });
         mSuggestionsList = new ArrayList<>();
@@ -125,13 +125,14 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
         mSearchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                searchView.hide(false);
+//                searchView.close(false);
                 TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
                 CharSequence text = textView.getText();
                 mSearchHistory.addItem(new SearchItem(text));
             }
         });
         searchView.setAdapter(mSearchAdapter);
+        showSearchViwe();*/
         //TODO--------------------------------------------------------------------------------------
 
         //TODO---------------------底部导航栏=-------------------------------------------------------
@@ -143,9 +144,9 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
                 .setInActiveColor(R.color.colorInActive)
                 .setBarBackgroundColor(R.color.colorBackground);
         bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_home, R.string.Home))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_shop, "商家"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_shop, "商家"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_user, "我的"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_shopping_car, "购物车"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_shopping_car_black, "购物车"))
                 .initialise();
         bottomNavigation.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             //当item被选中状态
@@ -177,22 +178,26 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
     }
 
     //----------------------------单独呼出搜索页面--------------------------------------------------
-    private void showSearchViwe() {
+   /* private void showSearchViwe() {
         mSuggestionsList.clear();
         mSuggestionsList.addAll(mSearchHistory.getAllItems());
         mSuggestionsList.add(new SearchItem("Google"));
         mSuggestionsList.add(new SearchItem("Android"));
         searchView.show(true);
-    }
+//        searchView.open(true);
+    }*/
     //--------------------------------------------------------------------------------------------
     //------------------------回调显示统一区--------------------------------------------------------
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("RHG", "resultCode: " + resultCode + "data");
         if (resultCode == AppConstants.BACK_WITH_DELETE) {//// TODO: 商品详情返回购物车
             bottomNavigation.selectTab(data.getExtras().getInt(AppConstants.KEY_DELETE, 0), true);
+            return;
         }
+        fragmentController.getCurrentFM().onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -205,6 +210,6 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
 
     @Override
     public void doSearch() {
-        showSearchViwe();
+        startActivity(new Intent(this, SearchActivity.class));
     }
 }

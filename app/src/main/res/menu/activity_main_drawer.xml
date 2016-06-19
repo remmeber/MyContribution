@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+   <!-- <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_ecit_password"
             android:icon="@drawable/ic_ecit_password"
@@ -20,12 +20,12 @@
             android:title="@string/action_update" />
         <item
             android:id="@+id/nav_exit"
-            android:icon="@drawable/ic_exit"
+            android:icon="@drawable/ic_shop"
             android:title="@string/action_exit" />
         <item
             android:id="@+id/nav_about_us"
             android:icon="@drawable/ic_about_us"
             android:title="@string/about_us" />
-    </group>
+    </group>-->
 
 </menu>

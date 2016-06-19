@@ -133,12 +133,9 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
 
     @Override
     protected void initData() {
-        ImageUtils.TintFill(tlLeftIV, getResources().getDrawable(R.mipmap.ic_place_white)
-                , getResources().getColor(R.color.colorActiveGreen));
-        ImageUtils.TintFill(tlCenterIV, getResources().getDrawable(R.mipmap.ic_search_white)
-                , getResources().getColor(R.color.colorActiveGreen));
-        ImageUtils.TintFill(tlRightIV, getResources().getDrawable(R.mipmap.ic_search_white)
-                , getResources().getColor(R.color.colorActiveGreen));
+        tlLeftIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
+        tlCenterIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_green));
+        tlRightIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_green));
         tlLeftRL.setOnClickListener(this);
         tlCenterTV.setOnClickListener(this);
         tlCenterIV.setOnClickListener(this);

@@ -1,23 +1,16 @@
 package com.example.rhg.outsourcing.utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.constants.AppConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOError;
 import java.io.IOException;
 
 /**
@@ -47,7 +40,7 @@ public class ImageUtils {
         if (!file.exists()) {
             file.mkdir();
         }
-        File _file = new File(AppConstants.f_Path, DataUtil.getData() + ".png");
+        File _file = new File(AppConstants.f_Path, DataUtil.getCurrentTime() + ".png");
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(_file);

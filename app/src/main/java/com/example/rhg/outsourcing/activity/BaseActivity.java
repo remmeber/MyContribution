@@ -1,26 +1,23 @@
 package com.example.rhg.outsourcing.activity;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
-import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.application.InitApplication;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.locationservice.LocationService;
 import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.view.BaseView;
-import com.example.rhg.outsourcing.utils.NetUtil;
+import com.example.rhg.outsourcing.utils.KeyBoardUtil;
 import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
@@ -39,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    boolean isFirstLoc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,13 +48,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
         dataReceive(getIntent());
-        firstLoc();
+        isFirstLoc = isNeedFirstLoc();
+        startLoc();
         loadingData();
         initView(getRootView(this));
         initData();
 //        bindData(loadData());
     }
 
+    protected boolean isNeedFirstLoc() {
+        return false;
+    }
+
+    /*TODO 获取根布局*/
     View getRootView(Activity context) {
         return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);
     }
@@ -65,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
 
-    private void firstLoc() {
+    private void startLoc() {
         if ((locationService = GetMapService()) != null) {
             if ((mLocationListener = getLocationListener()) != null) {
                 locationService.registerListener(mLocationListener);
@@ -79,15 +83,52 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter filter = new IntentFilter();
+        /*IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_NETWORK_CHANGE);
         filter.addAction(ACTION_PUSH_DATA);
         filter.addAction(ACTION_NEW_VERSION);
-        registerReceiver(receiver, filter);
+        registerReceiver(receiver, filter);*/
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View focusView = getCurrentFocus();
+            if (isShouldHideKeyBoard(focusView, ev)) {
+                KeyBoardUtil.closeKeybord((EditText) focusView, this);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private boolean isShouldHideKeyBoard(View focusView, MotionEvent ev) {
+        if (focusView != null && focusView instanceof EditText) {
+            int[] p = {0, 0};
+            focusView.getLocationInWindow(p);
+            int left = p[0];
+            int top = p[1];
+            int bottom = top + focusView.getHeight();
+            int right = left + focusView.getWidth();
+            return ev.getX() < left || ev.getX() > right || ev.getY() < top || ev.getY() > bottom;
+        } else return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (null != this.getCurrentFocus() && this.getCurrentFocus() instanceof EditText) {
+
+            return KeyBoardUtil.closeKeybord((EditText) this.getCurrentFocus(), this);
+        }
+        return super.onTouchEvent(event);
+    }
 
     public void reStartLocation() {
+        if (isFirstLoc) {
+            startLoc();
+            isFirstLoc = false;
+            return;
+        }
         if (locationService == null)
             locationService = GetMapService();
         if (mLocationListener == null) {
@@ -105,8 +146,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         return null;
     }
 
-    public void getLocation(LocationService locationService, MyLocationListener mLocationListener) {
-    }
+    /*public void getLocation(LocationService locationService, MyLocationListener mLocationListener) {
+    }*/
 
 
     /*默认不定位，如果需要定位，子类需要重写该方法*/
@@ -130,7 +171,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiver);
+//        unregisterReceiver(receiver);
     }
 
     @Override
@@ -140,7 +181,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         ButterKnife.unbind(this);
     }
 
-    BroadcastReceiver receiver = new BroadcastReceiver() {
+    /*BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -155,9 +196,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
                 //TODO 版本发生变化
             }
         }
-    };
+    };*/
 
-    public int getLayoutResId() {
+    protected int getLayoutResId() {
         return 0;
     }
 

@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 
 import com.example.rhg.outsourcing.bean.AddressBean;
+import com.example.rhg.outsourcing.bean.AddressLocalBean;
 import com.example.rhg.outsourcing.bean.ShoppingCartBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.utils.ToastHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +106,7 @@ public class AccountDao {
         close();
     }
 
-    public void saveAddress(AddressBean addressBean) {
+    public void saveAddress(AddressLocalBean addressBean) {
         if (addressBean == null) {
             return;
         }
@@ -132,7 +134,6 @@ public class AccountDao {
         db = AccountDBHelper.getInstance().getReadableDatabase();
         db.delete(Table, null, null);
         close();
-
     }
 
     /*public void deleteItemList(String Table, List<String> itemList) {
@@ -215,8 +216,8 @@ public class AccountDao {
         return mList;
     }
 
-    public List<AddressBean> getAddressList() {
-        List<AddressBean> addressBeanList = new ArrayList<>();
+    public List<AddressLocalBean> getAddressList() {
+        List<AddressLocalBean> addressBeanList = new ArrayList<>();
         String[] columns = new String[]{
                 AppConstants.ADDRESS_CREATE_TIME,
                 AppConstants.NAME_FOR_ADDRESS,
@@ -228,7 +229,7 @@ public class AccountDao {
                 null, null);
         if (cursor.moveToFirst()) {
             do {
-                AddressBean addressBean = new AddressBean();
+                AddressLocalBean addressBean = new AddressLocalBean();
                 String time = cursor.getString(0);
                 String Name = cursor.getString(1);
                 String phone = cursor.getString(2);
@@ -250,6 +251,55 @@ public class AccountDao {
         }
         cursor.close();
         return addressBeanList;
+    }
+
+    public List<String> queryHistory(String searchContent) {
+        if (searchContent == null) {
+            return null;
+        }
+        List<String> mList = new ArrayList<>();
+        db = AccountDBHelper.getInstance().getReadableDatabase();
+        cursor = db.query(AccountDBHelper.Q_SEARCH_HISTORY_TABLE, new String[]{"searched"}, "searched like ?",
+                new String[]{"%" + searchContent + "%"}, null, null, null);
+        if (cursor.moveToLast()) {
+            do {
+                String historyContent = cursor.getString(0);
+                if (historyContent != null && !"".equals(historyContent)) {
+                    mList.add(historyContent);
+                }
+            } while (cursor.moveToPrevious());
+        }
+        cursor.close();
+        return mList;
+    }
+
+    public List<String> getSearchHistoryList() {
+        db = AccountDBHelper.getInstance().getReadableDatabase();
+        List<String> mList = new ArrayList<>();
+        Cursor cursor = db.query(AccountDBHelper.Q_SEARCH_HISTORY_TABLE,
+                new String[]{"searched"},
+                null, null, null, null, null);
+        if (cursor.moveToLast()) {
+            do {
+                String productID = cursor.getString(0);
+                if (productID != null && !"".equals(productID)) {
+                    mList.add(productID);
+                }
+            } while (cursor.moveToPrevious());
+        }
+        cursor.close();
+        return mList;
+    }
+
+    public void saveSearchHistory(String historyContent) {
+        if (historyContent == null) {
+            return;
+        }
+        db = AccountDBHelper.getInstance().getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("searched", historyContent);
+        ToastHelper.getInstance()._toast("插入第" + db.insert(AccountDBHelper.Q_SEARCH_HISTORY_TABLE, null, values));
+        close();
     }
 
 

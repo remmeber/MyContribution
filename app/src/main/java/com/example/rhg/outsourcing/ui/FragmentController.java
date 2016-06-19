@@ -5,33 +5,33 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 /**
- *desc:fm控制类
- *author：remember
- *time：2016/5/28 17:02
- *email：1013773046@qq.com
+ * desc:fm控制类
+ * author：remember
+ * time：2016/5/28 17:02
+ * email：1013773046@qq.com
  */
 public class FragmentController {
     private static final String TAG = "FragmentController";
-    public  FragmentManager fm;
+    public FragmentManager fm;
     private Fragment[] fragments;
     private int showMark = 0;
 
-    public FragmentController(FragmentManager fm ,Fragment[] fragments,int id) {
+    public FragmentController(FragmentManager fm, Fragment[] fragments, int id) {
         this.fm = fm;
         this.fragments = fragments;
         initFragment(id);
     }
 
-    public  FragmentManager getFm() {
+    public FragmentManager getFm() {
         return fm;
     }
 
     //TODO ---------------------初始化fragment------------------------------------------------------
     private void initFragment(int id) {
         FragmentTransaction ft = fm.beginTransaction();
-        for (int i=0;i<fragments.length;i++){
-            ft.add(id,fragments[i],fragments[i].getClass().getName());
-            if(i==0)
+        for (int i = 0; i < fragments.length; i++) {
+            ft.add(id, fragments[i], fragments[i].getClass().getName());
+            if (i == 0)
                 ft.show(fragments[i]);
             else ft.hide(fragments[i]);
         }
@@ -64,5 +64,9 @@ public class FragmentController {
         //TODO -------------------------------------------------------------------------------------
         showMark = position;
         transaction.commitAllowingStateLoss();
+    }
+
+    public Fragment getCurrentFM() {
+        return fragments[showMark];
     }
 }

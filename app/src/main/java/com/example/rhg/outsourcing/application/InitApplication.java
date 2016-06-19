@@ -21,6 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.umeng.socialize.PlatformConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -32,6 +33,11 @@ import java.util.HashMap;
  * email：1013773046@qq.com
  */
 public class InitApplication extends Application {
+    public final static String QQID = "1105473854";
+    public final static String QQKEY = "r8LhuDPffnpByTby";
+    /*TODO WX需要加入*/
+    public final static String WXID = "";
+    public final static String WXKEY = "";
     private static InitApplication initApplication;
     public static boolean isNetworkAvailable;
     private HashMap<String, WeakReference<BaseActivity>> activityList = new HashMap<String, WeakReference<BaseActivity>>();
@@ -71,7 +77,6 @@ public class InitApplication extends Application {
     }
 
     public void exit() {
-
         for (String key : activityList.keySet()) {
             WeakReference<BaseActivity> activity = activityList.get(key);
             if (activity != null && activity.get() != null) {
@@ -104,12 +109,24 @@ public class InitApplication extends Application {
         initDBHelper();
         initToast();
         initImageLoader();
+        thirdConfig();
     }
 
+    /**
+     * desc:第三方配置
+     * author：remember
+     * time：2016/6/15 22:06
+     * email：1013773046@qq.com
+     */
+    private void thirdConfig() {
+        PlatformConfig.setWeixin(WXID, WXKEY);
+        PlatformConfig.setQQZone(QQID, QQKEY);
+    }
+
+    /***
+     * 初始化定位sdk，建议在Application中创建
+     */
     private void initBDMap() {
-        /***
-         * 初始化定位sdk，建议在Application中创建
-         */
         locationService = new LocationService(getApplicationContext());
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         SDKInitializer.initialize(getApplicationContext());

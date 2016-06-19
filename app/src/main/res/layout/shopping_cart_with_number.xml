@@ -9,7 +9,7 @@
         android:id="@+id/iv_shopping_cart"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        tools:src="@mipmap/ic_shopping_cart_black_48dp" />
+        tools:src="@drawable/ic_shopping_car_black" />
 
     <TextView
         android:id="@+id/tv_goods_num"

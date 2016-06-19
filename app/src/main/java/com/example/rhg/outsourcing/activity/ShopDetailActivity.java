@@ -59,7 +59,7 @@ public class ShopDetailActivity extends BaseActivity {
     }
 
     @Override()
-    public int getLayoutResId() {
+    protected int getLayoutResId() {
         return R.layout.shop_detail_layout;
     }
 

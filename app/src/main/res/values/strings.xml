@@ -52,7 +52,24 @@
 
     <!--收货地址-->
     <string name="address">收货地址</string>
+    <string name="newAddress">添加新地址</string>
+    <string name="contactUser">联系人&#160;&#160;&#160;&#160;</string>
+    <string name="contactUser_Null">联系人为空</string>
+    <string name="contacts">联系方式</string>
+    <string name="contacts_Null">联系方式为空</string>
+    <string name="contactAddress">收货地址</string>
+    <string name="contactAddress_Null">收货地址为空</string>
+    <string name="contactAddressDetail">补充详细地址(如门牌号、楼层号)</string>
+    <string name="tvSave">保存</string>
     <!--收货地址-->
+
+    <!--搜索-->
+    <string name="searchActivityHint">输入搜索名称</string>
+    <string name="searchHistory">历史搜索</string>
+    <string name="searchResult">搜索结果</string>
+    <!--搜索-->
+
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

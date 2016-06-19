@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.AddressAdapter;
 import com.example.rhg.outsourcing.bean.AddressLocalBean;
+import com.example.rhg.outsourcing.utils.DpUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.AddressRecycleViewWithDelete;
 import com.example.rhg.outsourcing.widget.RecycleViewDivider;
@@ -53,7 +54,7 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
     }
 
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutResId() {
         return R.layout.address_layout;
     }
 
@@ -77,11 +78,11 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
         tb_common.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbRight_ll.setVisibility(View.GONE);
         tvCenter.setText(getResources().getString(R.string.address));
-        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_blackp));
+        ivLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         ivLeft.setOnClickListener(this);
 
         rcyAddress.addItemDecoration(new RecycleViewDivider(this,
-                        16,
+                        DpUtil.dip2px(8),
                         getResources().getColor(R.color.colorSearchHint)
                 )
         );
@@ -108,6 +109,7 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
                 }, 2000);
             }
         });
+        btAddAddress.setText(getResources().getString(R.string.newAddress));
         btAddAddress.setOnClickListener(this);
     }
 

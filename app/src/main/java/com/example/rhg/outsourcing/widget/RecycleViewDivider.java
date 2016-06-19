@@ -11,22 +11,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * 作者：rememberon 2016/6/7
- * 邮箱：1013773046@qq.com
+ * desc:RecycleView Divider
+ * author：remember
+ * time：2016/6/18 19:32
+ * email：1013773046@qq.com
  */
 public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     private Paint mPaint;
     private Drawable mDivider;
     private int mDividerHeight = 2;//分割线高度，默认为1px
-    private int mOrientation = LinearLayoutManager.VERTICAL;//列表的方向：LinearLayoutManager.VERTICAL或
-    // LinearLayoutManager.HORIZONTAL
+    /*列表的方向：LinearLayoutManager.VERTICAL或 LinearLayoutManager.HORIZONTAL*/
+    private int mOrientation = LinearLayoutManager.VERTICAL;
+    private int mLeftPadding;
+    private int mRightPadding;
+    private int mTopPadding;
+    private int mBottomPadding;
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
     public RecycleViewDivider(Context context, int mOrientation) {
         if (mOrientation != LinearLayoutManager.VERTICAL && mOrientation != LinearLayoutManager.HORIZONTAL) {
             throw new IllegalArgumentException("请输入正确的参数！");
         }
-        mOrientation = mOrientation;
+        this.mOrientation = mOrientation;
 
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
@@ -58,6 +64,16 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
         mPaint.setStyle(Paint.Style.FILL);
     }
 
+    public void setLeftAndRightPadding(int l, int r) {
+        mLeftPadding = l;
+        mRightPadding = r;
+    }
+
+    public void setTopAndBottomPadding(int t, int b) {
+        mTopPadding = t;
+        mBottomPadding = b;
+    }
+
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
@@ -76,8 +92,8 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
     //绘制横向 item 分割线
     private void drawHorizontal(Canvas canvas, RecyclerView parent) {
-        final int left = parent.getPaddingLeft();
-        final int right = parent.getMeasuredWidth() - parent.getPaddingRight();
+        final int left = parent.getPaddingLeft() + mLeftPadding;
+        final int right = parent.getMeasuredWidth() - parent.getPaddingRight() - mRightPadding;
         final int childSize = parent.getChildCount();
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
@@ -96,8 +112,8 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
     //绘制纵向 item 分割线
     private void drawVertical(Canvas canvas, RecyclerView parent) {
-        final int top = parent.getPaddingTop();
-        final int bottom = parent.getMeasuredHeight() - parent.getPaddingBottom();
+        final int top = parent.getPaddingTop() + mTopPadding;
+        final int bottom = parent.getMeasuredHeight() - parent.getPaddingBottom() - mBottomPadding;
         final int childSize = parent.getChildCount();
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);

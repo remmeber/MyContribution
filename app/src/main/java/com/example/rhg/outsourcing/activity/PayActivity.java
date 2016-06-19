@@ -61,7 +61,7 @@ public class PayActivity extends BaseActivity {
     }
 
     @Override
-    public int getLayoutResId() {
+    protected int getLayoutResId() {
         return R.layout.pay_layout;
     }
 
@@ -86,6 +86,7 @@ public class PayActivity extends BaseActivity {
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         ivBack.setOnClickListener(this);
+        ivBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tvCenter.setText(getResources().getString(R.string.tvPayTitle));
         tvReceiver.setText("收货人：哈哈");
         tvReceiverPhone.setText("联系方式：00001111");
@@ -145,10 +146,5 @@ public class PayActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

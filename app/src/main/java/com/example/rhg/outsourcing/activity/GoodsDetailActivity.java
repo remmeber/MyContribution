@@ -18,12 +18,15 @@ import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.viewHolder.BannerImageHolder;
 import com.example.rhg.outsourcing.application.InitApplication;
 import com.example.rhg.outsourcing.bean.GoodsDetailUrlBean;
+import com.example.rhg.outsourcing.bean.ShareModel;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.datebase.AccountDao;
+import com.example.rhg.outsourcing.impl.ShareListener;
 import com.example.rhg.outsourcing.locationservice.LocationService;
 import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenter;
 import com.example.rhg.outsourcing.mvp.presenter.GoodsDetailPresenterImpl;
+import com.example.rhg.outsourcing.third.UmengUtil;
 import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.ShoppingCartUtil;
@@ -31,6 +34,7 @@ import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
 import com.example.rhg.outsourcing.widget.ShoppingCartWithNumber;
 import com.example.rhg.outsourcing.widget.UIAlertView;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.List;
 
@@ -42,6 +46,7 @@ import java.util.List;
  */
 public class GoodsDetailActivity extends BaseActivity {
 
+    Bundle bundle;
     //    private boolean isLike;
     private boolean isNeedLoc;
     private String location;
@@ -109,7 +114,10 @@ public class GoodsDetailActivity extends BaseActivity {
         ShoppingCartUtil.addGoodToCart("20160522", "3");
     }
 
-    Bundle bundle;
+    @Override
+    protected boolean isNeedFirstLoc() {
+        return true;
+    }
 
     @Override
     public LocationService GetMapService() {
@@ -178,15 +186,14 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
 //        goodsDetailPresenter.getGoodsInfo();
-        ImageUtils.TintFill(ivRight, getResources().getDrawable(R.mipmap.ic_place_white),
-                getResources().getColor(R.color.colorActiveGreen));
+        ivRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
         ImageUtils.TintFill(ivShare, getResources().getDrawable(R.mipmap.ic_social_share),
                 getResources().getColor(R.color.colorActiveGreen));
         drawable_like = ImageUtils.TintWithoutFill(getResources().getDrawable(R.mipmap.ic_like),
                 getResources().getColor(R.color.colorActiveGreen));
         drawable_not_like = ImageUtils.TintWithoutFill(getResources().getDrawable(R.mipmap.ic_not_like),
                 getResources().getColor(R.color.colorActiveGreen));
-        ivLeft.setImageDrawable(getResources().getDrawable(R.mipmap.ic_chevron_left_blackp));
+        ivLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tvRight.setText(location);//TODO 根据定位来决定
         tvCenter.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
@@ -208,7 +215,7 @@ public class GoodsDetailActivity extends BaseActivity {
         ivShare.setOnClickListener(this);
         ivAdd.setOnClickListener(this);
         ivReduce.setOnClickListener(this);
-        shoppingCartWithNumber.setDrawable(R.mipmap.ic_shopping_cart_black_48dp);
+        shoppingCartWithNumber.setDrawable(R.drawable.ic_shopping_car_black);
         shoppingCartWithNumber.setOnClickListener(this);
         btBuy.setOnClickListener(this);
         convenientBanner.setOnClickListener(this);
@@ -306,7 +313,25 @@ public class GoodsDetailActivity extends BaseActivity {
                 }*/
                 break;
             case R.id.iv_share:
-                ToastHelper.getInstance()._toast("分享");
+                UmengUtil umengUtil = new UmengUtil(this);
+                UMImage imageMedia = new UMImage(this, AccountUtil.getInstance().getHeadImageUrl());
+                ShareModel shareModel = new ShareModel("QFood", "好吃", imageMedia);
+                umengUtil.Share(shareModel, new ShareListener() {
+                    @Override
+                    public void shareSuccess(String message) {
+                        ToastHelper.getInstance()._toast(message);
+                    }
+
+                    @Override
+                    public void shareFailed(String message, String content) {
+                        ToastHelper.getInstance()._toast(message);
+                    }
+
+                    @Override
+                    public void shareCancel(String message) {
+                        ToastHelper.getInstance()._toast(message);
+                    }
+                });
                 break;
             case R.id.shopping_cart_with_number:
                 dialogShow();

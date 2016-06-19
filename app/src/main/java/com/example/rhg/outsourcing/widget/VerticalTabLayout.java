@@ -119,7 +119,7 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
                     itemWidth == 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : /*dip2px(itemWidth)*/(int) itemWidth,
                     itemHeight == 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : /*dip2px(itemHeight)*/(int) itemHeight
             );
-            _lp.setMargins(dip2px(5), dip2px(15), dip2px(5), dip2px(15));
+            _lp.setMargins(dip2px(5), dip2px(15), dip2px(5), dip2px(5));
             textview.setLayoutParams(_lp);
             textview.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             CharSequence pageTitle = titles[i];

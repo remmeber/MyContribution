@@ -52,6 +52,11 @@ public class AppConstants {
     public static final int BACK_WITHOUT_DATA = 5;
     public static final int PAY = 6;
 
+    /*signin*/
+    public static final String USERNAME_QQ = "screen_name";
+    public static final String PROFILE_IMAGE_QQ = "profile_image_url";
+    /*signin*/
+
     /**
      * Intent/Bundle 传递Bean的KEY
      */
