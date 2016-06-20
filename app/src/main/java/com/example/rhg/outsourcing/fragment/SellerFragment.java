@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
@@ -16,7 +15,6 @@ import com.example.rhg.outsourcing.apapter.QFoodVpAdapter;
 import com.example.rhg.outsourcing.constants.AppConstants;
 import com.example.rhg.outsourcing.impl.SearchListener;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +64,7 @@ public class SellerFragment extends SuperFragment implements View.OnClickListene
 
     @Override
     public int getLayoutResId() {
-        return R.layout.seller_viewpager_layout;
+        return R.layout.all_shop_home_layout;
     }
 
     @Override
@@ -74,7 +72,7 @@ public class SellerFragment extends SuperFragment implements View.OnClickListene
         fl_tab = (FrameLayout) view.findViewById(R.id.fl_tab);
         tbCenterTV = (TextView) view.findViewById(R.id.tb_center_tv);
         tbRightIV = (ImageView) view.findViewById(R.id.tb_right_iv);
-        tabLayout = (SlidingTabLayout) view.findViewById(R.id.tabLayout);
+        tabLayout = (SlidingTabLayout) view.findViewById(R.id.all_seller_tl);
         viewPager = (ViewPager) view.findViewById(R.id.sellerViewPager);
     }
 

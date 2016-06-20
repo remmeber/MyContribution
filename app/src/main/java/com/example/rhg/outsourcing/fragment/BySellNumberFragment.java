@@ -12,6 +12,7 @@ import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.impl.RcvItemClickListener;
 import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenter;
 import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
@@ -25,7 +26,7 @@ import java.util.List;
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public class BySellNumberFragment extends SuperFragment implements QFoodMerchantAdapter.OnListItemClick {
+public class BySellNumberFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
     private SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     //TODO-------------------------------按销量排序的数据--------------------------------------------
@@ -60,7 +61,7 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
-        qFoodMerchantAdapter.setOnListItemClick(this);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
         recyclerView.setAdapter(qFoodMerchantAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -81,14 +82,14 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
     @Override
     public void onResume() {
         super.onResume();
-        qFoodMerchantAdapter.setOnListItemClick(this);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        qFoodMerchantAdapter.setOnListItemClick(null);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(null);
     }
 
     @Override
@@ -104,8 +105,9 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
         qFoodMerchantAdapter.notifyDataSetChanged();
     }
 
+
     @Override
-    public void itemClick(View v, int position) {
+    public void onItemClickListener(int position, MerchantUrlBean.MerchantBean item) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         MerchantUrlBean.MerchantBean merchantBean = dataBySellNumberModels.get(position);
         /*目前后台还没有加入这是三个字段*/
@@ -122,6 +124,6 @@ public class BySellNumberFragment extends SuperFragment implements QFoodMerchant
         intent.putExtra("productName","黄焖鸡米饭");
         intent.putExtra("goodsPrice","￥:90");
         startActivity(intent);*/
-    }
 
+    }
 }

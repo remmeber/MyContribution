@@ -75,7 +75,7 @@ public class PayDemoActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.pay_main);
+		setContentView(R.layout.pay_main_layout);
 	}
 
 	/**

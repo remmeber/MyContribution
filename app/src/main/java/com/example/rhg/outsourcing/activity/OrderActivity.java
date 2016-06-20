@@ -36,6 +36,7 @@ public class OrderActivity extends BaseActivity{
 
     @Override
     protected void initData() {
+        ivBack.setOnClickListener(this);
         tb_common.setBackgroundResource(R.color.colorActiveGreen);
         tvOrder.setText("我的订单");
         List<Fragment> fragments = new ArrayList<>();
@@ -56,7 +57,6 @@ public class OrderActivity extends BaseActivity{
         tvOrder = (TextView)findViewById(R.id.tb_center_tv);
         stlOrder = (SlidingTabLayout)findViewById(R.id.stl_myorder);
         vpOrder = (ViewPager)findViewById(R.id.vp_myorder);
-        ivBack.setOnClickListener(this);
     }
 
     @Override

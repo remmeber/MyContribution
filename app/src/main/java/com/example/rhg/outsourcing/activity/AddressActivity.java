@@ -81,14 +81,12 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
         ivLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         ivLeft.setOnClickListener(this);
 
-        rcyAddress.addItemDecoration(new RecycleViewDivider(this,
-                        DpUtil.dip2px(8),
-                        getResources().getColor(R.color.colorSearchHint)
-                )
-        );
-        rcyAddress.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcyAddress.setLayoutManager(linearLayoutManager);
+        rcyAddress.setHasFixedSize(true);
+        RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
+                DpUtil.dip2px(8), getResources().getColor(R.color.colorBackground));
+        rcyAddress.addItemDecoration(divider);
         addressAdapter = new AddressAdapter(this, addressBeanList);
         rcyAddress.setAdapter(addressAdapter);
         rcyAddress.setOnItemClickListener(this);

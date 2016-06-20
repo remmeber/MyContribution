@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/shopping_include"
-        layout="@layout/toolbar_common" />
+        layout="@layout/toolbar_common_layout" />
 
     <RelativeLayout
         android:id="@+id/rl_shopping_cart_empty"

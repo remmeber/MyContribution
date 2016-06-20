@@ -1,6 +1,7 @@
 package com.example.rhg.outsourcing.bean;
 
 import com.example.rhg.outsourcing.apapter.HomeRecycleAdapter;
+import com.example.rhg.outsourcing.impl.RcvItemClickListener;
 
 import java.util.List;
 
@@ -13,13 +14,14 @@ import java.util.List;
 public class RecommendListTypeModel {
     List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity;
     private HomeRecycleAdapter homeRecycleAdapter;
-    private HomeRecycleAdapter.OnListItemClick onListItemClick;
+    private RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClick;
 
     public List<RecommendListUrlBean.RecommendShopBeanEntity> getRecommendShopBeanEntity() {
         return recommendShopBeanEntity;
     }
 
-    public void setRecommendShopBeanEntity(List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity) {
+    public void setRecommendShopBeanEntity(
+            List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity) {
         this.recommendShopBeanEntity = recommendShopBeanEntity;
         if (this.homeRecycleAdapter != null)
             homeRecycleAdapter.setRecommendListBean(this.recommendShopBeanEntity);
@@ -33,11 +35,12 @@ public class RecommendListTypeModel {
         this.homeRecycleAdapter = homeRecycleAdapter;
     }
 
-    public HomeRecycleAdapter.OnListItemClick getOnListItemClick() {
-        return onListItemClick;
+    public RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> getOnItemClick() {
+        return onItemClick;
     }
 
-    public void setOnListItemClick(HomeRecycleAdapter.OnListItemClick onListItemClick) {
-        this.onListItemClick = onListItemClick;
+    public void setOnItemClick(
+            RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClick) {
+        this.onItemClick = onItemClick;
     }
 }

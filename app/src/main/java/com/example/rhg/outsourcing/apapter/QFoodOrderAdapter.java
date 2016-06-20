@@ -12,7 +12,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/28.
+ * desc:
+ * author：remember
+ * time：2016/6/19 18:02
+ * email：1013773046@qq.com
  */
 public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.OrderBean> {
 
@@ -27,7 +30,7 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
 
     @Override
     protected int getLayoutResId(int viewtype) {
-        return R.layout.sellitem_layout;
+        return R.layout.item_sell_layout;
     }
 
     @Override
@@ -41,8 +44,8 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getOnListItemClick() != null)
-                    getOnListItemClick().itemClick(v, holder.getAdapterPosition());
+                if (getOnRcvItemClickListener() != null)
+                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
             }
         });
     }

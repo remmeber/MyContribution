@@ -13,20 +13,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 /**
- *desc:
- *author：remember
- *time：2016/6/6 14:14
- *email：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/6/6 14:14
+ * email：1013773046@qq.com
  */
 public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean.MerchantBean> {
-
 
 
     public QFoodMerchantAdapter(Context context, List<MerchantUrlBean.MerchantBean> mData) {
         super(context, mData);
     }
-
-
 
 
     @Override
@@ -42,8 +39,8 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
     @Override
     protected int getLayoutResId(int viewtype) {
         if (viewtype == AppConstants.TypeHeader)
-            return R.layout.all_store_header_layout;
-        return R.layout.sellitem_layout;
+            return R.layout.all_store_header_cardview;
+        return R.layout.item_sell_layout;
     }
 
     @Override
@@ -56,8 +53,8 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
         holder.headerlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getOnListItemClick() != null)
-                    getOnListItemClick().itemClick(v, holder.getAdapterPosition());
+                if (getOnRcvItemClickListener() != null)
+                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
             }
         });
     }
@@ -73,8 +70,8 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getOnListItemClick() != null)
-                    getOnListItemClick().itemClick(v, holder.getAdapterPosition());
+                if (getOnRcvItemClickListener() != null)
+                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
             }
         });
 

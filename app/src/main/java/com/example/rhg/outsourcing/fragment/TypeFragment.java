@@ -63,7 +63,7 @@ public class TypeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recyclegridtype, container, false);
+        View view = inflater.inflate(R.layout.grid_type_layout, container, false);
         mGridView = (GridView) view.findViewById(R.id.gridview);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class TypeFragment extends Fragment {
             }
         });
         mGridView.setNumColumns(5);
-        mDPGridViewAdapter = new QFoodGridViewAdapter(getActivity(), R.layout.recyclegriditem);
+        mDPGridViewAdapter = new QFoodGridViewAdapter(getActivity(), R.layout.item_grid_rcv);
         mGridView.setAdapter(mDPGridViewAdapter);
         return view;
     }

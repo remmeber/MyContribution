@@ -4,7 +4,8 @@
     <item name="ic_location_green" type="drawable">@drawable/place_green</item>
     <item name="ic_home" type="drawable">@drawable/home</item>
     <item name="ic_user" type="drawable">@drawable/user</item>
-    <item name="ic_shop" type="drawable">@drawable/shop</item>
+    <item name="ic_shop" type="drawable">@drawable/shop_gray</item>
+    <item name="ic_shop_green" type="drawable">@drawable/shop_light_green</item>
     <item name="ic_shopping_car_black" type="drawable">@drawable/cart</item>
     <item name="ic_search_black" type="drawable">@drawable/search_black</item>
     <item name="ic_search_green" type="drawable">@drawable/search_green</item>
@@ -16,6 +17,11 @@
     <item name="ic_chevron_right_black" type="drawable">@drawable/chevron_right_black</item>
     <item name="ic_chevron_right_green" type="drawable">@drawable/chevron_right_green</item>
     <item name="ic_speaker" type="drawable">@drawable/speaker_white</item>
-    <item name="ic_like" type="drawable">@mipmap/ic_like</item>
-    <item name="ic_not_like" type="drawable">@mipmap/ic_not_like</item>
+    <item name="ic_star_gray" type="drawable">@drawable/star_gray</item>
+    <item name="ic_star_green" type="drawable">@drawable/star_green</item>
+    <item name="ic_wechat_pay_green_128dp" type="drawable">@drawable/wechat_pay_128dp</item>
+    <item name="ic_alipay_green_128dp" type="drawable">@drawable/alipay</item>
+    <item name="ic_cash_green_200dp" type="drawable">@drawable/cash_green_200dp</item>
+    <item name="ic_check_green" type="drawable">@drawable/check</item>
+    <item name="ic_uncheck_green" type="drawable">@drawable/uncheck</item>
 </resources>

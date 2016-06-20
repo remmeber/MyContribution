@@ -81,13 +81,13 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_BANNER:
                 return new BannerTypeViewHolder(layoutInflater.inflate(R.layout.item_banner, parent, false));
             case TYPE_TEXT:
-                return new TextTypeViewHolder(layoutInflater.inflate(R.layout.recycletext, parent, false));
+                return new TextTypeViewHolder(layoutInflater.inflate(R.layout.text_rcv, parent, false));
             case TYPE_FAVORABLE:
-                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.recyclegridtype, parent, false), viewType);
+                return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.grid_type_layout, parent, false), viewType);
             case TYPE_RECOMMEND_TEXT:
-                return new RecommendTextTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendtext, parent, false));
+                return new RecommendTextTypeViewHolder(layoutInflater.inflate(R.layout.recommend_text_rcv, parent, false));
             case TYPE_RECOMMEND_LIST:
-                return new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recyclerecommendlist, parent, false), viewType);
+                return new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recommend_list_rcv, parent, false), viewType);
             case TYPE_FOOTER:
                 return new FooterTypeViewHolder(layoutInflater.inflate(R.layout.recyclefooter, parent, false));
             default:
@@ -176,7 +176,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data) {
         holder.homeRecycleAdapter.notifyDataSetChanged();
-        holder.homeRecycleAdapter.setOnListItemClick(data.getOnListItemClick());
+        holder.homeRecycleAdapter.setOnRcvItemClickListener(data.getOnItemClick());
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
@@ -263,7 +263,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public RecommendListTypeViewHolder(View itemView, int viewType) {
             super(itemView);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.recommendlist);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.recommend_list);
             recyclerView.setHasFixedSize(true);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);

@@ -82,6 +82,9 @@
         <activity
             android:name=".activity.SearchActivity"
             android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.HotSellActivity"
+            android:configChanges="orientation|screenSize" />
 
 
         <!-- alipay sdk begin -->

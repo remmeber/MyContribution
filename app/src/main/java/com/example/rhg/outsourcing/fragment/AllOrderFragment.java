@@ -11,6 +11,7 @@ import com.example.rhg.outsourcing.activity.PayActivity;
 import com.example.rhg.outsourcing.apapter.QFoodOrderAdapter;
 import com.example.rhg.outsourcing.bean.OrderUrlBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.impl.RcvItemClickListener;
 import com.example.rhg.outsourcing.mvp.presenter.OrderDetailPresenter;
 import com.example.rhg.outsourcing.mvp.presenter.OrderDetailPresenterImpl;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
@@ -24,7 +25,7 @@ import java.util.List;
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public class AllOrderFragment extends SuperFragment implements QFoodOrderAdapter.OnListItemClick {
+public class AllOrderFragment extends SuperFragment implements RcvItemClickListener<OrderUrlBean.OrderBean> {
     RecyclerView rcv;
     QFoodOrderAdapter qFoodOrderAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -61,7 +62,7 @@ public class AllOrderFragment extends SuperFragment implements QFoodOrderAdapter
     @Override
     protected void initData() {
         qFoodOrderAdapter = new QFoodOrderAdapter(getContext(), orderBeanList);
-        qFoodOrderAdapter.setOnListItemClick(this);
+        qFoodOrderAdapter.setOnRcvItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(linearLayoutManager);
         rcv.setHasFixedSize(true);
@@ -90,9 +91,15 @@ public class AllOrderFragment extends SuperFragment implements QFoodOrderAdapter
     }
 
     @Override
+    public void onItemClickListener(int position, OrderUrlBean.OrderBean item) {
+        Intent intent = new Intent(getContext(), PayActivity.class);
+        startActivity(intent);
+    }
+
+    /*@Override
     public void itemClick(View v, int position) {
 //        ToastHelper.getInstance()._toast("item " + position + "is click.");
         Intent intent = new Intent(getContext(), PayActivity.class);
         startActivity(intent);
-    }
+    }*/
 }

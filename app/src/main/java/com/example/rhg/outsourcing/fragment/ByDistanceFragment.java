@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.R;
+import com.example.rhg.outsourcing.impl.RcvItemClickListener;
 import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
 
@@ -22,7 +23,7 @@ import java.util.List;
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAdapter.OnListItemClick {
+public class ByDistanceFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
 
     //TODO-------------------------------按距离排序的数据--------------------------------------------
     List<MerchantUrlBean.MerchantBean> dataByDistanceModels = new ArrayList<>();
@@ -68,7 +69,7 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataByDistanceModels);
-        qFoodMerchantAdapter.setOnListItemClick(this);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
         recyclerView.setAdapter(qFoodMerchantAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -81,14 +82,14 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
     @Override
     public void onResume() {
         super.onResume();
-        qFoodMerchantAdapter.setOnListItemClick(this);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        qFoodMerchantAdapter.setOnListItemClick(null);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(null);
     }
 
     @Override
@@ -102,8 +103,9 @@ public class ByDistanceFragment extends SuperFragment implements QFoodMerchantAd
         qFoodMerchantAdapter.notifyDataSetChanged();
     }
 
+
     @Override
-    public void itemClick(View v, int position) {
+    public void onItemClickListener(int position, MerchantUrlBean.MerchantBean item) {
         Toast.makeText(getActivity(), " " + position + " is clicked ", Toast.LENGTH_SHORT).show();
 
     }

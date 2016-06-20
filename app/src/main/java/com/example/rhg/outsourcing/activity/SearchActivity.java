@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.apapter.SearchHistoryAdapter;
+import com.example.rhg.outsourcing.utils.DpUtil;
 import com.example.rhg.outsourcing.utils.SearchHistoryUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.RecycleViewDivider;
@@ -70,8 +71,8 @@ public class SearchActivity extends BaseActivity implements SearchHistoryAdapter
         searchHistoryRcv.setHasFixedSize(false);
         searchHistoryRcv.setLayoutManager(lm);
         RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                2, getResources().getColor(R.color.colorInActive));
-        divider.setLeftAndRightPadding(dip2px(16), 0);
+                DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive));
+        divider.setLeftAndRightPadding(DpUtil.dip2px(16), 0);
         searchHistoryRcv.addItemDecoration(divider);
         searchHistoryAdapter = new SearchHistoryAdapter(this, searchHistoryData);
         searchHistoryAdapter.setOnSearchHistoryClickListener(this);
@@ -159,8 +160,4 @@ public class SearchActivity extends BaseActivity implements SearchHistoryAdapter
 
     }
 
-    private int dip2px(float dpValue) {
-        final float scale = this.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
 }

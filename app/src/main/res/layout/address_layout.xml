@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/address_include"
-        layout="@layout/toolbar_common" />
+        layout="@layout/toolbar_common_layout" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_address"

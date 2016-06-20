@@ -10,7 +10,7 @@
         android:background="@color/colorOrderTab"
         app:tl_textsize="@dimen/toolbar_text_large"
         app:tl_textSelectColor="@color/colorActiveGreen"
-        app:tl_textUnselectColor="@color/tabunselectcolor"
+        app:tl_textUnselectColor="@color/tabUnSelectColor"
         app:tl_tab_space_equal="true"
         app:tl_divider_width="1dp"
         app:tl_divider_padding="2dp"

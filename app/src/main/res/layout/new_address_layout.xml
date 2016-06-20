@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/new_address_include"
-        layout="@layout/toolbar_common" />
+        layout="@layout/toolbar_common_layout" />
 
     <LinearLayout
         android:layout_width="match_parent"

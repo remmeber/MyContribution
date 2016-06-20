@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.rhg.outsourcing.apapter.QFoodMerchantAdapter;
-import com.example.rhg.outsourcing.apapter.RecycleAbstractAdapter;
 import com.example.rhg.outsourcing.bean.MerchantUrlBean;
 import com.example.rhg.outsourcing.R;
+import com.example.rhg.outsourcing.impl.RcvItemClickListener;
 import com.example.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
 
 import java.util.ArrayList;
@@ -22,11 +22,11 @@ import java.util.List;
  * time：2016/5/28 16:43
  * email：1013773046@qq.com
  */
-public class ByRateFragment extends SuperFragment implements RecycleAbstractAdapter.OnListItemClick {
+public class ByRateFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
     //TODO-------------------------------按评分排序的数据--------------------------------------------
     List<MerchantUrlBean.MerchantBean> dataByRateScoreModels = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
-    MerchantsPresenterImpl distancetestPresenter;
+    MerchantsPresenterImpl distanceTestPresenter;
     private RecyclerView recyclerView;
     Context context;
     QFoodMerchantAdapter qFoodMerchantAdapter;
@@ -38,7 +38,7 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     }
 
     public ByRateFragment() {
-        distancetestPresenter = new MerchantsPresenterImpl(this);
+        distanceTestPresenter = new MerchantsPresenterImpl(this);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     @Override
     public void loadData() {
         super.loadData();
-        distancetestPresenter.getMerchants("restaurants", 2);
+        distanceTestPresenter.getMerchants("restaurants", 2);
     }
 
     @Override
@@ -65,12 +65,12 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataByRateScoreModels);
-        qFoodMerchantAdapter.setOnListItemClick(this);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
         recyclerView.setAdapter(qFoodMerchantAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                distancetestPresenter.getMerchants("restaurants", 2);
+                distanceTestPresenter.getMerchants("restaurants", 2);
             }
         });
 
@@ -80,14 +80,13 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     @Override
     public void onResume() {
         super.onResume();
-        qFoodMerchantAdapter.setOnListItemClick(this);
-
+        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        qFoodMerchantAdapter.setOnListItemClick(null);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(null);
     }
 
     @Override
@@ -103,7 +102,8 @@ public class ByRateFragment extends SuperFragment implements RecycleAbstractAdap
     }
 
     @Override
-    public void itemClick(View v, int position) {
+    public void onItemClickListener(int position, MerchantUrlBean.MerchantBean item) {
+
         Toast.makeText(getActivity(), " " + position + " is clicked ", Toast.LENGTH_SHORT).show();
     }
 }

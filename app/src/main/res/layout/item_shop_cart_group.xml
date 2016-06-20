@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="contentDescription">
 
     <View
         android:layout_width="match_parent"
@@ -26,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_uncheck" />
+            android:src="@drawable/ic_uncheck_green" />
 
         <ImageView
 
@@ -39,7 +41,7 @@
             android:layout_toEndOf="@+id/ivCheckGroup"
             android:layout_toRightOf="@+id/ivCheckGroup"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_shop" />
+            android:src="@drawable/ic_shop_green" />
 
         <TextView
             android:id="@+id/tvShopNameGroup"

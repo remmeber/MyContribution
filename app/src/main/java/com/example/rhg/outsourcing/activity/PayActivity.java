@@ -3,6 +3,7 @@ package com.example.rhg.outsourcing.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -40,7 +41,7 @@ public class PayActivity extends BaseActivity {
 
     QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
     ExpandableListView expandableListView;
-    FrameLayout flPay;
+    Button flPay;
 
     LinearLayout llPay;
     PayDescriptionView payDescriptionView;
@@ -77,7 +78,7 @@ public class PayActivity extends BaseActivity {
         ivEdit = (ImageView) findViewById(R.id.iv_edit_right);
 
         expandableListView = (ExpandableListView) findViewById(R.id.elv_pay);
-        flPay = (FrameLayout) findViewById(R.id.fl_pay);
+        flPay = (Button) findViewById(R.id.fl_pay);
         llPay = (LinearLayout) findViewById(R.id.ll_pay);
         payDescriptionView = (PayDescriptionView) findViewById(R.id.pay_content);
     }

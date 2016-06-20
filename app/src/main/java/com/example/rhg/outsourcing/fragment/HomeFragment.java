@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.rhg.outsourcing.R;
 import com.example.rhg.outsourcing.activity.GoodsDetailActivity;
+import com.example.rhg.outsourcing.activity.HotSellActivity;
 import com.example.rhg.outsourcing.activity.ShopDetailActivity;
 import com.example.rhg.outsourcing.apapter.HomeRecycleAdapter;
 import com.example.rhg.outsourcing.apapter.QFoodGridViewAdapter;
@@ -31,12 +32,12 @@ import com.example.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.example.rhg.outsourcing.bean.RecommendTextTypeModel;
 import com.example.rhg.outsourcing.bean.TextTypeBean;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.impl.RcvItemClickListener;
 import com.example.rhg.outsourcing.impl.SearchListener;
 import com.example.rhg.outsourcing.locationservice.LocationService;
 import com.example.rhg.outsourcing.locationservice.MyLocationListener;
 import com.example.rhg.outsourcing.mvp.presenter.HomePresenter;
 import com.example.rhg.outsourcing.mvp.presenter.HomePresenterImpl;
-import com.example.rhg.outsourcing.utils.ImageUtils;
 import com.example.rhg.outsourcing.utils.AccountUtil;
 import com.example.rhg.outsourcing.utils.ToastHelper;
 import com.example.rhg.outsourcing.widget.LoadingDialog;
@@ -51,7 +52,8 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
-        RecycleMultiTypeAdapter.OnGridItemClickListener, HomeRecycleAdapter.OnListItemClick, View.OnClickListener {
+        RecycleMultiTypeAdapter.OnGridItemClickListener,RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity>,
+        View.OnClickListener {
     FavorableTypeModel favorableTypeModel;
     List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodBeen = new ArrayList<>();
 
@@ -243,10 +245,10 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         mData.add(bannerTypeBean);
         mData.add(textTypeBean);
         favorableTypeModel.setDpGridViewAdapter(new QFoodGridViewAdapter(getContext(),
-                R.layout.recyclegriditem));
+                R.layout.item_grid_rcv));
         mData.add(favorableTypeModel);
         mData.add(new RecommendTextTypeModel());
-        recommendListTypeModel.setOnListItemClick(this);
+        recommendListTypeModel.setOnItemClick(this);
         recommendListTypeModel.setHomeRecycleAdapter(new HomeRecycleAdapter(getContext()));
         mData.add(recommendListTypeModel);
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
@@ -293,6 +295,8 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, "荣哥土菜馆");
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[3]);
         startActivity(intent);*/
+
+        startActivity(new Intent(getContext(), HotSellActivity.class));
     }
 
     @Override
@@ -305,7 +309,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
     }
 
     @Override
-    public void itemClick(View v, int position) {
+    public void onItemClickListener(int position, RecommendListUrlBean.RecommendShopBeanEntity item) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         /*todo 传递参数*/
         intent.putExtra(AppConstants.KEY_OR_SP_PHONE, "1234567890");
@@ -316,5 +320,4 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[1]);
         startActivity(intent);
     }
-
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.rhg.outsourcing.apapter.viewHolder.BodyViewHolder;
 import com.example.rhg.outsourcing.apapter.viewHolder.HeaderViewHolder;
 import com.example.rhg.outsourcing.constants.AppConstants;
+import com.example.rhg.outsourcing.impl.RcvItemClickListener;
 
 import java.util.List;
 
@@ -24,6 +25,15 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
     private int type = -1;
     private boolean hasHead;
     private boolean hasFooter;
+    RcvItemClickListener<T> onRcvItemClickListener;
+
+    public void setOnRcvItemClickListener(RcvItemClickListener<T> onRcvItemClickListener) {
+        this.onRcvItemClickListener = onRcvItemClickListener;
+    }
+
+    public RcvItemClickListener<T> getOnRcvItemClickListener() {
+        return onRcvItemClickListener;
+    }
 
     public void setContext(Context context) {
         this.context = context;
@@ -123,9 +133,11 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
         return mData == null ? 0 : mData.size();
     }
 
-    private OnListItemClick onListItemClick;
 
-    public void setOnListItemClick(OnListItemClick onListItemClick) {
+
+    /* private OnListItemClick onListItemClick;
+
+   public void setOnListItemClick(OnListItemClick onListItemClick) {
         this.onListItemClick = onListItemClick;
     }
 
@@ -135,5 +147,5 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
 
     public interface OnListItemClick {
         void itemClick(View v, int position);
-    }
+    }*/
 }

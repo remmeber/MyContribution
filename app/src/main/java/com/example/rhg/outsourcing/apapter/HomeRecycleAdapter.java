@@ -12,10 +12,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 /**
- *desc:主页推荐商家适配器
- *author：remember
- *time：2016/6/5 18:10
- *email：1013773046@qq.com
+ * desc:主页推荐商家适配器
+ * author：remember
+ * time：2016/6/5 18:10
+ * email：1013773046@qq.com
  */
 public class HomeRecycleAdapter extends RecycleAbstractAdapter<RecommendListUrlBean.RecommendShopBeanEntity> {
     List<RecommendListUrlBean.RecommendShopBeanEntity> recommendListBean;
@@ -42,7 +42,7 @@ public class HomeRecycleAdapter extends RecycleAbstractAdapter<RecommendListUrlB
 
     @Override
     protected int getLayoutResId(int viewtype) {
-        return R.layout.sellitem_body;
+        return R.layout.item_sell_body;
     }
 
     @Override
@@ -51,11 +51,11 @@ public class HomeRecycleAdapter extends RecycleAbstractAdapter<RecommendListUrlB
         ImageLoader.getInstance().displayImage(data.getSrc(), holder.sellerImage);
         holder.sellerDistance.setText(data.getDistance());
 //        holder.foodType.setText(data.getFoodType());
-        if (getOnListItemClick() == null)
+        if (getOnRcvItemClickListener() != null)
             holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getOnListItemClick().itemClick(v, holder.getAdapterPosition());
+                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
                 }
             });
         /*holder.sellerName.setText(data.getMerchantName());

@@ -7,9 +7,9 @@
     android:orientation="vertical">
 
     <include
-        layout="@layout/toolbar_common"
+        layout="@layout/toolbar_common_layout"
         android:layout_width="match_parent"
-        android:layout_height="56dp" />
+        android:layout_height="65dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -88,29 +88,34 @@
             android:id="@+id/elv_pay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/pay_content_include" />
+
+        <include
+            android:id="@+id/pay_content_include"
+            layout="@layout/pay_way_layout"
+            android:layout_marginTop="@dimen/margin_little"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/fl_pay" />
 
-        <FrameLayout
+
+        <Button
             android:id="@+id/fl_pay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/margin_little"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:background="@color/colorActiveGreen">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/margin_small"
-                android:layout_marginTop="@dimen/margin_small"
-                android:text="@string/tvSubmitOrder"
-                android:textSize="@dimen/text_large" />
-        </FrameLayout>
+            android:layout_marginTop="@dimen/margin_little"
+            android:background="@color/colorActiveGreen"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
+            android:text="@string/tvSubmitOrder"
+            android:textSize="@dimen/text_large" />
     </RelativeLayout>
 </LinearLayout>

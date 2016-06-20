@@ -26,6 +26,7 @@ public class AppConstants {
     public static final String[] SELL_TITLES = new String[]{"按销量", "按距离", "按评分"};
     public static final String[] ORDER_TITLES = new String[]{"全部", "已完成", "待付款", "已退款"};
     public static final String[] SHOP_TITLES = new String[]{"热销排行", "超值套餐", "店铺优惠", "必点饮品", "最新优惠"};
+    public static final String[] HOT_SELL_TITLES = new String[]{"综合", "距离", "销量", "评分"};
     //---------------------------店铺复用------------------------------------------------------------
     public static final int TypeHome = 0;
     public static final int TypeSeller = 1;
