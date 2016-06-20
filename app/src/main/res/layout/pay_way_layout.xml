@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_pay"
+    android:background="@drawable/cv_goods_bg"
     android:orientation="vertical"
     tools:ignore="contentDescription">
 
@@ -12,11 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/margin_little"
         android:background="@drawable/tv_search_bg"
         android:padding="@dimen/margin_little"
         android:text="支付方式" />
 
     <LinearLayout
+        android:id="@+id/wechat_pay_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_little"
@@ -47,7 +49,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_uncheck_green" />
+                    android:src="@drawable/ic_check_green" />
 
                 <ImageView
                     android:id="@+id/iv_wepay"
@@ -60,6 +62,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/alipay_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
@@ -95,6 +98,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/cash_ll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">

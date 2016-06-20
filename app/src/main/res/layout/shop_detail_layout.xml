@@ -39,7 +39,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_social_share" />
+                android:src="@drawable/ic_shop" />
 
             <TextView
                 android:id="@+id/tv_shop_detail_name"

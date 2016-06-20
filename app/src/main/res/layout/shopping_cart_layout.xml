@@ -44,7 +44,7 @@
         android:layout_above="@+id/rl_shopping_cart_pay"
         android:layout_below="@+id/shopping_include">
 
-        <com.example.rhg.outsourcing.widget.SwipeDeleteExpandListView
+        <com.rhg.outsourcing.widget.SwipeDeleteExpandListView
             android:id="@+id/list_shopping_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

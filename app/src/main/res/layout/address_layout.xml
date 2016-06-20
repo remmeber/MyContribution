@@ -16,7 +16,7 @@
         android:layout_above="@+id/bt_add_new_address"
         android:layout_below="@+id/address_include">
 
-        <com.example.rhg.outsourcing.widget.AddressRecycleViewWithDelete
+        <com.rhg.outsourcing.widget.AddressRecycleViewWithDelete
             android:id="@+id/rcy_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

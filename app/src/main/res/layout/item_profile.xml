@@ -31,9 +31,10 @@
             android:id="@+id/profileForward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignEnd="@+id/headerline"
+            android:layout_alignRight="@+id/headerline"
             android:layout_centerVertical="true"
+            android:padding="@dimen/margin_little"
             android:src="@drawable/ic_chevron_right_black" />
 
         <View
@@ -57,12 +58,14 @@
         <TextView
             android:id="@+id/profileDealleft"
             android:layout_width="56dp"
-            android:layout_height="21dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
             android:background="@drawable/tv_search_bg"
             android:gravity="center"
+            android:paddingBottom="@dimen/margin_little"
+            android:paddingTop="@dimen/margin_little"
             android:textColor="@color/colorTextOrder"
             android:textSize="@dimen/text_small"
             tools:text=" left " />
@@ -70,18 +73,20 @@
         <TextView
             android:id="@+id/profileDealcenter"
             android:layout_width="56dp"
-            android:layout_height="21dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@drawable/tv_search_bg"
             android:gravity="center"
+            android:paddingBottom="@dimen/margin_little"
+            android:paddingTop="@dimen/margin_little"
             android:textColor="@color/colorTextOrder"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
             tools:text=" center " />
 
         <TextView
             android:id="@+id/profileDealright"
             android:layout_width="56dp"
-            android:layout_height="21dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -89,8 +94,10 @@
             android:layout_marginRight="32dp"
             android:background="@drawable/tv_search_bg"
             android:gravity="center"
+            android:paddingBottom="@dimen/margin_little"
+            android:paddingTop="@dimen/margin_little"
             android:textColor="@color/colorTextOrder"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
             tools:text=" right " />
     </RelativeLayout>
 </LinearLayout>

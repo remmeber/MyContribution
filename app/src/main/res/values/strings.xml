@@ -2,8 +2,13 @@
     <string name="app_name">WB</string>
     <string name="searchHint">&#160;&#160;&#160;search</string>
     <string name="Home">首页</string>
-    <string name="allstore">所有店铺</string>
-    <string name="shoppingcar">购物车</string>
+    <string name="Merchant">商家</string>
+    <string name="User">我的</string>
+    <string name="shoppingCart">购物车</string>
+    <string name="allStore">所有店铺</string>
+
+    <!--Home-->
+    <!--Home-->
 
     <!-- profile -->
     <string name="myOrder">我的订单</string>
@@ -36,11 +41,11 @@
     <!--商品详情-->
     <string name="goodsDetail">商品详情</string>
     <string name="sellNumber">销量:</string>
-    <string name="buy">购买</string>
+    <string name="buy">去结账</string>
     <!--商品详情-->
 
     <!--支付-->
-    <string name="tvPay">支付</string>
+    <string name="tvPay">确认支付</string>
     <string name="tvPayTitle">确认订单</string>
     <string name="tvSubmitOrder">提交订单</string>
     <!--支付-->
@@ -68,19 +73,4 @@
     <string name="searchHistory">历史搜索</string>
     <string name="searchResult">搜索结果</string>
     <!--搜索-->
-
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="action_search">Search</string>
-    <string name="user_name">口remember</string>
-
-    <string name="action_edit_password">修改密码</string>
-    <string name="action_personal_info">个人信息</string>
-    <string name="action_info_feedback">意见反馈</string>
-    <string name="action_update">软件升级</string>
-    <string name="action_exit">退出账号</string>
-    <string name="about_us">关于我们</string>
 </resources>

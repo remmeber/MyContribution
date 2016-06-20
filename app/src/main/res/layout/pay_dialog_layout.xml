@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </ScrollView>-->
-    <com.example.rhg.outsourcing.widget.PayDescriptionView
+    <com.rhg.outsourcing.widget.PayDescriptionView
         android:id="@+id/pay_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

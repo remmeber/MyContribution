@@ -3,16 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="81dp">
+    android:layout_height="81dp"
+    tools:ignore="contentDescription">
 
 
     <RelativeLayout
         android:id="@+id/home_tl_left_rl"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_little"
-        android:layout_marginStart="@dimen/margin_little"
         android:layout_marginTop="25dp">
+
 
         <ImageView
             android:id="@+id/home_tl_left_bt"
@@ -21,8 +21,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
-            tools:ignore="contentDescription"
-            tools:src="@drawable/ic_location_black" />
+            tools:src="@drawable/ic_location_green" />
 
         <TextView
             android:id="@+id/home_tl_left_tv"
@@ -34,6 +33,15 @@
             android:textColor="@color/black"
             android:textSize="@dimen/search_text_medium"
             tools:text="南京" />
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignBottom="@id/home_tl_left_bt"
+            android:layout_toEndOf="@id/home_tl_left_bt"
+            android:layout_toRightOf="@id/home_tl_left_bt"
+            android:indeterminateDrawable="@drawable/round_progress"
+            android:visibility="visible" />
     </RelativeLayout>
 
     <TextView
@@ -50,22 +58,11 @@
         android:layout_toRightOf="@id/home_tl_left_rl"
         android:layout_toStartOf="@+id/home_tl_right_ll"
         android:background="@drawable/tv_search_bg"
+        android:drawableRight="@drawable/ic_search_green"
         android:gravity="center_vertical"
         android:hint="@string/searchHint"
         android:textColor="@color/colorSearchHint"
         android:textSize="20dp" />
-
-    <ImageView
-        android:id="@+id/home_tl_center_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/home_tl_center_tv"
-        android:layout_alignEnd="@+id/home_tl_center_tv"
-        android:layout_alignRight="@+id/home_tl_center_tv"
-        android:layout_alignTop="@+id/home_tl_center_tv"
-        android:background="@android:color/transparent"
-        tools:ignore="contentDescription"
-        tools:src="@drawable/ic_search_black" />
 
     <LinearLayout
         android:id="@+id/home_tl_right_ll"
@@ -92,7 +89,7 @@
             android:id="@+id/home_tl_right_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="扫一扫"
+            android:text="反馈"
             android:textColor="@color/colorToolbarGreen" />
     </LinearLayout>
 </RelativeLayout>

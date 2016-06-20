@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rhg.outsourcing"
+    package="com.rhg.outsourcing"
     android:anyDensity="true">
     <!-- 这个权限用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -95,7 +95,7 @@
             android:screenOrientation="behind" />
 
         <activity
-            android:name="com.example.rhg.outsourcing.pay.H5PayDemoActivity"
+            android:name="com.rhg.outsourcing.pay.H5PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />

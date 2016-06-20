@@ -19,7 +19,7 @@
             android:background="@color/colorActiveGreen"
             android:orientation="vertical">
 
-            <com.example.rhg.outsourcing.widget.CircleImageView
+            <com.rhg.outsourcing.widget.CircleImageView
                 android:id="@+id/userHeader"
                 android:layout_width="109dp"
                 android:layout_height="109dp"

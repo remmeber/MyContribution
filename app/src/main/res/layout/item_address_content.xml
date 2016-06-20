@@ -21,7 +21,7 @@
         android:layout_marginTop="@dimen/margin_little"
         android:background="@android:color/transparent"
         tools:ignore="contentDescription"
-        tools:src="@mipmap/unchecked" />
+        tools:src="@drawable/ic_uncheck_green" />
 
     <TextView
         android:id="@+id/tv_address_receiver"

@@ -7,17 +7,17 @@
 
     <ImageView
         android:id="@+id/iv_shopping_cart"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        tools:src="@drawable/ic_shopping_car_black" />
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        tools:src="@drawable/ic_shopping_cart_green" />
 
     <TextView
         android:id="@+id/tv_goods_num"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_gravity="end"
         android:background="@drawable/goods_num_bg"
         android:gravity="center"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_little_small"
         tools:text="1" />
 </FrameLayout>
