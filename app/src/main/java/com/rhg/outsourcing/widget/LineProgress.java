@@ -1,22 +1,18 @@
 package com.rhg.outsourcing.widget;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.Interpolator;
 
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.utils.DpUtil;
 
 /**
- * desc:
+ * desc:水平进度条
  * author：remember
  * time：2016/6/21 15:02
  * email：1013773046@qq.com
