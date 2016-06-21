@@ -120,7 +120,7 @@ public class MyRatingBar extends View {
                 case MotionEvent.ACTION_DOWN:
                     float starTotalWidth = starMaxNumber * (mStarWidth + mSpaceWidth) - mSpaceWidth;
                     if (event.getX() <= starTotalWidth) {
-                        float newStarRating = (int) event.getX() / (mStarWidth + mSpaceWidth) + 1;
+                        float newStarRating = event.getX() / (mStarWidth + mSpaceWidth) + 1;
                         setStarRating(newStarRating);
                     }
                     break;

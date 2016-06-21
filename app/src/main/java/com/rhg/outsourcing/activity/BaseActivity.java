@@ -32,11 +32,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     private static final String ACTION_NETWORK_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
     private static final String ACTION_PUSH_DATA = "fm.data.push.action";
     private static final String ACTION_NEW_VERSION = "apk.update.action";
-
+    boolean isFirstLoc;
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
-    boolean isFirstLoc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

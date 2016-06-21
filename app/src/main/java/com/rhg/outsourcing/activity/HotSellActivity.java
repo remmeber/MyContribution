@@ -7,11 +7,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.HotSellVpAdapter;
 import com.rhg.outsourcing.constants.AppConstants;
 import com.rhg.outsourcing.fragment.ComprehensiveHotSellFragment;
-import com.flyco.tablayout.SlidingTabLayout;
 
 import butterknife.Bind;
 import butterknife.OnClick;

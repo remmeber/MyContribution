@@ -27,7 +27,6 @@ import com.rhg.outsourcing.locationservice.MyLocationListener;
 import com.rhg.outsourcing.mvp.presenter.GoodsDetailPresenter;
 import com.rhg.outsourcing.mvp.presenter.GoodsDetailPresenterImpl;
 import com.rhg.outsourcing.third.UmengUtil;
-import com.rhg.outsourcing.utils.ImageUtils;
 import com.rhg.outsourcing.utils.AccountUtil;
 import com.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.rhg.outsourcing.utils.ToastHelper;
@@ -47,12 +46,6 @@ import java.util.List;
 public class GoodsDetailActivity extends BaseActivity {
 
     Bundle bundle;
-    //    private boolean isLike;
-    private boolean isNeedLoc;
-    private String location;
-    private MyLocationListener myLocationListener;
-    private String temp_productId;
-
     Drawable drawable_like;
     Drawable drawable_not_like;
     FrameLayout tb_common;
@@ -61,7 +54,6 @@ public class GoodsDetailActivity extends BaseActivity {
     ImageView ivRight;
     ImageView ivLeft;
     LinearLayout llTabRight;
-
     ConvenientBanner<String> convenientBanner;
     ImageView ivLike;
     ImageView ivShare;
@@ -74,10 +66,8 @@ public class GoodsDetailActivity extends BaseActivity {
     TextView tvNum;
     ShoppingCartWithNumber shoppingCartWithNumber;
     Button btBuy;
-
     LoadingDialog loadingDialog;
     GoodsDetailPresenter goodsDetailPresenter;
-
     String foodId;
     String foodName;
     String foodPrice;
@@ -85,6 +75,11 @@ public class GoodsDetailActivity extends BaseActivity {
     String foodStyle;
     String foodMessage;
     List<String> foodSrcs;
+    //    private boolean isLike;
+    private boolean isNeedLoc;
+    private String location;
+    private MyLocationListener myLocationListener;
+    private String temp_productId;
 
 
     public GoodsDetailActivity() {

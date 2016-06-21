@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flyco.tablayout.SlidingTabLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.QFoodVpAdapter;
 import com.rhg.outsourcing.constants.AppConstants;
 import com.rhg.outsourcing.fragment.ShopDetailFoodFragment;
 import com.rhg.outsourcing.fragment.ShopDetailFragment;
-import com.flyco.tablayout.SlidingTabLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;

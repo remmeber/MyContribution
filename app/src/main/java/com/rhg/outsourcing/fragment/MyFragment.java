@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.activity.AddressActivity;
 import com.rhg.outsourcing.activity.DeliverInfoActivity;
+import com.rhg.outsourcing.activity.DeliverRegisterActivity;
 import com.rhg.outsourcing.activity.NewAddressActivity;
 import com.rhg.outsourcing.activity.OrderActivity;
 import com.rhg.outsourcing.constants.AppConstants;
@@ -215,7 +216,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 Toast.makeText(getContext(), R.string.workerSignIn, Toast.LENGTH_SHORT).show();
                 break;
             case 4://TODO 注册
-                Toast.makeText(getContext(), R.string.wokerSignUp, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), DeliverRegisterActivity.class));
                 break;
             case 5://TODO 修改
                 Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();

@@ -68,9 +68,47 @@
     <string name="tvSave">保存</string>
     <!--收货地址-->
 
+    <!--收货-->
+    <string name="conformReceive">确认收货</string>
+    <string name="rate">评分</string>
+    <string name="mouthFeel">口感</string>
+    <string name="deliverService">配送服务</string>
+    <string name="finish">完成</string>
+    <!--收货-->
+
     <!--搜索-->
     <string name="searchActivityHint">输入搜索名称</string>
     <string name="searchHistory">历史搜索</string>
     <string name="searchResult">搜索结果</string>
     <!--搜索-->
+
+    <!--register-->
+    <string name="register">注册</string>
+    <string name="phoneNumber">手机号码</string>
+    <string name="checkNumber">验证码&#160;&#160;&#160;&#160;</string>
+    <string name="getCheckNumber">获取验证码</string>
+    <string name="haveRead">我已经阅读同意了本地美食服务协议</string>
+    <string name="completeRegister">完成注册</string>
+    <string name="agreement">转眼间一个学期又过了，\n
+        也意味着研究生的英语学习已经结束。\n
+        英语本学期教学目标很明确，课程要教会\n
+        我们研究生如何用英语去发表国际论文，从中\n
+        我也获益匪浅。孙老师对于论文每一部分的讲解\n
+        的生动细腻，有利于我们课程学习；助教每周为我\n
+        们总结雅思的写作方法、句子，有利于我们提升写\n
+        作；外教的课程以讨论为主，有利于我们拓宽思维。\n
+        感谢一年的英语学习，感谢孙老师、助教、外教一年的付出。\n
+    转眼间一个学期又过了，\n
+        也意味着研究生的英语学习已经结束。\n
+        英语本学期教学目标很明确，课程要教会\n
+        我们研究生如何用英语去发表国际论文，从中\n
+        我也获益匪浅。孙老师对于论文每一部分的讲解\n
+        的生动细腻，有利于我们课程学习；助教每周为我\n
+        们总结雅思的写作方法、句子，有利于我们提升写\n
+        作；外教的课程以讨论为主，有利于我们拓宽思维。\n
+        感谢一年的英语学习，感谢孙老师、助教、外教一年的付出。</string>
+    <!--register-->
+    <!--test-->
+
+    <!--test-->
 </resources>

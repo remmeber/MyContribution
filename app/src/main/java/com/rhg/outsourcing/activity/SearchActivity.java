@@ -35,8 +35,8 @@ public class SearchActivity extends BaseActivity implements SearchHistoryAdapter
     TextView tvResult;
 
     RecyclerView searchHistoryRcv;
-    private List<String> searchHistoryData;
     SearchHistoryAdapter searchHistoryAdapter;
+    private List<String> searchHistoryData;
 
     @Override
     public void loadingData() {

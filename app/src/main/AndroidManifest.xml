@@ -85,6 +85,12 @@
         <activity
             android:name=".activity.HotSellActivity"
             android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.DeliverRegisterActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.DeliverStateNoneActivity"
+            android:configChanges="orientation|screenSize" />
 
 
         <!-- alipay sdk begin -->

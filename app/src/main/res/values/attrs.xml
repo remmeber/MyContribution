@@ -52,4 +52,14 @@
         <attr name="pwContourColor" format="color" />
         <attr name="pwContourSize" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="LineProgress">
+        <attr name="marginBetweenTextAndBar" format="dimension|reference" />
+        <attr name="lineProgressBackground" format="color|reference" />
+        <attr name="lineProgressColor" format="color|reference" />
+        <attr name="lineProgressHeight" format="dimension|reference" />
+        <attr name="lineProgressTextSize" format="dimension|reference" />
+        <attr name="lineProgressTextDefaultColor" format="color|reference" />
+        <attr name="lineProgressTextColor" format="color|reference" />
+    </declare-styleable>
 </resources>

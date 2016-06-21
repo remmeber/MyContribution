@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.constants.AppConstants;
 import com.rhg.outsourcing.mvp.api.QFoodApi;
@@ -28,9 +29,8 @@ import com.rhg.outsourcing.utils.AccountUtil;
 import com.rhg.outsourcing.utils.DataUtil;
 import com.rhg.outsourcing.utils.ImageUtils;
 import com.rhg.outsourcing.utils.ToastHelper;
-import com.rhg.outsourcing.widget.ModifyHeadImageDialog;
 import com.rhg.outsourcing.widget.CircleImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rhg.outsourcing.widget.ModifyHeadImageDialog;
 
 import java.io.File;
 
@@ -41,10 +41,16 @@ import java.io.File;
  * email：1013773046@qq.com
  */
 public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImageDialog.ChoosePicListener {
+    /**
+     * desc:裁剪图片
+     * author：remember
+     * time：2016/5/31 22:28
+     * email：1013773046@qq.com
+     */
+    private static final String CROP = "com.android.camera.action.CROP";
     FrameLayout tb_common;
     TextView tvRight;
     ImageView ivLeft;
-
     CircleImageView headView;
     TextInputLayout et_name_wrap;
     TextInputLayout et_id_wrap;
@@ -52,12 +58,11 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
     TextInputLayout et_place_wrap;
     Button bt_save;
     Button bt_exit;
-
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
     String imageStr = "";
     String userID = "19216801";
     String passWord = "123";
-
+    Uri fileUri = null;
 
     @Override
     protected int getLayoutResId() {
@@ -148,8 +153,6 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
             startActivityForResult(intentFromGallery, AppConstants.CODE_GALLERY_REQUEST);
         }
     }
-
-    Uri fileUri = null;
 
     @Override
     final public void chooseFromCamera() {
@@ -275,14 +278,6 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
     private boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
-
-    /**
-     * desc:裁剪图片
-     * author：remember
-     * time：2016/5/31 22:28
-     * email：1013773046@qq.com
-     */
-    private static final String CROP = "com.android.camera.action.CROP";
 
     private void cropRawPic(Uri data) {
         Intent intent = new Intent(CROP);
