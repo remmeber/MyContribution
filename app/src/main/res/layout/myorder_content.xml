@@ -8,7 +8,7 @@
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/stl_myorder"
         android:background="@color/colorOrderTab"
-        app:tl_textsize="@dimen/toolbar_text_large"
+        app:tl_textsize="@dimen/text_big"
         app:tl_textSelectColor="@color/colorActiveGreen"
         app:tl_textUnselectColor="@color/tabUnSelectColor"
         app:tl_tab_space_equal="true"

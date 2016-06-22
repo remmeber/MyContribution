@@ -14,9 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rhg.outsourcing.R;
-import com.rhg.outsourcing.activity.DeliverStateNoneActivity;
 import com.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.rhg.outsourcing.activity.HotSellActivity;
+import com.rhg.outsourcing.activity.PersonalOrderActivity;
 import com.rhg.outsourcing.activity.ShopDetailActivity;
 import com.rhg.outsourcing.apapter.HomeRecycleAdapter;
 import com.rhg.outsourcing.apapter.QFoodGridViewAdapter;
@@ -287,7 +287,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
                 break;
             case R.id.home_tl_right_ll:
                 doFeedback();
-                startActivity(new Intent(getContext(), DeliverStateNoneActivity.class));
+                startActivity(new Intent(getContext(), PersonalOrderActivity.class));
                 break;
         }
     }

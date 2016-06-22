@@ -12,8 +12,8 @@ import android.widget.Toast;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.bean.ShoppingCartBean;
 import com.rhg.outsourcing.utils.ShoppingCartUtil;
-import com.rhg.outsourcing.widget.UIAlertView;
 import com.rhg.outsourcing.widget.SlideView;
+import com.rhg.outsourcing.widget.UIAlertView;
 
 import java.util.List;
 
@@ -121,7 +121,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         goods.slideView.shrink();
 
         boolean isChildSelected = goods.isChildSelected();
-        String goodsprice = "￥" + goods.getPrice();//TODO 获得商品的价格
+        String goodsprice = String.format(context.getResources().getString(R.string.countMoney),
+                goods.getPrice());//TODO 获得商品的价格
         String goodsNum = goods.getNumber();//TODO 获得商品的数量
         String goodsName = goods.getGoodsName();//TODO 获得商品的名字
         int goodsLogoUrl = goods.getGoodsLogoUrl();//TODO 获得商品图片的链接

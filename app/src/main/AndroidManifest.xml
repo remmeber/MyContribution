@@ -91,6 +91,9 @@
         <activity
             android:name=".activity.DeliverStateNoneActivity"
             android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.PersonalOrderActivity"
+            android:configChanges="orientation|screenSize" />
 
 
         <!-- alipay sdk begin -->

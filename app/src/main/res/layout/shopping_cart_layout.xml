@@ -71,7 +71,7 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:text="@string/needPay"
-            android:textSize="@dimen/toolbar_text_large" />
+            android:textSize="@dimen/text_big" />
 
         <TextView
             android:id="@+id/tv_count_money"
@@ -84,7 +84,7 @@
             android:layout_toRightOf="@id/tv_need_pay"
             android:text="@string/countMoney"
             android:textColor="@color/colorPay_Red"
-            android:textSize="@dimen/toolbar_text_large" />
+            android:textSize="@dimen/text_big" />
 
         <TextView
             android:id="@+id/tv_count"
@@ -99,6 +99,6 @@
             android:gravity="center"
             android:text="@string/countGoods"
             android:textColor="@color/white"
-            android:textSize="@dimen/toolbar_text_large" />
+            android:textSize="@dimen/text_big" />
     </RelativeLayout>
 </RelativeLayout>

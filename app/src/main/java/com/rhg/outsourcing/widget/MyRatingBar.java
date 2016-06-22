@@ -92,7 +92,7 @@ public class MyRatingBar extends View {
         paint.setColor(Color.GREEN);
         for (int i = 1; i <= solidStarNum; i++) {
             canvas.drawBitmap(mSolidBitmap, solidStartPoint, 0, paint);
-            solidStartPoint = solidStartPoint + mSpaceWidth + mHollowBitmap.getWidth();
+            solidStartPoint += mSpaceWidth + mSolidBitmap.getWidth();
         }
         //虚心开始位置
         int hollowStartPoint = solidStartPoint;
@@ -118,9 +118,16 @@ public class MyRatingBar extends View {
         if (!isIndicator) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    float starTotalWidth = starMaxNumber * (mStarWidth + mSpaceWidth) - mSpaceWidth;
-                    if (event.getX() <= starTotalWidth) {
-                        float newStarRating = event.getX() / (mStarWidth + mSpaceWidth) + 1;
+                    float clickX = event.getX();
+                    float starTotalWidth = finalWidth - getPaddingLeft() - getPaddingRight();
+                    float newStarRating = 0.0f;
+                    if (clickX <= starTotalWidth + getPaddingLeft()
+                            && clickX >= getPaddingLeft()) {
+                        float ration = clickX / (mStarWidth + mSpaceWidth);
+                        if (clickX - (mStarWidth + mSpaceWidth) * (int) ration > mStarWidth)
+                            newStarRating = (int) ration + 1;
+                        else
+                            newStarRating = (clickX - mSpaceWidth * (int) ration) / mStarWidth;
                         setStarRating(newStarRating);
                     }
                     break;
@@ -131,6 +138,16 @@ public class MyRatingBar extends View {
             }
         }
         return super.onTouchEvent(event);
+    }
+
+    float finalWidth;
+    float finalHeight;
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        finalWidth = w;
+        finalHeight = h;
     }
 
     /**
@@ -202,7 +219,7 @@ public class MyRatingBar extends View {
         } else {
             //Calculate the width according the views count
             result = (int) (getPaddingLeft() + getPaddingRight()
-                    + (mSpaceWidth + mStarWidth) * (starMaxNumber));
+                    + mSpaceWidth * (starMaxNumber - 1) + mStarWidth * (starMaxNumber));
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);

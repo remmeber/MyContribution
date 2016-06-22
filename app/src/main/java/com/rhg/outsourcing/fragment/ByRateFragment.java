@@ -5,16 +5,21 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.QFoodMerchantAdapter;
 import com.rhg.outsourcing.bean.MerchantUrlBean;
-import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.impl.RcvItemClickListener;
 import com.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 /**
  * desc:所有店铺的按评价fm
@@ -25,9 +30,14 @@ import java.util.List;
 public class ByRateFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
     //TODO-------------------------------按评分排序的数据--------------------------------------------
     List<MerchantUrlBean.MerchantBean> dataByRateScoreModels = new ArrayList<>();
-    private SwipeRefreshLayout swipeRefreshLayout;
-    MerchantsPresenterImpl distanceTestPresenter;
-    private RecyclerView recyclerView;
+    @Bind(R.id.common_recycle)
+    RecyclerView commonRecycle;
+    @Bind(R.id.common_refresh)
+    ProgressBar commonRefresh;
+    @Bind(R.id.common_swipe)
+    SwipeRefreshLayout commonSwipe;
+
+    MerchantsPresenterImpl getMerchantsOrderByRatePresenter;
     Context context;
     QFoodMerchantAdapter qFoodMerchantAdapter;
 
@@ -38,7 +48,7 @@ public class ByRateFragment extends SuperFragment implements RcvItemClickListene
     }
 
     public ByRateFragment() {
-        distanceTestPresenter = new MerchantsPresenterImpl(this);
+        getMerchantsOrderByRatePresenter = new MerchantsPresenterImpl(this);
     }
 
     @Override
@@ -49,28 +59,25 @@ public class ByRateFragment extends SuperFragment implements RcvItemClickListene
 
     @Override
     protected void initView(View view) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);
-        recyclerView = (RecyclerView) view.findViewById(R.id.common_recycle);
-
     }
 
     @Override
     public void loadData() {
-        super.loadData();
-        distanceTestPresenter.getMerchants("restaurants", 2);
+        commonRefresh.setVisibility(View.VISIBLE);
+        getMerchantsOrderByRatePresenter.getMerchants("restaurants", 2);
     }
 
     @Override
     protected void initData() {
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        commonRecycle.setHasFixedSize(true);
+        commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataByRateScoreModels);
         qFoodMerchantAdapter.setOnRcvItemClickListener(this);
-        recyclerView.setAdapter(qFoodMerchantAdapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        commonRecycle.setAdapter(qFoodMerchantAdapter);
+        commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                distanceTestPresenter.getMerchants("restaurants", 2);
+                getMerchantsOrderByRatePresenter.getMerchants("restaurants", 2);
             }
         });
 
@@ -91,14 +98,16 @@ public class ByRateFragment extends SuperFragment implements RcvItemClickListene
 
     @Override
     protected void showFailed() {
-
     }
 
     @Override
     public void showSuccess(Object o) {
-        swipeRefreshLayout.setRefreshing(false);
         qFoodMerchantAdapter.setmData((List<MerchantUrlBean.MerchantBean>) o);
         qFoodMerchantAdapter.notifyDataSetChanged();
+        if (commonSwipe.isRefreshing())
+            commonSwipe.setRefreshing(false);
+        if (commonRefresh.getVisibility() == View.VISIBLE)
+            commonRefresh.setVisibility(View.GONE);
     }
 
     @Override
@@ -106,4 +115,5 @@ public class ByRateFragment extends SuperFragment implements RcvItemClickListene
 
         Toast.makeText(getActivity(), " " + position + " is clicked ", Toast.LENGTH_SHORT).show();
     }
+
 }

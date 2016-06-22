@@ -22,7 +22,7 @@ import java.util.List;
  * time：2016/5/28 16:48
  * email：1013773046@qq.com
  */
-public class ShopDetailFoodFragment extends SuperFragment implements SwipeRefreshListener {
+public class ShopDetailFoodFragment extends SuperFragment {
     VerticalTabLayout verticalTabLayout;
     FragmentController fragmentController;
     Fragment[] fragments;
@@ -57,7 +57,7 @@ public class ShopDetailFoodFragment extends SuperFragment implements SwipeRefres
         fragments = new Fragment[5];
         for (int i = 0; i < fragments.length; i++) {
             FoodTypeFragment fragment = new FoodTypeFragment();
-            fragment.setSwipeRefreshListener(this);
+            fragment.setArguments(bundle);
             fragments[i] = fragment;
         }
         fragmentController = new FragmentController(getChildFragmentManager(), fragments, R.id.fl_shop_detail);
@@ -69,12 +69,6 @@ public class ShopDetailFoodFragment extends SuperFragment implements SwipeRefres
         });
     }
 
-    @Override
-    public void loadData() {
-        loadingDialog = new LoadingDialog(getContext());
-        loadingDialog.show();
-        shopDetailPresenter.getShopDetail("food", merchantId);
-    }
 
     @Override
     public void receiveData(Bundle arguments) {
@@ -89,14 +83,8 @@ public class ShopDetailFoodFragment extends SuperFragment implements SwipeRefres
     @Override
     public void showSuccess(Object o) {
         shopDetailBeanList = (List<ShopDetailUriBean.ShopDetailBean>) o;
-        ((FoodTypeFragment) fragments[verticalTabLayout.getCurrentPosition()])
-                .setShopDetailBeanList(shopDetailBeanList);
-        loadingDialog.dismiss();
+        /*((FoodTypeFragment) fragments[verticalTabLayout.getCurrentPosition()])
+                .setShopDetailBeanList(shopDetailBeanList);*/
     }
 
-    @Override
-    public void startRefresh() {
-        loadingDialog.show();
-        shopDetailPresenter.getShopDetail("food", merchantId);
-    }
 }

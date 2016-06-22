@@ -177,7 +177,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected void onDestroy() {
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
-        ButterKnife.unbind(this);
+        ButterKnife.bind(this);
     }
 
     /*BroadcastReceiver receiver = new BroadcastReceiver() {

@@ -9,15 +9,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.rhg.outsourcing.constants.AppConstants;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rhg.outsourcing.impl.RcvItemClickListener;
 
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/20.
+ * desc:商品详情里面的商品适配器
+ * author：remember
+ * time：2016/6/22 15:08
+ * email：1013773046@qq.com
  */
 public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
@@ -34,7 +38,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View.inflate(context,R.layout.item_goods_layout,parent);
+//        View.inflate(context,R.layout.item_goods_layout,parent); TODO 用View.inflate会采用默认的warpcontent布局
         LayoutInflater inflater = LayoutInflater.from(context);
         return new GoodsDetailViewHolder(inflater.inflate(R.layout.item_goods_layout, parent, false));
     }
@@ -51,13 +55,15 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ImageLoader.getInstance().displayImage(AppConstants.images[0],
                 goodsDetailViewHolder.goodsImage);
         goodsDetailViewHolder.goodsName.setText(shopDetailBean.getName());
-        goodsDetailViewHolder.goodsPrice.setText(shopDetailBean.getPrice());
+        goodsDetailViewHolder.goodsPrice.setText(String.format(context.getResources().getString(R.string.countMoney),
+                shopDetailBean.getPrice()));
         goodsDetailViewHolder.goodsSellNum.setText(shopDetailBean.getMonthlySales());
         goodsDetailViewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onGoodsItemClickListener != null)
-                    onGoodsItemClickListener.onItemClick(v, goodsDetailViewHolder.getAdapterPosition());
+                    onGoodsItemClickListener.onItemClickListener(goodsDetailViewHolder.getAdapterPosition(),
+                            null);
             }
         });
     }
@@ -68,16 +74,10 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
-    /**
-     * todo 开放接口
-     */
-    public interface GoodsItemClickListener {
-        public void onItemClick(View v, int position);
-    }
+    private RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> onGoodsItemClickListener;
 
-    private GoodsItemClickListener onGoodsItemClickListener;
-
-    public void setGoodsItemClickListener(GoodsItemClickListener onGoodsItemClickListener) {
+    public void setOnGoodsItemClickListener(RcvItemClickListener<ShopDetailUriBean.ShopDetailBean>
+                                                    onGoodsItemClickListener) {
         this.onGoodsItemClickListener = onGoodsItemClickListener;
     }
 

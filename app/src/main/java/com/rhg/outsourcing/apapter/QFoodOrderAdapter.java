@@ -3,11 +3,11 @@ package com.rhg.outsourcing.apapter;
 import android.content.Context;
 import android.view.View;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.viewHolder.BodyViewHolder;
 import com.rhg.outsourcing.bean.OrderUrlBean;
 import com.rhg.outsourcing.constants.AppConstants;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -18,9 +18,11 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.OrderBean> {
+    Context context;
 
     public QFoodOrderAdapter(Context context, List<OrderUrlBean.OrderBean> mData) {
         super(context, mData);
+        this.context = context;
     }
 
     @Override
@@ -40,7 +42,8 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
         holder.tv_state.setText(data.getStyle());
         holder.tv_orderTime.setText(data.getOtime());
         holder.tv_orderTag.setText(data.getID());
-        holder.tv_totalMoney.setText(data.getPrice());
+        holder.tv_totalMoney.setText(String.format(context.getResources().getString(R.string.countMoney),
+                data.getPrice()));
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

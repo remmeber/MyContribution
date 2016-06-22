@@ -20,6 +20,6 @@
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_big">18sp</dimen>
     <dimen name="text_large">20sp</dimen>
-    <dimen name="search_text_medium">16sp</dimen>
-    <dimen name="toolbar_text_large">18sp</dimen>
+
+    <dimen name="header_image_size">80dp</dimen>
 </resources>

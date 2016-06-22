@@ -4,7 +4,6 @@ package com.rhg.outsourcing.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,8 @@ import com.rhg.outsourcing.utils.NetUtil;
 import com.rhg.outsourcing.utils.ToastHelper;
 import com.squareup.leakcanary.RefWatcher;
 
+import butterknife.ButterKnife;
+
 
 /**
  * desc:所有fm的基类
@@ -28,6 +29,7 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+//    private Unbinder bind;
 
     public SuperFragment() {
     }
@@ -44,6 +46,7 @@ public abstract class SuperFragment extends Fragment implements BaseView {
         refWatcher.watch(this);
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
+        ButterKnife.bind(this, view);
         initView(view);
         return view;
     }
@@ -154,6 +157,11 @@ public abstract class SuperFragment extends Fragment implements BaseView {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 
     protected abstract void showFailed();
 

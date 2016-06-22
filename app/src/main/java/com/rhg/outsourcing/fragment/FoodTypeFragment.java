@@ -5,34 +5,46 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.activity.GoodsDetailActivity;
 import com.rhg.outsourcing.apapter.GoodsListAdapter;
 import com.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.rhg.outsourcing.constants.AppConstants;
-import com.rhg.outsourcing.impl.SwipeRefreshListener;
+import com.rhg.outsourcing.impl.RcvItemClickListener;
 import com.rhg.outsourcing.mvp.presenter.ShopDetailPresenter;
 import com.rhg.outsourcing.mvp.presenter.ShopDetailPresenterImpl;
+import com.rhg.outsourcing.widget.VerticalTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
- * desc:店铺详情中的商品类型fm，和{@link com.rhg.outsourcing.widget.VerticalTabLayout}一起使用
+ * desc:店铺详情中的商品类型fm，和{@link VerticalTabLayout}一起使用
  * author：remember
  * time：2016/5/28 16:43
  * email：1013773046@qq.com
  */
-public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.GoodsItemClickListener {
-//    private int tag;
+public class FoodTypeFragment extends SuperFragment implements RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> {
+    //    private int tag;
     List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
     GoodsListAdapter goodsListAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
-    SwipeRefreshListener swipeRefreshListener;
-    RecyclerView recyclerView;
     ShopDetailPresenter shopDetailPresenter;
+
+    String merchantId;
+    @Bind(R.id.common_recycle)
+    RecyclerView commonRecycle;
+    @Bind(R.id.common_refresh)
+    ProgressBar commonRefresh;
+    @Bind(R.id.common_swipe)
+    SwipeRefreshLayout commonSwipe;
 
 
     public FoodTypeFragment() {
@@ -42,11 +54,18 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
     @Override
     public void receiveData(Bundle arguments) {
         // TODO: 获取数据
+        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
     }
 
     @Override
     public int getLayoutResId() {
         return R.layout.common_swipe_recycle_layout;
+    }
+
+    @Override
+    public void loadData() {
+        commonRefresh.setVisibility(View.VISIBLE);
+        shopDetailPresenter.getShopDetail("food", merchantId);
     }
 
     @Override
@@ -61,16 +80,15 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
             goodsDetailBean.setGoodsPrice(i + "0");
             goodsDetailBeanList.add(goodsDetailBean);
         }*/
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        commonRecycle.setHasFixedSize(true);
+        commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         goodsListAdapter = new GoodsListAdapter(getContext(), shopDetailBeanList);
-        goodsListAdapter.setGoodsItemClickListener(this);
-        recyclerView.setAdapter(goodsListAdapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        goodsListAdapter.setOnGoodsItemClickListener(this);
+        commonRecycle.setAdapter(goodsListAdapter);
+        commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (swipeRefreshListener != null)
-                    swipeRefreshListener.startRefresh();
+                shopDetailPresenter.getShopDetail("food", merchantId);
             }
 
         });
@@ -78,12 +96,6 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
 
     @Override
     protected void initView(View view) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);
-        recyclerView = (RecyclerView) view.findViewById(R.id.common_recycle);
-        /*RecycleAbstractAdapter recycleSellerAdapter = new RecycleAbstractAdapter(getContext(), dataBySellNumberModels, AppConstants.TypeSeller);
-        recycleSellerAdapter.setOnListItemClick(this);
-        recyclerView.setAdapter(recycleSellerAdapter)*/
-        ;
     }
 
 
@@ -94,17 +106,19 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
 
     @Override
     public void showSuccess(Object o) {
-        swipeRefreshLayout.setRefreshing(false);
         shopDetailBeanList = (List<ShopDetailUriBean.ShopDetailBean>) o;
         if (goodsListAdapter != null) {
             goodsListAdapter.setShopDetailBeanList(shopDetailBeanList);
             goodsListAdapter.notifyDataSetChanged();
         }
+        if (commonSwipe.isRefreshing())
+            commonSwipe.setRefreshing(false);
+        if (commonRefresh.getVisibility() == View.VISIBLE)
+            commonRefresh.setVisibility(View.GONE);
     }
 
-
     @Override
-    public void onItemClick(View v, int position) {
+    public void onItemClickListener(int position, ShopDetailUriBean.ShopDetailBean item) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         /*intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
@@ -114,7 +128,7 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
         startActivityForResult(intent, 1);
     }
 
-    public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
+   /* public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
         this.shopDetailBeanList = shopDetailBeanList;
         if (swipeRefreshLayout.isRefreshing())
             swipeRefreshLayout.setRefreshing(false);
@@ -123,10 +137,7 @@ public class FoodTypeFragment extends SuperFragment implements GoodsListAdapter.
             goodsListAdapter.notifyDataSetChanged();
         }
     }
-
-    public void setSwipeRefreshListener(SwipeRefreshListener swipeRefreshListener) {
-        this.swipeRefreshListener = swipeRefreshListener;
-    }
+*/
 /*
     public int getFragmentTag() {
         return tag;

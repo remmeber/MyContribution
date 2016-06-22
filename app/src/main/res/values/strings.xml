@@ -47,7 +47,7 @@
     <!--支付-->
     <string name="tvPay">确认支付</string>
     <string name="tvPayTitle">确认订单</string>
-    <string name="tvSubmitOrder">提交订单</string>
+    <string name="tvSubmitOrder">提交订单1</string>
     <!--支付-->
 
     <!--我的页面-->
@@ -81,6 +81,12 @@
     <string name="searchHistory">历史搜索</string>
     <string name="searchResult">搜索结果</string>
     <!--搜索-->
+
+    <!--自主点餐-->
+    <string name="information">请写下所有您想吃的\n\n 给我们单身狗跑腿员一个体会恋爱的机会\n\n 我们会找遍全城，只为你</string>
+    <string name="iWantEat">我想吃&#8230;</string>
+    <string name="submit">提交</string>
+    <!--自主点餐-->
 
     <!--register-->
     <string name="register">注册</string>

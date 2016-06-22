@@ -2,10 +2,14 @@ package com.rhg.outsourcing.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.activity.ShopDetailActivity;
@@ -15,10 +19,13 @@ import com.rhg.outsourcing.constants.AppConstants;
 import com.rhg.outsourcing.impl.RcvItemClickListener;
 import com.rhg.outsourcing.mvp.presenter.MerchantsPresenter;
 import com.rhg.outsourcing.mvp.presenter.MerchantsPresenterImpl;
-import com.rhg.outsourcing.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 /**
  * desc:所有店铺的按销量
@@ -27,12 +34,15 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class BySellNumberFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
-    private SwipeRefreshLayout swipeRefreshLayout;
-    RecyclerView recyclerView;
+    @Bind(R.id.common_recycle)
+    RecyclerView commonRecycle;
+    @Bind(R.id.common_refresh)
+    ProgressBar commonRefresh;
+    @Bind(R.id.common_swipe)
+    SwipeRefreshLayout commonSwipe;
     //TODO-------------------------------按销量排序的数据--------------------------------------------
     List<MerchantUrlBean.MerchantBean> dataBySellNumberModels = new ArrayList<>();
-    MerchantsPresenter sellertestPresenter;
-    LoadingDialog loadingDialog;
+    MerchantsPresenter getMerchantsOrderBySellNumberPresenter;
     QFoodMerchantAdapter qFoodMerchantAdapter;
 
     public void setContext(Context context) {
@@ -41,7 +51,7 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
     }
 
     public BySellNumberFragment() {
-        sellertestPresenter = new MerchantsPresenterImpl(this);
+        getMerchantsOrderBySellNumberPresenter = new MerchantsPresenterImpl(this);
     }
 
     @Override
@@ -49,34 +59,30 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
         return R.layout.common_swipe_recycle_layout;
     }
 
-    @Override
-    protected void initView(View view) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);
-        recyclerView = (RecyclerView) view.findViewById(R.id.common_recycle);
-
-    }
 
     @Override
     protected void initData() {
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        commonRecycle.setHasFixedSize(true);
+        commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
         qFoodMerchantAdapter.setOnRcvItemClickListener(this);
-        recyclerView.setAdapter(qFoodMerchantAdapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        commonRecycle.setAdapter(qFoodMerchantAdapter);
+        commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                sellertestPresenter.getMerchants("restaurants", 0);
+                getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", 0);
             }
         });
     }
 
     @Override
+    protected void initView(View view) {
+    }
+
+    @Override
     public void loadData() {
-        super.loadData();
-        /*loadingDialog = new LoadingDialog(getContext());
-        loadingDialog.show();*/
-        sellertestPresenter.getMerchants("restaurants", 0);
+        commonRefresh.setVisibility(View.VISIBLE);
+        getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", 0);
     }
 
     @Override
@@ -100,9 +106,13 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
     @Override
     public void showSuccess(Object o) {
         dataBySellNumberModels = (List<MerchantUrlBean.MerchantBean>) o;
-        swipeRefreshLayout.setRefreshing(false);
         qFoodMerchantAdapter.setmData(dataBySellNumberModels);
         qFoodMerchantAdapter.notifyDataSetChanged();
+        if (commonSwipe.isRefreshing())
+            commonSwipe.setRefreshing(false);
+        if (commonRefresh.getVisibility() == View.VISIBLE) {
+            commonRefresh.setVisibility(View.GONE);
+        }
     }
 
 
@@ -116,7 +126,7 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
         intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
 
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, merchantBean.getID());
-        intent.putExtra(AppConstants.KEY_MERCHANT_NAME,merchantBean.getName());
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, merchantBean.getName());
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, merchantBean.getPic());
         startActivityForResult(intent, 1);
         /*Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
@@ -126,4 +136,5 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
         startActivity(intent);*/
 
     }
+
 }
