@@ -43,7 +43,7 @@ import java.util.List;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class GoodsDetailActivity extends BaseActivity {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener{
 
     Bundle bundle;
     Drawable drawable_like;

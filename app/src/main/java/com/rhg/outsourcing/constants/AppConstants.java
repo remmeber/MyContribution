@@ -72,6 +72,7 @@ public class AppConstants {
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_NOTE = "note";
     public static final String KEY_DELETE = "delete";
+    public static final String KEY_ORDER_TAG = "order_tag";
     public static final int KEY_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
     /*for headImage*/
     public static final int CODE_GALLERY_REQUEST = 10;//TODO:From Local
@@ -85,6 +86,12 @@ public class AppConstants {
     public static final String PHONE_FOR_ADDRESS = "address_phone";
     public static final String ADDRESS_CONTENT = "address_content";
     public static final String ADDRESS_CREATE_TIME = "address_time";
+
+    /*Order*/
+    public static final String ORDER_DELIVERING = "0";
+    public static final String ORDER_COMPLETE = "1";
+    public static final String ORDER_UNPAID = "2";
+    public static final String ORDER_DRAWBACK = "3";
 
     /*后台交互信息*/
     public static final String TABLE_CLIENT = "client";

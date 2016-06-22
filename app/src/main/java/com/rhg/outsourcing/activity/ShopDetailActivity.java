@@ -25,7 +25,7 @@ import java.util.List;
  * time：2016/5/28 16:15
  * email：1013773046@qq.com
  */
-public class ShopDetailActivity extends BaseActivity {
+public class ShopDetailActivity extends BaseActivity implements View.OnClickListener{
     ImageView ivBack;
     ImageView ivShopLogo;
     String shopLogoUrl;

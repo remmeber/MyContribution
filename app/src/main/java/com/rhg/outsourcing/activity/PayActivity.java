@@ -29,7 +29,7 @@ import java.util.List;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class PayActivity extends BaseActivity {
+public class PayActivity extends BaseActivity implements View.OnClickListener{
     ImageView ivBack;
     TextView tvCenter;
     FrameLayout flTab;
@@ -76,7 +76,7 @@ public class PayActivity extends BaseActivity {
         ivEdit = (ImageView) findViewById(R.id.iv_edit_right);
 
         rcvPayItem = (RecyclerView) findViewById(R.id.rcv_item_pay);
-        flPay = (Button) findViewById(R.id.fl_pay);
+        flPay = (Button) findViewById(R.id.bt_pay_affirmance);
         llPay = (LinearLayout) findViewById(R.id.ll_pay);
         payDescriptionView = (PayDescriptionView) findViewById(R.id.pay_content);
     }
@@ -120,7 +120,7 @@ public class PayActivity extends BaseActivity {
             case R.id.iv_edit_right:
                 ToastHelper.getInstance()._toast("编辑");
                 break;
-            case R.id.fl_pay:
+            case R.id.bt_pay_affirmance:
 
                 payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {

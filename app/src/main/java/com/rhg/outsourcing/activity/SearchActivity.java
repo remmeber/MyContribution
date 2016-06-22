@@ -26,7 +26,8 @@ import java.util.List;
  * time：2016/6/18 13:10
  * email：1013773046@qq.com
  */
-public class SearchActivity extends BaseActivity implements SearchHistoryAdapter.SearchHistoryClickListener {
+public class SearchActivity extends BaseActivity implements SearchHistoryAdapter.SearchHistoryClickListener,
+        View.OnClickListener {
     //    SearchView searchView;
     FrameLayout flTab;
     ImageView ivLeft;

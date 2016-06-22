@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * 作者：rememberon 2016/6/16
  * 邮箱：1013773046@qq.com
  */
-public class NewAddressActivity extends BaseActivity {
+public class NewAddressActivity extends BaseActivity implements View.OnClickListener{
 
     TextView tbCenterTv;
     ImageView tbLeftIv;

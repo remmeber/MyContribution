@@ -25,7 +25,8 @@ import java.util.List;
  * 作者：rememberon 2016/6/5
  * 邮箱：1013773046@qq.com
  */
-public class AddressActivity extends BaseActivity implements AddressRecycleViewWithDelete.ItemClickListener {
+public class AddressActivity extends BaseActivity implements AddressRecycleViewWithDelete.ItemClickListener,
+        View.OnClickListener {
     FrameLayout tb_common;
     LinearLayout tbRight_ll;
     TextView tvCenter;

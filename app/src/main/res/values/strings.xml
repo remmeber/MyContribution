@@ -12,16 +12,16 @@
 
     <!-- profile -->
     <string name="myOrder">我的订单</string>
-    <string name="myPay">待付款</string>
-    <string name="myCancel">取消</string>
-    <string name="myComplete">已完成</string>
+    <string name="orderUnPaid">待付款</string>
+    <string name="cancel">取消</string>
+    <string name="orderComplete">已完成</string>
     <string name="workerInfo">我是跑腿员</string>
     <string name="workerSignIn">登录</string>
     <string name="wokerSignUp">注册</string>
     <string name="wokerAndAddrModify">修改</string>
     <string name="addrInfo">我的地址</string>
-    <string name="addrCustome">常用</string>
-    <string name="addrAdd">添加</string>
+    <string name="custome">常用</string>
+    <string name="add">添加</string>
     <string name="modifyHeader">修改头像</string>
     <string name="userSignIn">请点击登录</string>
     <!--- profile-->
@@ -45,10 +45,20 @@
     <!--商品详情-->
 
     <!--支付-->
-    <string name="tvPay">确认支付</string>
+    <string name="tvPayAffirmance">确认支付</string>
     <string name="tvPayTitle">确认订单</string>
-    <string name="tvSubmitOrder">提交订单1</string>
+    <string name="tvSubmitOrder">提交订单</string>
     <!--支付-->
+
+    <!--订单相关-->
+    <string name="tvReceiver">收货人:%s</string>
+    <string name="tvContactPhone">联系方式:%s</string>
+    <string name="tvReceiveAddress">收货地址:%s</string>
+    <string name="tvNote">备注:%s</string>
+    <string name="goPay">去付款</string>
+    <string name="tvDrawback">申请退款</string>
+    <string name="tvSummation">合计</string>
+    <!--订单相关-->
 
     <!--我的页面-->
     <string name="tvCamera">相机</string>
@@ -71,6 +81,7 @@
     <!--收货-->
     <string name="conformReceive">确认收货</string>
     <string name="rate">评分</string>
+    <string name="goEvaluate">去评价</string>
     <string name="mouthFeel">口感</string>
     <string name="deliverService">配送服务</string>
     <string name="finish">完成</string>
