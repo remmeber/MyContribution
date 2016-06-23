@@ -5,22 +5,22 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.bean.PayContentBean;
 import com.rhg.outsourcing.utils.DpUtil;
 import com.rhg.outsourcing.utils.ToastHelper;
-import com.rhg.outsourcing.widget.PayDescriptionView;
-import com.rhg.outsourcing.widget.PayDialog;
 import com.rhg.outsourcing.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * desc:付款页面 todo 跳到付款页面的数据都要有一个标志：来自购物车还是待付款页面。如果来自购物车，则要去掉购物车
@@ -29,22 +29,34 @@ import java.util.List;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class PayActivity extends BaseActivity implements View.OnClickListener{
-    ImageView ivBack;
-    TextView tvCenter;
-    FrameLayout flTab;
-
-    TextView tvReceiver;
-    TextView tvReceiverPhone;
-    TextView tvReceiverAddress;
-    ImageView ivEdit;
-
-    RecyclerView rcvPayItem;
-    Button flPay;
-
-    LinearLayout llPay;
-    PayDescriptionView payDescriptionView;
+public class PayActivity extends BaseActivity {
     List<PayContentBean> payContentBeanList;
+
+    @Bind(R.id.tb_center_tv)
+    TextView tbCenterTv;
+    @Bind(R.id.tb_left_iv)
+    ImageView tbLeftIv;
+    @Bind(R.id.fl_tab)
+    FrameLayout flTab;
+    @Bind(R.id.tv_receiver)
+    TextView tvReceiver;
+    @Bind(R.id.tv_receiver_phone)
+    TextView tvReceiverPhone;
+    @Bind(R.id.tv_receiver_address)
+    TextView tvReceiverAddress;
+    @Bind(R.id.rcv_item_pay)
+    RecyclerView rcvItemPay;
+    @Bind(R.id.iv_wepay_check)
+    ImageView ivWxpayCheck;
+    @Bind(R.id.iv_alipay_check)
+    ImageView ivAlipayCheck;
+    @Bind(R.id.iv_cash_check)
+    ImageView ivCashCheck;
+
+    private static final String WECHAT = "wechat";
+    private static final String ALIPAY = "alipay";
+    private static final String CASH = "cash";
+    String payMethod = WECHAT;
 
     public PayActivity() {
         payContentBeanList = new ArrayList<>();
@@ -54,8 +66,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void dataReceive(Intent intent) {
         if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            //// TODO: 接收要付款的订单
+             /*TODO: 接收要付款的订单*/
         }
     }
 
@@ -66,39 +77,21 @@ public class PayActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initView(View view) {
-        ivBack = (ImageView) findViewById(R.id.tb_left_iv);
-        tvCenter = (TextView) findViewById(R.id.tb_center_tv);
-        flTab = (FrameLayout) findViewById(R.id.fl_tab);
-
-        tvReceiver = (TextView) findViewById(R.id.tv_receiver);
-        tvReceiverPhone = (TextView) findViewById(R.id.tv_receiver_phone);
-        tvReceiverAddress = (TextView) findViewById(R.id.tv_receiver_address);
-        ivEdit = (ImageView) findViewById(R.id.iv_edit_right);
-
-        rcvPayItem = (RecyclerView) findViewById(R.id.rcv_item_pay);
-        flPay = (Button) findViewById(R.id.bt_pay_affirmance);
-        llPay = (LinearLayout) findViewById(R.id.ll_pay);
-        payDescriptionView = (PayDescriptionView) findViewById(R.id.pay_content);
     }
 
     @Override
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
-        ivBack.setOnClickListener(this);
-        ivBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        tvCenter.setText(getResources().getString(R.string.tvPayTitle));
+        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbCenterTv.setText(getResources().getString(R.string.tvPayTitle));
         tvReceiver.setText("收货人：哈哈");
         tvReceiverPhone.setText("联系方式：00001111");
         tvReceiverAddress.setText("收货地址：江苏省南京市江宁区东南大学");
-        ivEdit.setOnClickListener(this);
 
-        rcvPayItem.setLayoutManager(new LinearLayoutManager(this));
-        rcvPayItem.setHasFixedSize(true);
-        rcvPayItem.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
+        rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
+        rcvItemPay.setHasFixedSize(true);
+        rcvItemPay.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
                 DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
-
-        flPay.setOnClickListener(this);
-
     }
 
     @Override
@@ -111,7 +104,9 @@ public class PayActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
-    @Override
+    @OnClick({R.id.tb_left_iv, R.id.iv_edit_right, R.id.bt_pay_affirmance,
+            R.id.iv_wepay_check, R.id.iv_wepay, R.id.iv_alipay_check, R.id.iv_alipay,
+            R.id.iv_cash_check, R.id.iv_cash})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tb_left_iv:
@@ -121,8 +116,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener{
                 ToastHelper.getInstance()._toast("编辑");
                 break;
             case R.id.bt_pay_affirmance:
-
-                payContentBeanList.clear();
+                ToastHelper.getInstance()._toast("支付");
+                /*payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {
                     PayContentBean payContentBean = new PayContentBean();
                     payContentBean.setGoodsName("哈啊哈" + i);
@@ -131,10 +126,28 @@ public class PayActivity extends BaseActivity implements View.OnClickListener{
                     payContentBeanList.add(payContentBean);
                 }
                 PayDialog payDialog = new PayDialog(this, payContentBeanList);
-                payDialog.show();
+                payDialog.show();*/
+                break;
+            case R.id.iv_wepay_check:
+            case R.id.iv_wepay:
+                if (WECHAT.equals(payMethod))
+                    return;
+                ivWxpayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_green));
+                break;
+            case R.id.iv_alipay_check:
+            case R.id.iv_alipay:
+                ivAlipayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_green));
+                break;
+            case R.id.iv_cash_check:
+            case R.id.iv_cash:
+                ivCashCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_green));
                 break;
         }
+        if (WECHAT.equals(payMethod))
+            ivWxpayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
+        if (ALIPAY.equals(payMethod))
+            ivAlipayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
+        if (CASH.equals(payMethod))
+            ivCashCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
     }
-
-
 }

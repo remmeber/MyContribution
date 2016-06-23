@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_pay"
     android:layout_width="match_parent"
@@ -24,10 +23,10 @@
             android:drawableEnd="@drawable/ic_delete_black"
             android:drawableRight="@drawable/ic_delete_black"
             android:paddingBottom="@dimen/margin_little"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/margin_little"
             android:text="@string/searchHistory"
             android:textSize="@dimen/text_medium" />
@@ -41,9 +40,9 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/margin_little"
-            android:text="@string/searchResult"
             android:textSize="@dimen/text_medium"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:text="@string/searchResult" />
     </FrameLayout>
 
     <!--<View
@@ -58,12 +57,12 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/searchHistoryRcv"
+            android:id="@+id/historyResultsRcv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/searchItemRcy"
+            android:id="@+id/itemResultsRcv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone" />

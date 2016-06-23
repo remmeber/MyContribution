@@ -46,9 +46,6 @@ public class AppConstants {
      * 页面调起/销毁标志
      */
     public static final int START_0 = 0;
-    public static final int START_1 = 1;
-    public static final int START_2 = 2;
-    public static final int START_3 = 3;
     public static final int BACK_WITH_DELETE = 4;
     public static final int BACK_WITHOUT_DATA = 5;
     public static final int PAY = 6;
@@ -88,14 +85,18 @@ public class AppConstants {
     public static final String ADDRESS_CONTENT = "address_content";
     public static final String ADDRESS_CREATE_TIME = "address_time";
 
+    /*Merchant*/
+    public static final int MERCHANT_SELLNUMBER = 0;
+    public static final int MERCHANT_DISTANCE = 1;
+    public static final int MERCHANT_RATE = 2;
     /*Order*/
-    public static final String ORDER_ALL= "0";
+    public static final String ORDER_ALL = "0";
     public static final String ORDER_UNPAID = "1";
     public static final String ORDER_DELIVERING = "2";
     public static final String ORDER_COMPLETE = "3";
     public static final String ORDER_DRAWBACK = "4";
 
-   /*HotFood*/
+    /*HotFood*/
     public static final String OVERALL = "0";
     public static final String SELLNUMBER = "1";
     public static final String DISTANCE = "2";

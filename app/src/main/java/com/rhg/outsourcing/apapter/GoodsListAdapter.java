@@ -15,6 +15,10 @@ import com.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.rhg.outsourcing.impl.RcvItemClickListener;
 
 import java.util.List;
+import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * desc:商品详情里面的商品适配器
@@ -52,12 +56,13 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void bindData(final GoodsDetailViewHolder goodsDetailViewHolder,
                           final ShopDetailUriBean.ShopDetailBean shopDetailBean) {
         ImageLoader.getInstance().displayImage(shopDetailBean.getPic(),
-                goodsDetailViewHolder.goodsImage);
-        goodsDetailViewHolder.goodsName.setText(shopDetailBean.getName());
-        goodsDetailViewHolder.goodsPrice.setText(String.format(context.getResources().getString(R.string.countMoney),
+                goodsDetailViewHolder.ivGoodsDetail);
+        goodsDetailViewHolder.tvGoodsDetailName.setText(shopDetailBean.getName());
+        goodsDetailViewHolder.tvGoodsDetailPrice.setText(String.format(context.getResources().getString(R.string.countMoney),
                 shopDetailBean.getPrice()));
-        goodsDetailViewHolder.goodsSellNum.setText(shopDetailBean.getMonthlySales());
-        goodsDetailViewHolder.layout.setOnClickListener(new View.OnClickListener() {
+        goodsDetailViewHolder.tvGoodsDetailSellNum.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.sellNumber), shopDetailBean.getMonthlySales()));
+        goodsDetailViewHolder.llGoodsItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onGoodsItemClickListener != null)
@@ -80,7 +85,25 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.onGoodsItemClickListener = onGoodsItemClickListener;
     }
 
-    private class GoodsDetailViewHolder extends RecyclerView.ViewHolder {
+    public class GoodsDetailViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.iv_goods_detail)
+        ImageView ivGoodsDetail;
+        @Bind(R.id.tv_goods_detail_name)
+        TextView tvGoodsDetailName;
+        @Bind(R.id.tv_goods_detail_price)
+        TextView tvGoodsDetailPrice;
+        @Bind(R.id.tv_goods_detail_sell_num)
+        TextView tvGoodsDetailSellNum;
+        @Bind(R.id.ll_goods_item)
+        LinearLayout llGoodsItem;
+
+        public GoodsDetailViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    /*private class GoodsDetailViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout layout;
         private ImageView goodsImage;
         private TextView goodsName;
@@ -95,5 +118,5 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             goodsPrice = (TextView) itemView.findViewById(R.id.tv_goods_detail_price);
             goodsSellNum = (TextView) itemView.findViewById(R.id.tv_goods_detail_sell_num);
         }
-    }
+    }*/
 }

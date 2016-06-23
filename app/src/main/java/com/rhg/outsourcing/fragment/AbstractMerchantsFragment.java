@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public class BySellNumberFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
+public abstract class AbstractMerchantsFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
     @Bind(R.id.common_recycle)
     RecyclerView commonRecycle;
     @Bind(R.id.common_refresh)
@@ -45,14 +45,19 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
     MerchantsPresenter getMerchantsOrderBySellNumberPresenter;
     QFoodMerchantAdapter qFoodMerchantAdapter;
 
+    int merchantsType;
+
     public void setContext(Context context) {
         if (qFoodMerchantAdapter != null)
             qFoodMerchantAdapter.setContext(context);
     }
 
-    public BySellNumberFragment() {
+    public AbstractMerchantsFragment() {
+        merchantsType = getMerchantsFmType();
         getMerchantsOrderBySellNumberPresenter = new MerchantsPresenterImpl(this);
     }
+
+    protected abstract int getMerchantsFmType();
 
     @Override
     public int getLayoutResId() {
@@ -70,7 +75,7 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", 0);
+                getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", merchantsType);
             }
         });
     }
@@ -82,14 +87,13 @@ public class BySellNumberFragment extends SuperFragment implements RcvItemClickL
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", 0);
+        getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", merchantsType);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         qFoodMerchantAdapter.setOnRcvItemClickListener(this);
-
     }
 
     @Override

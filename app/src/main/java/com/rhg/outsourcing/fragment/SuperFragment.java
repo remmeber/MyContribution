@@ -42,8 +42,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        RefWatcher refWatcher = InitApplication.getRefWatcher(getActivity());
-        refWatcher.watch(this);
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
@@ -161,6 +159,8 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        RefWatcher refWatcher = InitApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     protected abstract void showFailed();

@@ -2,12 +2,13 @@ package com.rhg.outsourcing.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.bean.ShopDetailUriBean;
 import com.rhg.outsourcing.constants.AppConstants;
-import com.rhg.outsourcing.impl.SwipeRefreshListener;
 import com.rhg.outsourcing.mvp.presenter.ShopDetailPresenter;
 import com.rhg.outsourcing.mvp.presenter.ShopDetailPresenterImpl;
 import com.rhg.outsourcing.ui.FragmentController;
@@ -16,6 +17,9 @@ import com.rhg.outsourcing.widget.VerticalTabLayout;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * desc:店铺详情的食物类型fm，里面{@link FoodTypeFragment}展示店铺中的商品
  * author：remember
@@ -23,13 +27,14 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class ShopDetailFoodFragment extends SuperFragment {
+    @Bind(R.id.vt_selector)
     VerticalTabLayout verticalTabLayout;
+
     FragmentController fragmentController;
     Fragment[] fragments;
 
     List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
     ShopDetailPresenter shopDetailPresenter;
-    LoadingDialog loadingDialog;
 
     String merchantId;
 
@@ -45,7 +50,6 @@ public class ShopDetailFoodFragment extends SuperFragment {
 
     @Override
     protected void initView(View view) {
-        verticalTabLayout = (VerticalTabLayout) view.findViewById(R.id.vt_selector);
     }
 
 

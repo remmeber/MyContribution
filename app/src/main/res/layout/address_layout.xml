@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/address_include"
-        layout="@layout/toolbar_common_layout" />
+    <include layout="@layout/toolbar_common_layout" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_address"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bt_add_new_address"
-        android:layout_below="@+id/address_include">
+        android:layout_height="match_parent">
 
-        <com.rhg.outsourcing.widget.AddressRecycleViewWithDelete
-            android:id="@+id/rcy_address"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_above="@+id/bt_add_new_address"
+            android:layout_marginTop="@dimen/margin_little">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <com.rhg.outsourcing.widget.AddressRecycleViewWithDelete
+                android:id="@+id/rcy_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-    <Button
-        android:id="@+id/bt_add_new_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/colorActiveGreen"
-        android:textColor="@color/white"
-        tools:text="添加新地址" />
-</RelativeLayout>
+        <Button
+            android:id="@+id/bt_add_new_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin = "@dimen/activity_horizontal_margin"
+            android:background="@color/colorActiveGreen"
+            android:textColor="@color/white"
+            android:text="添加新地址" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -19,19 +19,29 @@ import com.rhg.outsourcing.fragment.ShopDetailFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.OnClick;
+
 /**
  * desc:店铺详情页面
  * author：remember
  * time：2016/5/28 16:15
  * email：1013773046@qq.com
  */
-public class ShopDetailActivity extends BaseActivity implements View.OnClickListener{
-    ImageView ivBack;
+public class ShopDetailActivity extends BaseActivity {
+
+    @Bind(R.id.iv_shop_detail_logo)
     ImageView ivShopLogo;
-    String shopLogoUrl;
+    @Bind(R.id.iv_shop_detail_back)
+    ImageView ivBack;
+    @Bind(R.id.tv_shop_detail_name)
     TextView tvShopName;
+    @Bind(R.id.stl_shop_detail)
     SlidingTabLayout slidingTabLayout;
+    @Bind(R.id.vp_shop_detail)
     ViewPager viewPager;
+
+    String shopLogoUrl;
     String merchantName;
     String merchantId;
     String merchantPhone;
@@ -74,11 +84,6 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    public void loadingData() {
-        /*TODO 加载数据*/
-    }
-
-    @Override
     protected void initData() {
         tvShopName.setText(merchantName);
         ImageLoader.getInstance().displayImage(shopLogoUrl, ivShopLogo);
@@ -98,7 +103,6 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         fragments.add(fragment);
         QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
                 AppConstants.SHOP_DETAIL_TITLES, viewPager, slidingTabLayout);
-        ivBack.setOnClickListener(this);
     }
 
     @Override
@@ -111,7 +115,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     }
 
-    @Override
+    @OnClick(R.id.iv_shop_detail_back)
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_shop_detail_back:
@@ -141,4 +145,5 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         bundle = null;
         super.onBackPressed();
     }
+
 }

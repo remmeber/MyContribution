@@ -1,9 +1,12 @@
 package com.rhg.outsourcing.fragment;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -13,10 +16,16 @@ import android.widget.TextView;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.QFoodShoppingCartExplAdapter;
 import com.rhg.outsourcing.bean.ShoppingCartBean;
+import com.rhg.outsourcing.utils.ShoppingCartUtil;
+import com.rhg.outsourcing.utils.ToastHelper;
 import com.rhg.outsourcing.widget.SwipeDeleteExpandListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * desc:购物车fm
@@ -28,19 +37,26 @@ public class ShoppingCartFragment extends SuperFragment {
     private static final String TAG = "ShoppingCartFragment";
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
-    SwipeRefreshLayout swipeLayout;
-    SwipeDeleteExpandListView expandableListView;
-    RelativeLayout rlShoppingCartEmpty;
-    RelativeLayout rlShoppingCartPay;
     QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
-    TextView tvCountGoods;
-    TextView tvCountMoney;
 
-
-    FrameLayout fl_tab;
+    @Bind(R.id.tb_center_tv)
     TextView tbCenterTV;
-    LinearLayout tbRightLL;
+    @Bind(R.id.tb_right_tv)
     TextView tbRightTV;
+    @Bind(R.id.fl_tab)
+    FrameLayout fl_tab;
+    @Bind(R.id.rl_shopping_cart_empty)
+    RelativeLayout rlShoppingCartEmpty;
+    @Bind(R.id.list_shopping_cart)
+    SwipeDeleteExpandListView listShoppingCart;
+    @Bind(R.id.srl_shopping_cart)
+    SwipeRefreshLayout srlShoppingCart;
+    @Bind(R.id.tv_count_money)
+    TextView tvCountMoney;
+    @Bind(R.id.ll_shopping_cart)
+    LinearLayout llShoppingCart;
+    @Bind(R.id.rl_shopping_cart_pay)
+    RelativeLayout rlShoppingCartPay;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
     //----------------------------------------------------------------------------------------------
@@ -74,17 +90,6 @@ public class ShoppingCartFragment extends SuperFragment {
 
     @Override
     protected void initView(View view) {
-        fl_tab = (FrameLayout) view.findViewById(R.id.shopping_include);
-        tbCenterTV = (TextView) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_center_tv);
-        tbRightLL = (LinearLayout) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_right_ll);
-        tbRightTV = (TextView) view.findViewById(R.id.shopping_include).findViewById(R.id.tb_right_tv);
-
-        swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.sl_shopping_cart);
-        expandableListView = (SwipeDeleteExpandListView) view.findViewById(R.id.list_shopping_cart);
-        tvCountMoney = (TextView) view.findViewById(R.id.tv_count_money);
-        tvCountGoods = (TextView) view.findViewById(R.id.tv_count);
-        rlShoppingCartEmpty = (RelativeLayout) view.findViewById(R.id.rl_shopping_cart_empty);
-        rlShoppingCartPay = (RelativeLayout) view.findViewById(R.id.rl_shopping_cart_pay);
     }
 
     @Override
@@ -92,22 +97,22 @@ public class ShoppingCartFragment extends SuperFragment {
         fl_tab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbCenterTV.setText(getResources().getString(R.string.shoppingCart));
         tbRightTV.setText("编辑");
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        srlShoppingCart.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Log.i("RHG", "refresh is done");
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        swipeLayout.setRefreshing(false);
+                        srlShoppingCart.setRefreshing(false);
                     }
                 }, 2000);
             }
         });
         QFoodShoppingCartExplAdapter = new QFoodShoppingCartExplAdapter(getContext());
-        expandableListView.setAdapter(QFoodShoppingCartExplAdapter);
-        expandableListView.setGroupIndicator(null);
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        listShoppingCart.setAdapter(QFoodShoppingCartExplAdapter);
+        listShoppingCart.setGroupIndicator(null);
+        listShoppingCart.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 return true;
@@ -124,9 +129,9 @@ public class ShoppingCartFragment extends SuperFragment {
                 tvCountMoney.setText(countMoney);
             }
         });
-        View.OnClickListener listener = QFoodShoppingCartExplAdapter.getShortCartListener();
+        /*View.OnClickListener listener = QFoodShoppingCartExplAdapter.getShortCartListener();
         if (listener != null)
-            tvCountGoods.setOnClickListener(listener);
+            tvCountGoods.setOnClickListener(listener);*/
         updateListView();
     }
 
@@ -147,18 +152,18 @@ public class ShoppingCartFragment extends SuperFragment {
     private void showEmpty(boolean isEmpty) {
         if (isEmpty) {
             rlShoppingCartEmpty.setVisibility(View.VISIBLE);
-            expandableListView.setVisibility(View.GONE);
+            listShoppingCart.setVisibility(View.GONE);
             rlShoppingCartPay.setVisibility(View.GONE);
         } else {
             rlShoppingCartEmpty.setVisibility(View.GONE);
-            expandableListView.setVisibility(View.VISIBLE);
+            listShoppingCart.setVisibility(View.VISIBLE);
             rlShoppingCartPay.setVisibility(View.VISIBLE);
         }
     }
 
     private void expandAll(int size) {
         for (int i = 0; i < size; i++) {
-            expandableListView.expandGroup(i);
+            listShoppingCart.expandGroup(i);
         }
     }
 
@@ -173,4 +178,17 @@ public class ShoppingCartFragment extends SuperFragment {
 
     }
 
+    @OnClick({R.id.iv_shopping_cart_empty, R.id.tv_count_money})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_shopping_cart_empty:
+                break;
+            case R.id.tv_count_money:
+                if (ShoppingCartUtil.hasSelectedGoods(shoppingCartBeanList))
+                    ToastHelper.getInstance()._toast("去付款");
+                else
+                    ToastHelper.getInstance()._toast("亲，请选择商品！");
+                break;
+        }
+    }
 }

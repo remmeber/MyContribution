@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rhg.outsourcing.R;
@@ -21,23 +20,29 @@ import com.rhg.outsourcing.widget.RecycleViewDivider;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.OnClick;
+
 /**
  * 作者：rememberon 2016/6/5
  * 邮箱：1013773046@qq.com
  */
-public class AddressActivity extends BaseActivity implements AddressRecycleViewWithDelete.ItemClickListener,
-        View.OnClickListener {
-    FrameLayout tb_common;
-    LinearLayout tbRight_ll;
-    TextView tvCenter;
-    ImageView ivLeft;
+public class AddressActivity extends BaseActivity implements AddressRecycleViewWithDelete.ItemClickListener {
 
-    SwipeRefreshLayout srlAddress;
+    @Bind(R.id.tb_center_tv)
+    TextView tbCenterTv;
+    @Bind(R.id.tb_left_iv)
+    ImageView tbLeftIv;
+    @Bind(R.id.fl_tab)
+    FrameLayout flTab;
+    @Bind(R.id.rcy_address)
     AddressRecycleViewWithDelete rcyAddress;
-    AddressAdapter addressAdapter;
-    Button btAddAddress;
-    int lastPosition = -1;
+    @Bind(R.id.srl_address)
+    SwipeRefreshLayout srlAddress;
 
+
+    AddressAdapter addressAdapter;
+    int lastPosition = -1;
     List<AddressLocalBean> addressBeanList;
 
     public AddressActivity() {
@@ -61,26 +66,14 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
 
     @Override
     protected void initView(View view) {
-        tb_common = (FrameLayout) view.findViewById(R.id.address_include);
-        tbRight_ll = (LinearLayout) view.findViewById(R.id.address_include)
-                .findViewById(R.id.tb_right_ll);
-        tvCenter = (TextView) view.findViewById(R.id.address_include)
-                .findViewById(R.id.tb_center_tv);
-        ivLeft = (ImageView) view.findViewById(R.id.address_include)
-                .findViewById(R.id.tb_left_iv);
 
-        srlAddress = (SwipeRefreshLayout) findViewById(R.id.srl_address);
-        rcyAddress = (AddressRecycleViewWithDelete) findViewById(R.id.rcy_address);
-        btAddAddress = (Button) findViewById(R.id.bt_add_new_address);
     }
 
     @Override
     protected void initData() {
-        tb_common.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
-        tbRight_ll.setVisibility(View.GONE);
-        tvCenter.setText(getResources().getString(R.string.address));
-        ivLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        ivLeft.setOnClickListener(this);
+        flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        tbCenterTv.setText(getResources().getString(R.string.address));
+        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcyAddress.setLayoutManager(linearLayoutManager);
@@ -108,8 +101,6 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
                 }, 2000);
             }
         });
-        btAddAddress.setText(getResources().getString(R.string.newAddress));
-        btAddAddress.setOnClickListener(this);
     }
 
     @Override
@@ -122,17 +113,6 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_add_new_address:
-                ToastHelper.getInstance()._toast("增加地址");
-                break;
-            case R.id.tb_left_iv:
-                finish();
-                break;
-        }
-    }
 
     @Override
     public void onItemClick(int position) {
@@ -151,4 +131,16 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
         }
     }
 
+
+    @OnClick({R.id.tb_left_iv, R.id.bt_add_new_address})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_add_new_address:
+                ToastHelper.getInstance()._toast("增加地址");
+                break;
+            case R.id.tb_left_iv:
+                finish();
+                break;
+        }
+    }
 }

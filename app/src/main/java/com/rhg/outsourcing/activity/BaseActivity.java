@@ -41,8 +41,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         InitApplication.getInstance().addActivity(this);
-        RefWatcher refWatcher = InitApplication.getRefWatcher(this);
-        refWatcher.watch(this);
 
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
@@ -178,6 +176,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);
+        RefWatcher refWatcher = InitApplication.getRefWatcher(this);
+        refWatcher.watch(this);
     }
 
     /*BroadcastReceiver receiver = new BroadcastReceiver() {
