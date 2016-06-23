@@ -1,44 +1,50 @@
 package com.rhg.outsourcing.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.rhg.outsourcing.R;
-import com.rhg.outsourcing.activity.PayActivity;
+import com.rhg.outsourcing.activity.OrderDetailActivity;
 import com.rhg.outsourcing.apapter.QFoodOrderAdapter;
 import com.rhg.outsourcing.bean.OrderUrlBean;
 import com.rhg.outsourcing.constants.AppConstants;
 import com.rhg.outsourcing.impl.RcvItemClickListener;
 import com.rhg.outsourcing.mvp.presenter.OrderDetailPresenter;
 import com.rhg.outsourcing.mvp.presenter.OrderDetailPresenterImpl;
-import com.rhg.outsourcing.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+
 /**
- * desc:所有订单fm
+ * desc:订单抽象FM
  * author：remember
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public class AllOrderFragment extends SuperFragment implements RcvItemClickListener<OrderUrlBean.OrderBean> {
-    RecyclerView rcv;
+public abstract class AbstractOrderFragment extends SuperFragment implements RcvItemClickListener<OrderUrlBean.OrderBean> {
+    @Bind(R.id.common_recycle)
+    RecyclerView commonRecycle;
+    @Bind(R.id.common_refresh)
+    ProgressBar commonRefresh;
+    @Bind(R.id.common_swipe)
+    SwipeRefreshLayout commonSwipe;
     QFoodOrderAdapter qFoodOrderAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
     List<OrderUrlBean.OrderBean> orderBeanList = new ArrayList<>();
-    LoadingDialog loadingDialog;
-    OrderDetailPresenter testPresenter;
+    OrderDetailPresenter rderDetailPresenter;
     String userId;
     String style;
 
-    public AllOrderFragment() {
-        testPresenter = new OrderDetailPresenterImpl(this);
-        userId = "1";
-        style = "3";
+    public AbstractOrderFragment() {
+        rderDetailPresenter = new OrderDetailPresenterImpl(this);
+        userId = "1";/*从数据库中获取*/
+        style = getFmTag();
     }
 
     @Override
@@ -48,15 +54,14 @@ public class AllOrderFragment extends SuperFragment implements RcvItemClickListe
 
     @Override
     protected void initView(View view) {
-        rcv = (RecyclerView) view.findViewById(R.id.common_recycle);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);
+        commonRecycle = (RecyclerView) view.findViewById(R.id.common_recycle);
+        commonSwipe = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);
     }
 
     @Override
     public void loadData() {
-        loadingDialog = new LoadingDialog(getContext());
-        loadingDialog.show();
-        testPresenter.getData(AppConstants.TABLE_ORDER, userId, style);
+        commonRefresh.setVisibility(View.VISIBLE);
+        rderDetailPresenter.getData(AppConstants.TABLE_ORDER, userId, style);
     }
 
     @Override
@@ -64,13 +69,13 @@ public class AllOrderFragment extends SuperFragment implements RcvItemClickListe
         qFoodOrderAdapter = new QFoodOrderAdapter(getContext(), orderBeanList);
         qFoodOrderAdapter.setOnRcvItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        rcv.setLayoutManager(linearLayoutManager);
-        rcv.setHasFixedSize(true);
-        rcv.setAdapter(qFoodOrderAdapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        commonRecycle.setLayoutManager(linearLayoutManager);
+        commonRecycle.setHasFixedSize(true);
+        commonRecycle.setAdapter(qFoodOrderAdapter);
+        commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                testPresenter.getData(AppConstants.TABLE_ORDER, userId, style);
+                rderDetailPresenter.getData(AppConstants.TABLE_ORDER, userId, style);
             }
 
         });
@@ -83,18 +88,29 @@ public class AllOrderFragment extends SuperFragment implements RcvItemClickListe
 
     @Override
     public void showSuccess(Object o) {
-        if (swipeRefreshLayout.isRefreshing())
-            swipeRefreshLayout.setRefreshing(false);
+        if (commonSwipe.isRefreshing())
+            commonSwipe.setRefreshing(false);
         qFoodOrderAdapter.setmData((List<OrderUrlBean.OrderBean>) o);
         qFoodOrderAdapter.notifyDataSetChanged();
-        loadingDialog.dismiss();
+        if (commonRefresh.getVisibility() == View.VISIBLE)
+            commonRefresh.setVisibility(View.GONE);
     }
 
     @Override
     public void onItemClickListener(int position, OrderUrlBean.OrderBean item) {
-        Intent intent = new Intent(getContext(), PayActivity.class);
+        Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(AppConstants.SP_USER_NAME, item.getReceiver());
+        bundle.putString(AppConstants.KEY_ADDRESS, item.getAddress());
+        bundle.putString(AppConstants.KEY_OR_SP_PHONE, item.getPhone());
+        bundle.putString(AppConstants.KEY_PRODUCT_PRICE,item.getPrice());
+        bundle.putString(AppConstants.KEY_ORDER_TAG, style);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    protected abstract String getFmTag();
+
 
     /*@Override
     public void itemClick(View v, int position) {

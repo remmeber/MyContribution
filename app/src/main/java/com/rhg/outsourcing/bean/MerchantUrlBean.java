@@ -45,6 +45,7 @@ public class MerchantUrlBean {
     }
 
     public static class MerchantBean {
+
         private String ID;
         private String Name;
         private String Pic;

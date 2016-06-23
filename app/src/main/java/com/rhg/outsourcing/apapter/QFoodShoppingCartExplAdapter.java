@@ -208,12 +208,12 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
             int clickPosition;
             switch (v.getId()) {
                 //TODO fragment中结算结算按钮
-                case R.id.tv_count:
+                /*case R.id.tv_count:
                     if (ShoppingCartUtil.hasSelectedGoods(mData))
                         Toast.makeText(context, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(context, "亲，请选择商品！", Toast.LENGTH_SHORT).show();
-                    break;
+                    break;*/
                 case R.id.ivCheckGroup:
                     clickPosition = Integer.parseInt(String.valueOf(v.getTag()));
 //                    isSelectAll = ShoppingCartUtil.selectGroup(mData,position);//TODO 如果有全选，则需要加上返回

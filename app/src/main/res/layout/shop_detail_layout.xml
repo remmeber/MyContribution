@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="contentDescription">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,32 +26,19 @@
             android:fitsSystemWindows="true"
             android:src="@drawable/ic_chevron_left_black" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_shop_detail_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_shop_detail_logo"
+            android:layout_gravity="center_vertical"
             android:background="@color/colorShop"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_shop" />
-
-            <TextView
-                android:id="@+id/tv_shop_detail_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:textSize="@dimen/text_large"
-                tools:text="哈哈" />
-        </LinearLayout>
+            android:drawableLeft="@drawable/ic_shop_green"
+            android:drawablePadding="@dimen/margin_small"
+            android:drawableStart="@drawable/ic_shop_green"
+            android:padding="@dimen/margin_little"
+            android:textSize="@dimen/text_large"
+            tools:text="哈哈" />
 
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/stl_shop_detail"

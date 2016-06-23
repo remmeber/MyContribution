@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * time：2016/5/28 16:13
  * email：1013773046@qq.com
  */
-public abstract class BaseActivity extends AppCompatActivity implements BaseView, View.OnClickListener {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView/*, View.OnClickListener*/ {
     private static final String ACTION_NETWORK_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
     private static final String ACTION_PUSH_DATA = "fm.data.push.action";
     private static final String ACTION_NEW_VERSION = "apk.update.action";
@@ -41,8 +41,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         InitApplication.getInstance().addActivity(this);
-        RefWatcher refWatcher = InitApplication.getRefWatcher(this);
-        refWatcher.watch(this);
 
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
@@ -178,6 +176,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);
+        RefWatcher refWatcher = InitApplication.getRefWatcher(this);
+        refWatcher.watch(this);
     }
 
     /*BroadcastReceiver receiver = new BroadcastReceiver() {

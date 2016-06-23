@@ -34,6 +34,9 @@ import com.rhg.outsourcing.widget.ModifyHeadImageDialog;
 
 import java.io.File;
 
+import butterknife.Bind;
+import butterknife.OnClick;
+
 /**
  * desc:跑腿员信息页面
  * author：remember
@@ -48,14 +51,6 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
      * email：1013773046@qq.com
      */
     private static final String CROP = "com.android.camera.action.CROP";
-    FrameLayout tb_common;
-    TextView tvRight;
-    ImageView ivLeft;
-    CircleImageView headView;
-    TextInputLayout et_name_wrap;
-    TextInputLayout et_id_wrap;
-    TextInputLayout et_phone_wrap;
-    TextInputLayout et_place_wrap;
     Button bt_save;
     Button bt_exit;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
@@ -63,6 +58,22 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
     String userID = "19216801";
     String passWord = "123";
     Uri fileUri = null;
+    @Bind(R.id.et_name_wrap)
+    TextInputLayout etNameWrap;
+    @Bind(R.id.tb_right_tv)
+    TextView tbRightTv;
+    @Bind(R.id.tb_left_iv)
+    ImageView tbLeftIv;
+    @Bind(R.id.et_id_wrap)
+    TextInputLayout etIdWrap;
+    @Bind(R.id.et_phone_wrap)
+    TextInputLayout etPhoneWrap;
+    @Bind(R.id.et_place_wrap)
+    TextInputLayout etPlaceWrap;
+    @Bind(R.id.ci_head)
+    CircleImageView headView;
+    @Bind(R.id.fl_tab)
+    FrameLayout tb_common;
 
     @Override
     protected int getLayoutResId() {
@@ -71,30 +82,14 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
 
     @Override
     protected void initView(View view) {
-        tb_common = (FrameLayout) findViewById(R.id.fl_tab);
-        tvRight = (TextView) findViewById(R.id.tb_right_tv);
-        ivLeft = (ImageView) findViewById(R.id.tb_left_iv);
-
-        headView = (CircleImageView) findViewById(R.id.ci_head);
-        et_name_wrap = (TextInputLayout) findViewById(R.id.et_name_wrap);
-        et_id_wrap = (TextInputLayout) findViewById(R.id.et_id_wrap);
-        et_phone_wrap = (TextInputLayout) findViewById(R.id.et_phone_wrap);
-        et_place_wrap = (TextInputLayout) findViewById(R.id.et_place_wrap);
-        bt_save = (Button) findViewById(R.id.bt_save);
-        bt_exit = (Button) findViewById(R.id.bt_exit);
     }
 
     protected void initData() {
         uploadAndSaveImagePresenter = new UploadAndSaveImagePresenterImpl(this);
         tb_common.setBackgroundResource(R.color.colorActiveGreen);
-        tvRight.setText("编辑");
-        ivLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        ivLeft.setOnClickListener(this);
-
-        headView.setOnClickListener(this);
-        et_name_wrap.setError("");
-        bt_save.setOnClickListener(this);
-        bt_exit.setOnClickListener(this);
+        tbRightTv.setText("编辑");
+        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        etNameWrap.setError("");
         imageStr = AccountUtil.getInstance().getHeadImageUrl();
         /*从本地获取头像URI*/
 //        if (AccountUtil.getInstance().hasAccount()) {
@@ -121,24 +116,6 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tb_left_iv:
-                finish();
-                break;
-            case R.id.bt_save:
-                break;
-            case R.id.bt_exit:
-                finish();
-                break;
-            case R.id.ci_head:
-                ModifyHeadImageDialog modifyHeadImageDialog = new ModifyHeadImageDialog(this);
-                modifyHeadImageDialog.show();
-                modifyHeadImageDialog.setChoosePicListener(this);
-                break;
-        }
-    }
 
     @Override
     final public void chooseFromGallery() {
@@ -294,4 +271,24 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
     }
 
 
+    @OnClick({R.id.bt_save, R.id.bt_exit, R.id.tb_left_iv, R.id.ci_head, R.id.tb_right_tv})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tb_left_iv:
+                finish();
+                break;
+            case R.id.bt_save:
+                break;
+            case R.id.bt_exit:
+                finish();
+                break;
+            case R.id.ci_head:
+                ModifyHeadImageDialog modifyHeadImageDialog = new ModifyHeadImageDialog(this);
+                modifyHeadImageDialog.show();
+                modifyHeadImageDialog.setChoosePicListener(this);
+                break;
+            case R.id.tb_right_tv:
+                break;
+        }
+    }
 }

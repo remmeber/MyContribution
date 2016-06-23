@@ -1,15 +1,11 @@
 package com.rhg.outsourcing.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -30,12 +26,14 @@ import com.rhg.outsourcing.third.UmengUtil;
 import com.rhg.outsourcing.utils.AccountUtil;
 import com.rhg.outsourcing.utils.ShoppingCartUtil;
 import com.rhg.outsourcing.utils.ToastHelper;
-import com.rhg.outsourcing.widget.LoadingDialog;
 import com.rhg.outsourcing.widget.ShoppingCartWithNumber;
 import com.rhg.outsourcing.widget.UIAlertView;
 import com.umeng.socialize.media.UMImage;
 
-import java.util.List;
+import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * desc:商品详情页面
@@ -45,37 +43,36 @@ import java.util.List;
  */
 public class GoodsDetailActivity extends BaseActivity {
 
-    Bundle bundle;
-    Drawable drawable_like;
-    Drawable drawable_not_like;
-    FrameLayout tb_common;
-    TextView tvCenter;
-    TextView tvRight;
-    ImageView ivRight;
-    ImageView ivLeft;
-    LinearLayout llTabRight;
-    ConvenientBanner<String> convenientBanner;
-    ImageView ivLike;
-    ImageView ivShare;
-    TextView tvGoodsName;
+    @Bind(R.id.tb_center_tv)
+    TextView tbCenterTv;
+    @Bind(R.id.tb_left_iv)
+    ImageView tbLeftIv;
+    @Bind(R.id.tb_right_iv)
+    ImageView tbRightIv;
+    @Bind(R.id.tb_right_tv)
+    TextView tbRightTv;
+    @Bind(R.id.common_refresh)
+    ProgressBar commonRefresh;
+    @Bind(R.id.iv_banner)
+    ConvenientBanner ivBanner;
+    @Bind(R.id.tv_sell_number)
     TextView tvSellNumber;
+    @Bind(R.id.tv_goods_name)
+    TextView tvGoodsName;
+    @Bind(R.id.tv_description_content)
     TextView tvDescriptionContent;
+    @Bind(R.id.tv_price_number)
     TextView tvPriceNumber;
-    ImageView ivReduce;
-    ImageView ivAdd;
+    @Bind(R.id.tvNum)
     TextView tvNum;
-    ShoppingCartWithNumber shoppingCartWithNumber;
-    Button btBuy;
-    LoadingDialog loadingDialog;
+    @Bind(R.id.ivAddToShoppingCart)
+    ShoppingCartWithNumber ivAddToShoppingCart;
+    //    private boolean isLike;
+
+    Bundle bundle;
+
     GoodsDetailPresenter goodsDetailPresenter;
     String foodId;
-    String foodName;
-    String foodPrice;
-    String foodSale;
-    String foodStyle;
-    String foodMessage;
-    List<String> foodSrcs;
-    //    private boolean isLike;
     private boolean isNeedLoc;
     private String location;
     private MyLocationListener myLocationListener;
@@ -116,7 +113,6 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @Override
     public LocationService GetMapService() {
-        loadingDialog.show();
         if (isNeedLoc) {
             return InitApplication.getInstance().locationService;
         }
@@ -139,10 +135,8 @@ public class GoodsDetailActivity extends BaseActivity {
     //todo Intent 传递接收的数据
     @Override
     public void dataReceive(Intent intent) {
-        loadingDialog = new LoadingDialog(this);
         if (intent != null) {
-            bundle = intent.getExtras();
-            foodId = bundle.getString(AppConstants.KEY_PRODUCT_ID, "");
+            foodId = intent.getStringExtra(AppConstants.KEY_PRODUCT_ID);
 //            merchantName = bundle.getString(AppConstants.KEY_PRODUCT_NAME, null);
 //            merchantSrc = bundle.getString(AppConstants.KEY_PRODUCT_PRICE, null);
         }
@@ -156,24 +150,7 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @Override
     protected void initView(View view) {
-        tb_common = (FrameLayout) findViewById(R.id.fl_tab);
-        tvCenter = (TextView) findViewById(R.id.tb_center_tv);
-        tvRight = (TextView) findViewById(R.id.tb_right_tv);
-        ivRight = (ImageView) findViewById(R.id.tb_right_iv);
-        ivLeft = (ImageView) findViewById(R.id.tb_left_iv);
-        llTabRight = (LinearLayout) findViewById(R.id.tb_right_ll);
-        convenientBanner = (ConvenientBanner) findViewById(R.id.iv_banner);
-//        ivLike = (ImageView) findViewById(R.id.iv_like);
-        ivShare = (ImageView) findViewById(R.id.ivShare);
-        tvGoodsName = (TextView) findViewById(R.id.tv_goods_name);
-        tvSellNumber = (TextView) findViewById(R.id.tv_sell_number);
-        tvDescriptionContent = (TextView) findViewById(R.id.tv_description_content);
-        tvPriceNumber = (TextView) findViewById(R.id.tv_price_number);
-        ivReduce = (ImageView) findViewById(R.id.ivReduce);
-        ivAdd = (ImageView) findViewById(R.id.ivAdd);
-        tvNum = (TextView) findViewById(R.id.tvNum);
-        shoppingCartWithNumber = (ShoppingCartWithNumber) findViewById(R.id.ivAddToShoppingCart);
-        btBuy = (Button) findViewById(R.id.bt_buy);
+
     }
 
 
@@ -181,41 +158,29 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
 //        goodsDetailPresenter.getGoodsInfo();
-        ivRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
-        ivLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        tvRight.setText(location);//TODO 根据定位来决定
-        tvCenter.setText(getResources().getString(R.string.goodsDetail));
+        tbRightIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
+        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbRightTv.setText(location);//TODO 根据定位来决定
+        tbCenterTv.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
         AccountDao accountDao = AccountDao.getInstance();
         String _productId = String.valueOf(foodId);
         if (accountDao.isExistGood(_productId)) {
             String _num = accountDao.getNumByProductID(_productId);
             tvNum.setText(_num);
-            shoppingCartWithNumber.setNum(_num);
+            ivAddToShoppingCart.setNum(_num);
         } else {
             tvNum.setText("0");
-            shoppingCartWithNumber.setNum("0");
+            ivAddToShoppingCart.setNum("0");
         }
-
-
-        ivLeft.setOnClickListener(this);
-        llTabRight.setOnClickListener(this);
-//        ivLike.setOnClickListener(this);
-        ivShare.setOnClickListener(this);
-        ivAdd.setOnClickListener(this);
-        ivReduce.setOnClickListener(this);
-        shoppingCartWithNumber.setDrawable(R.drawable.ic_shopping_cart_green);
-        shoppingCartWithNumber.setOnClickListener(this);
-        btBuy.setOnClickListener(this);
-        convenientBanner.setOnClickListener(this);
-        convenientBanner.startTurning(2000);
-        convenientBanner
-                .setPageIndicator(AppConstants.IMAGE_INDICTORS);
+        ivAddToShoppingCart.setDrawable(R.drawable.ic_shopping_cart_green);
+        ivBanner.startTurning(2000);
+        ivBanner.setPageIndicator(AppConstants.IMAGE_INDICTORS);
     }
 
     @Override
     public void showLocSuccess(String s) {
-        tvRight.setText(s);
+        tbRightTv.setText(s);
         AccountUtil.getInstance().setLocation(s);
     }
 
@@ -228,19 +193,9 @@ public class GoodsDetailActivity extends BaseActivity {
     @Override
     protected void showSuccess(Object s) {
         GoodsDetailUrlBean.GoodsDetailBean _bean = (GoodsDetailUrlBean.GoodsDetailBean) s;
-        foodName = _bean.getName();
-        foodPrice = _bean.getPrice();
-        foodMessage = _bean.getMessage();
-        foodSale = _bean.getMonthlySales();
-        foodStyle = _bean.getStyle();
-        foodSrcs = _bean.getPics();
-        bindData();
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                //execute the task
-                loadingDialog.dismiss();
-            }
-        }, 500);
+        bindData(_bean);
+        if (commonRefresh.getVisibility() == View.VISIBLE)
+            commonRefresh.setVisibility(View.GONE);
     }
 
     @Override
@@ -248,22 +203,24 @@ public class GoodsDetailActivity extends BaseActivity {
 
     }
 
-    private void bindData() {
-        convenientBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
+    private void bindData(GoodsDetailUrlBean.GoodsDetailBean _bean) {
+        ivBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
 
             @Override
             public BannerImageHolder createHolder() {
                 return new BannerImageHolder();
             }
-        }, foodSrcs);
-        tvGoodsName.setText(foodName);
-        String _temp = getResources().getString(R.string.sellNumber) + foodSale;
-        tvSellNumber.setText(_temp);
-        tvDescriptionContent.setText(foodMessage);
-        tvPriceNumber.setText(foodPrice);
+        }, _bean.getPicsrc());
+        tvGoodsName.setText(_bean.getName());
+        tvSellNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.sellNumber),
+                _bean.getMonthlySales()));
+        tvDescriptionContent.setText(_bean.getMessage());
+        tvPriceNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
+                _bean.getPrice()));
     }
 
-    @Override
+    @OnClick({R.id.tb_left_iv, R.id.tb_right_ll, R.id.ivAddToShoppingCart, R.id.ivShare,
+            R.id.ivReduce, R.id.ivAdd, R.id.bt_buy})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tb_left_iv:
@@ -278,7 +235,7 @@ public class GoodsDetailActivity extends BaseActivity {
                 int t = Integer.valueOf(tvNum.getText().toString());
                 if (t != 0) {
                     tvNum.setText(String.valueOf(t - 1));
-                    shoppingCartWithNumber.setNum(String.valueOf(t - 1));
+                    ivAddToShoppingCart.setNum(String.valueOf(t - 1));
                     //TODO 需要更新购物车数据库的数据
                 }
                 break;
@@ -286,7 +243,7 @@ public class GoodsDetailActivity extends BaseActivity {
                 String text = tvNum.getText().toString();
                 int num = Integer.valueOf(text);
                 tvNum.setText(String.valueOf(num + 1));
-                shoppingCartWithNumber.setNum(String.valueOf(num + 1));
+                ivAddToShoppingCart.setNum(String.valueOf(num + 1));
                 //TODO 需要更新购物车数据库的数据
                 break;
          /*   case R.id.ivAddToShoppingCart:
@@ -374,4 +331,6 @@ public class GoodsDetailActivity extends BaseActivity {
         location = null;
         super.onDestroy();
     }
+
+
 }

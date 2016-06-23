@@ -3,11 +3,11 @@ package com.rhg.outsourcing.apapter;
 import android.content.Context;
 import android.view.View;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.viewHolder.BodyViewHolder;
 import com.rhg.outsourcing.bean.RecommendListUrlBean;
 import com.rhg.outsourcing.constants.AppConstants;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class HomeRecycleAdapter extends RecycleAbstractAdapter<RecommendListUrlB
     }
 
     @Override
-    protected void bindBodyData(final BodyViewHolder holder, RecommendListUrlBean.RecommendShopBeanEntity data, int type) {
+    protected void bindBodyData(final BodyViewHolder holder, final RecommendListUrlBean.RecommendShopBeanEntity data, int type) {
         holder.sellerName.setText(data.getName());
         ImageLoader.getInstance().displayImage(data.getSrc(), holder.sellerImage);
         holder.sellerDistance.setText(data.getDistance());
@@ -55,7 +55,8 @@ public class HomeRecycleAdapter extends RecycleAbstractAdapter<RecommendListUrlB
             holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
+                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(),
+                            data);
                 }
             });
         /*holder.sellerName.setText(data.getMerchantName());

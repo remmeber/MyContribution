@@ -1,25 +1,35 @@
 package com.rhg.outsourcing.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.constants.AppConstants;
 
+import butterknife.Bind;
+import butterknife.BindString;
+import butterknife.ButterKnife;
+
 /**
- *desc:店铺详情fm
- *author：remember
- *time：2016/5/28 16:49
- *email：1013773046@qq.com
+ * desc:店铺详情fm
+ * author：remember
+ * time：2016/5/28 16:49
+ * email：1013773046@qq.com
  */
 public class ShopDetailFragment extends SuperFragment {
+    @Bind(R.id.tv_shop_phone_num)
     TextView tvPhoneNumber;
+    @Bind(R.id.tv_shop_address)
+    TextView tvShopAddress;
+    @Bind(R.id.tv_seller_note)
+    TextView tvSellerNote;
+
     String phoneNumber;
-    TextView tvAddress;
     String Address;
-    TextView tvMerchantNote;
-    String merchantNote;
+    String sellerNote;
 
     @Override
     public void receiveData(Bundle arguments) {
@@ -34,13 +44,13 @@ public class ShopDetailFragment extends SuperFragment {
                 Address = _address + _temp;
             _temp = arguments.getString(AppConstants.KEY_NOTE);
             if (_temp == null || "".equals(_temp))
-                merchantNote = _note + "无";
+                sellerNote = _note + "无";
             else
-                merchantNote = _note + _temp;
+                sellerNote = _note + _temp;
         } else {
             phoneNumber = "0246813579";
             Address = _address + "江苏省南京市江宁区秣周东路无线谷";
-            merchantNote = _note + "无线谷是一个非常神奇的地方";
+            sellerNote = _note + "无线谷是一个非常神奇的地方";
         }
     }
 
@@ -52,15 +62,12 @@ public class ShopDetailFragment extends SuperFragment {
     @Override
     protected void initData() {
         tvPhoneNumber.setText(phoneNumber);
-        tvAddress.setText(Address);
-        tvMerchantNote.setText(merchantNote);
+        tvShopAddress.setText(Address);
+        tvSellerNote.setText(sellerNote);
     }
 
     @Override
     protected void initView(View view) {
-        tvPhoneNumber = (TextView) view.findViewById(R.id.tv_shop_phone_num);
-        tvAddress = (TextView) view.findViewById(R.id.tv_shop_address);
-        tvMerchantNote = (TextView) view.findViewById(R.id.tv_seller_note);
     }
 
     @Override

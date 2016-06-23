@@ -34,7 +34,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_shop" />
+            android:src="@drawable/ic_shop_green" />
 
         <TextView
             android:id="@+id/headerstorename"
@@ -58,7 +58,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_chevron_right_black" />
+            android:src="@drawable/ic_chevron_right_green" />
 
         <View
             android:id="@+id/headerline"
@@ -85,7 +85,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textColor="@color/colorTextOrder"
             android:textSize="@dimen/text_small"
             tools:text="bbbbbb" />
 
@@ -97,7 +96,6 @@
             android:layout_marginStart="@dimen/margin_big"
             android:layout_toEndOf="@id/headerdemandmoney"
             android:layout_toRightOf="@id/headerdemandmoney"
-            android:textColor="@color/colorTextOrder"
             android:textSize="@dimen/text_small"
             tools:text="aaaaaa" />
 
@@ -109,7 +107,6 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:textColor="@color/colorTextOrder"
             android:textSize="@dimen/text_small"
             tools:text="aaaaaa" />
 

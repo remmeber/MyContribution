@@ -6,7 +6,7 @@ import java.util.List;
  * 作者：rememberon 2016/6/4
  * 邮箱：1013773046@qq.com
  */
-public class HotGoodsUrlBean {
+public class HotFoodSearchUrlBean {
 
     /**
      * result : 0
@@ -28,7 +28,7 @@ public class HotGoodsUrlBean {
      * Price : 128
      */
 
-    private List<HotGoodsBean> rows;
+    private List<HotGoodsSearchBean> rows;
 
     public int getResult() {
         return result;
@@ -54,15 +54,15 @@ public class HotGoodsUrlBean {
         this.total = total;
     }
 
-    public List<HotGoodsBean> getRows() {
+    public List<HotGoodsSearchBean> getRows() {
         return rows;
     }
 
-    public void setRows(List<HotGoodsBean> rows) {
+    public void setRows(List<HotGoodsSearchBean> rows) {
         this.rows = rows;
     }
 
-    public static class HotGoodsBean {
+    public static class HotGoodsSearchBean {
         private String RName;
         private String FName;
         private String Stars;

@@ -324,9 +324,10 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         intent.putExtra(AppConstants.KEY_OR_SP_PHONE, "1234567890");
         intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
         intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
-        intent.putExtra(AppConstants.KEY_MERCHANT_ID, "20160517");
-        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, "荣哥土菜馆");
-        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[1]);
+
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getID());
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getName());
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, item.getSrc());
         startActivity(intent);
     }
 }

@@ -11,7 +11,10 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.HotSellVpAdapter;
 import com.rhg.outsourcing.constants.AppConstants;
-import com.rhg.outsourcing.fragment.ComprehensiveHotSellFragment;
+import com.rhg.outsourcing.fragment.HotFoodDistanceFm;
+import com.rhg.outsourcing.fragment.HotFoodRateFm;
+import com.rhg.outsourcing.fragment.HotFoodSellNumberFm;
+import com.rhg.outsourcing.fragment.OverallHotFoodFm;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -42,9 +45,6 @@ public class HotSellActivity extends BaseActivity {
     Fragment[] fragments = new Fragment[4];
 
     public HotSellActivity() {
-        for (int i = 0; i < 4; i++) {
-            fragments[i] = new ComprehensiveHotSellFragment();
-        }
     }
 
     @Override
@@ -59,6 +59,10 @@ public class HotSellActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        fragments[0] = new OverallHotFoodFm();
+        fragments[1] = new HotFoodDistanceFm();
+        fragments[2] = new HotFoodSellNumberFm();
+        fragments[3] = new HotFoodRateFm();
         tbBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbTitle.setText("热销单品");

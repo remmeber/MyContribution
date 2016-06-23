@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rhg.outsourcing.R;
+import com.rhg.outsourcing.impl.RcvItemClickListener;
 
 import java.util.List;
 
@@ -43,8 +44,8 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
         searchHistoryViewHolder.tvSearchHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onSearchHistoryClickListener != null)
-                    onSearchHistoryClickListener.onSearchItemClick(clickPosition);
+                if (onSearchItemClick != null)
+                    onSearchItemClick.onItemClickListener(clickPosition, searchHistory.get(clickPosition));
             }
         });
     }
@@ -63,14 +64,9 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public interface SearchHistoryClickListener {
-        void onSearchItemClick(int position);
-    }
+    private RcvItemClickListener onSearchItemClick;
 
-    private SearchHistoryClickListener onSearchHistoryClickListener;
-
-    public void setOnSearchHistoryClickListener(SearchHistoryClickListener
-                                                        onSearchHistoryClickListener) {
-        this.onSearchHistoryClickListener = onSearchHistoryClickListener;
+    public void setOnSearchHistoryClickListener(RcvItemClickListener onSearchItemClick) {
+        this.onSearchItemClick = onSearchItemClick;
     }
 }

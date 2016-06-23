@@ -194,9 +194,6 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
     //--------------------------------------------------------------------------------------------
 
 
-    @Override
-    public void onClick(View v) {
-    }
 
     @Override
     public void doSearch() {

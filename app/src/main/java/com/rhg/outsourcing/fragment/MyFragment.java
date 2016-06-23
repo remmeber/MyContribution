@@ -13,7 +13,7 @@ import com.rhg.outsourcing.activity.AddressActivity;
 import com.rhg.outsourcing.activity.DeliverInfoActivity;
 import com.rhg.outsourcing.activity.DeliverRegisterActivity;
 import com.rhg.outsourcing.activity.NewAddressActivity;
-import com.rhg.outsourcing.activity.OrderActivity;
+import com.rhg.outsourcing.activity.OrderListActivity;
 import com.rhg.outsourcing.constants.AppConstants;
 import com.rhg.outsourcing.impl.SignInListener;
 import com.rhg.outsourcing.third.UmengUtil;
@@ -115,15 +115,15 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         myForward.setOnClickListener(this);
         myForward.setTag(R.id.profileInfo);
 
-        myPay.setText(R.string.myPay);
+        myPay.setText(R.string.orderUnPaid);
         myPay.setOnClickListener(this);
         myPay.setTag(0);
 
-        myCancel.setText(R.string.myCancel);
+        myCancel.setText(R.string.cancel);
         myCancel.setOnClickListener(this);
         myCancel.setTag(1);
 
-        myComplete.setText(R.string.myComplete);
+        myComplete.setText(R.string.orderComplete);
         myComplete.setOnClickListener(this);
         myComplete.setTag(2);
 
@@ -149,11 +149,11 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         addressForward.setOnClickListener(this);
         addressForward.setTag(R.id.profileAddress);
 
-        addressCustome.setText(R.string.addrCustome);
+        addressCustome.setText(R.string.custome);
         addressCustome.setOnClickListener(this);
         addressCustome.setTag(6);
 
-        addressAdd.setText(R.string.addrAdd);
+        addressAdd.setText(R.string.add);
         addressAdd.setOnClickListener(this);
         addressAdd.setTag(7);
 
@@ -189,7 +189,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         Intent intent = new Intent();
         switch ((int) v.getTag()) {
             case R.id.profileInfo://TODO 我的订单右箭头
-                startActivity(new Intent(getContext(), OrderActivity.class));
+                startActivity(new Intent(getContext(), OrderListActivity.class));
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
 //                if (isSignIn)
@@ -204,13 +204,13 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
                 doLogin();
                 break;
             case 0://TODO 待付款
-                Toast.makeText(getContext(), R.string.myPay, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.orderUnPaid, Toast.LENGTH_SHORT).show();
                 break;
             case 1://TODO  取消
-                Toast.makeText(getContext(), R.string.myCancel, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.cancel, Toast.LENGTH_SHORT).show();
                 break;
             case 2://TODO 修改
-                Toast.makeText(getContext(), R.string.myComplete, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.orderComplete, Toast.LENGTH_SHORT).show();
                 break;
             case 3://TODO 登录
                 Toast.makeText(getContext(), R.string.workerSignIn, Toast.LENGTH_SHORT).show();

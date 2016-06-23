@@ -1,12 +1,11 @@
 package com.rhg.outsourcing.activity;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rhg.outsourcing.R;
@@ -18,6 +17,8 @@ import com.rhg.outsourcing.utils.AddressUtil;
 import com.rhg.outsourcing.utils.DataUtil;
 import com.rhg.outsourcing.utils.ToastHelper;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -25,16 +26,17 @@ import butterknife.OnClick;
  * 邮箱：1013773046@qq.com
  */
 public class NewAddressActivity extends BaseActivity {
-
+    @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
+    @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;
-    LinearLayout tbRightLl;
+    @Bind(R.id.fl_tab)
     FrameLayout flTab;
+    @Bind(R.id.add_new_address_contact_person_content)
     EditText addNewAddressContactPersonContent;
+    @Bind(R.id.add_new_address_contacts_content)
     EditText addNewAddressContactsContent;
-    ImageView addNewAddressLocation;
-    EditText addNewAddressContentDetail;
-    Button addNewAddressBt;
+    @Bind(R.id.add_new_address_contact_address_content)
     TextView addNewAddressContactAddressContent;
 
     @Override
@@ -44,18 +46,6 @@ public class NewAddressActivity extends BaseActivity {
 
     @Override
     protected void initView(View view) {
-        flTab = (FrameLayout) view.findViewById(R.id.new_address_include);
-        tbCenterTv = (TextView) view.findViewById(R.id.new_address_include).findViewById(R.id.tb_center_tv);
-        tbLeftIv = (ImageView) view.findViewById(R.id.new_address_include).findViewById(R.id.tb_left_iv);
-        tbRightLl = (LinearLayout) view.findViewById(R.id.new_address_include).findViewById(R.id.tb_right_ll);
-
-        addNewAddressContactPersonContent = (EditText) findViewById(R.id.add_new_address_contact_person_content);
-        addNewAddressContactsContent = (EditText) findViewById(R.id.add_new_address_contacts_content);
-        addNewAddressContentDetail = (EditText) findViewById(R.id.add_new_address_content_detail);
-        addNewAddressLocation = (ImageView) findViewById(R.id.add_new_address_location);
-        addNewAddressBt = (Button) findViewById(R.id.add_new_address_bt);
-        addNewAddressContactAddressContent = (TextView) findViewById(R.id.add_new_address_contact_address_content);
-
 
     }
 
@@ -79,12 +69,6 @@ public class NewAddressActivity extends BaseActivity {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tbCenterTv.setText(getResources().getString(R.string.newAddress));
-        tbRightLl.setVisibility(View.GONE);
-
-        tbLeftIv.setOnClickListener(this);
-        addNewAddressBt.setOnClickListener(this);
-        addNewAddressContactAddressContent.setOnClickListener(this);
-        addNewAddressLocation.setOnClickListener(this);
     }
 
     @Override
@@ -139,4 +123,10 @@ public class NewAddressActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

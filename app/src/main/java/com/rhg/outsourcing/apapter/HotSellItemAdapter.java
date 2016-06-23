@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rhg.outsourcing.R;
-import com.rhg.outsourcing.bean.HotGoodsUrlBean;
+import com.rhg.outsourcing.bean.HotFoodUrlBean;
 import com.rhg.outsourcing.impl.RcvItemClickListener;
 import com.rhg.outsourcing.widget.MyRatingBar;
 
@@ -24,20 +24,20 @@ import butterknife.ButterKnife;
  */
 public class HotSellItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
-    List<HotGoodsUrlBean.HotGoodsBean> hotGoodsBeanList;
-    RcvItemClickListener<HotGoodsUrlBean.HotGoodsBean> onRcvItemClickListener;
+    List<HotFoodUrlBean.HotGoodsBean> hotGoodsBeanList;
+    RcvItemClickListener<HotFoodUrlBean.HotGoodsBean> onRcvItemClickListener;
 
-    public HotSellItemAdapter(Context context, List<HotGoodsUrlBean.HotGoodsBean> hotGoodsBeanList) {
+    public HotSellItemAdapter(Context context, List<HotFoodUrlBean.HotGoodsBean> hotGoodsBeanList) {
         this.context = context;
         this.hotGoodsBeanList = hotGoodsBeanList;
     }
 
-    public void setHotGoodsBeanList(List<HotGoodsUrlBean.HotGoodsBean> hotGoodsBeanList) {
+    public void setHotGoodsBeanList(List<HotFoodUrlBean.HotGoodsBean> hotGoodsBeanList) {
         this.hotGoodsBeanList = hotGoodsBeanList;
         notifyDataSetChanged();
     }
 
-    public void setOnRcvItemClickListener(RcvItemClickListener<HotGoodsUrlBean.HotGoodsBean>
+    public void setOnRcvItemClickListener(RcvItemClickListener<HotFoodUrlBean.HotGoodsBean>
                                                   onRcvItemClickListener) {
         this.onRcvItemClickListener = onRcvItemClickListener;
     }
@@ -62,7 +62,7 @@ public class HotSellItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void bindData(HotSellItemViewHolder hotSellItemViewHolder,
-                          HotGoodsUrlBean.HotGoodsBean hotGoodsBean) {
+                          HotFoodUrlBean.HotGoodsBean hotGoodsBean) {
         hotSellItemViewHolder.hotSellMerchantName.setText(hotGoodsBean.getRName());
         /*ImageLoader.getInstance().displayImage(R.drawable.recommend_default_icon_1,
                 hotSellItemViewHolder.hotSellFoodImage);*/
