@@ -51,9 +51,9 @@ public class OrderListActivity extends BaseActivity {
         flTab.setBackgroundResource(R.color.colorActiveGreen);
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
         List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new OrderUnPaidFM());
         fragments.add(new OrderDeliveringFm());
         fragments.add(new OrderCompleteFm());
-        fragments.add(new OrderUnPaidFM());
         fragments.add(new OrderDrawbackFm());
         QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
                 AppConstants.ORDER_TITLES,

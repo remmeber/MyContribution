@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.bean.ShopDetailUriBean;
-import com.rhg.outsourcing.constants.AppConstants;
 import com.rhg.outsourcing.impl.RcvItemClickListener;
 
 import java.util.List;
@@ -51,8 +50,8 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     private void bindData(final GoodsDetailViewHolder goodsDetailViewHolder,
-                          ShopDetailUriBean.ShopDetailBean shopDetailBean) {
-        ImageLoader.getInstance().displayImage(AppConstants.images[0],
+                          final ShopDetailUriBean.ShopDetailBean shopDetailBean) {
+        ImageLoader.getInstance().displayImage(shopDetailBean.getPic(),
                 goodsDetailViewHolder.goodsImage);
         goodsDetailViewHolder.goodsName.setText(shopDetailBean.getName());
         goodsDetailViewHolder.goodsPrice.setText(String.format(context.getResources().getString(R.string.countMoney),
@@ -63,7 +62,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             public void onClick(View v) {
                 if (onGoodsItemClickListener != null)
                     onGoodsItemClickListener.onItemClickListener(goodsDetailViewHolder.getAdapterPosition(),
-                            null);
+                            shopDetailBean);
             }
         });
     }

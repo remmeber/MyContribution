@@ -59,10 +59,18 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvEdit;
 
     String orderTag;
+    String orderReceiver;
+    String orderPhone;
+    String orderAddress;
+    String orderPrice;
 
     @Override
     public void dataReceive(Intent intent) {
-        orderTag = intent.getExtras().getString(AppConstants.KEY_ORDER_TAG, "");
+        orderTag = intent.getStringExtra(AppConstants.KEY_ORDER_TAG);
+        orderReceiver = intent.getStringExtra(AppConstants.SP_USER_NAME);
+        orderPhone = intent.getStringExtra(AppConstants.KEY_OR_SP_PHONE);
+        orderAddress = intent.getStringExtra(AppConstants.KEY_ADDRESS);
+        orderPrice = intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE);
     }
 
     @Override
@@ -81,16 +89,16 @@ public class OrderDetailActivity extends BaseActivity {
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tvReceiver.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
-                "阮湖岗"));
+                orderReceiver));
         tvReceiverPhone.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
-                "222222222"));
+                orderPhone));
         tvReceiverAddress.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
-                "江苏省南京市江宁区"));
+                orderAddress));
         ivEditRight.setVisibility(View.GONE);
         tvEdit.setVisibility(View.GONE);
         tvOrderNote.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvNote),
-                "没有备注"));
-        tvMerchantName.setText("黄焖鸡");
+                "无"));
+        tvMerchantName.setText("黄焖鸡");/*接口中午订单名字*/
         btDrawback.setVisibility(View.GONE);
         /*recycleview*/
         rcyPayItem.setLayoutManager(new LinearLayoutManager(this));
@@ -99,7 +107,7 @@ public class OrderDetailActivity extends BaseActivity {
 
         lyTotalCount.setVisibility(View.VISIBLE);
         tvTotalMoney.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
-                "299.00"));
+                orderPrice));
         setButtonText(btPayOrRateOrConform);
     }
 

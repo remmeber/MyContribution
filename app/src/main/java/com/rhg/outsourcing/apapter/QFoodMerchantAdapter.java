@@ -3,14 +3,15 @@ package com.rhg.outsourcing.apapter;
 import android.content.Context;
 import android.view.View;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.outsourcing.R;
 import com.rhg.outsourcing.apapter.viewHolder.BodyViewHolder;
 import com.rhg.outsourcing.apapter.viewHolder.HeaderViewHolder;
 import com.rhg.outsourcing.bean.MerchantUrlBean;
 import com.rhg.outsourcing.constants.AppConstants;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * desc:
@@ -20,9 +21,11 @@ import java.util.List;
  */
 public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean.MerchantBean> {
 
+    Context context;
 
     public QFoodMerchantAdapter(Context context, List<MerchantUrlBean.MerchantBean> mData) {
         super(context, mData);
+        this.context = context;
     }
 
 
@@ -47,9 +50,12 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
     public void bindHeadData(final HeaderViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
         ImageLoader.getInstance().displayImage(data.getPic(), holder.headerstoreimage);
         holder.headerstorename.setText(data.getName());
-        holder.headerdemandmoney.setText(data.getDelivery());
-        holder.headerdelivermoney.setText(data.getFee());
-        holder.headerdistance.setText(data.getDistance());
+        holder.headerdemandmoney.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDeliverRequire), data.getDelivery()));
+        holder.headerdelivermoney.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDeliverFee), data.getFee()));
+        holder.headerdistance.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDistance), data.getDistance()));
         holder.headerlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,10 +69,13 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
     protected void bindBodyData(final BodyViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
         holder.sellerName.setText(data.getName());
         ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
-        holder.sellerDistance.setText(data.getDistance());
+        holder.sellerDistance.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDeliverRequire), data.getDistance()));
         holder.foodType.setText(data.getStyle());
-        holder.deliverMoney.setText(data.getFee());
-        holder.demandMoney.setText(data.getDelivery());
+        holder.deliverMoney.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDeliverFee), data.getFee()));
+        holder.demandMoney.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDistance), data.getDelivery()));
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

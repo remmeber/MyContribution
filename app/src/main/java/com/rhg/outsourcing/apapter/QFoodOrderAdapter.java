@@ -36,7 +36,7 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
     }
 
     @Override
-    protected void bindBodyData(final BodyViewHolder holder, OrderUrlBean.OrderBean data, int type) {
+    protected void bindBodyData(final BodyViewHolder holder, final OrderUrlBean.OrderBean data, int type) {
         holder.sellerName.setText("ddddddd");
         ImageLoader.getInstance().displayImage(AppConstants.images[0], holder.sellerImage);
         holder.tv_state.setText(data.getStyle());
@@ -48,7 +48,7 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
             @Override
             public void onClick(View v) {
                 if (getOnRcvItemClickListener() != null)
-                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
+                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), data);
             }
         });
     }

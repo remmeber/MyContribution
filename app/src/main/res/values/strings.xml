@@ -40,7 +40,7 @@
 
     <!--商品详情-->
     <string name="goodsDetail">商品详情</string>
-    <string name="sellNumber">销量:</string>
+    <string name="sellNumber">销量:%s</string>
     <string name="buy">去结账</string>
     <!--商品详情-->
 
@@ -55,6 +55,9 @@
     <string name="tvContactPhone">联系方式:%s</string>
     <string name="tvReceiveAddress">收货地址:%s</string>
     <string name="tvNote">备注:%s</string>
+    <string name="tvDistance">距离%s米</string>
+    <string name="tvDeliverRequire">满%s起送</string>
+    <string name="tvDeliverFee">配送费%s元</string>
     <string name="goPay">去付款</string>
     <string name="tvDrawback">申请退款</string>
     <string name="tvSummation">合计</string>

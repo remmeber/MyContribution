@@ -7,23 +7,43 @@ import java.util.List;
  * 邮箱：1013773046@qq.com
  */
 public class GoodsDetailUrlBean {
-
     /**
+     * result : 0
+     * msg : 请求成功
      * total : 1
-     * rows : [{"Name":"微辣黄焖鸡米饭","Price":"288","MonthlySales":"16","Style":"有货","Message":"微辣的黄焖鸡米饭","Pic":"http://www.zousitanghulu.com/Pic/1.jpg"}]
+     * rows : [{"Name":"微辣绿焖鸡米饭","Price":"200","MonthlySales":"0","Style":"有货","Message":"微辣的绿焖鸡米饭","Picnum":2,"Picsrc":["http://www.zousitanghulu.com/Pic/1.jpg","http://zousitanghulu.com/Pic/FoodPic/food3.jpg"]}]
      */
 
+    private int result;
+    private String msg;
     private int total;
     /**
-     * Name : 微辣黄焖鸡米饭
-     * Price : 288
-     * MonthlySales : 16
+     * Name : 微辣绿焖鸡米饭
+     * Price : 200
+     * MonthlySales : 0
      * Style : 有货
-     * Message : 微辣的黄焖鸡米饭
-     * Pic : http://www.zousitanghulu.com/Pic/1.jpg
+     * Message : 微辣的绿焖鸡米饭
+     * Picnum : 2
+     * Picsrc : ["http://www.zousitanghulu.com/Pic/1.jpg","http://zousitanghulu.com/Pic/FoodPic/food3.jpg"]
      */
 
     private List<GoodsDetailBean> rows;
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public int getTotal() {
         return total;
@@ -47,7 +67,8 @@ public class GoodsDetailUrlBean {
         private String MonthlySales;
         private String Style;
         private String Message;
-        private List<String> Pics;
+        private int Picnum;
+        private List<String> Picsrc;
 
         public String getName() {
             return Name;
@@ -89,12 +110,21 @@ public class GoodsDetailUrlBean {
             this.Message = Message;
         }
 
-        public List<String> getPics() {
-            return Pics;
+        public int getPicnum() {
+            return Picnum;
         }
 
-        public void setPics(List<String> Pics) {
-            this.Pics = Pics;
+        public void setPicnum(int Picnum) {
+            this.Picnum = Picnum;
+        }
+
+        public List<String> getPicsrc() {
+            return Picsrc;
+        }
+
+        public void setPicsrc(List<String> Picsrc) {
+            this.Picsrc = Picsrc;
         }
     }
+
 }

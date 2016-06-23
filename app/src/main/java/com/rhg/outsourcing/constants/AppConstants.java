@@ -24,7 +24,7 @@ public class AppConstants {
             R.drawable.ic_page_indicator_focused};
     public static final String[] SHOP_DETAIL_TITLES = new String[]{"菜品", "店铺详情"};
     public static final String[] SELL_TITLES = new String[]{"按销量", "按距离", "按评分"};
-    public static final String[] ORDER_TITLES = new String[]{"全部", "已完成", "待付款", "已退款"};
+    public static final String[] ORDER_TITLES = new String[]{"待付款", "进行中", "已完成", "已退款"};
     public static final String[] SHOP_TITLES = new String[]{"热销排行", "超值套餐", "店铺优惠", "必点饮品", "最新优惠"};
     public static final String[] HOT_SELL_TITLES = new String[]{"综合", "距离", "销量", "评分"};
     //---------------------------店铺复用------------------------------------------------------------
@@ -66,6 +66,7 @@ public class AppConstants {
     public static final String KEY_PRODUCT_NAME = "product_name";
     public static final String KEY_MERCHANT_ID = "merchant_id";
     public static final String KEY_PRODUCT_ID = "product_id";
+    public static final String KEY_IMAGE = "image";
     public static final String KEY_MERCHANT_LOGO = "merchant_logo";
     public static final String KEY_PRODUCT_PRICE = "product_price";
     public static final String KEY_OR_SP_PHONE = "phone";
@@ -88,10 +89,17 @@ public class AppConstants {
     public static final String ADDRESS_CREATE_TIME = "address_time";
 
     /*Order*/
-    public static final String ORDER_DELIVERING = "0";
-    public static final String ORDER_COMPLETE = "1";
-    public static final String ORDER_UNPAID = "2";
-    public static final String ORDER_DRAWBACK = "3";
+    public static final String ORDER_ALL= "0";
+    public static final String ORDER_UNPAID = "1";
+    public static final String ORDER_DELIVERING = "2";
+    public static final String ORDER_COMPLETE = "3";
+    public static final String ORDER_DRAWBACK = "4";
+
+   /*HotFood*/
+    public static final String OVERALL = "0";
+    public static final String SELLNUMBER = "1";
+    public static final String DISTANCE = "2";
+    public static final String RATE = "3";
 
     /*后台交互信息*/
     public static final String TABLE_CLIENT = "client";

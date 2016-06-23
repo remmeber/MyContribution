@@ -3,8 +3,8 @@ package com.rhg.outsourcing.mvp.api;
 import com.rhg.outsourcing.bean.FavorableFoodUrlBean;
 import com.rhg.outsourcing.bean.BannerTypeUrlBean;
 import com.rhg.outsourcing.bean.GoodsDetailUrlBean;
-import com.rhg.outsourcing.bean.HotGoodsSearchUrlBean;
-import com.rhg.outsourcing.bean.HotGoodsUrlBean;
+import com.rhg.outsourcing.bean.HotFoodSearchUrlBean;
+import com.rhg.outsourcing.bean.HotFoodUrlBean;
 import com.rhg.outsourcing.bean.MerchantUrlBean;
 import com.rhg.outsourcing.bean.OrderUrlBean;
 import com.rhg.outsourcing.bean.RecommendListUrlBean;
@@ -62,7 +62,7 @@ public interface QFoodApiService {
 
     /*商品详情*/
     @FormUrlEncoded
-    @POST("Table/Json.php")
+    @POST("Table/FoodJson.php")
 //table:foodmessage Foodid:food id号
     Observable<GoodsDetailUrlBean> getGoodsDetail(@Field("Table") String table,
                                                   @Field("Foodid") int foodId);
@@ -113,13 +113,13 @@ public interface QFoodApiService {
     @FormUrlEncoded
     @POST("Table/Json.php")
     /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
-    Observable<HotGoodsUrlBean> getHotGoods(@Field("Table") String hotFood,
-                                            @Field("Order") String style);
+    Observable<HotFoodUrlBean> getHotGoods(@Field("Table") String hotFood,
+                                           @Field("Order") String style);
 
     @FormUrlEncoded
     @POST("Table/Json.php")
     /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
-    Observable<HotGoodsSearchUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
-                                                           @Field("Hotfoodkey") String searchContent,
-                                                           @Field("Order") String style);
+    Observable<HotFoodSearchUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
+                                                          @Field("Hotfoodkey") String searchContent,
+                                                          @Field("Order") String style);
 }

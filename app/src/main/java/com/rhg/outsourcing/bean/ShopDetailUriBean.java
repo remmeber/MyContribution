@@ -65,6 +65,7 @@ public class ShopDetailUriBean {
         private String Price;
         private String MonthlySales;
         private String Style;
+        private String Pic;
 
         public String getID() {
             return ID;
@@ -104,6 +105,14 @@ public class ShopDetailUriBean {
 
         public void setStyle(String Style) {
             this.Style = Style;
+        }
+
+        public String getPic() {
+            return Pic;
+        }
+
+        public void setPic(String pic) {
+            Pic = pic;
         }
     }
 }

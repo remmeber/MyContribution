@@ -36,6 +36,7 @@ import com.rhg.outsourcing.widget.UIAlertView;
 import com.umeng.socialize.media.UMImage;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * desc:商品详情页面
@@ -43,7 +44,7 @@ import java.util.List;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener{
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener {
 
     Bundle bundle;
     Drawable drawable_like;
@@ -141,8 +142,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void dataReceive(Intent intent) {
         loadingDialog = new LoadingDialog(this);
         if (intent != null) {
-            bundle = intent.getExtras();
-            foodId = bundle.getString(AppConstants.KEY_PRODUCT_ID, "");
+            foodId = intent.getStringExtra(AppConstants.KEY_PRODUCT_ID);
 //            merchantName = bundle.getString(AppConstants.KEY_PRODUCT_NAME, null);
 //            merchantSrc = bundle.getString(AppConstants.KEY_PRODUCT_PRICE, null);
         }
@@ -233,7 +233,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         foodMessage = _bean.getMessage();
         foodSale = _bean.getMonthlySales();
         foodStyle = _bean.getStyle();
-        foodSrcs = _bean.getPics();
+        foodSrcs = _bean.getPicsrc();
         bindData();
         new Handler().postDelayed(new Runnable() {
             public void run() {
@@ -257,10 +257,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         }, foodSrcs);
         tvGoodsName.setText(foodName);
-        String _temp = getResources().getString(R.string.sellNumber) + foodSale;
-        tvSellNumber.setText(_temp);
+        tvSellNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.sellNumber),
+                foodSale));
         tvDescriptionContent.setText(foodMessage);
-        tvPriceNumber.setText(foodPrice);
+        tvPriceNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
+                foodPrice));
     }
 
     @Override

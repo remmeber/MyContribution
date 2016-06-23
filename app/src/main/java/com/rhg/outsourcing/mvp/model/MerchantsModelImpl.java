@@ -1,5 +1,7 @@
 package com.rhg.outsourcing.mvp.model;
 
+import android.util.Log;
+
 import com.rhg.outsourcing.bean.MerchantUrlBean;
 import com.rhg.outsourcing.mvp.api.QFoodApiMamager;
 

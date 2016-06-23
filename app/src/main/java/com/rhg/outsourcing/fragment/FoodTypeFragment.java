@@ -123,7 +123,7 @@ public class FoodTypeFragment extends SuperFragment implements RcvItemClickListe
         /*intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
         intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID, shopDetailBeanList.get(position).getID());
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
 //        intent.putExtra() //todo 传递参数
         startActivityForResult(intent, 1);
     }
