@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rhg.outsourcing"
+    package="com.rhg.qf"
     android:anyDensity="true">
     <!-- 这个权限用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -25,7 +25,7 @@
 
 
     <application
-        android:name=".application.InitApplication"
+        android:name="com.rhg.qf.application.InitApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -49,7 +49,7 @@
             android:enabled="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.rhg.qf.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -61,57 +61,61 @@
 
 
         <activity
-            android:name=".activity.OrderListActivity"
+            android:name="com.rhg.qf.activity.OrderListActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.OrderDetailActivity"
+            android:name="com.rhg.qf.activity.OrderDetailActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.PayActivity"
+            android:name="com.rhg.qf.activity.PayActivity"
+            android:configChanges="orientation|screenSize">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.rhg.qf.activity.DeliverInfoActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.DeliverInfoActivity"
+            android:name="com.rhg.qf.activity.GoodsDetailActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.GoodsDetailActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".activity.ShopDetailActivity"
+            android:name="com.rhg.qf.activity.ShopDetailActivity"
             android:configChanges="orientation|screenSize" />
 
         <activity
-            android:name=".activity.AddressActivity"
+            android:name="com.rhg.qf.activity.AddressActivity"
             android:configChanges="orientation|screenSize" />
 
         <activity
-            android:name=".activity.NewAddressActivity"
+            android:name="com.rhg.qf.activity.NewAddressActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.SearchActivity"
+            android:name="com.rhg.qf.activity.SearchActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.HotSellActivity"
+            android:name="com.rhg.qf.activity.HotSellActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.DeliverRegisterActivity"
+            android:name="com.rhg.qf.activity.DeliverRegisterActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.DeliverStateNoneActivity"
+            android:name="com.rhg.qf.activity.DeliverStateNoneActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.PersonalOrderActivity"
+            android:name="com.rhg.qf.activity.PersonalOrderActivity"
             android:configChanges="orientation|screenSize" />
 
 
         <!-- alipay sdk begin -->
         <activity
-            android:name=".pay.PayDemoActivity"
+            android:name="com.rhg.qf.pay.PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
 
         <activity
-            android:name="com.rhg.outsourcing.pay.H5PayDemoActivity"
+            android:name="com.rhg.qf.pay.H5PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
@@ -124,11 +128,25 @@
 
         <!--微信-->
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.rhg.qf.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="wxd930ea5d5a258f4f" /><!--微信key-->
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.rhg.qf.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
         <!--微信-->
 
         <!--QQ-->
@@ -176,6 +194,15 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <!-- alipay sdk end -->
+
+
+        <!--<receiver
+            android:name=""
+            android:permission="com.tencent.mm.plugin.permission.SEND">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>-->
 
         <!-- WeChat-->
         <!-- <activity

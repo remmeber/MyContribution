@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/margin_small"
         android:src="@mipmap/deliver" />
 
-    <com.rhg.outsourcing.widget.LineProgress
+    <com.rhg.qf.widget.LineProgress
         android:id="@+id/food_receive_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:text="@string/mouthFeel"
             android:textSize="@dimen/text_medium" />
 
-        <com.rhg.outsourcing.widget.MyRatingBar
+        <com.rhg.qf.widget.MyRatingBar
             android:id="@+id/rb_mouth_feel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             android:text="@string/deliverService"
             android:textSize="@dimen/text_medium" />
 
-        <com.rhg.outsourcing.widget.MyRatingBar
+        <com.rhg.qf.widget.MyRatingBar
             android:id="@+id/rb_deliver_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

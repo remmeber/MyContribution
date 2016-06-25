@@ -39,7 +39,7 @@
             android:layout_toRightOf="@id/sellerIcon"
             android:gravity="center_vertical"
             android:minHeight="0dp"
-            android:textSize="@dimen/search_text_medium" />
+            android:textSize="@dimen/text_medium" />
 
         <TextView
             android:id="@+id/tv_state"
@@ -51,7 +51,7 @@
             android:background="@drawable/tv_state_bg"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/search_text_medium"
+            android:textSize="@dimen/text_medium"
             android:visibility="gone" />
 
         <ImageView

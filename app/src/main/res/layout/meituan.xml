@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.rhg.outsourcing.widget.TypeViewPager
+    <com.rhg.qf.widget.TypeViewPager
         android:id="@+id/viewpager_meituan"
         android:isScrollContainer="false"
         android:layout_width="match_parent"
         android:layout_height="160dp"/>
 
-    <com.rhg.outsourcing.widget.PointView
+    <com.rhg.qf.widget.PointView
         android:id="@+id/pointview_meituan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

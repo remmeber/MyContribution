@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <com.rhg.outsourcing.widget.VerticalTabLayout
+    <com.rhg.qf.widget.VerticalTabLayout
         android:id="@+id/vt_selector"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

@@ -40,7 +40,7 @@
             android:layout_toRightOf="@id/hot_sell_sellerIcon"
             android:gravity="center_vertical"
             android:minHeight="0dp"
-            android:textSize="@dimen/search_text_medium"
+            android:textSize="@dimen/text_medium"
             tools:text="ddddd" />
 
         <ImageView
@@ -119,7 +119,7 @@
             android:textSize="@dimen/text_small"
             tools:text="配送费2元" />
 
-        <com.rhg.outsourcing.widget.MyRatingBar
+        <com.rhg.qf.widget.MyRatingBar
             android:id="@+id/hot_sell_rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -14,7 +14,7 @@
         android:gravity="center"
         android:text="@string/tvSummation"
         android:textColor="@color/white"
-        android:textSize="@dimen/search_text_medium" />
+        android:textSize="@dimen/text_medium" />
 
     <TextView
         android:id="@+id/tv_totalMoney"

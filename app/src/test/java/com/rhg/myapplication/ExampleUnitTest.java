@@ -1,4 +1,4 @@
-package com.rhg.outsourcing;
+package com.rhg.qf;
 
 import org.junit.Test;
 
