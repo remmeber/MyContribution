@@ -35,8 +35,8 @@ public class InitApplication extends Application {
     public final static String QQID = "1105473854";
     public final static String QQKEY = "r8LhuDPffnpByTby";
     /*TODO WX需要加入*/
-    public final static String WXID = "";
-    public final static String WXKEY = "";
+    public final static String WXID = "wx4868b35061f87885";
+    public final static String WXKEY = "64020361b8ec4c99936c0e3999a9f249";
     private static InitApplication initApplication;
     public LocationService locationService;
     public Vibrator mVibrator;
