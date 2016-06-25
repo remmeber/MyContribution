@@ -1,6 +1,7 @@
 package com.rhg.qf.pay;
 
 
+import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -8,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.rhg.qf.activity.BaseActivity;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
@@ -18,9 +18,10 @@ import com.rhg.qf.pay.pays.PaysFactory;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.plugins.RxJavaErrorHandler;
 import rx.schedulers.Schedulers;
 
-public abstract class BasePayActivity extends BaseActivity {
+public abstract class BasePayActivity extends Activity {
 
     /**
      * 默认方式微信支付（微信支付被选中）
@@ -72,6 +73,10 @@ public abstract class BasePayActivity extends BaseActivity {
             }
         }
     };
+
+    protected abstract void showSuccess(String string);
+
+    protected abstract void showError(String string);
 
     /**
      * 确认支付
@@ -143,7 +148,6 @@ public abstract class BasePayActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.i("RHG", "return:" + e.getMessage());
-
                     }
 
                     @Override
@@ -174,7 +178,7 @@ public abstract class BasePayActivity extends BaseActivity {
                                     String notifyUrl, String tradeNo, String subject, String totalFee,
                                     String spbillCreateIp) {
 
-        payManager = PaysFactory.GetInstance(payType);
+//        payManager = PaysFactory.GetInstance(payType);
 
         return payManager.BuildOrderInfo(body, invalidTime, notifyUrl, tradeNo,
                 subject, totalFee, spbillCreateIp);
@@ -209,5 +213,9 @@ public abstract class BasePayActivity extends BaseActivity {
 
     protected abstract OrderInfo OnOrderCreate();
 
-
+    @Override
+    protected void onDestroy() {
+        payManager.unRegisterApp();
+        super.onDestroy();
+    }
 }

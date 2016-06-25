@@ -66,13 +66,7 @@
         <activity
             android:name="com.rhg.qf.activity.OrderDetailActivity"
             android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.rhg.qf.activity.PayActivity"
-            android:configChanges="orientation|screenSize">
-            <intent-filter>
-                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name="com.rhg.qf.activity.DeliverInfoActivity"
             android:configChanges="orientation|screenSize" />
@@ -133,20 +127,25 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="wxd930ea5d5a258f4f" /><!--微信key-->
-
-            </intent-filter>
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
             android:name="com.rhg.qf.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.rhg.qf.activity.PayActivity"
+            android:configChanges="orientation|screenSize">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="wxd930ea5d5a258f4f" /><!--微信key-->
+            </intent-filter>
+        </activity>
         <!--微信-->
 
         <!--QQ-->

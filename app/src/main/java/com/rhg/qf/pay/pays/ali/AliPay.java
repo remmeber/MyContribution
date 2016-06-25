@@ -110,5 +110,10 @@ public class AliPay implements IPayable {
         return null;
     }
 
+    @Override
+    public void unRegisterApp() {
+
+    }
+
 
 }

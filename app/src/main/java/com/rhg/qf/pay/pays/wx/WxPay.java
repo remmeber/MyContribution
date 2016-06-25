@@ -7,7 +7,6 @@ import android.util.Log;
 import com.rhg.qf.bean.OrderXml;
 import com.rhg.qf.mvp.api.PayService;
 import com.rhg.qf.mvp.api.QFoodApi;
-import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.pays.IPayable;
@@ -25,11 +24,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * desc:
@@ -37,7 +33,7 @@ import rx.schedulers.Schedulers;
  * time：2016/6/24 15:20
  * email：1013773046@qq.com
  */
-public class WxPay implements IPayable, BaseView {
+public class WxPay implements IPayable {
 
     //微信sdk对象
     private IWXAPI msgApi;
@@ -91,7 +87,6 @@ public class WxPay implements IPayable, BaseView {
             String sign = Sign(packageParams);
             packageParams.put("sign", sign);/*签名*/
 
-
             String xmlstring = XmlUtil.MapToXml(packageParams);
 
             return new OrderInfo(xmlstring);
@@ -104,6 +99,13 @@ public class WxPay implements IPayable, BaseView {
     public void RegisterApp(Context context, String appId) {
         msgApi = WXAPIFactory.createWXAPI(context, null);
         msgApi.registerApp(appId);
+        Log.i("RHG", "msgApi:" + msgApi);
+    }
+
+    public void unRegisterApp() {
+        Log.i("RHG", "msgApi:" + msgApi);
+        if (msgApi != null)
+            msgApi.detach();
     }
 
     public Observable<String> GetPrepayId(final OrderInfo orderInfo) {
@@ -236,8 +238,4 @@ public class WxPay implements IPayable, BaseView {
         return System.currentTimeMillis() / 1000;
     }
 
-    @Override
-    public void showData(Object o) {
-
-    }
 }

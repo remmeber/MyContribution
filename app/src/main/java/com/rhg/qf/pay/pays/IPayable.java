@@ -52,5 +52,6 @@ public interface IPayable {
 	 * @return
 	 */
 	Observable<String> GetPrepayId(OrderInfo orderInfo);
-	
+
+	void unRegisterApp();
 }

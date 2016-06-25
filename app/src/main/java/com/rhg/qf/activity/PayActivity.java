@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -60,16 +62,13 @@ public class PayActivity extends BasePayActivity {
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.pay_layout;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.pay_layout);
+        ButterKnife.bind(this);
+        initData();
     }
 
-    @Override
-    protected void initView(View view) {
-
-    }
-
-    @Override
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
@@ -87,7 +86,7 @@ public class PayActivity extends BasePayActivity {
     }
 
     @Override
-    protected void showSuccess(Object s) {
+    protected void showSuccess(String s) {
         ToastHelper.getInstance()._toast((String) s);
     }
 
@@ -98,7 +97,7 @@ public class PayActivity extends BasePayActivity {
     }
 
     @Override
-    protected void showError(Object s) {
+    protected void showError(String s) {
         ToastHelper.getInstance()._toast((String) s);
 
     }
@@ -175,5 +174,11 @@ public class PayActivity extends BasePayActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }
