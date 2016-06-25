@@ -19,10 +19,6 @@ public class AccountDBHelper extends SQLiteOpenHelper {
      */
     public static final String DATABASE_NAME = "q_account.db3";
     /**
-     * 数据库版本常量
-     */
-    private static final int DATABASE_VERSION = 3;
-    /**
      * 购物车表
      */
     public static final String Q_SHOPPING_CART_TABLE = "q_shopping_cart_table";
@@ -30,19 +26,22 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     public static final String Q_ADDRESS_TABLE = "q_address_table";
     /*搜索历史记录表*/
     public static final String Q_SEARCH_HISTORY_TABLE = "q_search_history_table";
+    /**
+     * 数据库版本常量
+     */
+    private static final int DATABASE_VERSION = 3;
     /*收藏表*/
 //    public static final String Q_LIKE = "Q_like";
-
     private static AccountDBHelper helper;
 
     private static Context APPLICATION_CONTEXT;
 
-    public static void init(Context context) {
-        APPLICATION_CONTEXT = context;
-    }
-
     public AccountDBHelper() {
         super(APPLICATION_CONTEXT, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static void init(Context context) {
+        APPLICATION_CONTEXT = context;
     }
 
     public static AccountDBHelper getInstance() {

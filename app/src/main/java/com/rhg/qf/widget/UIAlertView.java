@@ -35,12 +35,6 @@ public class UIAlertView extends Dialog {
         this.buttonRightText = buttonRightText;
     }
 
-    public interface ClickListenerInterface {
-        public void doLeft();
-
-        public void doRight();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -81,6 +75,12 @@ public class UIAlertView extends Dialog {
 
     public void setClicklistener(ClickListenerInterface clickListenerInterface) {
         this.clickListenerInterface = clickListenerInterface;
+    }
+
+    public interface ClickListenerInterface {
+        public void doLeft();
+
+        public void doRight();
     }
 
     private class clickListener implements View.OnClickListener {

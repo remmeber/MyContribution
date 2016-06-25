@@ -9,7 +9,7 @@ import com.rhg.qf.constants.AppConstants;
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public class BySellNumberFm extends AbstractMerchantsFragment{
+public class BySellNumberFm extends AbstractMerchantsFragment {
     @Override
     protected int getMerchantsFmType() {
         return AppConstants.MERCHANT_SELLNUMBER;

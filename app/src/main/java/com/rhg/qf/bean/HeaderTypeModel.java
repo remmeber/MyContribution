@@ -1,10 +1,10 @@
 package com.rhg.qf.bean;
 
 /**
- *desc:主页列表头部
- *author：remember
- *time：2016/5/28 16:32
- *email：1013773046@qq.com
+ * desc:主页列表头部
+ * author：remember
+ * time：2016/5/28 16:32
+ * email：1013773046@qq.com
  */
 public class HeaderTypeModel {
     private String text;

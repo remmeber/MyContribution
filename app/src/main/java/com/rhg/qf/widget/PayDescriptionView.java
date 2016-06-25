@@ -48,9 +48,9 @@ public class PayDescriptionView extends ScrollView {
         for (int i = 0; i < payContentBeanList.size(); i++) {
             PayContentBean _temp = payContentBeanList.get(i);
             View view = View.inflate(mContext, R.layout.item_pay_content, null);
-            TextView goodsName = (TextView)view.findViewById(R.id.product_subject);
-            TextView goodsDesc = (TextView)view.findViewById(R.id.product_desc);
-            TextView goodsPrice = (TextView)view.findViewById(R.id.product_price);
+            TextView goodsName = (TextView) view.findViewById(R.id.product_subject);
+            TextView goodsDesc = (TextView) view.findViewById(R.id.product_desc);
+            TextView goodsPrice = (TextView) view.findViewById(R.id.product_price);
             goodsName.setText(_temp.getGoodsName());
             goodsDesc.setText(_temp.getGoodsDescription());
             goodsPrice.setText(_temp.getPayMoney());

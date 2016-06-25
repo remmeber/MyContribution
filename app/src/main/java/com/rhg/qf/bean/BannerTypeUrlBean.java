@@ -3,10 +3,10 @@ package com.rhg.qf.bean;
 import java.util.List;
 
 /**
- *desc:轮播图片的网络访问数据模型，网络请求后，需要将该类转换为{@link BannerTypeBean}
- *author：remember
- *time：2016/5/28 16:23
- *email：1013773046@qq.com
+ * desc:轮播图片的网络访问数据模型，网络请求后，需要将该类转换为{@link BannerTypeBean}
+ * author：remember
+ * time：2016/5/28 16:23
+ * email：1013773046@qq.com
  */
 public class BannerTypeUrlBean {
     String total;
@@ -26,6 +26,11 @@ public class BannerTypeUrlBean {
 
     public void setRows(List<BannerEntity> rows) {
         this.rows = rows;
+    }
+
+    @Override
+    public String toString() {
+        return "total: " + total + " result: " + rows;
     }
 
     public static class BannerEntity {
@@ -71,10 +76,5 @@ public class BannerTypeUrlBean {
         public String toString() {
             return "ID: " + ID + " Title: " + Title + " Src: " + Src + " Jump: " + Jump;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "total: " + total + " result: " + rows;
     }
 }

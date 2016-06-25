@@ -22,6 +22,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  */
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     private IWXAPI api;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

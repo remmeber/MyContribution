@@ -31,14 +31,14 @@ public abstract class QFoodBaseAdapter<T> extends BaseAdapter {
         this.mLayoutId = mLayoutId;
     }
 
-    public void setmDataList(List<T> mDataList) {
-        this.mDataList = mDataList;
-    }
-
     public QFoodBaseAdapter(Context context, List<T> list, int layoutId) {
         mContext = context;
         mDataList = list;
         mLayoutId = layoutId;
+    }
+
+    public void setmDataList(List<T> mDataList) {
+        this.mDataList = mDataList;
     }
 
     @Override

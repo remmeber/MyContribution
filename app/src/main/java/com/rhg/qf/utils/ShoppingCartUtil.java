@@ -4,9 +4,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.datebase.AccountDao;
-import com.rhg.qf.bean.ShoppingCartBean;
 
 import java.util.List;
 
@@ -210,7 +210,7 @@ public class ShoppingCartUtil {
 
     /**
      * 查询购物车商品总数量
-     * <p>
+     * <p/>
      * 统一使用该接口，而就行是通过何种方式获取数据，数据库、SP、文件、网络，都可以
      *
      * @return

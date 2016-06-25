@@ -18,6 +18,7 @@ import android.widget.Scroller;
 public class SwipeDeleteRecycle extends RecyclerView {
     private static final int SCROLL_OFF = 0;
     private static final int SCROLL_ON = 1;
+    private static final int SNAP_VELOCITY = 20;
     int scrollState = SCROLL_OFF;
     private Orientation orientation = Orientation.VERTICAL;
     /**
@@ -44,7 +45,6 @@ public class SwipeDeleteRecycle extends RecyclerView {
      * 滑动类
      */
     private Scroller scroller;
-    private static final int SNAP_VELOCITY = 20;
     /**
      * 速度追踪对象
      */
@@ -65,11 +65,6 @@ public class SwipeDeleteRecycle extends RecyclerView {
      * 用来指示item滑出屏幕的方向,向左或者向右,用一个枚举值来标记
      */
     private RemoveDirection removeDirection;
-
-    // 滑动删除方向的枚举值
-    public enum RemoveDirection {
-        /*RIGHT, */LEFT
-    }
 
     public SwipeDeleteRecycle(Context context) {
         super(context);
@@ -175,27 +170,6 @@ public class SwipeDeleteRecycle extends RecyclerView {
     }
 
     /**
-     * 往右滑动，getScrollX()返回的是左边缘的距离，就是以View左边缘为原点到开始滑动的距离，所以向右边滑动为负值
-     *//*
-    private void scrollRight() {
-        if (orientation == Orientation.VERTICAL) {// 往右滑动
-            removeDirection = RemoveDirection.RIGHT;
-            final int delta = (screenWidth + itemView.getScrollX());
-            // 调用startScroll方法来设置一些滚动的参数，我们在computeScroll()方法中调用scrollTo来滚动item
-            scroller.startScroll(itemView.getScrollX(), 0, -delta, 0,
-                    Math.abs(delta));
-            postInvalidate(); // 刷新itemView
-        } else {// 往上滑动
-            removeDirection = RemoveDirection.RIGHT;
-            final int delta = (screenWidth + itemView.getScrollY());
-            // 调用startScroll方法来设置一些滚动的参数，我们在computeScroll()方法中调用scrollTo来滚动item
-            scroller.startScroll(0, itemView.getScrollY(), 0, -delta,
-                    Math.abs(delta));
-            postInvalidate(); // 刷新itemView
-        }
-    }*/
-
-    /**
      * 向左滑动，根据上面我们知道向左滑动为正值
      */
     private void scrollLeft() {
@@ -215,6 +189,27 @@ public class SwipeDeleteRecycle extends RecyclerView {
             postInvalidate(); // 刷新itemView
         }*/
     }
+
+    /**
+     * 往右滑动，getScrollX()返回的是左边缘的距离，就是以View左边缘为原点到开始滑动的距离，所以向右边滑动为负值
+     *//*
+    private void scrollRight() {
+        if (orientation == Orientation.VERTICAL) {// 往右滑动
+            removeDirection = RemoveDirection.RIGHT;
+            final int delta = (screenWidth + itemView.getScrollX());
+            // 调用startScroll方法来设置一些滚动的参数，我们在computeScroll()方法中调用scrollTo来滚动item
+            scroller.startScroll(itemView.getScrollX(), 0, -delta, 0,
+                    Math.abs(delta));
+            postInvalidate(); // 刷新itemView
+        } else {// 往上滑动
+            removeDirection = RemoveDirection.RIGHT;
+            final int delta = (screenWidth + itemView.getScrollY());
+            // 调用startScroll方法来设置一些滚动的参数，我们在computeScroll()方法中调用scrollTo来滚动item
+            scroller.startScroll(0, itemView.getScrollY(), 0, -delta,
+                    Math.abs(delta));
+            postInvalidate(); // 刷新itemView
+        }
+    }*/
 
     /**
      * 根据手指滚动itemView的距离来判断是滚动到开始位置还是向左或者向右滚动
@@ -365,11 +360,9 @@ public class SwipeDeleteRecycle extends RecyclerView {
 
     }
 
-    /**
-     * 当ListView item滑出屏幕，回调这个接口 我们需要在回调方法removeItem()中移除该Item,然后刷新ListView
-     */
-    public interface RemoveListener {
-        public void removeItem(RemoveDirection direction, int position);
+    // 滑动删除方向的枚举值
+    public enum RemoveDirection {
+        /*RIGHT, */LEFT
     }
 
     public static enum Orientation {
@@ -379,10 +372,6 @@ public class SwipeDeleteRecycle extends RecyclerView {
 
         private Orientation(int i) {
             value = i;
-        }
-
-        public int value() {
-            return value;
         }
 
         public static Orientation valueOf(int i) {
@@ -395,5 +384,16 @@ public class SwipeDeleteRecycle extends RecyclerView {
                     throw new RuntimeException("[0->HORIZONTAL, 1->VERTICAL]");
             }
         }
+
+        public int value() {
+            return value;
+        }
+    }
+
+    /**
+     * 当ListView item滑出屏幕，回调这个接口 我们需要在回调方法removeItem()中移除该Item,然后刷新ListView
+     */
+    public interface RemoveListener {
+        public void removeItem(RemoveDirection direction, int position);
     }
 }

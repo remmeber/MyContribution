@@ -11,11 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
 /**
- *desc:主页Grid适配器
- *author：remember 
- *time：2016/5/28 16:17
- *email：1013773046@qq.com
+ * desc:主页Grid适配器
+ * author：remember
+ * time：2016/5/28 16:17
+ * email：1013773046@qq.com
  */
 public class QFoodGridAdapterViewHolder {
     private final Context mContext;

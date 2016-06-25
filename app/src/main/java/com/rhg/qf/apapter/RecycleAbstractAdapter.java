@@ -19,24 +19,12 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    RcvItemClickListener<T> onRcvItemClickListener;
     private Context context;
     private List<T> mData;
     private int type = -1;
     private boolean hasHead;
     private boolean hasFooter;
-    RcvItemClickListener<T> onRcvItemClickListener;
-
-    public void setOnRcvItemClickListener(RcvItemClickListener<T> onRcvItemClickListener) {
-        this.onRcvItemClickListener = onRcvItemClickListener;
-    }
-
-    public RcvItemClickListener<T> getOnRcvItemClickListener() {
-        return onRcvItemClickListener;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     public RecycleAbstractAdapter(Context context) {
         this.context = context;
@@ -46,16 +34,28 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
         this.hasFooter = getHasFooter();
     }
 
-    public void setmData(List<T> mData) {
-        this.mData = mData;
-    }
-
     public RecycleAbstractAdapter(Context context, List<T> mData) {
         this.context = context;
         this.mData = mData;
         this.type = getDisplayType();
         this.hasHead = getHasHead();
         this.hasFooter = getHasFooter();
+    }
+
+    public RcvItemClickListener<T> getOnRcvItemClickListener() {
+        return onRcvItemClickListener;
+    }
+
+    public void setOnRcvItemClickListener(RcvItemClickListener<T> onRcvItemClickListener) {
+        this.onRcvItemClickListener = onRcvItemClickListener;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public void setmData(List<T> mData) {
+        this.mData = mData;
     }
 
     public boolean getHasFooter() {

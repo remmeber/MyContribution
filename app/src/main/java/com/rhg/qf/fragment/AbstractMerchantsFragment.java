@@ -43,14 +43,14 @@ public abstract class AbstractMerchantsFragment extends SuperFragment implements
 
     int merchantsType;
 
-    public void setContext(Context context) {
-        if (qFoodMerchantAdapter != null)
-            qFoodMerchantAdapter.setContext(context);
-    }
-
     public AbstractMerchantsFragment() {
         merchantsType = getMerchantsFmType();
         getMerchantsOrderBySellNumberPresenter = new MerchantsPresenterImpl(this);
+    }
+
+    public void setContext(Context context) {
+        if (qFoodMerchantAdapter != null)
+            qFoodMerchantAdapter.setContext(context);
     }
 
     protected abstract int getMerchantsFmType();

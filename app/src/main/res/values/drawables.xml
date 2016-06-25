@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
     <item name="ic_camera_with_circle" type="drawable">@drawable/camera</item>
     <item name="ic_location_black" type="drawable">@drawable/place_black</item>
     <item name="ic_location_green" type="drawable">@drawable/location_green</item>

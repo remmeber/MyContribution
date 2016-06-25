@@ -28,7 +28,7 @@ public class ShopDetailPresenterImpl implements ShopDetailPresenter {
 
     @Override
     public void getShopDetail(String table, String merchantId) {
-        shopDetailModel.getShopDetail(table,merchantId).observeOn(AndroidSchedulers.mainThread())
+        shopDetailModel.getShopDetail(table, merchantId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<ShopDetailUriBean.ShopDetailBean>>() {
                     @Override

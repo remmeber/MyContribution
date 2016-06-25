@@ -103,7 +103,7 @@ public abstract class AbstractOrderFragment extends SuperFragment implements Rcv
         bundle.putString(AppConstants.SP_USER_NAME, item.getReceiver());
         bundle.putString(AppConstants.KEY_ADDRESS, item.getAddress());
         bundle.putString(AppConstants.KEY_OR_SP_PHONE, item.getPhone());
-        bundle.putString(AppConstants.KEY_PRODUCT_PRICE,item.getPrice());
+        bundle.putString(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
         bundle.putString(AppConstants.KEY_ORDER_TAG, style);
         intent.putExtras(bundle);
         startActivity(intent);

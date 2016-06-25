@@ -20,6 +20,7 @@ import java.util.List;
 public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<String> searchHistory;
+    private RcvItemClickListener onSearchItemClick;
 
     public SearchHistoryAdapter(Context context, List<String> searchHistory) {
         this.context = context;
@@ -55,6 +56,10 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
         return searchHistory == null ? 0 : searchHistory.size();
     }
 
+    public void setOnSearchHistoryClickListener(RcvItemClickListener onSearchItemClick) {
+        this.onSearchItemClick = onSearchItemClick;
+    }
+
     private class SearchHistoryViewHolder extends RecyclerView.ViewHolder {
         TextView tvSearchHistory;
 
@@ -62,11 +67,5 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
             super(view);
             tvSearchHistory = (TextView) view.findViewById(R.id.tv_search_history);
         }
-    }
-
-    private RcvItemClickListener onSearchItemClick;
-
-    public void setOnSearchHistoryClickListener(RcvItemClickListener onSearchItemClick) {
-        this.onSearchItemClick = onSearchItemClick;
     }
 }

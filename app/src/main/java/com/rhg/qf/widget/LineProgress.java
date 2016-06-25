@@ -21,12 +21,17 @@ public class LineProgress extends View {
     public static final float DEFAULT_TEXT_SIZE = 12;
     public static final int DEFAULT_COLOR = Color.GRAY;
     public static final int COVERED_COLOR = Color.GREEN;
-
-    private int state = -1;
     public static final int STATE_LEFT = 0;
     public static final int STATE_CENTER = 1;
     public static final int STATE_RIGHT = 2;
-
+    float textStartY;
+    int finalWidth = 0;
+    int finalHeight = 0;
+    float totalLength;
+    float leftX;
+    float centerX;
+    float rightX;
+    private int state = -1;
     private float strokeWidth = DpUtil.dip2px(18);
     private float mTextSize = DEFAULT_TEXT_SIZE;
     private int mTextDefaultColor;/*默认字体颜色*/
@@ -34,16 +39,11 @@ public class LineProgress extends View {
     private int mProgressBackground;/*默认颜色*/
     private int mProgressColor;/*渲染颜色*/
     private int marginBetweenTextAndBar;/*字体与进度条的距离*/
-
     private String leftText = "已接单";
     private String centerText = "配送中";
     private String rightText = "已送达";
-    float textStartY;
-
-    int finalWidth = 0;
-    int finalHeight = 0;
-
     private Paint mTextPaint;
+
 
     public LineProgress(Context context) {
         this(context, null);
@@ -74,7 +74,6 @@ public class LineProgress extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), measureHeight(heightMeasureSpec));
     }
-
 
     private int measureHeight(int heightMeasureSpec) {
         int result = 0;
@@ -108,11 +107,6 @@ public class LineProgress extends View {
         drawText(canvas);
         drawProgress(canvas);
     }
-
-    float totalLength;
-    float leftX;
-    float centerX;
-    float rightX;
 
     private void drawText(Canvas canvas) {
         mTextPaint.setColor(mTextDefaultColor);
@@ -155,13 +149,13 @@ public class LineProgress extends View {
         }
     }
 
+    public int getState() {
+        return state;
+    }
+
     public void setState(int state) {
         this.state = state;
         postInvalidate();
-    }
-
-    public int getState() {
-        return state;
     }
 
     public void setContent(String leftText, String centerText, String rightText) {

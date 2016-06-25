@@ -15,21 +15,21 @@ public class FavorableTypeModel {
     List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodBeen;
     private QFoodGridViewAdapter dpGridViewAdapter;
 
+    public List<FavorableFoodUrlBean.FavorableFoodEntity> getFavorableFoodBeen() {
+        return favorableFoodBeen;
+    }
+
     public void setFavorableFoodBeen(List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodBeen) {
         this.favorableFoodBeen = favorableFoodBeen;
         if (dpGridViewAdapter != null)
             dpGridViewAdapter.setList(this.favorableFoodBeen);
     }
 
-    public void setDpGridViewAdapter(QFoodGridViewAdapter dpGridViewAdapter) {
-        this.dpGridViewAdapter = dpGridViewAdapter;
-    }
-
-    public List<FavorableFoodUrlBean.FavorableFoodEntity> getFavorableFoodBeen() {
-        return favorableFoodBeen;
-    }
-
     public QFoodGridViewAdapter getDpGridViewAdapter() {
         return dpGridViewAdapter;
+    }
+
+    public void setDpGridViewAdapter(QFoodGridViewAdapter dpGridViewAdapter) {
+        this.dpGridViewAdapter = dpGridViewAdapter;
     }
 }

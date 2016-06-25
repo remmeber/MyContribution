@@ -23,14 +23,33 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class QFoodApiMamager {
     private static QFoodApiMamager mInstant;
-
+    private final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
+        @Override
+        public Response intercept(Interceptor.Chain chain) throws IOException {
+            Request request = chain.request();
+            if (!NetUtil.isConnected(InitApplication.getInstance())) {
+                request = request.newBuilder()
+                        .cacheControl(CacheControl.FORCE_CACHE)
+                        .build();
+                ToastHelper.getInstance()._toast("no network");
+            }
+            Response originalResponse = chain.proceed(request);
+            if (NetUtil.isConnected(InitApplication.getInstance())) {
+                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
+                String cacheControl = request.cacheControl().toString();
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", cacheControl)
+                        .removeHeader("Pragma")
+                        .build();
+            } else {
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=86400")
+                        .removeHeader("Pragma")
+                        .build();
+            }
+        }
+    };
     private QFoodApiService QFoodApiService;
-
-    public static QFoodApiMamager getInstant() {
-        if (mInstant == null)
-            mInstant = new QFoodApiMamager();
-        return mInstant;
-    }
 
     private QFoodApiMamager() {
         /*OkHttpClient okHttpClient = new OkHttpClient();
@@ -65,34 +84,13 @@ public class QFoodApiMamager {
         this.QFoodApiService = retrofit.create(QFoodApiService.class);
     }
 
+    public static QFoodApiMamager getInstant() {
+        if (mInstant == null)
+            mInstant = new QFoodApiMamager();
+        return mInstant;
+    }
+
     public QFoodApiService getQFoodApiService() {
         return QFoodApiService;
     }
-
-    private final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override
-        public Response intercept(Interceptor.Chain chain) throws IOException {
-            Request request = chain.request();
-            if (!NetUtil.isConnected(InitApplication.getInstance())) {
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        .build();
-                ToastHelper.getInstance()._toast("no network");
-            }
-            Response originalResponse = chain.proceed(request);
-            if (NetUtil.isConnected(InitApplication.getInstance())) {
-                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-                String cacheControl = request.cacheControl().toString();
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", cacheControl)
-                        .removeHeader("Pragma")
-                        .build();
-            } else {
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=86400")
-                        .removeHeader("Pragma")
-                        .build();
-            }
-        }
-    };
 }

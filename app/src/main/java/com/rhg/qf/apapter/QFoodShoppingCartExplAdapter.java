@@ -27,6 +27,72 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     List<ShoppingCartBean> mData;
     Context context;
     SlideView lastSlideView;
+    private DataChangeListener onDataChangeListener;
+    //TODO--------------------------购物车事件监听--------------------------------------------------
+    View.OnClickListener ShortCartListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int clickPosition;
+            switch (v.getId()) {
+                //TODO fragment中结算结算按钮
+                /*case R.id.tv_count:
+                    if (ShoppingCartUtil.hasSelectedGoods(mData))
+                        Toast.makeText(context, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(context, "亲，请选择商品！", Toast.LENGTH_SHORT).show();
+                    break;*/
+                case R.id.ivCheckGroup:
+                    clickPosition = Integer.parseInt(String.valueOf(v.getTag()));
+//                    isSelectAll = ShoppingCartUtil.selectGroup(mData,position);//TODO 如果有全选，则需要加上返回
+                    ShoppingCartUtil.selectGroup(mData, clickPosition);
+                    setDataChange();
+                    notifyDataSetChanged();
+                    break;
+                case R.id.ivCheckGood:
+                    String tag = String.valueOf(v.getTag());
+                    if (tag.contains(",")) {
+                        String s[] = tag.split(",");
+                        int groupPosition = Integer.parseInt(s[0]);
+                        int childPosition = Integer.parseInt(s[1]);
+                        ShoppingCartUtil.selectOne(mData, groupPosition, childPosition);
+                        setDataChange();
+                        notifyDataSetChanged();
+                    }
+                    break;
+                case R.id.imaShopForwardGroup:
+                    clickPosition = (int) v.getTag();
+                    Toast.makeText(context, "group " + clickPosition, Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.ivAdd:
+                    ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) v.getTag(),
+                            (TextView) ((View) (v.getParent())).findViewById(R.id.tvNum));
+                    setDataChange();
+                    break;
+                case R.id.ivReduce:
+                    ShoppingCartUtil.addOrReduceGoodsNum(false, (ShoppingCartBean.Goods) v.getTag(),
+                            (TextView) ((View) (v.getParent())).findViewById(R.id.tvNum));
+                    setDataChange();
+                    break;
+                case R.id.holder:
+                    String deleteTag = String.valueOf(v.getTag());
+                    if (deleteTag.contains(",")) {
+                        String s[] = deleteTag.split(",");
+                        int groupPosition = Integer.parseInt(s[0]);
+                        int childPosition = Integer.parseInt(s[1]);
+                        /*ToastHelper.getInstance()._toast("groupPosition: " + groupPosition
+                                + " childPosition: " + childPosition);*/
+                        showDelDialog(groupPosition, childPosition);
+                    }
+                    break;
+            }
+        }
+
+
+    };
+
+    public QFoodShoppingCartExplAdapter(Context context) {
+        this.context = context;
+    }
 
     public void setmData(List<ShoppingCartBean> mData) {
         this.mData = mData;
@@ -36,10 +102,6 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     //TODO-------------------------------开放监听口-------------------------------------------------
     public View.OnClickListener getShortCartListener() {
         return ShortCartListener;
-    }
-
-    public QFoodShoppingCartExplAdapter(Context context) {
-        this.context = context;
     }
 
     @Override
@@ -165,104 +227,6 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
             lastSlideView = (SlideView) view;
     }
 
-    class GroupViewHolder {
-        ImageView btGroupCheck;
-        TextView tvShopName;
-        ImageView btForwardShop;
-    }
-
-    class ChildViewHolder {
-        /*商品选中*/
-        ImageView btGoodsCheck;
-        /*商品图片*/
-        ImageView goodsLogo;
-        /*商品的名字*/
-        TextView tvGoodsName;
-        /*商品的价格*/
-        TextView tvGoodsPrice;
-        /*减少商品*/
-        ImageView btReduceNum;
-        /*增加商品*/
-        ImageView btAddNum;
-        /*商品数量*/
-        TextView goodsCount;
-        /*删除*/
-        ViewGroup delete;
-
-        ChildViewHolder(View view) {
-            btGoodsCheck = (ImageView) view.findViewById(R.id.ivCheckGood);
-            goodsLogo = (ImageView) view.findViewById(R.id.ivGoodsLogo);
-            tvGoodsName = (TextView) view.findViewById(R.id.tvItemChild);
-            tvGoodsPrice = (TextView) view.findViewById(R.id.tvPriceNew);
-            btReduceNum = (ImageView) view.findViewById(R.id.ivReduce);
-            btAddNum = (ImageView) view.findViewById(R.id.ivAdd);
-            goodsCount = (TextView) view.findViewById(R.id.tvNum);
-            delete = (ViewGroup) view.findViewById(R.id.holder);
-        }
-    }
-
-    //TODO--------------------------购物车事件监听--------------------------------------------------
-    View.OnClickListener ShortCartListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int clickPosition;
-            switch (v.getId()) {
-                //TODO fragment中结算结算按钮
-                /*case R.id.tv_count:
-                    if (ShoppingCartUtil.hasSelectedGoods(mData))
-                        Toast.makeText(context, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(context, "亲，请选择商品！", Toast.LENGTH_SHORT).show();
-                    break;*/
-                case R.id.ivCheckGroup:
-                    clickPosition = Integer.parseInt(String.valueOf(v.getTag()));
-//                    isSelectAll = ShoppingCartUtil.selectGroup(mData,position);//TODO 如果有全选，则需要加上返回
-                    ShoppingCartUtil.selectGroup(mData, clickPosition);
-                    setDataChange();
-                    notifyDataSetChanged();
-                    break;
-                case R.id.ivCheckGood:
-                    String tag = String.valueOf(v.getTag());
-                    if (tag.contains(",")) {
-                        String s[] = tag.split(",");
-                        int groupPosition = Integer.parseInt(s[0]);
-                        int childPosition = Integer.parseInt(s[1]);
-                        ShoppingCartUtil.selectOne(mData, groupPosition, childPosition);
-                        setDataChange();
-                        notifyDataSetChanged();
-                    }
-                    break;
-                case R.id.imaShopForwardGroup:
-                    clickPosition = (int) v.getTag();
-                    Toast.makeText(context, "group " + clickPosition, Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.ivAdd:
-                    ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.tvNum));
-                    setDataChange();
-                    break;
-                case R.id.ivReduce:
-                    ShoppingCartUtil.addOrReduceGoodsNum(false, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.tvNum));
-                    setDataChange();
-                    break;
-                case R.id.holder:
-                    String deleteTag = String.valueOf(v.getTag());
-                    if (deleteTag.contains(",")) {
-                        String s[] = deleteTag.split(",");
-                        int groupPosition = Integer.parseInt(s[0]);
-                        int childPosition = Integer.parseInt(s[1]);
-                        /*ToastHelper.getInstance()._toast("groupPosition: " + groupPosition
-                                + " childPosition: " + childPosition);*/
-                        showDelDialog(groupPosition, childPosition);
-                    }
-                    break;
-            }
-        }
-
-
-    };
-
     /**
      * 删除弹框
      *
@@ -312,13 +276,47 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
             onDataChangeListener.onDataChange(infos[1]);
     }
 
-    private DataChangeListener onDataChangeListener;
-
     public void setDataChangeListener(DataChangeListener onDataChangeListener) {
         this.onDataChangeListener = onDataChangeListener;
     }
 
     public interface DataChangeListener {
         public void onDataChange(String CountMoney);
+    }
+
+    class GroupViewHolder {
+        ImageView btGroupCheck;
+        TextView tvShopName;
+        ImageView btForwardShop;
+    }
+
+    class ChildViewHolder {
+        /*商品选中*/
+        ImageView btGoodsCheck;
+        /*商品图片*/
+        ImageView goodsLogo;
+        /*商品的名字*/
+        TextView tvGoodsName;
+        /*商品的价格*/
+        TextView tvGoodsPrice;
+        /*减少商品*/
+        ImageView btReduceNum;
+        /*增加商品*/
+        ImageView btAddNum;
+        /*商品数量*/
+        TextView goodsCount;
+        /*删除*/
+        ViewGroup delete;
+
+        ChildViewHolder(View view) {
+            btGoodsCheck = (ImageView) view.findViewById(R.id.ivCheckGood);
+            goodsLogo = (ImageView) view.findViewById(R.id.ivGoodsLogo);
+            tvGoodsName = (TextView) view.findViewById(R.id.tvItemChild);
+            tvGoodsPrice = (TextView) view.findViewById(R.id.tvPriceNew);
+            btReduceNum = (ImageView) view.findViewById(R.id.ivReduce);
+            btAddNum = (ImageView) view.findViewById(R.id.ivAdd);
+            goodsCount = (TextView) view.findViewById(R.id.tvNum);
+            delete = (ViewGroup) view.findViewById(R.id.holder);
+        }
     }
 }

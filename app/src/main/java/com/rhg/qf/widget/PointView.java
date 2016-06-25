@@ -11,7 +11,7 @@ import com.rhg.qf.R;
 
 import java.lang.reflect.Field;
 
-public class PointView extends LinearLayout implements ViewPager.OnPageChangeListener{
+public class PointView extends LinearLayout implements ViewPager.OnPageChangeListener {
     private static final String TAG = "PointView";
     private Context mContext;
     private int mCount;
@@ -52,9 +52,9 @@ public class PointView extends LinearLayout implements ViewPager.OnPageChangeLis
         setLayoutParams(layoutParams);
         removeAllViews();
         ImageView icon = null;
-        if(mCount==1)
+        if (mCount == 1)
             return;
-        for (int i = 0; i < mCount; i++){
+        for (int i = 0; i < mCount; i++) {
             icon = new ImageView(mContext);
 //            icon.setBackgroundColor(0xFF4081);
             icon.setImageResource(R.drawable.bg_global_search_textbox_gray);
@@ -62,16 +62,16 @@ public class PointView extends LinearLayout implements ViewPager.OnPageChangeLis
             lp.topMargin = 10;
             lp.leftMargin = 10;
             lp.rightMargin = 10;
-            addView(icon,lp);
+            addView(icon, lp);
         }
-        Log.d(TAG,">>>>>"+mViewPager.getCurrentItem());
+        Log.d(TAG, ">>>>>" + mViewPager.getCurrentItem());
         updatePoint(mViewPager.getCurrentItem());
     }
 
     private void updatePoint(int position) {
-        Log.d(TAG,">>>mCurrentPos"+mCurrentPos);
+        Log.d(TAG, ">>>mCurrentPos" + mCurrentPos);
         if (mCurrentPos != position) {
-            if (mCurrentPos == -1){
+            if (mCurrentPos == -1) {
                 ((ImageView) getChildAt(position)).setImageResource(R.drawable.bg_global_search_textbox_home);
                 mCurrentPos = position;
                 return;
@@ -97,21 +97,21 @@ public class PointView extends LinearLayout implements ViewPager.OnPageChangeLis
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if (mPointViewChangeListener!=null)
-        mPointViewChangeListener.onPageScrolled(position,positionOffset,positionOffsetPixels);
+        if (mPointViewChangeListener != null)
+            mPointViewChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
     }
 
     @Override
     public void onPageSelected(int position) {
         updatePoint(position);
-        Log.d(TAG,">>>pos"+position);
-        if (mPointViewChangeListener!=null)
+        Log.d(TAG, ">>>pos" + position);
+        if (mPointViewChangeListener != null)
             mPointViewChangeListener.onPageSelected(position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (mPointViewChangeListener!=null)
+        if (mPointViewChangeListener != null)
             mPointViewChangeListener.onPageScrollStateChanged(state);
     }
 }

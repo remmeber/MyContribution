@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_little"
-        android:background="@drawable/cv_goods_bg">
+        android:background="@drawable/cv_goods_bg"
+        android:paddingTop="@dimen/margin_little">
 
         <ImageView
             android:id="@+id/iv_shop_logo"
@@ -60,13 +60,13 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_shop_tel"
             android:layout_alignStart="@+id/tv_shop_tel"
-            android:paddingBottom="@dimen/margin_small"
             android:layout_below="@+id/iv_shop_logo"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/margin_small"
             android:gravity="center_vertical"
             android:maxLines="3"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             android:textSize="@dimen/text_medium"
             tools:text="地址:ddddddddddddddd" />
 
@@ -76,13 +76,13 @@
         android:id="@+id/tv_seller_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_little"
-        android:paddingBottom="@dimen/margin_little"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:maxLines="10"
+        android:paddingBottom="@dimen/margin_little"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/margin_little"
         android:textSize="@dimen/text_medium"
         tools:text="商家备注:" />
 

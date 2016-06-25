@@ -28,7 +28,7 @@ public class OrderDetailPresenterImpl implements OrderDetailPresenter {
 
     @Override
     public void getData(String table, String userId, String style) {
-        orderDetailModel.getOrderDetail(table, userId , style).observeOn(AndroidSchedulers.mainThread())
+        orderDetailModel.getOrderDetail(table, userId, style).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<OrderUrlBean.OrderBean>>() {
                     @Override

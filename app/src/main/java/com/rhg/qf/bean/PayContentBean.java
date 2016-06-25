@@ -1,10 +1,10 @@
 package com.rhg.qf.bean;
 
 /**
- *desc:用于支付详情的显示
- *author：remember
- *time：2016/5/28 16:34
- *email：1013773046@qq.com
+ * desc:用于支付详情的显示
+ * author：remember
+ * time：2016/5/28 16:34
+ * email：1013773046@qq.com
  */
 public class PayContentBean {
     String goodsName;
@@ -37,6 +37,6 @@ public class PayContentBean {
 
     @Override
     public String toString() {
-        return "goodsName: "+goodsName+" goodsDescription: "+" payMoney: ";
+        return "goodsName: " + goodsName + " goodsDescription: " + " payMoney: ";
     }
 }

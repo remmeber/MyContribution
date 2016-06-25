@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.AddressActivity;
 import com.rhg.qf.activity.DeliverInfoActivity;
@@ -19,7 +20,6 @@ import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -58,6 +58,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
 
     boolean isSignIn;
     UMShareAPI mShareAPI;
+    UmengUtil signUtil = null;
 
     public MyFragment() {
 
@@ -67,7 +68,6 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
     public int getLayoutResId() {
         return R.layout.user_profile_layout;
     }
-
 
     @Override
     protected void initView(View view) {
@@ -242,8 +242,6 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         signUtil.onActivityResult(requestCode, resultCode, data);
     }
-
-    UmengUtil signUtil = null;
 
     /*TODO 登录*/
     private void doLogin() {

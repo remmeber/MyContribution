@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by rhg on 2016/5/24.
  */
-public class PayDialog extends Dialog implements View.OnClickListener{
+public class PayDialog extends Dialog implements View.OnClickListener {
     Context mContext;
     PayDescriptionView payDesc;
     Button btPay;
@@ -36,10 +36,10 @@ public class PayDialog extends Dialog implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Window dialogWindow = getWindow();
-        dialogWindow.getDecorView().setPadding(0,0,0,0);
+        dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics d = mContext.getResources().getDisplayMetrics();
-        lp.width = (int)(d.widthPixels);
+        lp.width = (int) (d.widthPixels);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.BOTTOM;
         dialogWindow.setAttributes(lp);
@@ -57,6 +57,7 @@ public class PayDialog extends Dialog implements View.OnClickListener{
         btCancel = (Button) view.findViewById(R.id.bt_cancel);
 
     }
+
     private void initData() {
         payDesc.setPayContentBeanList(payContentBeanList);
         btPay.setOnClickListener(this);
@@ -66,7 +67,7 @@ public class PayDialog extends Dialog implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_pay:
                 /*调起支付页面*/
                 dismiss();
@@ -80,6 +81,6 @@ public class PayDialog extends Dialog implements View.OnClickListener{
 
     @Override
     protected void onStop() {
-        mContext=null;
+        mContext = null;
     }
 }

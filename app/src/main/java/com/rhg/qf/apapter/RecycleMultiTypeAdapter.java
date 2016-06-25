@@ -15,18 +15,18 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.rhg.qf.R;
 import com.rhg.qf.apapter.viewHolder.BannerImageHolder;
+import com.rhg.qf.bean.BannerTypeBean;
 import com.rhg.qf.bean.BannerTypeUrlBean;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
-import com.rhg.qf.constants.AppConstants;
-import com.rhg.qf.R;
-import com.rhg.qf.bean.BannerTypeBean;
 import com.rhg.qf.bean.FavorableTypeModel;
 import com.rhg.qf.bean.FooterTypeModel;
 import com.rhg.qf.bean.HeaderTypeModel;
 import com.rhg.qf.bean.RecommendListTypeModel;
 import com.rhg.qf.bean.RecommendTextTypeModel;
 import com.rhg.qf.bean.TextTypeBean;
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.utils.BannerController;
 
 import java.util.ArrayList;
@@ -47,10 +47,16 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     public static final int TYPE_RECOMMEND_TEXT = 4;
     public static final int TYPE_RECOMMEND_LIST = 5;
     public static final int TYPE_FOOTER = 6;
+    BannerController bannerController = new BannerController();
     //----------------------------------------------------------------------------------------------
     //
     private Context context;
     private List<Object> mData;
+    private ConvenientBanner<String> convenientBanner;
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------for banner click callback--------------------------------------
+    private OnBannerClickListener onBannerClickListener;
+    private OnGridItemClickListener onGridItemClickListener;
 
     public RecycleMultiTypeAdapter(Context context, List<Object> mData) {
         this.context = context;
@@ -70,7 +76,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (object instanceof FooterTypeModel) return TYPE_FOOTER;
         return -1;
     }
-    //----------------------------------------------------------------------------------------------
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -163,7 +168,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        onGridItemClickListener.gridItemClick(view,favorableFoodEntity.getFavorableFoodBeen().get(position));
+                        onGridItemClickListener.gridItemClick(view, favorableFoodEntity.getFavorableFoodBeen().get(position));
                     }
                 });
             }
@@ -184,10 +189,35 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
     }
 
-
     @Override
     public int getItemCount() {
         return (mData == null || mData.isEmpty()) ? 0 : mData.size();
+    }
+
+    public void stopBanner() {
+        bannerController.stopBanner();
+        bannerController.setConvenientBanner(null);
+    }
+
+    public void startBanner() {
+        bannerController.startBanner(2000);
+        bannerController.setConvenientBanner(convenientBanner);
+    }
+
+    public void setBannerClickListener(OnBannerClickListener onBannerClickListener) {
+        this.onBannerClickListener = onBannerClickListener;
+    }
+
+    public void setOnGridItemClickListener(OnGridItemClickListener onGridItemClickListener) {
+        this.onGridItemClickListener = onGridItemClickListener;
+    }
+
+    public interface OnBannerClickListener {
+        public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
+    }
+
+    public interface OnGridItemClickListener {
+        public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity);
     }
 
     private class HeaderTypeViewHolder extends RecyclerView.ViewHolder {
@@ -203,19 +233,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
             });
         }
-    }
-
-    private ConvenientBanner<String> convenientBanner;
-    BannerController bannerController = new BannerController();
-
-    public void stopBanner() {
-        bannerController.stopBanner();
-        bannerController.setConvenientBanner(null);
-    }
-
-    public void startBanner() {
-        bannerController.startBanner(2000);
-        bannerController.setConvenientBanner(convenientBanner);
     }
 
     private class BannerTypeViewHolder extends RecyclerView.ViewHolder {
@@ -249,6 +266,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             gridView.setAdapter(dpGridViewAdapter);
         }
     }
+    //----------------------------------------------------------------------------------------------
 
     private class RecommendTextTypeViewHolder extends RecyclerView.ViewHolder {
 
@@ -285,29 +303,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
             });
         }
-    }
-
-
-    //-------------------------------for banner click callback--------------------------------------
-    private OnBannerClickListener onBannerClickListener;
-
-    public void setBannerClickListener(OnBannerClickListener onBannerClickListener) {
-        this.onBannerClickListener = onBannerClickListener;
-    }
-
-    public interface OnBannerClickListener {
-        public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
-    }
-    //----------------------------------------------------------------------------------------------
-
-    private OnGridItemClickListener onGridItemClickListener;
-
-    public void setOnGridItemClickListener(OnGridItemClickListener onGridItemClickListener) {
-        this.onGridItemClickListener = onGridItemClickListener;
-    }
-
-    public interface OnGridItemClickListener {
-        public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity);
     }
 
 

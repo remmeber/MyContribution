@@ -130,7 +130,6 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
     //--------------------------------------------------------------------------------------------
 
 
-
     @Override
     public void doSearch() {
         startActivity(new Intent(this, SearchActivity.class));

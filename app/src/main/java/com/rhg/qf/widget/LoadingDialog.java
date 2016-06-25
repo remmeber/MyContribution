@@ -16,7 +16,7 @@ import com.rhg.qf.application.InitApplication;
  */
 public class LoadingDialog extends Dialog {
     Context mContext;
-
+    QFoodLoadingCircle loadCircle;
 
     public LoadingDialog(Context context) {
         super(context, R.style.MyDialogStyle);
@@ -37,8 +37,6 @@ public class LoadingDialog extends Dialog {
         initView();
         initData();
     }
-
-    QFoodLoadingCircle loadCircle;
 
     private void initView() {
         loadCircle = new QFoodLoadingCircle(InitApplication.getInstance().getApplicationContext());

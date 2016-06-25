@@ -28,6 +28,7 @@ public class AddressRecycleViewWithDelete extends RecyclerView implements Gestur
     Context context;
     int downX;
     int downY;
+    private ItemClickListener onItemClickListener;
 
     public AddressRecycleViewWithDelete(Context context) {
         super(context);
@@ -139,18 +140,12 @@ public class AddressRecycleViewWithDelete extends RecyclerView implements Gestur
     public void onLongPress(MotionEvent e) {
 
     }
+    /*for gesture*/
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
-    /*for gesture*/
-
-    public interface ItemClickListener {
-        void onItemClick(int position);
-    }
-
-    private ItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(ItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -158,5 +153,9 @@ public class AddressRecycleViewWithDelete extends RecyclerView implements Gestur
 
     public boolean hasItemClickListener() {
         return onItemClickListener != null;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(int position);
     }
 }

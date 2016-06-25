@@ -51,6 +51,7 @@ public class ShopDetailUriBean {
     public void setTotal(int total) {
         this.total = total;
     }
+
     public List<ShopDetailBean> getRows() {
         return rows;
     }

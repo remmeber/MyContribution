@@ -16,8 +16,8 @@ import okio.BufferedSink;
  */
 public class MyRequestBody extends RequestBody {
 
-    private File mFile;
     private static final int DEFAULT_BUFFER_SIZE = 2048;
+    private File mFile;
 
     public MyRequestBody(File mFile) {
         this.mFile = mFile;

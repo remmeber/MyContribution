@@ -54,6 +54,13 @@ public class ShoppingCartWithNumber extends FrameLayout {
 //        ImageUtils.TintFill(iv_goodsCart, iv_goodsCart.getDrawable(), backColor);
     }
 
+    public int getNum() {
+        if (tv_goodsNum.getVisibility() == GONE)
+            return 0;
+        String _string_num = tv_goodsNum.getText().toString();
+        return Integer.valueOf(_string_num);
+    }
+
     public void setNum(String num) {
         if (tv_goodsNum != null) {
             if (Integer.valueOf(num) == 0)
@@ -64,16 +71,10 @@ public class ShoppingCartWithNumber extends FrameLayout {
             }
         }
     }
-    public int getNum(){
-        if(tv_goodsNum.getVisibility()==GONE)
-            return 0;
-        String _string_num = tv_goodsNum.getText().toString();
-        return Integer.valueOf(_string_num);
-    }
 
     public void setDrawable(int resID) {
 //        iv_goodsCart.setImageDrawable(getResources().getDrawable(resID));
-        ImageUtils.TintFill(iv_goodsCart,getResources().getDrawable(resID),backColor);
+        ImageUtils.TintFill(iv_goodsCart, getResources().getDrawable(resID), backColor);
     }
 
     private void setNumVisible(boolean visible) {

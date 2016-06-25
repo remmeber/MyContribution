@@ -10,7 +10,6 @@ import com.rhg.qf.apapter.viewHolder.QFoodGridAdapterViewHolder;
 import java.util.List;
 
 
-
 /**
  * Created by whiskeyfei on 15-7-9.
  */
@@ -22,10 +21,9 @@ public abstract class DPBasePageAdapter<T> extends PagerAdapter {
     protected boolean mIsInfiniteLoop;
 
     /**
-     *
-     * @param context context
-     * @param list    data
-     * @param layoutId  layout id
+     * @param context  context
+     * @param list     data
+     * @param layoutId layout id
      */
     public DPBasePageAdapter(Context context, List<T> list, int layoutId) {
         mContext = context;
@@ -34,14 +32,13 @@ public abstract class DPBasePageAdapter<T> extends PagerAdapter {
     }
 
     /**
-     *
-     * @param context context
-     * @param list   data
-     * @param layoutId layout id
-     * @param isInfiniteLoop  is loop
+     * @param context        context
+     * @param list           data
+     * @param layoutId       layout id
+     * @param isInfiniteLoop is loop
      */
-    public DPBasePageAdapter(Context context, List<T> list, int layoutId,boolean isInfiniteLoop) {
-       this(context,list,layoutId);
+    public DPBasePageAdapter(Context context, List<T> list, int layoutId, boolean isInfiniteLoop) {
+        this(context, list, layoutId);
         mIsInfiniteLoop = isInfiniteLoop;
     }
 
@@ -79,10 +76,10 @@ public abstract class DPBasePageAdapter<T> extends PagerAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         final QFoodGridAdapterViewHolder holder = QFoodGridAdapterViewHolder.get(mContext, convertView, parent, mLayoutId, position);
-        convert(holder,getItem(getPosition(position)));
+        convert(holder, getItem(getPosition(position)));
         return holder.getConvertView();
     }
 
-	public abstract void convert(QFoodGridAdapterViewHolder holder, T t);
+    public abstract void convert(QFoodGridAdapterViewHolder holder, T t);
 
 }

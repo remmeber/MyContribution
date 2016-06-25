@@ -27,7 +27,7 @@ public class HomeModelImpl implements HomeModel {
                 qFoodApiService.getRecommendList(),
                 qFoodApiService.getMessage(),
                 new Func4<BannerTypeUrlBean, FavorableFoodUrlBean,
-                        RecommendListUrlBean,TextTypeBean, HomeBean>() {
+                        RecommendListUrlBean, TextTypeBean, HomeBean>() {
                     @Override
                     public HomeBean call(BannerTypeUrlBean bannerTypeUrlBean,
                                          FavorableFoodUrlBean favorableFoodUrlBean,

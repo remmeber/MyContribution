@@ -1,10 +1,10 @@
 package com.rhg.qf.bean;
 
 /**
- *desc:
- *author：remember
- *time：2016/6/17 20:11
- *email：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/6/17 20:11
+ * email：1013773046@qq.com
  */
 public class AddressLocalBean extends AddressBean {
 

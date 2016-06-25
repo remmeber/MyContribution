@@ -17,6 +17,7 @@ import android.view.View;
  * email：1013773046@qq.com
  */
 public class RecycleViewDivider extends RecyclerView.ItemDecoration {
+    private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     private Paint mPaint;
     private Drawable mDivider;
     private int mDividerHeight = 2;//分割线高度，默认为1px
@@ -26,7 +27,6 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     private int mRightPadding;
     private int mTopPadding;
     private int mBottomPadding;
-    private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
     public RecycleViewDivider(Context context, int mOrientation) {
         if (mOrientation != LinearLayoutManager.VERTICAL && mOrientation != LinearLayoutManager.HORIZONTAL) {

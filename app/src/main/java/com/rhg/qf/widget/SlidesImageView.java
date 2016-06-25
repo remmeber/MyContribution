@@ -7,16 +7,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.apapter.SlidesImageAdapter;
 import com.rhg.qf.impl.SlidesViewChangeListener;
 import com.rhg.qf.utils.AnimationUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 /**
  * Created by whiskeyfei on 15-7-28.
  */
-    public class SlidesImageView extends RelativeLayout implements SlidesViewChangeListener {
+public class SlidesImageView extends RelativeLayout implements SlidesViewChangeListener {
 
     private Context mContext;
     private View mConvertView;
@@ -49,7 +49,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
         addView(mConvertView);
     }
 
-    public void setAdapter(SlidesImageAdapter adapter){
+    public void setAdapter(SlidesImageAdapter adapter) {
         mSlidesImageAdapter = adapter;
         mSlidesImageAdapter.setImageChangeListener(this);
     }
@@ -57,12 +57,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mSlidesImageAdapter!= null) mSlidesImageAdapter.setImageChangeListener(null);
+        if (mSlidesImageAdapter != null) mSlidesImageAdapter.setImageChangeListener(null);
     }
 
     @Override
     public void update(String imageUrl, String title, int position) {
-        ImageLoader.getInstance().displayImage(imageUrl,mImageView);
+        ImageLoader.getInstance().displayImage(imageUrl, mImageView);
         AnimationUtils.alphaAnimation(mImageView, 0.0f, 1.0f, 500);
         mTextView.setText(title);
     }

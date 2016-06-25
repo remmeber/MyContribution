@@ -37,7 +37,7 @@ public class AppConstants {
 
     /*SP KEY*/
     public static final String SP_LOCATION = "location";
-    public static final String SP_LATITUDE= "latitude";
+    public static final String SP_LATITUDE = "latitude";
     public static final String SP_LONGITUDE = "longitude";
     public static final String SP_HEAD_IMAGE = "sp_head_image";
     public static final String SP_USER_ID = "user_id";
@@ -180,13 +180,6 @@ public class AppConstants {
     public static final String DES_KEY = "abcdefgh";
 
     public static final String IMAGE_PATH = "/wxt";
-
-    public static int SCREEN_WIDTH = 0;
-
-    public static int PAGE_SIZE_DEFAULLT = 7;
-    public static int PAGE_NO_DEFAULT = 1;
-    /*--------------------------------SP Key------------------------------------*/
-
     /**
      * SharedPreferences的key
      */
@@ -196,47 +189,43 @@ public class AppConstants {
      * UMeng推送的key
      */
     public static final String SP_KEY_PUSH = "push";
+    /*--------------------------------SP Key------------------------------------*/
     public static final String SP_KEY_OWER_ID = "owerID";
     public static final String SP_KEY_COMMUNITY_ID = "communityID";
-
     /**
      * 服务器返回的错误信息
      */
     public static final int WHAT_ERROR_HTTP = 500;
-
     /**
      * accessToken过期
      */
     public static final int WHAT_TOKEN_EXPIRED = 1011;
-
     /**
      * 忘记密码
      */
     public static final int WHAT_FORGET = 100;
-
     /**
      * 请求短信验证码
      */
     public static final int WHAT_VALIDATION_CODE = 101;
-
     /**
      * 倒计时
      */
     public static final int WHAT_COUNT_DOWN = 102;
-
     /**
      * 登录
      */
     public static final int WHAT_LOGIN = 103;
-
     /**
      * 评论列表
      */
     public static final int WHAT_COMMENT_LIST = 104;
-
     /**
      * 双击退出
      */
     public static final int WHAT_EXIT = 105;
+    public static int SCREEN_WIDTH = 0;
+    public static int PAGE_SIZE_DEFAULLT = 7;
+    public static int PAGE_NO_DEFAULT = 1;
 
 }

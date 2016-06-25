@@ -18,30 +18,19 @@ import com.rhg.qf.pay.pays.PaysFactory;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.plugins.RxJavaErrorHandler;
 import rx.schedulers.Schedulers;
 
 public abstract class BasePayActivity extends Activity {
 
+    private static final int PAY_FLAG = 1;
     /**
      * 默认方式微信支付（微信支付被选中）
      */
     public PayType payType = PayType.WeixinPay;
-
-    private static final int PAY_FLAG = 1;
-
     /**
      * 支付实体对象。通过该对象调用接口生成规范的订单信息并进行支付
      */
     private IPayable payManager;
-
-
-    /**
-     * 警告（比如：还没有确定支付结果，在等待支付结果确认）回调方法。开发者可根据各自业务override该方法
-     */
-    protected abstract void Warning(String s);
-
-
     // 支付宝支付完成后，多线程回调主线程handler
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -73,6 +62,11 @@ public abstract class BasePayActivity extends Activity {
             }
         }
     };
+
+    /**
+     * 警告（比如：还没有确定支付结果，在等待支付结果确认）回调方法。开发者可根据各自业务override该方法
+     */
+    protected abstract void Warning(String s);
 
     protected abstract void showSuccess(String string);
 

@@ -14,29 +14,17 @@ import com.rhg.qf.R;
 public class SlideView extends LinearLayout {
 
     private static final String TAG = "SlideView";
-
+    private static final int TAN = 2;
+    int state = OnSlideListener.SLIDE_STATUS_OFF;
+    boolean slide = false;
+    int downX;
+    int downY;
     private Context mContext;
     private LinearLayout mViewContent;
-    int state = OnSlideListener.SLIDE_STATUS_OFF;
     private Scroller mScroller;
     private OnSlideListener mOnSlideListener;
-    boolean slide = false;
-
     private int mHolderWidth = 80;
-    private static final int TAN = 2;
-
-    public interface OnSlideListener {
-        public static final int SLIDE_STATUS_OFF = 0;
-        public static final int SLIDE_STATUS_START_SCROLL = 1;
-        public static final int SLIDE_STATUS_ON = 2;
-        public static final int SLIDE_STATE_UPDATE = 3;
-
-        /**
-         * @param view   current SlideView
-         * @param status SLIDE_STATUS_ON or SLIDE_STATUS_OFF
-         */
-        public void onSlide(View view, int status);
-    }
+    private boolean isConsume;
 
     public SlideView(Context context) {
         super(context);
@@ -105,9 +93,35 @@ public class SlideView extends LinearLayout {
         return false;
     }
 
-    private boolean isConsume;
-    int downX;
-    int downY;
+    public void onRequireTouchEvent(MotionEvent event, MotionEvent event1) {
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        downX = (int) event1.getX();
+        downY = (int) event1.getY();
+        int scrollX = getScrollX();
+
+
+        int deltaX = x - downX;
+
+        int newScrollX = scrollX - deltaX;
+        if (deltaX != 0) {
+            if (newScrollX < 0) {
+                newScrollX = 0;
+            } else if (newScrollX > mHolderWidth) {
+                newScrollX = mHolderWidth;
+            }
+            this.scrollTo(newScrollX, 0);
+        }
+        if (scrollX - mHolderWidth * 0.4 > 0) {
+            newScrollX = mHolderWidth;
+        } else newScrollX = 0;
+        this.smoothScrollTo(newScrollX, 0);
+        if (mOnSlideListener != null) {
+            mOnSlideListener.onSlide(this,
+                    state = newScrollX == 0 ? OnSlideListener.SLIDE_STATUS_OFF
+                            : OnSlideListener.SLIDE_STATUS_ON);
+        }
+    }
 
     /*public boolean onRequireTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
@@ -178,36 +192,6 @@ public class SlideView extends LinearLayout {
         return isConsume;
     }*/
 
-    public void onRequireTouchEvent(MotionEvent event, MotionEvent event1) {
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-        downX = (int) event1.getX();
-        downY = (int) event1.getY();
-        int scrollX = getScrollX();
-
-
-        int deltaX = x - downX;
-
-        int newScrollX = scrollX - deltaX;
-        if (deltaX != 0) {
-            if (newScrollX < 0) {
-                newScrollX = 0;
-            } else if (newScrollX > mHolderWidth) {
-                newScrollX = mHolderWidth;
-            }
-            this.scrollTo(newScrollX, 0);
-        }
-        if (scrollX - mHolderWidth * 0.4 > 0) {
-            newScrollX = mHolderWidth;
-        } else newScrollX = 0;
-        this.smoothScrollTo(newScrollX, 0);
-        if (mOnSlideListener != null) {
-            mOnSlideListener.onSlide(this,
-                    state = newScrollX == 0 ? OnSlideListener.SLIDE_STATUS_OFF
-                            : OnSlideListener.SLIDE_STATUS_ON);
-        }
-    }
-
     private void smoothScrollTo(int destX, int destY) {
         // 缓慢滚动到指定位置
         int scrollX = getScrollX();
@@ -222,5 +206,18 @@ public class SlideView extends LinearLayout {
             this.scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
             postInvalidate();
         }
+    }
+
+    public interface OnSlideListener {
+        public static final int SLIDE_STATUS_OFF = 0;
+        public static final int SLIDE_STATUS_START_SCROLL = 1;
+        public static final int SLIDE_STATUS_ON = 2;
+        public static final int SLIDE_STATE_UPDATE = 3;
+
+        /**
+         * @param view   current SlideView
+         * @param status SLIDE_STATUS_ON or SLIDE_STATUS_OFF
+         */
+        public void onSlide(View view, int status);
     }
 }

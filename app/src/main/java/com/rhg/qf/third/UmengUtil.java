@@ -26,6 +26,56 @@ public class UmengUtil {
     private Activity activity;
     private SignInListener signInListener;
     private ShareListener shareListener;
+    private UMAuthListener umGetInfoListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            signInListener.signSuccess(map);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+            signInListener.signFail("获取用户信息失败");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media, int i) {
+            signInListener.signFail("取消");
+        }
+    };
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            umShareAPI.getPlatformInfo(activity, share_media, umGetInfoListener);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+            signInListener.signFail("取消授权");
+
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media, int i) {
+            signInListener.signFail("取消");
+
+        }
+    };
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+            shareListener.shareSuccess("分享成功");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            shareListener.shareFailed("分享失败", throwable.getMessage());
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+            shareListener.shareCancel("分享取消");
+        }
+    };
 
     public UmengUtil(Activity activity) {
         this.activity = activity;
@@ -47,59 +97,6 @@ public class UmengUtil {
                 .setCallback(umShareListener)
                 .open();
     }
-
-    private UMAuthListener umAuthListener = new UMAuthListener() {
-        @Override
-        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            umShareAPI.getPlatformInfo(activity, share_media, umGetInfoListener);
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            signInListener.signFail("取消授权");
-
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA share_media, int i) {
-            signInListener.signFail("取消");
-
-        }
-    };
-
-    private UMAuthListener umGetInfoListener = new UMAuthListener() {
-        @Override
-        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            signInListener.signSuccess(map);
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            signInListener.signFail("获取用户信息失败");
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA share_media, int i) {
-            signInListener.signFail("取消");
-        }
-    };
-
-    private UMShareListener umShareListener = new UMShareListener() {
-        @Override
-        public void onResult(SHARE_MEDIA share_media) {
-            shareListener.shareSuccess("分享成功");
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-            shareListener.shareFailed("分享失败", throwable.getMessage());
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA share_media) {
-            shareListener.shareCancel("分享取消");
-        }
-    };
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         umShareAPI.onActivityResult(requestCode, resultCode, data);

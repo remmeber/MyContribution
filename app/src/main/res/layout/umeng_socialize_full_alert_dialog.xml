@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/umeng_socialize_list_item_bgcolor"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include
         android:id="@+id/umeng_socialize_title"
@@ -13,12 +13,11 @@
         android:id="@+id/umeng_xp_ScrollView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center"
-         >
+        android:layout_gravity="center">
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/umeng_socialize_first_area_title"
@@ -36,8 +35,7 @@
                 android:layout_below="@id/umeng_socialize_first_area_title"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
 
             <TextView
                 android:id="@+id/umeng_socialize_second_area_title"
@@ -55,8 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/umeng_socialize_second_area_title"
                 android:layout_centerInParent="true"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </RelativeLayout>
     </ScrollView>
 

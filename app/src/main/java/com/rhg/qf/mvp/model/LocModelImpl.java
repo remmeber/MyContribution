@@ -9,14 +9,14 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- *desc:mvp中获取定位的实现
- *author：remember
- *time：2016/5/28 16:59
- *email：1013773046@qq.com
+ * desc:mvp中获取定位的实现
+ * author：remember
+ * time：2016/5/28 16:59
+ * email：1013773046@qq.com
  */
 public class LocModelImpl implements LocModel {
     @Override
-    public void getLocation( LocationService locationService) {
+    public void getLocation(LocationService locationService) {
         Observable.just(locationService).flatMap(new Func1<LocationService, Observable<String>>() {
             @Override
             public Observable<String> call(final LocationService locationService) {

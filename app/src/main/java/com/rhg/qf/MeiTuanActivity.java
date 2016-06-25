@@ -16,6 +16,11 @@ import java.util.List;
 
 public class MeiTuanActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
 
+    public static final String KEY_START = "key_start";
+    public static final String KEY_COUNT = "key_count";
+    public static final String KEY_IMAGE = "key_image";
+    public static final String KEY_TITLE = "key_title";
+    List<Fragment> mFragmentList;
     private int[] ICON_MAP_COMMON = {
 
             R.drawable.recommend_default_icon_1, R.drawable.recommend_default_icon_2,
@@ -25,16 +30,10 @@ public class MeiTuanActivity extends FragmentActivity implements ViewPager.OnPag
             R.drawable.recommend_default_icon_1, R.drawable.recommend_default_icon_2};
     private int ICON_SIZE = ICON_MAP_COMMON.length;
     private String[] TITLE = {"1", "2", "1", "2", "1", "2", "1", "2", "1", "2"};
-    public static final String KEY_START = "key_start";
-    public static final String KEY_COUNT = "key_count";
-    public static final String KEY_IMAGE = "key_image";
-    public static final String KEY_TITLE = "key_title";
-
     private Context mContext;
     private ViewPager mViewPager;
     private PointView mPonitView;
     private View mView;
-    List<Fragment> mFragmentList;
 
     public MeiTuanActivity() {
 
@@ -55,7 +54,7 @@ public class MeiTuanActivity extends FragmentActivity implements ViewPager.OnPag
                 if (i == ICON_SIZE) {
                     break;
                 }
-                bundle.putInt(KEY_START, i / 10-1);
+                bundle.putInt(KEY_START, i / 10 - 1);
                 bundle.putInt(KEY_COUNT, 10);
                 fragment.setArguments(bundle);
                 mFragmentList.add(fragment);

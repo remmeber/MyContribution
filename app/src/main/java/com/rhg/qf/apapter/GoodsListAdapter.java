@@ -29,13 +29,14 @@ import butterknife.ButterKnife;
 public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
-
-    public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
-        this.shopDetailBeanList = shopDetailBeanList;
-    }
+    private RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> onGoodsItemClickListener;
 
     public GoodsListAdapter(Context context, List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
         this.context = context;
+        this.shopDetailBeanList = shopDetailBeanList;
+    }
+
+    public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
         this.shopDetailBeanList = shopDetailBeanList;
     }
 
@@ -76,9 +77,6 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemCount() {
         return shopDetailBeanList == null ? 0 : shopDetailBeanList.size();
     }
-
-
-    private RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> onGoodsItemClickListener;
 
     public void setOnGoodsItemClickListener(RcvItemClickListener<ShopDetailUriBean.ShopDetailBean>
                                                     onGoodsItemClickListener) {

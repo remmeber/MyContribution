@@ -13,14 +13,12 @@ import android.widget.Scroller;
  * 可以左右拉伸的Layout
  */
 public class HorizontalFlingLayout extends LinearLayout {
+    boolean isWipeValid = false;
     private Scroller mScroller;
-
     private View mLeftView;
     private View mRightView;
-
     private float mInitX, mInitY;
     private float mOffsetX, mOffsetY;
-    boolean isWipeValid = false;
 
     public HorizontalFlingLayout(Context context) {
         this(context, null);
@@ -73,7 +71,7 @@ public class HorizontalFlingLayout extends LinearLayout {
                 mOffsetY = ev.getY() - mInitY;
                 float absOffset = Math.abs(mOffsetX);
                 //横向手势跟随移动
-                Log.i("RHG","offset is :"+absOffset);
+                Log.i("RHG", "offset is :" + absOffset);
                 if (absOffset > 1)
                     isWipeValid = true;
                 else isWipeValid = false;

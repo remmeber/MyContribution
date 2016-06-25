@@ -15,8 +15,8 @@ public class ToastHelper {
     private static Handler handler = new Handler(Looper.getMainLooper());
     private static ToastHelper toast;
     private static Toast toast1 = null;
-    private Context context;
     private static Object synObj = new Object();
+    private Context context;
 
     public static ToastHelper getInstance() {
         if (toast == null) {

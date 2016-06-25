@@ -76,60 +76,59 @@ public class AccountUtil {
         editor.apply();
     }
 
-    public void setUserID(String userID) {
-        putStringByKey(AppConstants.SP_USER_ID, userID);
-    }
-
     public String getUserID() {
         return getStringByKey(AppConstants.SP_USER_ID);
     }
 
-    public void setUserName(String userName) {
-        putStringByKey(AppConstants.SP_USER_NAME, userName);
+    public void setUserID(String userID) {
+        putStringByKey(AppConstants.SP_USER_ID, userID);
     }
 
     public String getUserName() {
         return getStringByKey(AppConstants.SP_USER_NAME);
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        putStringByKey(AppConstants.KEY_OR_SP_PHONE, phoneNumber);
+    public void setUserName(String userName) {
+        putStringByKey(AppConstants.SP_USER_NAME, userName);
     }
 
     public String getPhoneNumber() {
         return getStringByKey(AppConstants.KEY_OR_SP_PHONE);
     }
 
-    public void setHeadImageUrl(String headImageUrl) {
-        putStringByKey(AppConstants.SP_HEAD_IMAGE, headImageUrl);
+    public void setPhoneNumber(String phoneNumber) {
+        putStringByKey(AppConstants.KEY_OR_SP_PHONE, phoneNumber);
     }
 
     public String getHeadImageUrl() {
         return getStringByKey(AppConstants.SP_HEAD_IMAGE);
     }
 
-
-    public void setLocation(String s) {
-        putStringByKey(AppConstants.SP_LOCATION, s);
-    }
-
-    public void setLatitude(String s) {
-        putStringByKey(AppConstants.SP_LATITUDE, s);
+    public void setHeadImageUrl(String headImageUrl) {
+        putStringByKey(AppConstants.SP_HEAD_IMAGE, headImageUrl);
     }
 
     public String getLocation() {
         return getStringByKey(AppConstants.SP_LOCATION);
     }
 
+    public void setLocation(String s) {
+        putStringByKey(AppConstants.SP_LOCATION, s);
+    }
+
     public String getLatitude() {
         return getStringByKey(AppConstants.SP_LATITUDE);
     }
 
-    public void setLongitude(String s) {
-        putStringByKey(AppConstants.SP_LONGITUDE, s);
+    public void setLatitude(String s) {
+        putStringByKey(AppConstants.SP_LATITUDE, s);
     }
 
     public String getLongitude() {
         return getStringByKey(AppConstants.SP_LONGITUDE);
+    }
+
+    public void setLongitude(String s) {
+        putStringByKey(AppConstants.SP_LONGITUDE, s);
     }
 }

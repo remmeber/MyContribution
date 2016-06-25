@@ -5,14 +5,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
-import com.rhg.qf.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rhg.qf.R;
 
 /**
- *desc:图片轮播页面
- *author：remember
- *time：2016/5/28 16:15
- *email：1013773046@qq.com
+ * desc:图片轮播页面
+ * author：remember
+ * time：2016/5/28 16:15
+ * email：1013773046@qq.com
  */
 public class BannerImageHolder implements Holder<String> {
     ImageView imageView;
@@ -27,6 +27,6 @@ public class BannerImageHolder implements Holder<String> {
     @Override
     public void UpdateUI(Context context, int position, String data) {
         imageView.setImageResource(R.drawable.recommend_default_icon_2);
-        ImageLoader.getInstance().displayImage(data,imageView);
+        ImageLoader.getInstance().displayImage(data, imageView);
     }
 }

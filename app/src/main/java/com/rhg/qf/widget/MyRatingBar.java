@@ -20,12 +20,14 @@ import com.rhg.qf.R;
  * 邮箱：1013773046@qq.com
  */
 public class MyRatingBar extends View {
-    Rect rectSrc;
-    Rect dstF;
     //星星水平排列
     public static final int HORIZONTAL = 0;
     //星星垂直排列
     public static final int VERTICAL = 1;
+    Rect rectSrc;
+    Rect dstF;
+    float finalWidth;
+    float finalHeight;
     //实心图片
     private Bitmap mSolidBitmap;
     //空心图片
@@ -140,14 +142,15 @@ public class MyRatingBar extends View {
         return super.onTouchEvent(event);
     }
 
-    float finalWidth;
-    float finalHeight;
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         finalWidth = w;
         finalHeight = h;
+    }
+
+    public float getStarRating() {
+        return starRating;
     }
 
     /**
@@ -159,11 +162,6 @@ public class MyRatingBar extends View {
         this.starRating = starRating;
         invalidate();
     }
-
-    public float getStarRating() {
-        return starRating;
-    }
-
 
     /**
      * 获取缩放图片

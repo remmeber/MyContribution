@@ -74,7 +74,9 @@ public class DecimalUtil {
         return divideWithRoundingMode(v1, v2, RoundingMode.DOWN);
     }
 
-    /** 选择小数部分处理方式 */
+    /**
+     * 选择小数部分处理方式
+     */
     public static String divideWithRoundingMode(String v1, String v2,
                                                 RoundingMode roundingMode) {
         return divideWithRoundingModeAndScale(v1, v2, RoundingMode.DOWN, 0);

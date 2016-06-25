@@ -9,20 +9,22 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.rhg.qf.MainActivity"
     tools:showIn="@layout/app_bar_main">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <com.bigkoo.convenientbanner.ConvenientBanner
                 android:id="@+id/pictureBanner"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                app:canLoop="true"/>
+                app:canLoop="true" />
 
             <TextView
                 android:layout_width="wrap_content"

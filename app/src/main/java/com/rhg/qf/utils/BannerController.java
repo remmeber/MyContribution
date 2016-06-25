@@ -11,8 +11,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 public class BannerController {
     ConvenientBanner convenientBanner;
 
-    public void setConvenientBanner(ConvenientBanner convenientBanner) {
-        this.convenientBanner = convenientBanner;
+    public BannerController() {
     }
 
     /*private static BannerController ourInstance = new BannerController();
@@ -21,7 +20,8 @@ public class BannerController {
         return ourInstance;
     }*/
 
-    public BannerController() {
+    public void setConvenientBanner(ConvenientBanner convenientBanner) {
+        this.convenientBanner = convenientBanner;
     }
 
     public void startBanner(long time) {

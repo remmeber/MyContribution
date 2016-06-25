@@ -10,10 +10,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- *desc:mvp中获取商品详情的presenter实现
- *author：remember
- *time：2016/5/28 17:01
- *email：1013773046@qq.com
+ * desc:mvp中获取商品详情的presenter实现
+ * author：remember
+ * time：2016/5/28 17:01
+ * email：1013773046@qq.com
  */
 public class GoodsDetailPresenterImpl implements GoodsDetailPresenter {
 
@@ -27,7 +27,7 @@ public class GoodsDetailPresenterImpl implements GoodsDetailPresenter {
 
     @Override
     public void getGoodsInfo(String foodmessage, String foodId) {
-        goodsDetailModel.getGoodsDetail(foodmessage,foodId).observeOn(AndroidSchedulers.mainThread())
+        goodsDetailModel.getGoodsDetail(foodmessage, foodId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<GoodsDetailUrlBean.GoodsDetailBean>() {
                     @Override

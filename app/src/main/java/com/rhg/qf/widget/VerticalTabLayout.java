@@ -33,6 +33,7 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
     int selectBgColor;
     int unSelectBgColor;
     private String[] titles;
+    private VerticalTabClickListener mVerticalTabClickListener;
 
     public VerticalTabLayout(Context context) {
 
@@ -63,6 +64,16 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
 
     }
 
+    /*public void setVp(ViewPager vp) {
+        if (vp == null || vp.getAdapter() == null) {
+            throw new IllegalStateException("ViewPager or ViewPager adapter can not be NULL !");
+        }
+        this.vp = vp;
+        this.vp.removeOnPageChangeListener(this);
+        this.vp.addOnPageChangeListener(this);
+        notifyDataSetChanged();
+    }*/
+
     private void ontainAttr(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VerticalTabLayout);
         if (a.hasValue(R.styleable.VerticalTabLayout_item_height)) {
@@ -87,16 +98,6 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
             unSelectBgColor = a.getColor(R.styleable.VerticalTabLayout_item_unclick_bg_color, DEFAULT_UNSELECT_BG_COLOR);
         }
     }
-
-    /*public void setVp(ViewPager vp) {
-        if (vp == null || vp.getAdapter() == null) {
-            throw new IllegalStateException("ViewPager or ViewPager adapter can not be NULL !");
-        }
-        this.vp = vp;
-        this.vp.removeOnPageChangeListener(this);
-        this.vp.addOnPageChangeListener(this);
-        notifyDataSetChanged();
-    }*/
 
     private void notifyDataSetChanged() {
         mLayout.removeAllViews();
@@ -135,16 +136,9 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
         }
     }
 
-    public interface VerticalTabClickListener {
-        public void onVerticalTabClick(int position);
-    }
-
-    private VerticalTabClickListener mVerticalTabClickListener;
-
     public void setOnVerticalTabClickListener(VerticalTabClickListener mVerticalTabClickListener) {
         this.mVerticalTabClickListener = mVerticalTabClickListener;
     }
-
 
     public void changeTabState(int position) {
         if (lastPosition != position) {
@@ -164,7 +158,6 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
         return lastPosition;
     }
 
-
     private int dip2px(float dpValue) {
         final float scale = mContext.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
@@ -183,5 +176,9 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
     public void setTitles(String[] titles) {
         this.titles = titles;
         notifyDataSetChanged();
+    }
+
+    public interface VerticalTabClickListener {
+        public void onVerticalTabClick(int position);
     }
 }

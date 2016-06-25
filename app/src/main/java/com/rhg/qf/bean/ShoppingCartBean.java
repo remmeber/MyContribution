@@ -3,11 +3,12 @@ package com.rhg.qf.bean;
 import com.rhg.qf.widget.SlideView;
 
 import java.util.List;
+
 /**
- *desc:购物车模型  //todo 后期修改继承自店铺模型
- *author：remember
- *time：2016/5/28 16:39
- *email：1013773046@qq.com
+ * desc:购物车模型  //todo 后期修改继承自店铺模型
+ * author：remember
+ * time：2016/5/28 16:39
+ * email：1013773046@qq.com
  */
 public class ShoppingCartBean {
     public static final String KEY_PRODUCT_ID = "productId";

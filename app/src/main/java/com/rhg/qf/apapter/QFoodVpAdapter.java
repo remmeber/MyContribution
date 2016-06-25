@@ -23,10 +23,6 @@ public class QFoodVpAdapter extends FragmentPagerAdapter implements ViewPager.On
     private OnExtraPageChangeListener onExtraPageChangeListener; // ViewPager切换页面时的额外功能添加
     private int currentPage = 0;
 
-    public void setOnExtraPageChangeListener(OnExtraPageChangeListener onExtraPageChangeListener) {
-        this.onExtraPageChangeListener = onExtraPageChangeListener;
-    }
-
     public QFoodVpAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] titles, ViewPager viewPager, SlidingTabLayout slidingTabLayout) {
         super(fm);
         this.fragmentList = fragmentList;
@@ -37,6 +33,9 @@ public class QFoodVpAdapter extends FragmentPagerAdapter implements ViewPager.On
         slidingTabLayout.setViewPager(viewPager);
     }
 
+    public void setOnExtraPageChangeListener(OnExtraPageChangeListener onExtraPageChangeListener) {
+        this.onExtraPageChangeListener = onExtraPageChangeListener;
+    }
 
     @Override
     public Fragment getItem(int position) {

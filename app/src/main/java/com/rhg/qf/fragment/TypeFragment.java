@@ -18,19 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *desc:todo 未使用fm
- *author：remember
- *time：2016/5/28 16:49
- *email：1013773046@qq.com
+ * desc:todo 未使用fm
+ * author：remember
+ * time：2016/5/28 16:49
+ * email：1013773046@qq.com
  */
 public class TypeFragment extends Fragment {
 
+    QFoodGridViewAdapter mDPGridViewAdapter;
     private int[] mImageResId;
     private int mCount;
     private String[] mTitle;
     private int mStart;
     private GridView mGridView;
-    QFoodGridViewAdapter mDPGridViewAdapter;
     private List<FavorableFoodUrlBean> mDataList = new ArrayList<FavorableFoodUrlBean>();
 
     public TypeFragment() {
@@ -52,7 +52,7 @@ public class TypeFragment extends Fragment {
     }
 
     private void initData() {
-        for (int i = mStart*10; i < mStart*10+mCount; i++) {
+        for (int i = mStart * 10; i < mStart * 10 + mCount; i++) {
 //            FavorableFoodUrlBean model = new FavorableFoodUrlBean();
 //            model.setImageId(mImageResId[i]);
 //            model.setContent(mTitle[i]);

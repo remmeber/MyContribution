@@ -3,10 +3,10 @@ package com.rhg.qf.bean;
 import java.util.List;
 
 /**
- *desc:整个主页的数据模型，网络请求后，需要将所有的数据都整合到该类中
- *author：remember
- *time：2016/5/28 16:33
- *email：1013773046@qq.com
+ * desc:整个主页的数据模型，网络请求后，需要将所有的数据都整合到该类中
+ * author：remember
+ * time：2016/5/28 16:33
+ * email：1013773046@qq.com
  */
 public class HomeBean {
     List<BannerTypeUrlBean.BannerEntity> bannerEntityList;

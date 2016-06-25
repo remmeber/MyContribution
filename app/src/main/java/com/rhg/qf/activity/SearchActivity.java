@@ -50,9 +50,8 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
     RecyclerView historyResultsRcv;
     @Bind(R.id.itemResultsRcv)
     RecyclerView itemResultsRcv;
-    private List<String> searchHistoryData;
-
     SearchHistoryAdapter searchHistoryAdapter;
+    private List<String> searchHistoryData;
 
     @Override
     public void loadingData() {

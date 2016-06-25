@@ -7,7 +7,7 @@ package com.rhg.qf.impl;
 public interface ShareListener {
     public void shareSuccess(String message);
 
-    public void shareFailed(String message,String content);
+    public void shareFailed(String message, String content);
 
     public void shareCancel(String message);
 }

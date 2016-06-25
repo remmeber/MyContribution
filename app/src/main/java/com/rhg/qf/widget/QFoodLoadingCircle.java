@@ -17,12 +17,10 @@ import android.view.animation.LinearInterpolator;
  * email：1013773046@qq.com
  */
 public class QFoodLoadingCircle extends View {
+    Handler handler = new Handler();
     private Paint paint;
     private int maxRadius = 16;
     private ValueAnimator valueAnimator;
-    private boolean init = false;
-    private float radiu = 10;
-    Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -30,27 +28,25 @@ public class QFoodLoadingCircle extends View {
             invalidate();
         }
     };
-
+    private boolean init = false;
+    private float radiu = 10;
+    private int width;
+    private int height;
+    private float pi2;
+    private float r;
     public QFoodLoadingCircle(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
     public QFoodLoadingCircle(Context context) {
         super(context);
         init();
     }
 
-
     private void init() {
         paint = new Paint();
         paint.setColor(Color.GREEN);
     }
-
-    private int width;
-    private int height;
-    private float pi2;
-    private float r;
 
     @Override
     protected void onDraw(Canvas canvas) {

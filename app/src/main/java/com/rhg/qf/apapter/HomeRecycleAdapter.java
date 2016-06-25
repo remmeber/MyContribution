@@ -25,14 +25,14 @@ public class HomeRecycleAdapter extends RecycleAbstractAdapter<RecommendListUrlB
         super(context);
     }
 
-    public void setRecommendListBean(List<RecommendListUrlBean.RecommendShopBeanEntity> recommendListBean) {
-        this.recommendListBean = recommendListBean;
-        setmData(this.recommendListBean);
-    }
-
     public HomeRecycleAdapter(Context context, List<RecommendListUrlBean.RecommendShopBeanEntity> recommendListBean) {
         super(context, recommendListBean);
         this.recommendListBean = recommendListBean;
+    }
+
+    public void setRecommendListBean(List<RecommendListUrlBean.RecommendShopBeanEntity> recommendListBean) {
+        this.recommendListBean = recommendListBean;
+        setmData(this.recommendListBean);
     }
 
     @Override

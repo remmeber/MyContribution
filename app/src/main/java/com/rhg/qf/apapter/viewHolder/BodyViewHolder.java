@@ -10,31 +10,31 @@ import com.rhg.qf.R;
 import com.rhg.qf.constants.AppConstants;
 
 /**
- *desc:recycleView的body数据控制器
- *author：remember
- *time：2016/5/28 16:16
- *email：1013773046@qq.com
+ * desc:recycleView的body数据控制器
+ * author：remember
+ * time：2016/5/28 16:16
+ * email：1013773046@qq.com
  */
 public class BodyViewHolder extends RecyclerView.ViewHolder {
-    //这四个在商家页面显示
-    private View line;
-    private ImageView sellerForward;
     public TextView demandMoney;
     public TextView deliverMoney;
-    //以下均在主页中显示
-    private ImageView homeFoward;//TODO 在商家页面隐藏
-    private ImageView sellerIcon;//TODO 在商家页面隐藏
     public ImageView sellerImage;//指店铺的图片
     public TextView sellerName;
     public TextView foodType;
     public TextView sellerDistance;
     public LinearLayout frameLayout_item;
-    //以下均在我的订单中显示
-    private LinearLayout ly_totalCount;//合计
     public TextView tv_totalMoney;//合计总数
     public TextView tv_orderTime;//订单时间
     public TextView tv_orderTag;//订单号
     public TextView tv_state;//状态{已完成，待付款}
+    //这四个在商家页面显示
+    private View line;
+    private ImageView sellerForward;
+    //以下均在主页中显示
+    private ImageView homeFoward;//TODO 在商家页面隐藏
+    private ImageView sellerIcon;//TODO 在商家页面隐藏
+    //以下均在我的订单中显示
+    private LinearLayout ly_totalCount;//合计
 
     public BodyViewHolder(View itemView, int type) {
         super(itemView);
@@ -56,7 +56,7 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
         tv_orderTime = (TextView) itemView.findViewById(R.id.tv_orderTime);
         tv_orderTag = (TextView) itemView.findViewById(R.id.tv_orderTag);
         tv_state = (TextView) itemView.findViewById(R.id.tv_state);
-        switch (type){
+        switch (type) {
             case AppConstants.TypeHome:
                 sellerIcon.setVisibility(View.VISIBLE);
                 foodType.setVisibility(View.VISIBLE);

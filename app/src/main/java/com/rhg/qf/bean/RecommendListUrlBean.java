@@ -3,10 +3,10 @@ package com.rhg.qf.bean;
 import java.util.List;
 
 /**
- *desc:主页店铺推荐网络请求数据模型
- *author：remember
- *time：2016/5/28 16:38
- *email：1013773046@qq.com
+ * desc:主页店铺推荐网络请求数据模型
+ * author：remember
+ * time：2016/5/28 16:38
+ * email：1013773046@qq.com
  */
 public class RecommendListUrlBean {
     /**

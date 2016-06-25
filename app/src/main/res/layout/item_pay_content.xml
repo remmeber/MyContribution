@@ -82,8 +82,9 @@
             android:textColor="#ff6600"
             tools:ignore="HardcodedText" />
     </LinearLayout>
+
     <View
-        android:background="@color/colorActiveGreen"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/colorActiveGreen" />
 </LinearLayout>

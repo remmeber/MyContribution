@@ -7,17 +7,17 @@ import android.os.Vibrator;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.BaseActivity;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.umeng.socialize.PlatformConfig;
@@ -38,8 +38,22 @@ public class InitApplication extends Application {
     public final static String WXID = "";
     public final static String WXKEY = "";
     private static InitApplication initApplication;
+    public LocationService locationService;
+    public Vibrator mVibrator;
     private HashMap<String, WeakReference<BaseActivity>> activityList = new HashMap<String, WeakReference<BaseActivity>>();
     private HashMap<String, WeakReference<Object>> objectList = new HashMap<>();
+    private RefWatcher refWatcher;
+
+    public static RefWatcher getRefWatcher(Context context) {
+        InitApplication application = (InitApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+    public static InitApplication getInstance() {
+        if (initApplication == null)
+            initApplication = new InitApplication();
+        return initApplication;
+    }
 
     public void addObject(Object object) {
         if (null != object) {
@@ -86,17 +100,6 @@ public class InitApplication extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-
-    public LocationService locationService;
-    public Vibrator mVibrator;
-
-    public static RefWatcher getRefWatcher(Context context) {
-        InitApplication application = (InitApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
-
-    private RefWatcher refWatcher;
-
     @Override
     public void onCreate() {
         initBDMap();
@@ -141,12 +144,6 @@ public class InitApplication extends Application {
     private void initDBHelper() {
         AccountDBHelper.init(getApplicationContext());
 //        LikeDBHelper.init(getApplicationContext());
-    }
-
-    public static InitApplication getInstance() {
-        if (initApplication == null)
-            initApplication = new InitApplication();
-        return initApplication;
     }
 
     //------网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库

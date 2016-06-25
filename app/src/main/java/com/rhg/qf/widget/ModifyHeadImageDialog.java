@@ -25,6 +25,7 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
     Button btCamera;
     Button btGallery;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
+    private ChoosePicListener choosePicListener;
 
     public ModifyHeadImageDialog(Context context) {
         super(context, R.style.MyDialogStyle);
@@ -47,7 +48,6 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
         initData();
     }
 
-
     private void initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.pic_choose_layout, null);
 
@@ -61,7 +61,6 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
         btCamera.setOnClickListener(this);
         btGallery.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -80,15 +79,6 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
         }
     }
 
-
-    public interface ChoosePicListener {
-        public void chooseFromGallery();
-
-        public void chooseFromCamera();
-    }
-
-    private ChoosePicListener choosePicListener;
-
     public void setChoosePicListener(ChoosePicListener choosePicListener) {
         this.choosePicListener = choosePicListener;
     }
@@ -97,5 +87,11 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
     protected void onStop() {
         if (mContext != null)
             mContext = null;
+    }
+
+    public interface ChoosePicListener {
+        public void chooseFromGallery();
+
+        public void chooseFromCamera();
     }
 }
