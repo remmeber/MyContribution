@@ -209,7 +209,8 @@ public abstract class BasePayActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        payManager.unRegisterApp();
+        if (payManager != null)
+            payManager.unRegisterApp();
         super.onDestroy();
     }
 }

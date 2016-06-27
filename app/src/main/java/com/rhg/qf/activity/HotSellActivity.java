@@ -64,7 +64,7 @@ public class HotSellActivity extends BaseActivity {
         fragments[2] = new HotFoodSellNumberFm();
         fragments[3] = new HotFoodRateFm();
         tbBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbTitle.setText("热销单品");
         tbRightTv.setVisibility(View.GONE);
         tbSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_black));

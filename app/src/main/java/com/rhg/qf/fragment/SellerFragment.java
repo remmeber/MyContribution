@@ -75,7 +75,7 @@ public class SellerFragment extends SuperFragment {
     @Override
     protected void initData() {
         tbCenterTv.setText(getResources().getString(R.string.allStore));
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbRightIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_black));
         QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getChildFragmentManager(), fragments,
                 AppConstants.SELL_TITLES, sellerViewPager, allSellerTl);
@@ -88,17 +88,17 @@ public class SellerFragment extends SuperFragment {
             public void onExtraPageSelected(int currentPage, int lastPage) {
                 switch (currentPage) {
                     case 0:
-                        ((AbstractMerchantsFragment) fragments.get(currentPage)).setContext(getContext());
+                        ((BySellNumberFm) fragments.get(currentPage)).setContext(getContext());
                         ((ByDistanceFm) fragments.get(1)).setContext(null);
                         ((ByRateFm) fragments.get(2)).setContext(null);
                         break;
                     case 1:
-                        ((AbstractMerchantsFragment) fragments.get(0)).setContext(null);
+                        ((BySellNumberFm) fragments.get(0)).setContext(null);
                         ((ByDistanceFm) fragments.get(currentPage)).setContext(getContext());
                         ((ByRateFm) fragments.get(2)).setContext(null);
                         break;
                     case 2:
-                        ((AbstractMerchantsFragment) fragments.get(0)).setContext(null);
+                        ((BySellNumberFm) fragments.get(0)).setContext(null);
                         ((ByDistanceFm) fragments.get(1)).setContext(null);
                         ((ByRateFm) fragments.get(currentPage)).setContext(getContext());
                         break;

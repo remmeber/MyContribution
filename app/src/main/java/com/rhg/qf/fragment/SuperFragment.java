@@ -159,8 +159,6 @@ public abstract class SuperFragment extends Fragment implements BaseView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        RefWatcher refWatcher = InitApplication.getRefWatcher(getActivity());
-        refWatcher.watch(this);
     }
 
     protected abstract void showFailed();

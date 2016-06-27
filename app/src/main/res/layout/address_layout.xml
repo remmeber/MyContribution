@@ -27,13 +27,16 @@
                 android:layout_centerVertical="true" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <Button
+        <TextView
             android:id="@+id/bt_add_new_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/activity_horizontal_margin"
-            android:background="@color/colorActiveGreen"
+            android:background="@drawable/btn_green_style"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             android:text="添加新地址"
             android:textColor="@color/white" />
     </RelativeLayout>

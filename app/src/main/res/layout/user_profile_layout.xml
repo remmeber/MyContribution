@@ -16,7 +16,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorActiveGreen">
+            android:background="@color/colorGreenNormal">
 
             <com.rhg.qf.widget.CircleImageView
                 android:id="@+id/userHeader"

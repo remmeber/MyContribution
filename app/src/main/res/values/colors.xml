@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorPageBackground">#F2F2F2</color>
     <color name="dark">#FF222222</color>
-    <color name="colorActiveGreen">#8FC842</color>
+    <color name="colorGreenFocus">#64A600</color>
+    <color name="colorGreenNormal">#8FC842</color>
     <color name="colorToolbarGreen">#8DC73F</color>
     <color name="colorState">#BACC64</color>
     <color name="colorShop">#A0BAE967</color>

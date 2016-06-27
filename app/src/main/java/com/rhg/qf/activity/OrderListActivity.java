@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.pm.InstrumentationInfo;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -48,7 +49,7 @@ public class OrderListActivity extends BaseActivity {
     @Override
     protected void initData() {
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        flTab.setBackgroundResource(R.color.colorActiveGreen);
+        flTab.setBackgroundResource(R.color.colorGreenNormal);
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new OrderUnPaidFM());
@@ -60,6 +61,7 @@ public class OrderListActivity extends BaseActivity {
                 vpMyorder, stlMyorder);
         /*vpOrder.setAdapter(QFoodVpAdapter);
         stlOrder.setViewPager(vpOrder);*/
+
     }
 
     @Override

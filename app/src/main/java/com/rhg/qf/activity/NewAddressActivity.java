@@ -66,7 +66,7 @@ public class NewAddressActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tbCenterTv.setText(getResources().getString(R.string.newAddress));
     }

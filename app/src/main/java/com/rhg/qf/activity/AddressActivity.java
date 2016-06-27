@@ -70,7 +70,7 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbCenterTv.setText(getResources().getString(R.string.address));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
 

@@ -51,13 +51,11 @@ public class UmengUtil {
         @Override
         public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
             signInListener.signFail("取消授权");
-
         }
 
         @Override
         public void onCancel(SHARE_MEDIA share_media, int i) {
             signInListener.signFail("取消");
-
         }
     };
     private UMShareListener umShareListener = new UMShareListener() {

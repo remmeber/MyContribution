@@ -86,7 +86,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
 
     protected void initData() {
         uploadAndSaveImagePresenter = new UploadAndSaveImagePresenterImpl(this);
-        tb_common.setBackgroundResource(R.color.colorActiveGreen);
+        tb_common.setBackgroundResource(R.color.colorGreenNormal);
         tbRightTv.setText("编辑");
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         etNameWrap.setError("");

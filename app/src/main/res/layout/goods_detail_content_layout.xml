@@ -35,7 +35,7 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_shopping_cart_green"
-                app:tint_color="@color/colorActiveGreen" />
+                app:tint_color="@color/colorGreenNormal" />
 
             <ImageView
                 android:id="@+id/ivShare"
@@ -148,20 +148,17 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
-            <Button
+            <TextView
                 android:id="@+id/bt_buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@drawable/tv_buy_bg"
-                android:minHeight="0dp"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
+                android:background="@drawable/btn_green_style"
+                android:padding="@dimen/margin_little"
                 android:text="@string/buy"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium" />

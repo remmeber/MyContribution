@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigation
-                .setActiveColor(R.color.colorActiveGreen)
+                .setActiveColor(R.color.colorGreenNormal)
                 .setInActiveColor(R.color.colorInActive)
                 .setBarBackgroundColor(R.color.colorBackground);
         bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_home, R.string.Home))

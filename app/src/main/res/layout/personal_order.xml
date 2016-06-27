@@ -41,7 +41,7 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:background="@drawable/tv_buy_bg"
+            android:background="@drawable/btn_green_bg_normal"
             android:gravity="center"
             android:paddingBottom="@dimen/margin_little"
             android:paddingTop="@dimen/margin_little"

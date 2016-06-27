@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="@color/colorActiveGreen"
+        android:background="@color/colorGreenNormal"
         android:drawableLeft="@drawable/ic_speaker"
         android:drawablePadding="@dimen/margin_small"
         android:drawableStart="@drawable/ic_speaker"

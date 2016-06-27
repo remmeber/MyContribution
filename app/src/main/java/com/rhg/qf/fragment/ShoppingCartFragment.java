@@ -90,7 +90,7 @@ public class ShoppingCartFragment extends SuperFragment {
 
     @Override
     protected void initData() {
-        fl_tab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        fl_tab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbCenterTV.setText(getResources().getString(R.string.shoppingCart));
         tbRightTV.setText("编辑");
         srlShoppingCart.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

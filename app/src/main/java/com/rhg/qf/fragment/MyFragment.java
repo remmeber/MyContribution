@@ -98,7 +98,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        flTAB.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        flTAB.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
         if (AccountUtil.getInstance().hasAccount()) {

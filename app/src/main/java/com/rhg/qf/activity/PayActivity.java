@@ -70,7 +70,7 @@ public class PayActivity extends BasePayActivity {
     }
 
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tbCenterTv.setText(getResources().getString(R.string.tvPayTitle));
         tvReceiver.setText("收货人：哈哈");

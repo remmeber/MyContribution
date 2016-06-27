@@ -52,7 +52,7 @@ public class OrderDetailActivity extends BaseActivity {
     @Bind(R.id.ly_totalCount)
     LinearLayout lyTotalCount;
     @Bind(R.id.btPayOrRateOrConform)
-    Button btPayOrRateOrConform;
+    TextView btPayOrRateOrConform;
     @Bind(R.id.iv_edit_right)
     ImageView ivEditRight;
     @Bind(R.id.tv_edit)
@@ -85,7 +85,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorActiveGreen));
+        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tvReceiver.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
@@ -108,10 +108,10 @@ public class OrderDetailActivity extends BaseActivity {
         lyTotalCount.setVisibility(View.VISIBLE);
         tvTotalMoney.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
                 orderPrice));
-        setButtonText(btPayOrRateOrConform);
+        setText(btPayOrRateOrConform);
     }
 
-    private void setButtonText(Button btPayOrRateOrConform) {
+    private void setText(TextView btPayOrRateOrConform) {
         if (AppConstants.ORDER_UNPAID.equals(orderTag)) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.goPay));
             return;

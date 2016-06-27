@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/colorActiveGreen</item>
+        <item name="colorPrimaryDark">@color/colorGreenNormal</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorSign</item>
     </style>
@@ -19,7 +19,7 @@
     </style>
 
     <style name="MyActionOverflowButton" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
-        <item name="android:src">@mipmap/toolbar_overflow_button</item>
+        <!--<item name="android:src">@mipmap/toolbar_overflow_button</item>-->
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -37,8 +37,8 @@
     </style>
 
     <style name="MyTabStyle" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorActiveGreen</item>
-        <item name="tabSelectedTextColor">@color/colorActiveGreen</item>
+        <item name="tabIndicatorColor">@color/colorGreenNormal</item>
+        <item name="tabSelectedTextColor">@color/colorGreenNormal</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
     </style>
 

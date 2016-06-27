@@ -115,6 +115,8 @@ public class AddressRecycleViewWithDelete extends RecyclerView implements Gestur
         }
         if (slidePosition != lastPosition) {
             View view = findChildViewUnder(downX, downY);
+            if (view == null)
+                return false;
             viewHolder = findContainingViewHolder(view);
             if (viewHolder instanceof AddressAdapter.AddressViewHolder) {
                 slideView = ((AddressAdapter.AddressViewHolder) viewHolder).slideView;
