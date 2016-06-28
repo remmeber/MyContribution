@@ -1,6 +1,5 @@
 package com.rhg.qf.activity;
 
-import android.content.pm.InstrumentationInfo;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -56,11 +55,11 @@ public class OrderListActivity extends BaseActivity {
         fragments.add(new OrderDeliveringFm());
         fragments.add(new OrderCompleteFm());
         fragments.add(new OrderDrawbackFm());
-        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
-                AppConstants.ORDER_TITLES,
-                vpMyorder, stlMyorder);
-        /*vpOrder.setAdapter(QFoodVpAdapter);
-        stlOrder.setViewPager(vpOrder);*/
+        QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
+                AppConstants.ORDER_TITLES);
+        vpMyorder.setAdapter(qFoodVpAdapter);
+        vpMyorder.setOffscreenPageLimit(3);
+        stlMyorder.setViewPager(vpMyorder);
 
     }
 

@@ -1,8 +1,8 @@
 package com.rhg.qf.apapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.apapter.viewHolder.BannerImageHolder;
+import com.rhg.qf.apapter.viewHolder.BodyViewHolder;
 import com.rhg.qf.bean.BannerTypeBean;
 import com.rhg.qf.bean.BannerTypeUrlBean;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
@@ -24,9 +26,11 @@ import com.rhg.qf.bean.FavorableTypeModel;
 import com.rhg.qf.bean.FooterTypeModel;
 import com.rhg.qf.bean.HeaderTypeModel;
 import com.rhg.qf.bean.RecommendListTypeModel;
+import com.rhg.qf.bean.RecommendListUrlBean;
 import com.rhg.qf.bean.RecommendTextTypeModel;
 import com.rhg.qf.bean.TextTypeBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.utils.BannerController;
 
 import java.util.ArrayList;
@@ -57,28 +61,35 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     //-------------------------------for banner click callback--------------------------------------
     private OnBannerClickListener onBannerClickListener;
     private OnGridItemClickListener onGridItemClickListener;
+    private RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClickListener;
 
     public RecycleMultiTypeAdapter(Context context, List<Object> mData) {
         this.context = context;
         this.mData = mData;
     }
 
+    public void setmData(List<Object> mData) {
+        this.mData = mData;
+        notifyDataSetChanged();
+    }
+
     //--------------------------------定义类型-------------------------------------------------------
     @Override
     public int getItemViewType(int position) {
-        Object object = mData.get(position);
-        if (object instanceof HeaderTypeModel) return TYPE_HEADER;
-        if (object instanceof BannerTypeBean) return TYPE_BANNER;
-        if (object instanceof TextTypeBean) return TYPE_TEXT;
-        if (object instanceof FavorableTypeModel) return TYPE_FAVORABLE;
-        if (object instanceof RecommendTextTypeModel) return TYPE_RECOMMEND_TEXT;
-        if (object instanceof RecommendListTypeModel) return TYPE_RECOMMEND_LIST;
-        if (object instanceof FooterTypeModel) return TYPE_FOOTER;
-        return -1;
+        if (position == 0) return TYPE_HEADER;
+        if (position == 1) return TYPE_BANNER;
+        if (position == 2) return TYPE_TEXT;
+        if (position == 3) return TYPE_FAVORABLE;
+        if (position == 4) return TYPE_RECOMMEND_TEXT;
+        if (position == 5 + (((RecommendListTypeModel) mData.get(5)).getRecommendShopBeanEntity() == null ? 0 :
+                ((RecommendListTypeModel) mData.get(5)).getRecommendShopBeanEntity().size()))
+            return TYPE_FOOTER;
+        return TYPE_RECOMMEND_LIST;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i("RHG", "viewtype:" + viewType + "count:" + getItemCount());
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
             case TYPE_HEADER:
@@ -92,7 +103,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_RECOMMEND_TEXT:
                 return new RecommendTextTypeViewHolder(layoutInflater.inflate(R.layout.recommend_text_rcv, parent, false));
             case TYPE_RECOMMEND_LIST:
-                return new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recommend_list_rcv, parent, false), viewType);
+                return /*new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recommend_list_rcv, parent, false), viewType);*/
+                        new BodyViewHolder(View.inflate(context, R.layout.item_sell_body, null), AppConstants.TypeHome);
             case TYPE_FOOTER:
                 return new FooterTypeViewHolder(layoutInflater.inflate(R.layout.recyclefooter, parent, false));
             default:
@@ -102,28 +114,27 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Object data = mData.get(position);
         switch (getItemViewType(position)) {
             case TYPE_HEADER:
-                bindViewHolderHeader((HeaderTypeViewHolder) holder, (HeaderTypeModel) data, position);
+                bindViewHolderHeader((HeaderTypeViewHolder) holder, (HeaderTypeModel) mData.get(position), position);
                 break;
             case TYPE_BANNER:
-                bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeBean) data);
+                bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeBean) mData.get(position));
                 break;
             case TYPE_TEXT:
-                bindViewHolderText((TextTypeViewHolder) holder, (TextTypeBean) data);
+                bindViewHolderText((TextTypeViewHolder) holder, (TextTypeBean) mData.get(position));
                 break;
             case TYPE_FAVORABLE:
-                bindViewHolderFavorable((FavorableTypeViewHolder) holder, (FavorableTypeModel) data);
+                bindViewHolderFavorable((FavorableTypeViewHolder) holder, (FavorableTypeModel) mData.get(position));
                 break;
             case TYPE_RECOMMEND_TEXT:
-                bindViewHolderRecommendText((RecommendTextTypeViewHolder) holder, (RecommendTextTypeModel) data, position);
+                bindViewHolderRecommendText((RecommendTextTypeViewHolder) holder, (RecommendTextTypeModel) mData.get(position), position);
                 break;
             case TYPE_RECOMMEND_LIST:
-                bindViewHolderRecommendList((RecommendListTypeViewHolder) holder, (RecommendListTypeModel) data);
+                bindViewHolderRecommendList((BodyViewHolder) holder, (RecommendListTypeModel) mData.get(5), position);
                 break;
             case TYPE_FOOTER:
-                bindViewHolderFooter((FooterTypeViewHolder) holder, (FooterTypeModel) data, position);
+                bindViewHolderFooter((FooterTypeViewHolder) holder, (FooterTypeModel) mData.get(6), position);
                 break;
         }
     }
@@ -179,9 +190,21 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     private void bindViewHolderRecommendText(RecommendTextTypeViewHolder holder, RecommendTextTypeModel data, int position) {
     }
 
-    private void bindViewHolderRecommendList(RecommendListTypeViewHolder holder, RecommendListTypeModel data) {
-        holder.homeRecycleAdapter.notifyDataSetChanged();
-        holder.homeRecycleAdapter.setOnRcvItemClickListener(data.getOnItemClick());
+    private void bindViewHolderRecommendList(final BodyViewHolder holder, RecommendListTypeModel listData, int position) {
+//        holder.homeRecycleAdapter.notifyDataSetChanged();
+//        holder.homeRecycleAdapter.setOnRcvItemClickListener(data.getOnItemClick());
+        final RecommendListUrlBean.RecommendShopBeanEntity data = listData.getRecommendShopBeanEntity().get(position - 5);
+        holder.sellerName.setText(data.getName());
+        ImageLoader.getInstance().displayImage(data.getSrc(), holder.sellerImage);
+        holder.sellerDistance.setText(data.getDistance());
+//        holder.foodType.setText(data.getFoodType());
+        if (onItemClickListener != null)
+            holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClickListener(holder.getAdapterPosition(), data);
+                }
+            });
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
@@ -191,7 +214,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return (mData == null || mData.isEmpty()) ? 0 : mData.size();
+        return (mData == null || mData.isEmpty()) ? 0 : mData.size() - 1 + (((RecommendListTypeModel) mData.get(5)).getRecommendShopBeanEntity() == null ? 0 :
+                ((RecommendListTypeModel) mData.get(5)).getRecommendShopBeanEntity().size());
     }
 
     public void stopBanner() {
@@ -210,6 +234,10 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void setOnGridItemClickListener(OnGridItemClickListener onGridItemClickListener) {
         this.onGridItemClickListener = onGridItemClickListener;
+    }
+
+    public void setOnItemClickListener(RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     public interface OnBannerClickListener {
@@ -272,21 +300,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public RecommendTextTypeViewHolder(View itemView) {
             super(itemView);
-        }
-    }
-
-    private class RecommendListTypeViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerView recyclerView;
-        private HomeRecycleAdapter homeRecycleAdapter;
-
-        public RecommendListTypeViewHolder(View itemView, int viewType) {
-            super(itemView);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.recommend_list);
-            recyclerView.setHasFixedSize(true);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            homeRecycleAdapter = ((RecommendListTypeModel) mData.get(viewType)).getHomeRecycleAdapter();
-            recyclerView.setAdapter(homeRecycleAdapter);
         }
     }
 

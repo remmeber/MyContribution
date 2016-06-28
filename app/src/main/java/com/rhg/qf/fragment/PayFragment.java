@@ -10,7 +10,7 @@ import com.rhg.qf.R;
  * time：2016/5/28 16:46
  * email：1013773046@qq.com
  */
-public class PayFragment extends SuperFragment {
+public class PayFragment extends BaseFragment {
     @Override
     public int getLayoutResId() {
         return R.layout.pay_dialog_layout;

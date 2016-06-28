@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.ToastHelper;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
@@ -25,13 +23,13 @@ import butterknife.ButterKnife;
  * time：2016/5/28 16:45
  * email：1013773046@qq.com
  */
-public abstract class SuperFragment extends Fragment implements BaseView {
+public abstract class BaseFragment extends Fragment implements BaseView {
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
 //    private Unbinder bind;
 
-    public SuperFragment() {
+    public BaseFragment() {
     }
 
     // TODO: 子类重写该方法，获取数据的统一入口

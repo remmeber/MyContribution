@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * time：2016/5/28 16:47
  * email：1013773046@qq.com
  */
-public class SellerFragment extends SuperFragment {
+public class SellerFragment extends BaseFragment {
     private static final String TAG = "SellerFragment";
     List<Fragment> fragments = new ArrayList<Fragment>();
 
@@ -48,12 +48,13 @@ public class SellerFragment extends SuperFragment {
 
     //----------------------------------------------------------------------------------------------
 
-
     public SellerFragment() {
+
         fragments.add(new BySellNumberFm());
         fragments.add(new ByDistanceFm());
         fragments.add(new ByRateFm());
     }
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -78,8 +79,12 @@ public class SellerFragment extends SuperFragment {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbRightIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_black));
         QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getChildFragmentManager(), fragments,
-                AppConstants.SELL_TITLES, sellerViewPager, allSellerTl);
-        qFoodVpAdapter.setOnExtraPageChangeListener(new QFoodVpAdapter.OnExtraPageChangeListener() {
+                AppConstants.SELL_TITLES);
+
+        sellerViewPager.setAdapter(qFoodVpAdapter);
+        sellerViewPager.setOffscreenPageLimit(2);
+        allSellerTl.setViewPager(sellerViewPager);
+        /*qFoodVpAdapter.setOnExtraPageChangeListener(new QFoodVpAdapter.OnExtraPageChangeListener() {
             @Override
             public void onExtraPageScrolled(int i, float v, int i2) {
             }
@@ -110,6 +115,10 @@ public class SellerFragment extends SuperFragment {
 
             }
         });
+*/
+        sellerViewPager.setAdapter(qFoodVpAdapter);
+        sellerViewPager.setOffscreenPageLimit(3);
+        allSellerTl.setViewPager(sellerViewPager);
         /*viewPager.setAdapter(qFoodVpAdapter);
         tabLayout.setViewPager(viewPager);*/
     }

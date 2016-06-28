@@ -1,8 +1,5 @@
 package com.rhg.qf.bean;
 
-import com.rhg.qf.apapter.HomeRecycleAdapter;
-import com.rhg.qf.impl.RcvItemClickListener;
-
 import java.util.List;
 
 /**
@@ -13,8 +10,6 @@ import java.util.List;
  */
 public class RecommendListTypeModel {
     List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity;
-    private HomeRecycleAdapter homeRecycleAdapter;
-    private RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClick;
 
     public List<RecommendListUrlBean.RecommendShopBeanEntity> getRecommendShopBeanEntity() {
         return recommendShopBeanEntity;
@@ -23,24 +18,6 @@ public class RecommendListTypeModel {
     public void setRecommendShopBeanEntity(
             List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity) {
         this.recommendShopBeanEntity = recommendShopBeanEntity;
-        if (this.homeRecycleAdapter != null)
-            homeRecycleAdapter.setRecommendListBean(this.recommendShopBeanEntity);
-    }
 
-    public HomeRecycleAdapter getHomeRecycleAdapter() {
-        return homeRecycleAdapter;
-    }
-
-    public void setHomeRecycleAdapter(HomeRecycleAdapter homeRecycleAdapter) {
-        this.homeRecycleAdapter = homeRecycleAdapter;
-    }
-
-    public RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> getOnItemClick() {
-        return onItemClick;
-    }
-
-    public void setOnItemClick(
-            RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClick) {
-        this.onItemClick = onItemClick;
     }
 }

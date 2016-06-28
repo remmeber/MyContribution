@@ -18,7 +18,7 @@ import com.rhg.qf.apapter.AddressAdapter;
  * time：2016/6/11 13:54
  * email：1013773046@qq.com
  */
-public class AddressRecycleViewWithDelete extends RecyclerView implements GestureDetector.OnGestureListener {
+public class RecycleViewWithDelete extends RecyclerView implements GestureDetector.OnGestureListener {
 
     SlideView slideView;
     int lastPosition = 0;
@@ -30,17 +30,17 @@ public class AddressRecycleViewWithDelete extends RecyclerView implements Gestur
     int downY;
     private ItemClickListener onItemClickListener;
 
-    public AddressRecycleViewWithDelete(Context context) {
+    public RecycleViewWithDelete(Context context) {
         super(context);
         init(context);
     }
 
-    public AddressRecycleViewWithDelete(Context context, @Nullable AttributeSet attrs) {
+    public RecycleViewWithDelete(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public AddressRecycleViewWithDelete(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public RecycleViewWithDelete(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }

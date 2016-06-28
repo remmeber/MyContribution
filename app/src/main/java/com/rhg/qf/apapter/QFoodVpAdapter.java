@@ -3,10 +3,7 @@ package com.rhg.qf.apapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
-
-import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.List;
 
@@ -16,26 +13,22 @@ import java.util.List;
  * time：2016/5/28 16:20
  * email：1013773046@qq.com
  */
-public class QFoodVpAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
+public class QFoodVpAdapter extends FragmentPagerAdapter/* implements ViewPager.OnPageChangeListener*/ {
 
     private List<Fragment> fragmentList;
     private String[] titles;
-    private OnExtraPageChangeListener onExtraPageChangeListener; // ViewPager切换页面时的额外功能添加
+    //    private OnExtraPageChangeListener onExtraPageChangeListener; // ViewPager切换页面时的额外功能添加
     private int currentPage = 0;
 
-    public QFoodVpAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] titles, ViewPager viewPager, SlidingTabLayout slidingTabLayout) {
+    public QFoodVpAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] titles) {
         super(fm);
         this.fragmentList = fragmentList;
         this.titles = titles;
-        viewPager.addOnPageChangeListener(this);
-        viewPager.setAdapter(this);
-        viewPager.setOffscreenPageLimit(3);
-        slidingTabLayout.setViewPager(viewPager);
     }
 
-    public void setOnExtraPageChangeListener(OnExtraPageChangeListener onExtraPageChangeListener) {
+    /*public void setOnExtraPageChangeListener(OnExtraPageChangeListener onExtraPageChangeListener) {
         this.onExtraPageChangeListener = onExtraPageChangeListener;
-    }
+    }*/
 
     @Override
     public Fragment getItem(int position) {
@@ -52,25 +45,21 @@ public class QFoodVpAdapter extends FragmentPagerAdapter implements ViewPager.On
         return fragmentList == null ? 0 : fragmentList.size();
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-    }
 
-    @Override
+   /* @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        /*if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
+        *//*if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
             onExtraPageChangeListener.onExtraPageScrolled(position, positionOffset, positionOffsetPixels);
-        }*/
+        }*//*
     }
 
     @Override
     public void onPageSelected(int position) {
-        /*fragmentList.get(currentPage).onPause();
+        *//*fragmentList.get(currentPage).onPause();
         if(fragmentList.get(position).isAdded())
             fragmentList.get(position).onResume();
         currentPage = position;
-        Log.i("RHG","onPageSelected: "+position);*/
+        Log.i("RHG","onPageSelected: "+position);*//*
         if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
             onExtraPageChangeListener.onExtraPageSelected(position, currentPage);
         }
@@ -79,9 +68,9 @@ public class QFoodVpAdapter extends FragmentPagerAdapter implements ViewPager.On
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        /*if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
+        *//*if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
             onExtraPageChangeListener.onExtraPageScrollStateChanged(state);
-        }*/
+        }*//*
     }
 
     public interface OnExtraPageChangeListener {
@@ -90,5 +79,5 @@ public class QFoodVpAdapter extends FragmentPagerAdapter implements ViewPager.On
         public void onExtraPageSelected(int currentPage, int lastPage);
 
         public void onExtraPageScrollStateChanged(int i);
-    }
+    }*/
 }

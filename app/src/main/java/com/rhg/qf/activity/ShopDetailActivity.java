@@ -101,8 +101,10 @@ public class ShopDetailActivity extends BaseActivity {
         bundle.putString(AppConstants.KEY_NOTE, merchantNote);
         fragment.setArguments(bundle);
         fragments.add(fragment);
-        QFoodVpAdapter QFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
-                AppConstants.SHOP_DETAIL_TITLES, viewPager, slidingTabLayout);
+        QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
+                AppConstants.SHOP_DETAIL_TITLES);
+        viewPager.setAdapter(qFoodVpAdapter);
+        slidingTabLayout.setViewPager(viewPager);
     }
 
     @Override

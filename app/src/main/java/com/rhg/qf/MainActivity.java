@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
 
     @Override
     protected void initData() {
+//        loadRootFragment(R.id.content_fragment, HomeFragment.newInstance());
         Fragment[] fragments = new Fragment[4];
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setSearchListener(this);
@@ -134,4 +135,5 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
     public void doSearch() {
         startActivity(new Intent(this, SearchActivity.class));
     }
+
 }

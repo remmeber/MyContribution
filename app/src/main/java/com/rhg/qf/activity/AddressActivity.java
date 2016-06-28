@@ -13,8 +13,8 @@ import com.rhg.qf.apapter.AddressAdapter;
 import com.rhg.qf.bean.AddressLocalBean;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
-import com.rhg.qf.widget.AddressRecycleViewWithDelete;
 import com.rhg.qf.widget.RecycleViewDivider;
+import com.rhg.qf.widget.RecycleViewWithDelete;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import butterknife.OnClick;
  * 作者：rememberon 2016/6/5
  * 邮箱：1013773046@qq.com
  */
-public class AddressActivity extends BaseActivity implements AddressRecycleViewWithDelete.ItemClickListener {
+public class AddressActivity extends BaseActivity implements RecycleViewWithDelete.ItemClickListener {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
@@ -35,7 +35,7 @@ public class AddressActivity extends BaseActivity implements AddressRecycleViewW
     @Bind(R.id.fl_tab)
     FrameLayout flTab;
     @Bind(R.id.rcy_address)
-    AddressRecycleViewWithDelete rcyAddress;
+    RecycleViewWithDelete rcyAddress;
     @Bind(R.id.srl_address)
     SwipeRefreshLayout srlAddress;
 

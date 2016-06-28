@@ -15,7 +15,7 @@ import butterknife.Bind;
  * time：2016/5/28 16:49
  * email：1013773046@qq.com
  */
-public class ShopDetailFragment extends SuperFragment {
+public class ShopDetailFragment extends BaseFragment {
     @Bind(R.id.tv_shop_phone_num)
     TextView tvPhoneNumber;
     @Bind(R.id.tv_shop_address)

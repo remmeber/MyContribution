@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * time：2016/5/28 16:49
  * email：1013773046@qq.com
  */
-public class ShoppingCartFragment extends SuperFragment {
+public class ShoppingCartFragment extends BaseFragment {
     private static final String TAG = "ShoppingCartFragment";
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
@@ -55,7 +55,6 @@ public class ShoppingCartFragment extends SuperFragment {
     RelativeLayout rlShoppingCartPay;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
-    //----------------------------------------------------------------------------------------------
     public ShoppingCartFragment() {
         Log.i(TAG, "ShoppingCartFragment ");
         shoppingCartBeanList = new ArrayList<>();
@@ -77,6 +76,8 @@ public class ShoppingCartFragment extends SuperFragment {
             shoppingCartBeanList.add(shoppingCartBean);
         }
     }
+
+    //----------------------------------------------------------------------------------------------
 
     @Override
     public int getLayoutResId() {

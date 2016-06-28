@@ -18,7 +18,6 @@ import com.rhg.qf.activity.GoodsDetailActivity;
 import com.rhg.qf.activity.HotSellActivity;
 import com.rhg.qf.activity.PersonalOrderActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
-import com.rhg.qf.apapter.HomeRecycleAdapter;
 import com.rhg.qf.apapter.QFoodGridViewAdapter;
 import com.rhg.qf.apapter.RecycleMultiTypeAdapter;
 import com.rhg.qf.application.InitApplication;
@@ -43,9 +42,7 @@ import com.rhg.qf.mvp.presenter.HomePresenterImpl;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.ToastHelper;
-import com.rhg.qf.widget.LoadingDialog;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +52,7 @@ import java.util.List;
  * time：2016/5/28 16:44
  * email：1013773046@qq.com
  */
-public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
+public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
         RecycleMultiTypeAdapter.OnGridItemClickListener, RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity>,
         View.OnClickListener {
     FavorableTypeModel favorableTypeModel;
@@ -90,7 +87,6 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
 
     SearchListener searchListener;
     MyLocationListener myLocationListener;
-    WeakReference<LoadingDialog> loadingDialog;
     ProgressBar progressBar;
     boolean isLocated;
 
@@ -102,7 +98,6 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         textTypeBean = new TextTypeBean();
         recommendListTypeModel = new RecommendListTypeModel();
     }
-
 
     @Override
     public int getLayoutResId() {
@@ -131,8 +126,6 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
 
     @Override
     public void loadData() {
-        loadingDialog = new WeakReference<>(new LoadingDialog(getActivity()));
-        loadingDialog.get().show();
         homePresenter.getHomeData();
     }
 
@@ -155,6 +148,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getContext(), mData);
         recycleMultiTypeAdapter.setBannerClickListener(this);
         recycleMultiTypeAdapter.setOnGridItemClickListener(this);
+        recycleMultiTypeAdapter.setOnItemClickListener(this);
         initList();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         home_rcv.setLayoutManager(linearLayoutManager);
@@ -216,6 +210,7 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
 
     @Override
     public void showSuccess(Object o) {
+        Log.i("RHG", "Get data success");
         HomeBean _homeBean = (HomeBean) o;
         /*set null */
 
@@ -223,16 +218,9 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
         favorableTypeModel.setFavorableFoodBeen(_homeBean.getFavorableFoodEntityList());
         recommendListTypeModel.setRecommendShopBeanEntity(_homeBean.getRecommendShopBeanEntityList());
         textTypeBean.setTitle(_homeBean.getTextTypeBean().getTitle());
-        /*recycleMultiTypeAdapter.notifyItemChanged(1);
-        recycleMultiTypeAdapter.notifyItemChanged(2);
-        recycleMultiTypeAdapter.notifyItemChanged(3);
-        recycleMultiTypeAdapter.notifyItemChanged(5);*/
         recycleMultiTypeAdapter.notifyDataSetChanged();
         if (swipeRefreshLayout.isRefreshing())
             swipeRefreshLayout.setRefreshing(false);
-        if (loadingDialog != null) {
-            loadingDialog.get().dismiss();
-        }
     }
 
 
@@ -259,8 +247,8 @@ public class HomeFragment extends SuperFragment implements RecycleMultiTypeAdapt
                 R.layout.item_grid_rcv));
         mData.add(favorableTypeModel);
         mData.add(new RecommendTextTypeModel());
-        recommendListTypeModel.setOnItemClick(this);
-        recommendListTypeModel.setHomeRecycleAdapter(new HomeRecycleAdapter(getContext()));
+//        recommendListTypeModel.setOnItemClick(this);
+//        recommendListTypeModel.setHomeRecycleAdapter(new HomeRecycleAdapter(getContext()));
         mData.add(recommendListTypeModel);
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
         recycleMultiTypeAdapter.notifyDataSetChanged();

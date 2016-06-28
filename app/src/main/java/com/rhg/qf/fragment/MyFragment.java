@@ -31,7 +31,7 @@ import java.util.Map;
  * time：2016/5/28 16:44
  * email：1013773046@qq.com
  */
-public class MyFragment extends SuperFragment implements View.OnClickListener {
+public class MyFragment extends BaseFragment implements View.OnClickListener {
     boolean hasAccount = true;
 
     FrameLayout flTAB;
@@ -57,12 +57,7 @@ public class MyFragment extends SuperFragment implements View.OnClickListener {
     TextView addressModify;
 
     boolean isSignIn;
-    UMShareAPI mShareAPI;
     UmengUtil signUtil = null;
-
-    public MyFragment() {
-
-    }
 
     @Override
     public int getLayoutResId() {

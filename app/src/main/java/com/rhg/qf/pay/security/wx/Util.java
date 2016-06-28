@@ -72,7 +72,7 @@ public class Util {
 			return null;
 		}
 	}*/
-	
+
 	/*private static class SSLSocketFactoryEx extends SSLSocketFactory {
 	      
 	    SSLContext sslContext = SSLContext.getInstance("TLS");      

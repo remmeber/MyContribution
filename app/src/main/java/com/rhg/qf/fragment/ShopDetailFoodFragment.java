@@ -22,7 +22,7 @@ import butterknife.Bind;
  * time：2016/5/28 16:48
  * email：1013773046@qq.com
  */
-public class ShopDetailFoodFragment extends SuperFragment {
+public class ShopDetailFoodFragment extends BaseFragment {
     @Bind(R.id.vt_selector)
     VerticalTabLayout verticalTabLayout;
 
