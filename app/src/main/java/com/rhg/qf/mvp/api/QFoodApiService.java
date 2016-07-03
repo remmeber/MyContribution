@@ -1,5 +1,6 @@
 package com.rhg.qf.mvp.api;
 
+import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.BannerTypeUrlBean;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
 import com.rhg.qf.bean.GoodsDetailUrlBean;
@@ -13,6 +14,8 @@ import com.rhg.qf.bean.ShopDetailUriBean;
 import com.rhg.qf.bean.SignInBean;
 import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -97,13 +100,29 @@ public interface QFoodApiService {
 
     /*添加地址*/
     @FormUrlEncoded
-    @POST("JsonSQL/AddAddress.php")
-//    Observable<String> addAddress(@Body AddressBean addressUrlBean);
+    @POST("Table/JsonSQL/UpdateAddress.php")
     Observable<String> addAddress(@Field("Client") String userName,
                                   @Field("Pwd") String pwd,
                                   @Field("Name") String name,
                                   @Field("Phone") String phone,
                                   @Field("Address") String address);
+
+    /*获取地址*/
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<AddressUrlBean> getAddress(@Field("Table") String address,
+                                                            @Field("ID") String userId);
+
+
+    /*修改地址*/
+    @FormUrlEncoded
+    @POST("Table/JsonSQL/UpdateAddress.php")
+    Observable<String> updateAddress(@Field("Client") String userName,
+                                     @Field("ID") String id,
+                                     @Field("Name") String name,
+                                     @Field("Phone") String phone,
+                                     @Field("Address") String address,
+                                     @Field("Pwd") String pwd);
 
     @FormUrlEncoded
     @POST("Table/Json.php")

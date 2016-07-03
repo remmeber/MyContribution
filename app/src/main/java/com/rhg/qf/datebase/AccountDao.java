@@ -4,8 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.rhg.qf.bean.AddressBean;
-import com.rhg.qf.bean.AddressLocalBean;
+import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.utils.ToastHelper;
@@ -105,13 +104,13 @@ public class AccountDao {
         close();
     }
 
-    public void saveAddress(AddressLocalBean addressBean) {
+    public void saveAddress(AddressUrlBean.AddressBean addressBean) {
         if (addressBean == null) {
             return;
         }
         db = AccountDBHelper.getInstance().getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(AppConstants.ADDRESS_CREATE_TIME, addressBean.getCreateTime());
+        values.put(AppConstants.ADDRESS_ID, addressBean.getID());
         values.put(AppConstants.NAME_FOR_ADDRESS, addressBean.getName());
         values.put(AppConstants.PHONE_FOR_ADDRESS, addressBean.getPhone());
         values.put(AppConstants.ADDRESS_CONTENT, addressBean.getAddress());
@@ -165,7 +164,7 @@ public class AccountDao {
         close();
     }
 
-    public void updateAddress(String whereArg, AddressBean updateItems) {
+    public void updateAddress(String whereArg, AddressUrlBean.AddressBean updateItems) {
         if (whereArg == null || "".equals(whereArg) || updateItems == null) {
             return;
         }
@@ -174,7 +173,7 @@ public class AccountDao {
         values.put(AppConstants.NAME_FOR_ADDRESS, updateItems.getName());
         values.put(AppConstants.PHONE_FOR_ADDRESS, updateItems.getPhone());
         values.put(AppConstants.ADDRESS_CONTENT, updateItems.getAddress());
-        db.update(AccountDBHelper.Q_ADDRESS_TABLE, values, AppConstants.ADDRESS_CREATE_TIME + "=?",
+        db.update(AccountDBHelper.Q_ADDRESS_TABLE, values, AppConstants.ADDRESS_ID + "=?",
                 new String[]{whereArg});
         close();
     }
@@ -215,35 +214,35 @@ public class AccountDao {
         return mList;
     }
 
-    public List<AddressLocalBean> getAddressList() {
-        List<AddressLocalBean> addressBeanList = new ArrayList<>();
+    public List<AddressUrlBean.AddressBean> getAddressList() {
+        List<AddressUrlBean.AddressBean> addressBeanList = new ArrayList<>();
         String[] columns = new String[]{
-                AppConstants.ADDRESS_CREATE_TIME,
+                AppConstants.ADDRESS_ID,
                 AppConstants.NAME_FOR_ADDRESS,
                 AppConstants.PHONE_FOR_ADDRESS,
                 AppConstants.ADDRESS_CONTENT};
-        String selection = AppConstants.ADDRESS_CREATE_TIME + "=?";
+        String selection = AppConstants.ADDRESS_ID + "=?";
         db = AccountDBHelper.getInstance().getReadableDatabase();
         cursor = db.query(AccountDBHelper.Q_ADDRESS_TABLE, columns, selection, null, null,
                 null, null);
         if (cursor.moveToFirst()) {
             do {
-                AddressLocalBean addressBean = new AddressLocalBean();
-                String time = cursor.getString(0);
+                AddressUrlBean.AddressBean addressBean = new AddressUrlBean.AddressBean();
+                String id = cursor.getString(0);
                 String Name = cursor.getString(1);
                 String phone = cursor.getString(2);
                 String address = cursor.getString(3);
-                if (time != null && !"".equals(time)) {
-                    addressBean.setName(time);
+                if (id != null && !"".equals(id)) {
+                    addressBean.setID(id);
                 }
                 if (Name != null && !"".equals(Name)) {
                     addressBean.setName(Name);
                 }
                 if (phone != null && !"".equals(phone)) {
-                    addressBean.setName(phone);
+                    addressBean.setPhone(phone);
                 }
                 if (address != null && !"".equals(address)) {
-                    addressBean.setName(address);
+                    addressBean.setAddress(address);
                 }
                 addressBeanList.add(addressBean);
             } while (cursor.moveToNext());

@@ -85,7 +85,7 @@ public class AppConstants {
     public static final String NAME_FOR_ADDRESS = "address_name";
     public static final String PHONE_FOR_ADDRESS = "address_phone";
     public static final String ADDRESS_CONTENT = "address_content";
-    public static final String ADDRESS_CREATE_TIME = "address_time";
+    public static final String ADDRESS_ID = "address_id";
 
     /*Merchant*/
     public static final int MERCHANT_SELLNUMBER = 0;
@@ -110,6 +110,7 @@ public class AppConstants {
     public static final String TABLE_FOOD = "food";
     public static final String TABLE_RESTAURANTS = "restaurants";
     public static final String TABLE_ORDER = "order";
+    public static final String ADDRESS_TABLE = "address";
 
     /**
      * 响应结果，正确

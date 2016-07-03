@@ -14,30 +14,33 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.bean.AddressLocalBean;
+import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.widget.SlideView;
 
 import java.util.List;
 
 /**
- * 作者：rememberon 2016/6/5
- * 邮箱：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/6/29 15:39
+ * email：1013773046@qq.com
  */
 public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
         SlideView.OnSlideListener {
     Context context;
-    List<AddressLocalBean> addressBeanList;
+    List<AddressUrlBean.AddressBean> addressBeanList;
     int currentPosition = 0;
     SlideView lastSlideView;
     GestureDetectorCompat gestureDetector;
 
-    public AddressAdapter(Context content, List<AddressLocalBean> addressBeanList) {
+    public AddressAdapter(Context content, List<AddressUrlBean.AddressBean> addressBeanList) {
         this.context = content;
         this.addressBeanList = addressBeanList;
     }
 
-    public AddressAdapter(List<AddressLocalBean> addressBeanList) {
+    public void setAddressBeanList(List<AddressUrlBean.AddressBean> addressBeanList) {
         this.addressBeanList = addressBeanList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -46,7 +49,6 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View view = layoutInflater.inflate(R.layout.item_address_content, parent, false);
         SlideView slideView = new SlideView(context);
         slideView.setContentView(view);
-        Log.i("RHG", "adapter:" + slideView);
         return new AddressViewHolder(slideView);
     }
 
@@ -54,22 +56,29 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AddressViewHolder _holder = (AddressViewHolder) holder;
-        AddressLocalBean addressBean = addressBeanList.get(position);
+        AddressUrlBean.AddressBean addressBean = addressBeanList.get(position);
         bindData(_holder, addressBean, position);
     }
 
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    private void bindData(AddressViewHolder holder, AddressLocalBean addressLocalBean, int position) {
+    private void bindData(AddressViewHolder holder, AddressUrlBean.AddressBean addressBean,
+                          int position) {
         holder.slideView.setOnSlideListener(this);
         holder.slideView.shrink();
         holder.slideView.setTag(holder.getAdapterPosition());
-        holder.tvReceiver.setText(addressLocalBean.getName());
-        holder.tvPhone.setText(addressLocalBean.getPhone());
-        holder.tvAddress.setText(addressLocalBean.getAddress());
-        boolean isChecked = addressLocalBean.isChecked();
+        holder.tvReceiver.setText(addressBean.getName());
+        holder.tvPhone.setText(addressBean.getPhone());
+        holder.tvAddress.setText(addressBean.getAddress());
+        boolean isChecked = addressBean.isChecked();
         holder.rlAddress.setTag(holder.getAdapterPosition());
         setImage(isChecked, holder.ivCheck);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         /*if (holder.rlAddress.hasOnClickListeners())
             return;
         holder.rlAddress.setOnClickListener(this);*/
@@ -115,11 +124,12 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public class AddressViewHolder extends RecyclerView.ViewHolder {
         public SlideView slideView;
-        RelativeLayout rlAddress;
-        ImageView ivCheck;
-        TextView tvReceiver;
-        TextView tvPhone;
-        TextView tvAddress;
+        public RelativeLayout rlAddress;
+        public ImageView ivCheck;
+        public TextView tvReceiver;
+        public TextView tvPhone;
+        public TextView tvAddress;
+        public RelativeLayout delete;
 
         public AddressViewHolder(SlideView inflateView) {
             super(inflateView);
@@ -129,6 +139,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tvReceiver = (TextView) inflateView.findViewById(R.id.tv_address_receiver);
             tvPhone = (TextView) inflateView.findViewById(R.id.tv_address_phone);
             tvAddress = (TextView) inflateView.findViewById(R.id.tv_address_content);
+            delete = (RelativeLayout) inflateView.findViewById(R.id.holder);
         }
 
     }

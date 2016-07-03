@@ -2,6 +2,7 @@ package com.rhg.qf.third;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import com.rhg.qf.bean.ShareModel;
 import com.rhg.qf.impl.ShareListener;
@@ -29,6 +30,7 @@ public class UmengUtil {
     private UMAuthListener umGetInfoListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            Log.i("RHG", "user info" + map.toString());
             signInListener.signSuccess(map);
         }
 
@@ -45,6 +47,7 @@ public class UmengUtil {
     private UMAuthListener umAuthListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            Log.i("RHG", map.toString());
             umShareAPI.getPlatformInfo(activity, share_media, umGetInfoListener);
         }
 

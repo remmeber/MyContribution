@@ -56,7 +56,7 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TB_ADDRESS = "create table " + Q_ADDRESS_TABLE + "("
                 + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + AppConstants.ADDRESS_CREATE_TIME + " text,"
+                + AppConstants.ADDRESS_ID + " text,"
                 + AppConstants.NAME_FOR_ADDRESS + " text,"
                 + AppConstants.PHONE_FOR_ADDRESS + " text,"
                 + AppConstants.ADDRESS_CONTENT + " text"

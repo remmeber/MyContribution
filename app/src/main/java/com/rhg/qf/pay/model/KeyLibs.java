@@ -1,5 +1,7 @@
 package com.rhg.qf.pay.model;
 
+import com.rhg.qf.application.InitApplication;
+
 public class KeyLibs {
 
     public static String mark = "\"";
@@ -12,7 +14,7 @@ public class KeyLibs {
     public static String ali_privateKey = null;
     // appId（在请同时修改  androidmanifest.xml里面，.PayActivityd里的属性
     //       <data android:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid）
-    public static String weixin_appId = null;
+    public static String weixin_appId = InitApplication.WXID;
     // 商户号
     public static String weixin_mchId = null;
     //API密钥

@@ -135,6 +135,7 @@
             android:launchMode="singleTop" />
 
         <activity
+
             android:name="com.rhg.qf.activity.PayActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
@@ -143,7 +144,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="wx967daebe835fbeac" /><!--微信key-->
+                <data android:scheme="wxb066167618e700e6" /><!--微信key-->
             </intent-filter>
         </activity>
         <!--微信-->
@@ -159,7 +160,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent1105473854" />
+                <data android:scheme="tencent1105497604" />
             </intent-filter>
         </activity>
         <activity

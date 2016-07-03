@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.application.InitApplication;
-import com.rhg.qf.bean.AddressLocalBean;
+import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.utils.AddressUtil;
@@ -109,12 +109,12 @@ public class NewAddressActivity extends BaseActivity {
                     ToastHelper.getInstance()._toast(getResources().getString(R.string.contactAddress_Null));
                     break;
                 }
-                AddressLocalBean addressLocalBean = new AddressLocalBean();
-                addressLocalBean.setCreateTime(DataUtil.getCurrentTime());
-                addressLocalBean.setName(addNewAddressContactPersonContent.getText().toString());
-                addressLocalBean.setPhone(addNewAddressContactsContent.getText().toString());
-                addressLocalBean.setAddress(addNewAddressContactAddressContent.getText().toString());
-                AddressUtil.insertAddress(addressLocalBean);
+                AddressUrlBean.AddressBean addressBean = new AddressUrlBean.AddressBean();
+                addressBean.setID(DataUtil.getCurrentTime());
+                addressBean.setName(addNewAddressContactPersonContent.getText().toString());
+                addressBean.setPhone(addNewAddressContactsContent.getText().toString());
+                addressBean.setAddress(addNewAddressContactAddressContent.getText().toString());
+                AddressUtil.insertAddress(addressBean);
                 break;
             case R.id.add_new_address_location:
             case R.id.add_new_address_contact_address_content:

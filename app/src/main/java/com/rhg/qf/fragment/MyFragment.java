@@ -241,18 +241,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     /*TODO 登录*/
     private void doLogin() {
         signUtil = new UmengUtil(getActivity());
-        signUtil.SignIn(SHARE_MEDIA.QQ, new SignInListener() {
+        signUtil.SignIn(SHARE_MEDIA.WEIXIN, new SignInListener() {
             @Override
             public void signSuccess(Map<String, String> infoMap) {
-                userName.setText(infoMap.get(AppConstants.USERNAME_QQ));
+                /*userName.setText(infoMap.get(AppConstants.USERNAME_QQ));
                 ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_QQ),
                         userHeader);
-                signUtil.setActivity(null);
+                signUtil.setActivity(null);*/
             }
 
             @Override
             public void signFail(String errorMessage) {
-                ToastHelper.getInstance()._toast(errorMessage);
+//                ToastHelper.getInstance()._toast(errorMessage);
             }
         });
     }
