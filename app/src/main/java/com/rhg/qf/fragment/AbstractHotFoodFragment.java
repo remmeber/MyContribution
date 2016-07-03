@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.HotSellItemAdapter;
+import com.rhg.qf.apapter.HotSellItemRcvAdapter;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.HotFoodPresenter;
@@ -28,10 +28,10 @@ import butterknife.Bind;
  * time：2016/6/19 16:55
  * email：1013773046@qq.com
  */
-public abstract class AbstractHotFoodFragment extends SuperFragment implements
+public abstract class AbstractHotFoodFragment extends BaseFragment implements
         RcvItemClickListener<HotFoodUrlBean.HotGoodsBean> {
     List<HotFoodUrlBean.HotGoodsBean> hotGoodsBeanList;
-    HotSellItemAdapter hotSellItemAdapter;
+    HotSellItemRcvAdapter hotSellItemRcvAdapter;
     HotFoodPresenter hotFoodPresenter;
 
     @Bind(R.id.common_recycle)
@@ -70,10 +70,10 @@ public abstract class AbstractHotFoodFragment extends SuperFragment implements
         commonRecycle.addItemDecoration(new RecycleViewDivider(getContext(),
                 LinearLayoutManager.HORIZONTAL, DpUtil.dip2px(1),
                 getResources().getColor(R.color.colorInActive)));
-        hotSellItemAdapter = new HotSellItemAdapter(getContext(),
+        hotSellItemRcvAdapter = new HotSellItemRcvAdapter(getContext(),
                 hotGoodsBeanList);
-        hotSellItemAdapter.setOnRcvItemClickListener(this);
-        commonRecycle.setAdapter(hotSellItemAdapter);
+        hotSellItemRcvAdapter.setOnRcvItemClickListener(this);
+        commonRecycle.setAdapter(hotSellItemRcvAdapter);
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -100,7 +100,7 @@ public abstract class AbstractHotFoodFragment extends SuperFragment implements
     @Override
     public void showSuccess(Object o) {
         hotGoodsBeanList = (List<HotFoodUrlBean.HotGoodsBean>) o;
-        hotSellItemAdapter.setHotGoodsBeanList(hotGoodsBeanList);
+        hotSellItemRcvAdapter.setHotGoodsBeanList(hotGoodsBeanList);
         commonRefresh.setVisibility(View.GONE);
     }
 

@@ -28,7 +28,7 @@ import butterknife.Bind;
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public abstract class AbstractOrderFragment extends SuperFragment implements RcvItemClickListener<OrderUrlBean.OrderBean> {
+public abstract class AbstractOrderFragment extends BaseFragment implements RcvItemClickListener<OrderUrlBean.OrderBean> {
     @Bind(R.id.common_recycle)
     RecyclerView commonRecycle;
     @Bind(R.id.common_refresh)

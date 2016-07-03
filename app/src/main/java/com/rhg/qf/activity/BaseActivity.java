@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * time：2016/5/28 16:13
  * email：1013773046@qq.com
  */
-public abstract class BaseActivity extends AppCompatActivity implements BaseView/*, View.OnClickListener*/ {
+public abstract class BaseActivity extends FragmentActivity implements BaseView/*, View.OnClickListener*/ {
     private static final String ACTION_NETWORK_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
     private static final String ACTION_PUSH_DATA = "fm.data.push.action";
     private static final String ACTION_NEW_VERSION = "apk.update.action";
@@ -40,13 +40,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        InitApplication.getInstance().addActivity(this);
-
+//        InitApplication.getInstance().addActivity(this);
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
         dataReceive(getIntent());
-        isFirstLoc = isNeedFirstLoc();
-        startLoc();
+        /*isFirstLoc = isNeedFirstLoc();
+        startLoc();*/
         loadingData();
         initView(getRootView(this));
         initData();

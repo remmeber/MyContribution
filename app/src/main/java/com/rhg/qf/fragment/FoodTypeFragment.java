@@ -29,7 +29,7 @@ import butterknife.Bind;
  * time：2016/5/28 16:43
  * email：1013773046@qq.com
  */
-public class FoodTypeFragment extends SuperFragment implements RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> {
+public class FoodTypeFragment extends BaseFragment implements RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> {
     //    private int tag;
     List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
     GoodsListAdapter goodsListAdapter;

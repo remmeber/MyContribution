@@ -34,10 +34,12 @@ public class QFoodLoadingCircle extends View {
     private int height;
     private float pi2;
     private float r;
+
     public QFoodLoadingCircle(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
+
     public QFoodLoadingCircle(Context context) {
         super(context);
         init();

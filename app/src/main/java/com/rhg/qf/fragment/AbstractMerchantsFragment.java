@@ -29,7 +29,7 @@ import butterknife.Bind;
  * time：2016/5/28 16:42
  * email：1013773046@qq.com
  */
-public abstract class AbstractMerchantsFragment extends SuperFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
+public abstract class AbstractMerchantsFragment extends BaseFragment implements RcvItemClickListener<MerchantUrlBean.MerchantBean> {
     @Bind(R.id.common_recycle)
     RecyclerView commonRecycle;
     @Bind(R.id.common_refresh)

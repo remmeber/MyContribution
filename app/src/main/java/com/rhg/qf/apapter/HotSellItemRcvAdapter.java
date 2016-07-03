@@ -22,12 +22,12 @@ import butterknife.ButterKnife;
  * 作者：rememberon 2016/6/19
  * 邮箱：1013773046@qq.com
  */
-public class HotSellItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HotSellItemRcvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<HotFoodUrlBean.HotGoodsBean> hotGoodsBeanList;
     RcvItemClickListener<HotFoodUrlBean.HotGoodsBean> onRcvItemClickListener;
 
-    public HotSellItemAdapter(Context context, List<HotFoodUrlBean.HotGoodsBean> hotGoodsBeanList) {
+    public HotSellItemRcvAdapter(Context context, List<HotFoodUrlBean.HotGoodsBean> hotGoodsBeanList) {
         this.context = context;
         this.hotGoodsBeanList = hotGoodsBeanList;
     }

@@ -132,19 +132,4 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
         return mData == null ? 0 : mData.size();
     }
 
-
-
-    /* private OnListItemClick onListItemClick;
-
-   public void setOnListItemClick(OnListItemClick onListItemClick) {
-        this.onListItemClick = onListItemClick;
-    }
-
-    public OnListItemClick getOnListItemClick() {
-        return onListItemClick;
-    }
-
-    public interface OnListItemClick {
-        void itemClick(View v, int position);
-    }*/
 }
