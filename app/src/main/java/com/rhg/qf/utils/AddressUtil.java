@@ -1,7 +1,6 @@
 package com.rhg.qf.utils;
 
-import com.rhg.qf.bean.AddressBean;
-import com.rhg.qf.bean.AddressLocalBean;
+import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.datebase.AccountDao;
@@ -19,7 +18,7 @@ public class AddressUtil {
      * time：2016/6/5 13:45
      * email：1013773046@qq.com
      */
-    public static void insertAddress(AddressLocalBean addressBean) {
+    public static void insertAddress(AddressUrlBean.AddressBean addressBean) {
         AccountDao.getInstance().saveAddress(addressBean);
     }
 
@@ -30,7 +29,7 @@ public class AddressUtil {
      * email：1013773046@qq.com
      */
     public static void deleteOneAddress(String whereArg) {
-        AccountDao.getInstance().deleteItemInTableById(AccountDBHelper.Q_ADDRESS_TABLE, AppConstants.ADDRESS_CREATE_TIME,
+        AccountDao.getInstance().deleteItemInTableById(AccountDBHelper.Q_ADDRESS_TABLE, AppConstants.ADDRESS_ID,
                 whereArg);
     }
 
@@ -50,7 +49,7 @@ public class AddressUtil {
      * time：2016/6/5 12:04
      * email：1013773046@qq.com
      */
-    public static void updateAddress(String whereArg, AddressBean addressBean) {
+    public static void updateAddress(String whereArg, AddressUrlBean.AddressBean addressBean) {
         AccountDao.getInstance().updateAddress(whereArg, addressBean);
     }
 
@@ -60,7 +59,7 @@ public class AddressUtil {
      * time：2016/6/5 12:05
      * email：1013773046@qq.com
      */
-    public static List<AddressLocalBean> getAddressList() {
+    public static List<AddressUrlBean.AddressBean> getAddressList() {
         return AccountDao.getInstance().getAddressList();
     }
 }

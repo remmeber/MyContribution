@@ -32,11 +32,10 @@ import java.util.HashMap;
  * email：1013773046@qq.com
  */
 public class InitApplication extends Application {
-    public final static String QQID = "1105473854";
-    public final static String QQKEY = "r8LhuDPffnpByTby";
-    /*TODO WX需要加入*/
-    public final static String WXID = "wxb066167618e700e6";/*测试*/
-    public final static String WXKEY = "2a2d1cc89b6214c427001d3b1e5dad24";/*测试*/
+    public final static String QQID = "1105497604";
+    public final static String QQKEY = "MdCq3ttlP0xlAPIg";
+    public final static String WXID = "wxb066167618e700e6";/*已签名*/
+    public final static String WXKEY = "2a2d1cc89b6214c427001d3b1e5dad24";/*已签名*/
     private static InitApplication initApplication;
     public LocationService locationService;
     public Vibrator mVibrator;

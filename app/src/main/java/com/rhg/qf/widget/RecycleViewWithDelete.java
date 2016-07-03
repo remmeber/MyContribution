@@ -1,6 +1,7 @@
 package com.rhg.qf.widget;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,7 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
     }
 
     private void init(Context context) {
+        this.context = context;
         gestureDetectorCompat = new GestureDetectorCompat(context, this);
     }
 
@@ -80,9 +82,9 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
     /*for gesture*/
     @Override
     public boolean onDown(MotionEvent e) {
+        Log.i("RHG", "DONW");
         downX = (int) e.getX();
         downY = (int) e.getY();
-        Log.i("RHG", "downX: " + downX + ",downY: " + downY);
         View view = findChildViewUnder(downX, downY);
         if (view == null) {
             slideView = null;
@@ -105,7 +107,7 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
     public boolean onSingleTapUp(MotionEvent e) {
         AddressAdapter.AddressViewHolder oldLastViewHolder =
                 (AddressAdapter.AddressViewHolder) findViewHolderForAdapterPosition(lastPosition);
-        if (slidePosition != lastPosition)
+        if (slidePosition != lastPosition && oldLastViewHolder != null)
             if (oldLastViewHolder.slideView.getState() == SlideView.OnSlideListener.SLIDE_STATUS_ON) {
                 slideView.getmOnSlideListener().onSlide(slideView, slideView.getState());
                 return false;
@@ -114,10 +116,10 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
             onItemClickListener.onItemClick(slidePosition);
         }
         if (slidePosition != lastPosition) {
-            View view = findChildViewUnder(downX, downY);
+            /*View view = findChildViewUnder(downX, downY);
             if (view == null)
                 return false;
-            viewHolder = findContainingViewHolder(view);
+            viewHolder = findContainingViewHolder(view);*/
             if (viewHolder instanceof AddressAdapter.AddressViewHolder) {
                 slideView = ((AddressAdapter.AddressViewHolder) viewHolder).slideView;
             } else slideView = null;
@@ -131,7 +133,6 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
         if (Math.abs(distanceY) > Math.abs(distanceX) * 2)
             return false;
         if (slideView != null) {
-            Log.i("RHG", "DONE" + ": " + slideView);
             slideView.onRequireTouchEvent(e2, e1);
             lastPosition = slidePosition;
         }
@@ -140,13 +141,59 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
 
     @Override
     public void onLongPress(MotionEvent e) {
-
+        if (viewHolder instanceof AddressAdapter.AddressViewHolder) {
+            showDelDialog(viewHolder.getAdapterPosition());
+        }
     }
     /*for gesture*/
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
+    }
+
+    /**
+     * 删除弹框
+     *
+     * @param position
+     */
+    private void showDelDialog(final int position) {
+        final UIAlertView delDialog = new UIAlertView(context, "温馨提示", "确定修改选中的地址？",
+                "取消", "确定");
+        delDialog.show();
+        delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
+                                       @Override
+                                       public void doLeft() {
+                                           delDialog.dismiss();
+                                       }
+
+                                       @Override
+                                       public void doRight() {
+                                           updateSelectedAddress(position);
+                                           new Handler().postDelayed(new Runnable() {
+                                               @Override
+                                               public void run() {
+                                                   delDialog.dismiss();
+                                               }
+                                           },500);
+                                       }
+                                   }
+        );
+    }
+
+    private void updateSelectedAddress(int position) {
+        if (onLongClickListener != null)
+            onLongClickListener.onLongClick(position);
+    }
+
+    public interface LongClickListener {
+        void onLongClick(int position);
+    }
+
+    private LongClickListener onLongClickListener;
+
+    public void setOnLongClickListener(LongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
     }
 
     public void setOnItemClickListener(ItemClickListener onItemClickListener) {

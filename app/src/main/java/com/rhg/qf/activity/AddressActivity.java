@@ -1,6 +1,5 @@
 package com.rhg.qf.activity;
 
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -10,7 +9,11 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.apapter.AddressAdapter;
-import com.rhg.qf.bean.AddressLocalBean;
+import com.rhg.qf.bean.AddressUrlBean;
+import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.GetAddressPresenter;
+import com.rhg.qf.mvp.presenter.GetAddressPresenterImpl;
+import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -42,12 +45,13 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
 
     AddressAdapter addressAdapter;
     int lastPosition = -1;
-    List<AddressLocalBean> addressBeanList;
+    List<AddressUrlBean.AddressBean> addressBeanList;
+    GetAddressPresenter getAddressPresenter = new GetAddressPresenterImpl(this);
 
     public AddressActivity() {
         addressBeanList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            AddressLocalBean addressBean = new AddressLocalBean();
+        /*for (int i = 0; i < 6; i++) {
+            AddressUrlBean addressBean = new AddressUrlBean();
             if (i == 0)
                 addressBean.setChecked(true);
             else addressBean.setChecked(false);
@@ -55,8 +59,9 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
             addressBean.setAddress("东南大学");
             addressBean.setPhone("1" + i);
             addressBeanList.add(addressBean);
-        }
+        }*/
     }
+
 
     @Override
     protected int getLayoutResId() {
@@ -66,6 +71,16 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
     @Override
     protected void initView(View view) {
 
+    }
+
+    @Override
+    public void loadingData() {
+        addressBeanList = AddressUtil.getAddressList();
+        if (addressBeanList.size() == 0) {
+            /*TODO 加一个进度*/
+            String userId = /*AccountUtil.getInstance().getUserID()*/"1";
+            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, userId);
+        }
     }
 
     @Override
@@ -83,6 +98,13 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
         addressAdapter = new AddressAdapter(this, addressBeanList);
         rcyAddress.setAdapter(addressAdapter);
         rcyAddress.setOnItemClickListener(this);
+        rcyAddress.setOnLongClickListener(new RecycleViewWithDelete.LongClickListener() {
+            @Override
+            public void onLongClick(int position) {
+                addressBeanList.remove(position);
+                addressAdapter.notifyItemRemoved(position);
+            }
+        });
         /*rcyAddress.setRemoveListener(new SwipeDeleteRecycle.RemoveListener() {
             @Override
             public void removeItem(SwipeDeleteRecycle.RemoveDirection direction, int position) {
@@ -92,19 +114,18 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
         srlAddress.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        srlAddress.setRefreshing(false);
-                    }
-                }, 2000);
+                getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, "1");
             }
         });
     }
 
     @Override
     protected void showSuccess(Object s) {
-
+        addressBeanList = (List<AddressUrlBean.AddressBean>) s;
+        addressBeanList.get(0).setChecked(true);
+        addressAdapter.setAddressBeanList(addressBeanList);
+        if (srlAddress.isRefreshing())
+            srlAddress.setRefreshing(false);
     }
 
     @Override

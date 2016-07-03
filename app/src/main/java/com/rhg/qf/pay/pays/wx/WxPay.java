@@ -99,11 +99,9 @@ public class WxPay implements IPayable {
     public void RegisterApp(Context context, String appId) {
         msgApi = WXAPIFactory.createWXAPI(context, null);
         msgApi.registerApp(appId);
-        Log.i("RHG", "msgApi:" + msgApi);
     }
 
     public void unRegisterApp() {
-        Log.i("RHG", "msgApi:" + msgApi);
         if (msgApi != null)
             msgApi.detach();
     }

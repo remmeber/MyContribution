@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -306,7 +307,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         /*商品数量*/
         TextView goodsCount;
         /*删除*/
-        ViewGroup delete;
+        RelativeLayout delete;
 
         ChildViewHolder(View view) {
             btGoodsCheck = (ImageView) view.findViewById(R.id.ivCheckGood);
@@ -316,7 +317,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
             btReduceNum = (ImageView) view.findViewById(R.id.ivReduce);
             btAddNum = (ImageView) view.findViewById(R.id.ivAdd);
             goodsCount = (TextView) view.findViewById(R.id.tvNum);
-            delete = (ViewGroup) view.findViewById(R.id.holder);
+            delete = (RelativeLayout) view.findViewById(R.id.holder);
         }
     }
 }
