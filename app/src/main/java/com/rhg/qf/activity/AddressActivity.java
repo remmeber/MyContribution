@@ -25,9 +25,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-/**
- * 作者：rememberon 2016/6/5
- * 邮箱：1013773046@qq.com
+/*
+ *desc 地址页面
+ *author rhg
+ *time 2016/7/3 22:11
+ *email 1013773046@qq.com
  */
 public class AddressActivity extends BaseActivity implements RecycleViewWithDelete.ItemClickListener {
 
