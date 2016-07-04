@@ -55,6 +55,10 @@ public class AddOrNewAddressActivity extends BaseActivity {
         } else {
             resultCode = AppConstants.BACK_WITH_UPDATE;
             ToastHelper.getInstance()._toast("修改地址");
+            AddressUrlBean.AddressBean _address = intent.getParcelableExtra(AppConstants.KEY_ADDRESS);
+            addNewAddressContactPersonContent.setText(_address.getName());
+            addNewAddressContactsContent.setText(_address.getPhone());
+            addNewAddressContactPersonContent.setText(_address.getAddress());
         }
     }
 

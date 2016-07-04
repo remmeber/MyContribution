@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,16 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void setAddressBeanList(List<AddressUrlBean.AddressBean> addressBeanList) {
         this.addressBeanList = addressBeanList;
         notifyDataSetChanged();
+    }
+
+    public void insertAddressBeanList(List<AddressUrlBean.AddressBean> addressBeanList, int position) {
+        this.addressBeanList = addressBeanList;
+        notifyItemInserted(position);
+    }
+
+    public void updateAddressBeanList(List<AddressUrlBean.AddressBean> addressBeanList, int position) {
+        this.addressBeanList = addressBeanList;
+        notifyItemChanged(position);
     }
 
     @Override

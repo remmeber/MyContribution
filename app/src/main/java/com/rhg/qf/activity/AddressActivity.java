@@ -48,6 +48,7 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
 
     AddressAdapter addressAdapter;
     int lastPosition = -1;
+    int longClickPosition = -1;
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenterImpl(this);
     private static final int DELETE = 0;
@@ -106,6 +107,7 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
         rcyAddress.setOnLongClickListener(new RecycleViewWithDelete.LongClickListener() {
             @Override
             public void onLongClick(int position) {
+                longClickPosition = position;
                 showDelDialog(position, "确定修改选中地址？", MODIFY);
             }
         });
@@ -130,10 +132,10 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
             return;
         AddressUrlBean.AddressBean _addressBean = data.getParcelableExtra(AppConstants.KEY_ADDRESS);
         if (requestCode == AppConstants.BACK_WITH_UPDATE) {
-
+            addressAdapter.updateAddressBeanList(addressBeanList, longClickPosition);
         } else {
             addressBeanList.add(0, _addressBean);/*插入到第一条*/
-            addressAdapter.setAddressBeanList(addressBeanList);
+            addressAdapter.insertAddressBeanList(addressBeanList, 0);
         }
     }
 
@@ -174,8 +176,9 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_add_new_address:
-                Intent _intent = new Intent(AddressActivity.this, AddOrNewAddressActivity.class);
+                Intent _intent = new Intent(this, AddOrNewAddressActivity.class);
                 startActivityForResult(_intent, AppConstants.BACK_WITH_ADD);
+//                _intent.setComponent(null);/*TODO 对于intent内存泄漏可能有用*/
                 break;
             case R.id.tb_left_iv:
                 finish();
