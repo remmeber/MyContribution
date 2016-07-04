@@ -141,8 +141,10 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
 
     @Override
     public void onLongPress(MotionEvent e) {
+
         if (viewHolder instanceof AddressAdapter.AddressViewHolder) {
-            showDelDialog(viewHolder.getAdapterPosition());
+            if (onLongClickListener != null)
+                onLongClickListener.onLongClick(viewHolder.getAdapterPosition());
         }
     }
     /*for gesture*/
@@ -152,39 +154,7 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
         return false;
     }
 
-    /**
-     * 删除弹框
-     *
-     * @param position
-     */
-    private void showDelDialog(final int position) {
-        final UIAlertView delDialog = new UIAlertView(context, "温馨提示", "确定修改选中的地址？",
-                "取消", "确定");
-        delDialog.show();
-        delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
-                                       @Override
-                                       public void doLeft() {
-                                           delDialog.dismiss();
-                                       }
 
-                                       @Override
-                                       public void doRight() {
-                                           updateSelectedAddress(position);
-                                           new Handler().postDelayed(new Runnable() {
-                                               @Override
-                                               public void run() {
-                                                   delDialog.dismiss();
-                                               }
-                                           },500);
-                                       }
-                                   }
-        );
-    }
-
-    private void updateSelectedAddress(int position) {
-        if (onLongClickListener != null)
-            onLongClickListener.onLongClick(position);
-    }
 
     public interface LongClickListener {
         void onLongClick(int position);
@@ -198,10 +168,6 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
 
     public void setOnItemClickListener(ItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
-    }
-
-    public boolean hasItemClickListener() {
-        return onItemClickListener != null;
     }
 
     public interface ItemClickListener {

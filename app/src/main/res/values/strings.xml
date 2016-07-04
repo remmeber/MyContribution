@@ -71,6 +71,7 @@
     <!--收货地址-->
     <string name="address">收货地址</string>
     <string name="newAddress">添加新地址</string>
+    <string name="modifyAddress">修改地址</string>
     <string name="contactUser">联系人&#160;&#160;&#160;&#160;</string>
     <string name="contactUser_Null">联系人为空</string>
     <string name="contacts">联系方式</string>

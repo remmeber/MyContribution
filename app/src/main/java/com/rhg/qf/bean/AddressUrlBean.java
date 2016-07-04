@@ -1,5 +1,8 @@
 package com.rhg.qf.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -62,13 +65,25 @@ public class AddressUrlBean {
         this.rows = rows;
     }
 
-    public static class AddressBean {
+    public static class AddressBean implements Parcelable {
         private String ID;
         private String Client;
         private String Name;
         private String Phone;
         private String Address;
         private boolean isChecked;
+
+        public AddressBean() {
+        }
+
+        public AddressBean(Parcel source) {
+            ID = source.readString();
+            Client = source.readString();
+            Name = source.readString();
+            Phone = source.readString();
+            Address = source.readString();
+            source.readBooleanArray(new boolean[]{isChecked});
+        }
 
         public String getID() {
             return ID;
@@ -116,6 +131,34 @@ public class AddressUrlBean {
 
         public void setChecked(boolean checked) {
             isChecked = checked;
+        }
+
+
+        public static final Parcelable.Creator<AddressBean> CREATOR = new Creator<AddressBean>() {
+            @Override
+            public AddressBean createFromParcel(Parcel source) {
+                return new AddressBean(source);
+            }
+
+            @Override
+            public AddressBean[] newArray(int size) {
+                return new AddressBean[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int flags) {
+            parcel.writeString(ID);
+            parcel.writeString(Client);
+            parcel.writeString(Name);
+            parcel.writeString(Phone);
+            parcel.writeString(Address);
+            parcel.writeBooleanArray(new boolean[]{isChecked});
         }
     }
 }

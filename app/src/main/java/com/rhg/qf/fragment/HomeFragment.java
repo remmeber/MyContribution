@@ -302,7 +302,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
         /*intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
         intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
-        startActivityForResult(intent, AppConstants.START_0);
+        startActivityForResult(intent, AppConstants.INTENT_FOR_RESULT);
     }
 
     @Override

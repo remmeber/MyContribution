@@ -193,8 +193,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
         android:background="@drawable/btn_green_style"
         android:text="@string/tvSave"
-        android:textSize="@dimen/text_medium" />
+        android:textSize="@dimen/text_large" />
 
 </LinearLayout>

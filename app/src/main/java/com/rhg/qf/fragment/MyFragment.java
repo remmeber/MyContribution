@@ -8,19 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.AddressActivity;
 import com.rhg.qf.activity.DeliverInfoActivity;
 import com.rhg.qf.activity.DeliverRegisterActivity;
-import com.rhg.qf.activity.NewAddressActivity;
+import com.rhg.qf.activity.AddOrNewAddressActivity;
 import com.rhg.qf.activity.OrderListActivity;
-import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.ToastHelper;
-import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
@@ -224,7 +220,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             case 6://TODO 常用
                 break;
             case 7://TODO 添加
-                intent.setClass(getActivity(), NewAddressActivity.class);
+                intent.setClass(getActivity(), AddOrNewAddressActivity.class);
                 startActivity(intent);
                 break;
             case 8://TODO 修改

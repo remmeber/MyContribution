@@ -82,7 +82,7 @@
             android:configChanges="orientation|screenSize" />
 
         <activity
-            android:name="com.rhg.qf.activity.NewAddressActivity"
+            android:name=".activity.AddOrNewAddressActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.rhg.qf.activity.SearchActivity"

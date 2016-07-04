@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -15,9 +16,9 @@ import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.mvp.presenter.GetAddressPresenterImpl;
 import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
-import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 import com.rhg.qf.widget.RecycleViewWithDelete;
+import com.rhg.qf.widget.UIAlertView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
     int lastPosition = -1;
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenterImpl(this);
+    private static final int DELETE = 0;
+    private static final int MODIFY = 1;
 
     public AddressActivity() {
         addressBeanList = new ArrayList<>();
@@ -103,8 +106,7 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
         rcyAddress.setOnLongClickListener(new RecycleViewWithDelete.LongClickListener() {
             @Override
             public void onLongClick(int position) {
-                addressBeanList.remove(position);
-                addressAdapter.notifyItemRemoved(position);
+                showDelDialog(position, "确定修改选中地址？", MODIFY);
             }
         });
         /*rcyAddress.setRemoveListener(new SwipeDeleteRecycle.RemoveListener() {
@@ -119,6 +121,20 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
                 getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, "1");
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null)
+            return;
+        AddressUrlBean.AddressBean _addressBean = data.getParcelableExtra(AppConstants.KEY_ADDRESS);
+        if (requestCode == AppConstants.BACK_WITH_UPDATE) {
+
+        } else {
+            addressBeanList.add(0, _addressBean);/*插入到第一条*/
+            addressAdapter.setAddressBeanList(addressBeanList);
+        }
     }
 
     @Override
@@ -158,11 +174,53 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_add_new_address:
-                ToastHelper.getInstance()._toast("增加地址");
+                Intent _intent = new Intent(AddressActivity.this, AddOrNewAddressActivity.class);
+                startActivityForResult(_intent, AppConstants.BACK_WITH_ADD);
                 break;
             case R.id.tb_left_iv:
                 finish();
                 break;
         }
     }
+
+    /**
+     * 删除弹框
+     *
+     * @param position
+     * @param content
+     * @param tag
+     */
+    private void showDelDialog(final int position, final String content, final int tag) {
+        final UIAlertView delDialog = new UIAlertView(this, "温馨提示", content,
+                "取消", "确定");
+        delDialog.show();
+        delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
+                                       @Override
+                                       public void doLeft() {
+                                           delDialog.dismiss();
+                                       }
+
+                                       @Override
+                                       public void doRight() {
+                                           delDialog.dismiss();
+                                           if (tag == DELETE) {
+                                               addressBeanList.remove(position);
+                                               addressAdapter.notifyItemRemoved(position);
+                                           } else {
+                                               AddressUrlBean.AddressBean _addressBean = addressBeanList.get(position);
+                                               Intent _intent = new Intent(AddressActivity.this, AddOrNewAddressActivity.class);
+                                               _intent.putExtra(AppConstants.KEY_ADDRESS, _addressBean);
+                                               startActivityForResult(_intent, AppConstants.BACK_WITH_UPDATE);
+                                           }
+                                          /* new Handler().postDelayed(new Runnable() {
+                                               @Override
+                                               public void run() {
+                                                   delDialog.dismiss();
+                                               }
+                                           }, 500);*/
+                                       }
+                                   }
+        );
+    }
+
 }

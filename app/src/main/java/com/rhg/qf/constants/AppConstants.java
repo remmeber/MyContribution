@@ -47,10 +47,12 @@ public class AppConstants {
     /**
      * 页面调起/销毁标志
      */
-    public static final int START_0 = 0;
     public static final int BACK_WITH_DELETE = 4;
     public static final int BACK_WITHOUT_DATA = 5;
-    public static final int PAY = 6;
+    public static final int BACK_WITH_UPDATE = 6;
+    public static final int BACK_WITH_ADD = 7;
+    public static final int INTENT_FOR_RESULT =101 ;
+    public static final int INTENT_NO_RESULT =102 ;
 
     /*signin*/
     public static final String USERNAME_QQ = "screen_name";
@@ -74,6 +76,7 @@ public class AppConstants {
     public static final String KEY_DELETE = "delete";
     public static final String KEY_ORDER_TAG = "order_tag";
     public static final int KEY_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
+
     /*for headImage*/
     public static final int CODE_GALLERY_REQUEST = 10;//TODO:From Local
     public static final int CODE_GALLERY_REQUEST_KITKAT = 20;//TODO:From Local
