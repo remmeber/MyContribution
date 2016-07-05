@@ -71,7 +71,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    private void bindData(AddressViewHolder holder, AddressUrlBean.AddressBean addressBean,
+    private void bindData(final AddressViewHolder holder, AddressUrlBean.AddressBean addressBean,
                           int position) {
         holder.slideView.setOnSlideListener(this);
         holder.slideView.shrink();
@@ -85,7 +85,9 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mDeleteListener != null) {
+                    mDeleteListener.onDelete(holder.getAdapterPosition());
+                }
             }
         });
         /*if (holder.rlAddress.hasOnClickListeners())
@@ -151,5 +153,15 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             delete = (RelativeLayout) inflateView.findViewById(R.id.holder);
         }
 
+    }
+
+    public interface deleteListener {
+        void onDelete(int position);
+    }
+
+    private deleteListener mDeleteListener;
+
+    public void setmDeleteListener(deleteListener mDeleteListener) {
+        this.mDeleteListener = mDeleteListener;
     }
 }

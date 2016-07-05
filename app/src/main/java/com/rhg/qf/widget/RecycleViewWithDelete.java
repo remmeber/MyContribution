@@ -82,7 +82,6 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
     /*for gesture*/
     @Override
     public boolean onDown(MotionEvent e) {
-        Log.i("RHG", "DONW");
         downX = (int) e.getX();
         downY = (int) e.getY();
         View view = findChildViewUnder(downX, downY);
