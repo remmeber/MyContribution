@@ -51,8 +51,8 @@ public class AppConstants {
     public static final int BACK_WITHOUT_DATA = 5;
     public static final int BACK_WITH_UPDATE = 6;
     public static final int BACK_WITH_ADD = 7;
-    public static final int INTENT_FOR_RESULT =101 ;
-    public static final int INTENT_NO_RESULT =102 ;
+    public static final int INTENT_FOR_RESULT = 101;
+    public static final int INTENT_NO_RESULT = 102;
 
     /*signin*/
     public static final String USERNAME_QQ = "screen_name";
@@ -75,7 +75,12 @@ public class AppConstants {
     public static final String KEY_NOTE = "note";
     public static final String KEY_DELETE = "delete";
     public static final String KEY_ORDER_TAG = "order_tag";
-    public static final int KEY_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
+    public static final String KEY_SEARCH_TAG = "search_tag";
+    public static final int KEY_HOME_SEARCH = 30;// TODO: 首页搜索的KEY
+    public static final int KEY_MERCHANT_SEARCH_BY_SELL = 31;// TODO: 所有店铺按销量的KEY
+    public static final int KEY_MERCHANT_SEARCH_BY_DIS = 32;// TODO: 所有店铺按距离的KEY
+    public static final int KEY_MERCHANT_SEARCH_BY_RATE = 33;// TODO: 所有店铺按评分的KEY
+    public static final int KEY_BACK_2_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
 
     /*for headImage*/
     public static final int CODE_GALLERY_REQUEST = 10;//TODO:From Local

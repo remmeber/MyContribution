@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,7 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.SearchHistoryAdapter;
+import com.rhg.qf.apapter.SearchAdapter;
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.SearchHistoryUtil;
@@ -36,8 +38,6 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
 
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;
-    @Bind(R.id.tb_right_iv)
-    ImageView tbRightIv;
     @Bind(R.id.search_et)
     EditText searchEt;
     @Bind(R.id.fl_tab)
@@ -50,8 +50,14 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
     RecyclerView historyResultsRcv;
     @Bind(R.id.itemResultsRcv)
     RecyclerView itemResultsRcv;
-    SearchHistoryAdapter searchHistoryAdapter;
+    SearchAdapter searchAdapter;
     private List<String> searchHistoryData;
+    private int searchTag;
+
+    @Override
+    public void dataReceive(Intent intent) {
+        searchTag = intent.getIntExtra(AppConstants.KEY_SEARCH_TAG, -1);
+    }
 
     @Override
     public void loadingData() {
@@ -79,9 +85,9 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
                 DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive));
         divider.setLeftAndRightPadding(DpUtil.dip2px(16), 0);
         historyResultsRcv.addItemDecoration(divider);
-        searchHistoryAdapter = new SearchHistoryAdapter(this, searchHistoryData);
-        searchHistoryAdapter.setOnSearchHistoryClickListener(this);
-        historyResultsRcv.setAdapter(searchHistoryAdapter);
+        searchAdapter = new SearchAdapter(this, searchHistoryData);
+        searchAdapter.setOnSearchHistoryClickListener(this);
+        historyResultsRcv.setAdapter(searchAdapter);
         searchEt.setVisibility(View.VISIBLE);
         searchEt.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -94,13 +100,16 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
                 if (event.getRawX() > searchEt.getWidth() -
                         searchEt.getCompoundDrawables()[2].getBounds().width()) {
                     if (!TextUtils.isEmpty(searchEt.getText().toString().trim())
-                            && searchHistoryData.size() == 0)
+                            && searchHistoryData.size() == 0) {
                         SearchHistoryUtil.insertSearchHistory(searchEt.getText().toString().trim());
+                        doSearch(searchEt.getText().toString());
+                    }
                     return true;
                 }
                 return false;
             }
         });
+        /*清空搜索历史*/
         tvHistoryResult.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -112,7 +121,7 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
                 if (event.getRawX() > tvHistoryResult.getWidth() -
                         tvHistoryResult.getCompoundDrawables()[2].getBounds().width()) {
                     SearchHistoryUtil.deleteAllHistory();
-                    searchHistoryAdapter.setSearchHistory(null);
+                    searchAdapter.setSearchHistory(null);
                     return true;
                 }
                 return false;
@@ -135,9 +144,19 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
                 } else {
                     searchHistoryData = SearchHistoryUtil.getAllHistory();
                 }
-                searchHistoryAdapter.setSearchHistory(searchHistoryData);
+                searchAdapter.setSearchHistory(searchHistoryData);
             }
         });
+    }
+
+    /*
+     *desc 搜索业务
+     *author rhg
+     *time 2016/7/6 21:29
+     *email 1013773046@qq.com
+     */
+    private void doSearch(String s) {
+
     }
 
 

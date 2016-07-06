@@ -49,7 +49,7 @@ public class AddOrNewAddressActivity extends BaseActivity {
 
     @Override
     public void dataReceive(Intent intent) {
-        if (intent.getStringExtra(AppConstants.KEY_ADDRESS) == null) {/*为空则说明是增加地址，否则是修改地址*/
+        if (intent.getParcelableExtra(AppConstants.KEY_ADDRESS) == null) {
             resultCode = AppConstants.BACK_WITH_ADD;
             ToastHelper.getInstance()._toast("增加地址");
         } else {
@@ -58,7 +58,8 @@ public class AddOrNewAddressActivity extends BaseActivity {
             AddressUrlBean.AddressBean _address = intent.getParcelableExtra(AppConstants.KEY_ADDRESS);
             addNewAddressContactPersonContent.setText(_address.getName());
             addNewAddressContactsContent.setText(_address.getPhone());
-            addNewAddressContactPersonContent.setText(_address.getAddress());
+            addNewAddressContactAddressContent.setText(_address.getAddress());
+
         }
     }
 
@@ -140,9 +141,12 @@ public class AddOrNewAddressActivity extends BaseActivity {
                 addressBean.setID(DataUtil.getCurrentTime());
                 addressBean.setName(addNewAddressContactPersonContent.getText().toString());
                 addressBean.setPhone(addNewAddressContactsContent.getText().toString());
-                StringBuilder _address = new StringBuilder();
-                _address.append(addNewAddressContactAddressContent).append(addNewAddressContentDetail);
-                addressBean.setAddress(String.valueOf(_address));
+                String _address = addNewAddressContactAddressContent.getText().toString();
+                _address = _address.concat(addNewAddressContentDetail.getText().toString());
+//                StringBuilder _address = new StringBuilder();
+               /* _address.append(addNewAddressContactAddressContent.getText().toString())
+                        .append(addNewAddressContentDetail.getText().toString());*/
+                addressBean.setAddress(_address);
                 /*TODO 以下代码需要在提交地址保存至数据库成功后执行*/
                 setResult(resultCode, new Intent().putExtra(AppConstants.KEY_ADDRESS, addressBean));
                 finish();
