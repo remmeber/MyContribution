@@ -98,7 +98,7 @@ public class OrderDetailActivity extends BaseActivity {
         tvEdit.setVisibility(View.GONE);
         tvOrderNote.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvNote),
                 "无"));
-        tvMerchantName.setText("黄焖鸡");/*接口中午订单名字*/
+        tvMerchantName.setText("黄焖鸡");/*接口中订单名字*/
         btDrawback.setVisibility(View.GONE);
         /*recycleview*/
         rcyPayItem.setLayoutManager(new LinearLayoutManager(this));
@@ -120,7 +120,8 @@ public class OrderDetailActivity extends BaseActivity {
             btPayOrRateOrConform.setText(getResources().getString(R.string.conformReceive));
             return;
         }
-        if (AppConstants.ORDER_COMPLETE.equals(orderTag)) {
+        if (AppConstants.ORDER_COMPLETE.equals(orderTag)
+                || AppConstants.ORDER_DRAWBACK.equals(orderTag)) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.goEvaluate));
         }
     }

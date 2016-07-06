@@ -138,10 +138,10 @@
             app:star_width="@dimen/material_size_standard" />
 
         <TextView
+            android:layout_below="@id/rb_deliver_service"
             android:id="@+id/bt_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:background="@drawable/btn_green_bg_normal"
             android:gravity="center"

@@ -17,12 +17,12 @@ import java.util.List;
  * time：2016/6/18 16:00
  * email：1013773046@qq.com
  */
-public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<String> searchHistory;
     private RcvItemClickListener onSearchItemClick;
 
-    public SearchHistoryAdapter(Context context, List<String> searchHistory) {
+    public SearchAdapter(Context context, List<String> searchHistory) {
         this.context = context;
         this.searchHistory = searchHistory;
     }

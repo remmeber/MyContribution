@@ -305,7 +305,7 @@ public class GoodsDetailActivity extends BaseActivity {
                                        public void doRight() {
                                            setResult(AppConstants.BACK_WITH_DELETE, new Intent().putExtra(
                                                    AppConstants.KEY_DELETE,
-                                                   AppConstants.KEY_SHOPPING_CART
+                                                   AppConstants.KEY_BACK_2_SHOPPING_CART
                                            ));
                                            finish();
                                            delDialog.dismiss();

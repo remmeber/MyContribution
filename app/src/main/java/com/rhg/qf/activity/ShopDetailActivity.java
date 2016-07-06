@@ -131,7 +131,7 @@ public class ShopDetailActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == AppConstants.BACK_WITH_DELETE) {
-            setResult(resultCode, data);//AppConstants.KEY_SHOPPING_CART
+            setResult(resultCode, data);//AppConstants.KEY_BACK_2_SHOPPING_CART
             finish();
             return;
         }

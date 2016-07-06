@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,19 +50,18 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
      * email：1013773046@qq.com
      */
     private static final String CROP = "com.android.camera.action.CROP";
-    Button bt_save;
-    Button bt_exit;
+    ModifyHeadImageDialog modifyHeadImageDialog;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
     String imageStr = "";
     String userID = "19216801";
     String passWord = "123";
     Uri fileUri = null;
-    @Bind(R.id.et_name_wrap)
-    TextInputLayout etNameWrap;
     @Bind(R.id.tb_right_tv)
     TextView tbRightTv;
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;
+    @Bind(R.id.et_name_wrap)
+    TextInputLayout etNameWrap;
     @Bind(R.id.et_id_wrap)
     TextInputLayout etIdWrap;
     @Bind(R.id.et_phone_wrap)
@@ -89,7 +87,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
         tb_common.setBackgroundResource(R.color.colorGreenNormal);
         tbRightTv.setText("编辑");
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        etNameWrap.setError("");
+        etNameWrap.setError(""); 
         imageStr = AccountUtil.getInstance().getHeadImageUrl();
         /*从本地获取头像URI*/
 //        if (AccountUtil.getInstance().hasAccount()) {
@@ -141,7 +139,6 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (resultCode == RESULT_CANCELED) {
             ToastHelper.getInstance()._toast("CANCEL");
             return;
@@ -160,6 +157,10 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
                 cropRawPic(fileUri);
                 break;
             case AppConstants.CODE_RESULT_REQUEST:
+                /*先清除内存*/
+                ImageLoader.getInstance().clearMemoryCache();
+                ImageLoader.getInstance().clearDiskCache();
+
                 Bitmap photo = data.getExtras().getParcelable("data");
                 Uri _uri = ImageUtils.getImageUri(photo);
                 /*TODO 将图片传服务器，服务器返回相应的URL，保存本地*/
@@ -170,8 +171,8 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
                 } else
                     Log.i("RHG", "文件不存在");*/
                 uploadAndSaveImagePresenter.UploadAndSaveImage(_file, userID, passWord);
-                ImageLoader.getInstance().clearMemoryCache();
-                ImageLoader.getInstance().clearDiskCache();
+                /*ImageLoader.getInstance().clearMemoryCache();
+                ImageLoader.getInstance().clearDiskCache();*/
                 break;
         }
     }
@@ -180,7 +181,7 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
     @Nullable
     private String getImagePath(Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        if (isKitKat && DocumentsContract.isDocumentUri(this, uri)) {//TODO 可能会导致内存溢出
+        if (isKitKat && DocumentsContract.isDocumentUri(this, uri)) {
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -283,9 +284,11 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
                 finish();
                 break;
             case R.id.ci_head:
-                ModifyHeadImageDialog modifyHeadImageDialog = new ModifyHeadImageDialog(this);
+                if (modifyHeadImageDialog == null) {
+                    modifyHeadImageDialog = new ModifyHeadImageDialog(this);
+                    modifyHeadImageDialog.setChoosePicListener(this);
+                }
                 modifyHeadImageDialog.show();
-                modifyHeadImageDialog.setChoosePicListener(this);
                 break;
             case R.id.tb_right_tv:
                 break;

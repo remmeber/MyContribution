@@ -16,9 +16,11 @@ import com.rhg.qf.widget.MyCountDownTimer;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-/**
- * 作者：rememberon 2016/6/21
- * 邮箱：1013773046@qq.com
+/*
+ *desc 跑腿员注册
+ *author rhg
+ *time 2016/7/6 22:04
+ *email 1013773046@qq.com
  */
 public class DeliverRegisterActivity extends BaseActivity {
 
@@ -133,7 +135,23 @@ public class DeliverRegisterActivity extends BaseActivity {
                     ToastHelper.getInstance()._toast("请同意协议");
                     break;
                 }
+                if (countTimer.isRunning()) {
+                    countTimer.cancel();
+                    countTimer = null;
+                }
+                register2Server(etCheckNumber.getText().toString());
+                finish();
                 break;
         }
+    }
+
+    /*
+     *desc 将手机号注册到服务器端
+     *author rhg
+     *time 2016/7/6 22:02
+     *email 1013773046@qq.com
+     */
+    private void register2Server(String s) {
+
     }
 }

@@ -14,9 +14,11 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-/**
- * 作者：rememberon 2016/6/21
- * 邮箱：1013773046@qq.com
+/*
+ *desc 
+ *author rhg
+ *time 2016/7/6 21:37
+ *email 1013773046@qq.com
  */
 public class DeliverStateNoneActivity extends BaseActivity {
 

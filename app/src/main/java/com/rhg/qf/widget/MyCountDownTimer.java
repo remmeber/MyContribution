@@ -13,6 +13,7 @@ import android.widget.TextView;
  */
 public class MyCountDownTimer extends CountDownTimer {
     TextView countDownText;
+    boolean isFinish = false;
 
     public MyCountDownTimer(long millisInFuture, long countDownInterval, View view) {
         super(millisInFuture, countDownInterval);
@@ -33,7 +34,12 @@ public class MyCountDownTimer extends CountDownTimer {
     @Override
     public void onFinish() {
         cancel();
+        isFinish = true;
         countDownText.setClickable(true);
         countDownText.setText("获取验证码");
+    }
+
+    public boolean isRunning() {
+        return isFinish;
     }
 }

@@ -54,7 +54,6 @@ public class ImageUtils {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Uri _uri = Uri.fromFile(_file);
-        return _uri;
+        return Uri.fromFile(_file);
     }
 }
