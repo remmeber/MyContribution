@@ -8,17 +8,15 @@ import android.view.View;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.rhg.qf.activity.BaseActivity;
-import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.fragment.HomeFragment;
 import com.rhg.qf.fragment.MyFragment;
 import com.rhg.qf.fragment.SellerFragment;
 import com.rhg.qf.fragment.ShoppingCartFragment;
-import com.rhg.qf.impl.SearchListener;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.ui.FragmentController;
 
-public class MainActivity extends BaseActivity implements BaseView, SearchListener
+public class MainActivity extends BaseActivity implements BaseView
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {
     FragmentController fragmentController;
@@ -66,7 +64,6 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
 //        loadRootFragment(R.id.content_fragment, HomeFragment.newInstance());
         Fragment[] fragments = new Fragment[4];
         HomeFragment homeFragment = new HomeFragment();
-        homeFragment.setSearchListener(this);
         fragments[0] = homeFragment;
         fragments[1] = new SellerFragment();
         fragments[2] = new MyFragment();
@@ -130,10 +127,5 @@ public class MainActivity extends BaseActivity implements BaseView, SearchListen
 
     //--------------------------------------------------------------------------------------------
 
-
-    @Override
-    public void doSearch() {
-        startActivity(new Intent(this, SearchActivity.class));
-    }
 
 }

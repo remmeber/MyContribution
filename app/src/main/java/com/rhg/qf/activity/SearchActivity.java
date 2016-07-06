@@ -156,7 +156,16 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
      *email 1013773046@qq.com
      */
     private void doSearch(String s) {
-
+        switch (searchTag){
+            case AppConstants.KEY_HOME_SEARCH:
+                break;
+            case AppConstants.KEY_MERCHANT_SEARCH_BY_SELL:
+                break;
+            case AppConstants.KEY_MERCHANT_SEARCH_BY_DIS:
+                break;
+            case AppConstants.KEY_MERCHANT_SEARCH_BY_RATE:
+                break;
+        }
     }
 
 

@@ -17,6 +17,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.activity.GoodsDetailActivity;
 import com.rhg.qf.activity.HotSellActivity;
 import com.rhg.qf.activity.PersonalOrderActivity;
+import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
 import com.rhg.qf.apapter.QFoodGridViewAdapter;
 import com.rhg.qf.apapter.RecycleMultiTypeAdapter;
@@ -34,7 +35,6 @@ import com.rhg.qf.bean.RecommendTextTypeModel;
 import com.rhg.qf.bean.TextTypeBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
-import com.rhg.qf.impl.SearchListener;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.HomePresenter;
@@ -85,7 +85,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     //itme的数据类型集合
     List<Object> mData;
 
-    SearchListener searchListener;
     MyLocationListener myLocationListener;
     ProgressBar progressBar;
     boolean isLocated;
@@ -104,9 +103,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         return R.layout.home_fm_layout;
     }
 
-    public void setSearchListener(SearchListener searchListener) {
-        this.searchListener = searchListener;
-    }
 
     @Override
     protected void initView(View view) {
@@ -271,13 +267,19 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 else ToastHelper.getInstance()._toast("请检查网络");
                 break;
             case R.id.home_tl_center_tv:
-                searchListener.doSearch();
+                doSearch();
                 break;
             case R.id.home_tl_right_ll:
                 doFeedback();
                 startActivity(new Intent(getContext(), PersonalOrderActivity.class));
                 break;
         }
+    }
+    /*调起搜索页面，标志参数为AppConstants.KEY_HOME_SEARCH*/
+    private void doSearch() {
+        Intent _intent = new Intent(getActivity(), SearchActivity.class);
+        _intent.putExtra(AppConstants.KEY_SEARCH_TAG, AppConstants.KEY_HOME_SEARCH);
+        startActivity(_intent);
     }
 
     @Override

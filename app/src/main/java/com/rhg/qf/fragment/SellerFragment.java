@@ -1,5 +1,6 @@
 package com.rhg.qf.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.rhg.qf.R;
+import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.apapter.QFoodVpAdapter;
 import com.rhg.qf.constants.AppConstants;
 
@@ -148,9 +150,24 @@ public class SellerFragment extends BaseFragment {
 
     @OnClick(R.id.tb_right_iv)
     public void onClick() {
-        doSearch();
+        doSearch(allSellerTl.getCurrentTab());
     }
 
-    private void doSearch() {
+    private void doSearch(int position) {
+        int searchTag = -1;
+        switch (position) {
+            case 0:
+                searchTag = AppConstants.KEY_MERCHANT_SEARCH_BY_SELL;
+                break;
+            case 1:
+                searchTag = AppConstants.KEY_MERCHANT_SEARCH_BY_DIS;
+                break;
+            case 2:
+                searchTag = AppConstants.KEY_MERCHANT_SEARCH_BY_RATE;
+                break;
+        }
+        Intent _intent = new Intent(getActivity(), SearchActivity.class);
+        _intent.putExtra(AppConstants.KEY_SEARCH_TAG, searchTag);
+        startActivity(_intent);
     }
 }
