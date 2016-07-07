@@ -1,6 +1,6 @@
 package com.rhg.qf.bean;
 
-import com.rhg.qf.apapter.QFoodGridViewAdapter;
+import com.rhg.qf.adapter.QFoodGridViewAdapter;
 
 import java.util.List;
 

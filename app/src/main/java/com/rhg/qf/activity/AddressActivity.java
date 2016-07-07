@@ -9,11 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.AddressAdapter;
+import com.rhg.qf.adapter.AddressAdapter;
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
-import com.rhg.qf.mvp.presenter.GetAddressPresenterImpl;
 import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -32,7 +31,7 @@ import butterknife.OnClick;
  *time 2016/7/3 22:11
  *email 1013773046@qq.com
  */
-public class AddressActivity extends BaseActivity implements RecycleViewWithDelete.ItemClickListener {
+public class AddressActivity extends BaseAppcompactActivity implements RecycleViewWithDelete.ItemClickListener {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
@@ -50,7 +49,7 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
     int lastPosition = -1;
     int longClickPosition = -1;
     List<AddressUrlBean.AddressBean> addressBeanList;
-    GetAddressPresenter getAddressPresenter = new GetAddressPresenterImpl(this);
+    GetAddressPresenter getAddressPresenter = new GetAddressPresenter(this);
     private static final int DELETE = 0;
     private static final int MODIFY = 1;
     private AddressAdapter.deleteListener deleteListener = new AddressAdapter.deleteListener() {
@@ -80,10 +79,6 @@ public class AddressActivity extends BaseActivity implements RecycleViewWithDele
         return R.layout.address_layout;
     }
 
-    @Override
-    protected void initView(View view) {
-
-    }
 
     @Override
     public void loadingData() {

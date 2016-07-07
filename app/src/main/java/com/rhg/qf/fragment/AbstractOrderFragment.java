@@ -1,7 +1,6 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +9,11 @@ import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
 import com.rhg.qf.activity.OrderDetailActivity;
-import com.rhg.qf.apapter.QFoodOrderAdapter;
+import com.rhg.qf.adapter.QFoodOrderAdapter;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
-import com.rhg.qf.mvp.presenter.OrderDetailPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +32,16 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Bind(R.id.common_refresh)
     ProgressBar commonRefresh;
     @Bind(R.id.common_swipe)
+
     SwipeRefreshLayout commonSwipe;
     QFoodOrderAdapter qFoodOrderAdapter;
     List<OrderUrlBean.OrderBean> orderBeanList = new ArrayList<>();
     OrderDetailPresenter rderDetailPresenter;
     String userId;
-    String style;
+    int style;
 
     public AbstractOrderFragment() {
-        rderDetailPresenter = new OrderDetailPresenterImpl(this);
+        rderDetailPresenter = new OrderDetailPresenter(this);
         userId = "1";/*从数据库中获取*/
         style = getFmTag();
     }
@@ -54,8 +53,8 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
 
     @Override
     protected void initView(View view) {
-        commonRecycle = (RecyclerView) view.findViewById(R.id.common_recycle);
-        commonSwipe = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);
+        /*commonRecycle = (RecyclerView) view.findViewById(R.id.common_recycle);
+        commonSwipe = (SwipeRefreshLayout) view.findViewById(R.id.common_swipe);*/
     }
 
     @Override
@@ -67,7 +66,6 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Override
     protected void initData() {
         qFoodOrderAdapter = new QFoodOrderAdapter(getContext(), orderBeanList);
-        qFoodOrderAdapter.setOnRcvItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         commonRecycle.setLayoutManager(linearLayoutManager);
         commonRecycle.setHasFixedSize(true);
@@ -87,6 +85,18 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        qFoodOrderAdapter.setOnRcvItemClickListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        qFoodOrderAdapter.setOnRcvItemClickListener(null);
+    }
+
+    @Override
     public void showSuccess(Object o) {
         if (commonSwipe.isRefreshing())
             commonSwipe.setRefreshing(false);
@@ -98,18 +108,16 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
 
     @Override
     public void onItemClickListener(int position, OrderUrlBean.OrderBean item) {
-        Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(AppConstants.SP_USER_NAME, item.getReceiver());
-        bundle.putString(AppConstants.KEY_ADDRESS, item.getAddress());
-        bundle.putString(AppConstants.KEY_OR_SP_PHONE, item.getPhone());
-        bundle.putString(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
-        bundle.putString(AppConstants.KEY_ORDER_TAG, style);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
+        _intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());
+        _intent.putExtra(AppConstants.KEY_ADDRESS, item.getAddress());
+        _intent.putExtra(AppConstants.KEY_OR_SP_PHONE, item.getPhone());
+        _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
+        _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
+        startActivity(_intent);
     }
 
-    protected abstract String getFmTag();
+    protected abstract int getFmTag();
 
 
     /*@Override

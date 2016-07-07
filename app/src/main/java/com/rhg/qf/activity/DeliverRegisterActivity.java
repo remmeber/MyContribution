@@ -22,7 +22,7 @@ import butterknife.OnClick;
  *time 2016/7/6 22:04
  *email 1013773046@qq.com
  */
-public class DeliverRegisterActivity extends BaseActivity {
+public class DeliverRegisterActivity extends BaseFragmentActivity {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;

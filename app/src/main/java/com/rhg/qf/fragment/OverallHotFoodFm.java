@@ -11,7 +11,9 @@ import com.rhg.qf.constants.AppConstants;
 public class OverallHotFoodFm extends AbstractHotFoodFragment {
 
     @Override
-    protected String getHotFoodType() {
+    protected int getHotFoodType() {
         return AppConstants.OVERALL;
     }
+
+
 }

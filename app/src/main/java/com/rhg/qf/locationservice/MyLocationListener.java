@@ -3,7 +3,6 @@ package com.rhg.qf.locationservice;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.rhg.qf.mvp.model.LocModel;
-import com.rhg.qf.mvp.model.LocModelImpl;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.AccountUtil;
 
@@ -19,7 +18,7 @@ public class MyLocationListener implements BDLocationListener {
 
     public MyLocationListener(BaseView baseView) {
         this.baseView = baseView;
-        locModel = new LocModelImpl();
+        locModel = new LocModel();
     }
 
     public void getLocation(LocationService locationService) {

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.viewHolder.BannerImageHolder;
+import com.rhg.qf.adapter.viewHolder.BannerImageHolder;
 import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.GoodsDetailUrlBean;
 import com.rhg.qf.bean.ShareModel;
@@ -21,7 +21,6 @@ import com.rhg.qf.impl.ShareListener;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.GoodsDetailPresenter;
-import com.rhg.qf.mvp.presenter.GoodsDetailPresenterImpl;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
@@ -41,7 +40,7 @@ import butterknife.OnClick;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class GoodsDetailActivity extends BaseActivity {
+public class GoodsDetailActivity extends BaseFragmentActivity {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
@@ -80,7 +79,7 @@ public class GoodsDetailActivity extends BaseActivity {
 
 
     public GoodsDetailActivity() {
-        goodsDetailPresenter = new GoodsDetailPresenterImpl(this);
+        goodsDetailPresenter = new GoodsDetailPresenter(this);
         myLocationListener = new MyLocationListener(this);
         /*TODO 页面销毁需要置空，否则会出现内存泄漏*/
         location = AccountUtil.getInstance().getLocation();

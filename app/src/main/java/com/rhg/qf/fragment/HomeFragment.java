@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.activity.GoodsDetailActivity;
-import com.rhg.qf.activity.HotSellActivity;
+import com.rhg.qf.activity.HotFoodActivity;
 import com.rhg.qf.activity.PersonalOrderActivity;
 import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
-import com.rhg.qf.apapter.QFoodGridViewAdapter;
-import com.rhg.qf.apapter.RecycleMultiTypeAdapter;
+import com.rhg.qf.adapter.QFoodGridViewAdapter;
+import com.rhg.qf.adapter.RecycleMultiTypeAdapter;
 import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.BannerTypeBean;
 import com.rhg.qf.bean.BannerTypeUrlBean;
@@ -38,7 +38,6 @@ import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.HomePresenter;
-import com.rhg.qf.mvp.presenter.HomePresenterImpl;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.ToastHelper;
@@ -90,7 +89,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     boolean isLocated;
 
     public HomeFragment() {
-        homePresenter = new HomePresenterImpl(this);
+        homePresenter = new HomePresenter(this);
         myLocationListener = new MyLocationListener(this);
         favorableTypeModel = new FavorableTypeModel();
         bannerTypeBean = new BannerTypeBean();
@@ -275,10 +274,12 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 break;
         }
     }
-    /*调起搜索页面，标志参数为AppConstants.KEY_HOME_SEARCH*/
+
+    /*调起搜索页面，标志参数为AppConstants.KEY_RESTAURANT_SEARCH*/
     private void doSearch() {
         Intent _intent = new Intent(getActivity(), SearchActivity.class);
-        _intent.putExtra(AppConstants.KEY_SEARCH_TAG, AppConstants.KEY_HOME_SEARCH);
+        _intent.putExtra(AppConstants.KEY_SEARCH_TAG, AppConstants.KEY_RESTAURANT_SEARCH);
+        _intent.putExtra(AppConstants.KEY_SEARCH_INDEX, 0);
         startActivity(_intent);
     }
 
@@ -295,7 +296,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[3]);
         startActivity(intent);*/
 
-        startActivity(new Intent(getContext(), HotSellActivity.class));
+        startActivity(new Intent(getContext(), HotFoodActivity.class));
     }
 
     @Override

@@ -24,7 +24,7 @@ import butterknife.OnClick;
  *time 2016/6/22 20:31
  *email 1013773046@qq.com
  */
-public class OrderDetailActivity extends BaseActivity {
+public class OrderDetailActivity extends BaseFragmentActivity {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
@@ -58,7 +58,7 @@ public class OrderDetailActivity extends BaseActivity {
     @Bind(R.id.tv_edit)
     TextView tvEdit;
 
-    String orderTag;
+    int orderTag;
     String orderReceiver;
     String orderPhone;
     String orderAddress;
@@ -66,7 +66,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     @Override
     public void dataReceive(Intent intent) {
-        orderTag = intent.getStringExtra(AppConstants.KEY_ORDER_TAG);
+        orderTag = intent.getIntExtra(AppConstants.KEY_ORDER_TAG, -1);
         orderReceiver = intent.getStringExtra(AppConstants.SP_USER_NAME);
         orderPhone = intent.getStringExtra(AppConstants.KEY_OR_SP_PHONE);
         orderAddress = intent.getStringExtra(AppConstants.KEY_ADDRESS);
@@ -112,16 +112,16 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void setText(TextView btPayOrRateOrConform) {
-        if (AppConstants.ORDER_UNPAID.equals(orderTag)) {
+        if (AppConstants.ORDER_UNPAID == orderTag) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.goPay));
             return;
         }
-        if (AppConstants.ORDER_DELIVERING.equals(orderTag)) {
+        if (AppConstants.ORDER_DELIVERING == orderTag) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.conformReceive));
             return;
         }
-        if (AppConstants.ORDER_COMPLETE.equals(orderTag)
-                || AppConstants.ORDER_DRAWBACK.equals(orderTag)) {
+        if (AppConstants.ORDER_COMPLETE == orderTag
+                || AppConstants.ORDER_DRAWBACK == orderTag) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.goEvaluate));
         }
     }

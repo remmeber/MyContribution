@@ -27,7 +27,7 @@ import butterknife.OnClick;
  *email 1013773046@qq.com
  */
 
-public class AddOrNewAddressActivity extends BaseActivity {
+public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -66,11 +66,6 @@ public class AddOrNewAddressActivity extends BaseActivity {
     @Override
     protected int getLayoutResId() {
         return R.layout.new_address_layout;
-    }
-
-    @Override
-    protected void initView(View view) {
-
     }
 
     @Override

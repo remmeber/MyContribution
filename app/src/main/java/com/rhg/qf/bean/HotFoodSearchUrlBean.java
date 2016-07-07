@@ -28,7 +28,7 @@ public class HotFoodSearchUrlBean {
      * Price : 128
      */
 
-    private List<HotGoodsSearchBean> rows;
+    private List<HotFoodSearchBean> rows;
 
     public int getResult() {
         return result;
@@ -54,15 +54,15 @@ public class HotFoodSearchUrlBean {
         this.total = total;
     }
 
-    public List<HotGoodsSearchBean> getRows() {
+    public List<HotFoodSearchBean> getRows() {
         return rows;
     }
 
-    public void setRows(List<HotGoodsSearchBean> rows) {
+    public void setRows(List<HotFoodSearchBean> rows) {
         this.rows = rows;
     }
 
-    public static class HotGoodsSearchBean {
+    public static class HotFoodSearchBean {
         private String RName;
         private String FName;
         private String Stars;

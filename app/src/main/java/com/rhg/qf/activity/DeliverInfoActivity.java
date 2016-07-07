@@ -23,7 +23,6 @@ import com.rhg.qf.R;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.api.QFoodApi;
 import com.rhg.qf.mvp.presenter.UploadAndSaveImagePresenter;
-import com.rhg.qf.mvp.presenter.UploadAndSaveImagePresenterImpl;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.DataUtil;
 import com.rhg.qf.utils.ImageUtils;
@@ -42,20 +41,7 @@ import butterknife.OnClick;
  * time：2016/5/28 16:13
  * email：1013773046@qq.com
  */
-public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImageDialog.ChoosePicListener {
-    /**
-     * desc:裁剪图片
-     * author：remember
-     * time：2016/5/31 22:28
-     * email：1013773046@qq.com
-     */
-    private static final String CROP = "com.android.camera.action.CROP";
-    ModifyHeadImageDialog modifyHeadImageDialog;
-    UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
-    String imageStr = "";
-    String userID = "19216801";
-    String passWord = "123";
-    Uri fileUri = null;
+public class DeliverInfoActivity extends BaseAppcompactActivity implements ModifyHeadImageDialog.ChoosePicListener {
     @Bind(R.id.tb_right_tv)
     TextView tbRightTv;
     @Bind(R.id.tb_left_iv)
@@ -72,22 +58,36 @@ public class DeliverInfoActivity extends BaseActivity implements ModifyHeadImage
     CircleImageView headView;
     @Bind(R.id.fl_tab)
     FrameLayout tb_common;
+    /**
+     * desc:裁剪图片
+     * author：remember
+     * time：2016/5/31 22:28
+     * email：1013773046@qq.com
+     */
+    private static final String CROP = "com.android.camera.action.CROP";
+    ModifyHeadImageDialog modifyHeadImageDialog;
+    UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
+    String imageStr = "";
+    String userID = "19216801";
+    String passWord = "123";
+    Uri fileUri = null;
 
     @Override
     protected int getLayoutResId() {
         return R.layout.deliver_info_activity;
     }
 
-    @Override
-    protected void initView(View view) {
-    }
 
     protected void initData() {
-        uploadAndSaveImagePresenter = new UploadAndSaveImagePresenterImpl(this);
+        uploadAndSaveImagePresenter = new UploadAndSaveImagePresenter(this);
         tb_common.setBackgroundResource(R.color.colorGreenNormal);
         tbRightTv.setText("编辑");
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        etNameWrap.setError(""); 
+        etNameWrap.setHint("真实姓名");
+        etNameWrap.setError("");
+        etIdWrap.setHint("身份证号");
+        etPhoneWrap.setHint("手机号");
+        etPlaceWrap.setHint("配送范围");
         imageStr = AccountUtil.getInstance().getHeadImageUrl();
         /*从本地获取头像URI*/
 //        if (AccountUtil.getInstance().hasAccount()) {

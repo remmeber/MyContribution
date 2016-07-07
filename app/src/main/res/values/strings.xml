@@ -92,7 +92,7 @@
     <!--收货-->
 
     <!--搜索-->
-    <string name="searchActivityHint">输入搜索名称</string>
+    <string name="etSearchHint">输入搜索名称</string>
     <string name="searchHistory">历史搜索</string>
     <string name="searchResult">搜索结果</string>
     <!--搜索-->

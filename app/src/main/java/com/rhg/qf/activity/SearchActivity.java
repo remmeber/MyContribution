@@ -14,14 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.SearchAdapter;
+import com.rhg.qf.adapter.SearchHistoryAdapter;
+import com.rhg.qf.bean.RestaurantSearchUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
+import com.rhg.qf.mvp.presenter.HotFoodSearchPresenter;
+import com.rhg.qf.mvp.presenter.RestaurantSearchPresenter;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.SearchHistoryUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,7 +38,7 @@ import butterknife.OnClick;
  * time：2016/6/18 13:10
  * email：1013773046@qq.com
  */
-public class SearchActivity extends BaseActivity implements RcvItemClickListener,
+public class SearchActivity extends BaseFragmentActivity implements RcvItemClickListener,
         View.OnClickListener {
 
     @Bind(R.id.tb_left_iv)
@@ -50,12 +55,16 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
     RecyclerView historyResultsRcv;
     @Bind(R.id.itemResultsRcv)
     RecyclerView itemResultsRcv;
-    SearchAdapter searchAdapter;
+    SearchHistoryAdapter searchHistoryAdapter;
     private List<String> searchHistoryData;
+    RestaurantSearchPresenter restaurantSearchPresenter;
+    HotFoodSearchPresenter hotFoodSearchPresenter;
     private int searchTag;
+    private int searchIndex;
 
     @Override
     public void dataReceive(Intent intent) {
+        searchIndex = intent.getIntExtra(AppConstants.KEY_SEARCH_INDEX, -1);
         searchTag = intent.getIntExtra(AppConstants.KEY_SEARCH_TAG, -1);
     }
 
@@ -78,16 +87,21 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-
-        historyResultsRcv.setLayoutManager(new LinearLayoutManager(this));
-        historyResultsRcv.setHasFixedSize(false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
                 DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive));
+
+        itemResultsRcv.setHasFixedSize(false);
+        itemResultsRcv.setLayoutManager(linearLayoutManager);
+        itemResultsRcv.addItemDecoration(divider);
+
+        historyResultsRcv.setLayoutManager(linearLayoutManager);
+        historyResultsRcv.setHasFixedSize(false);
         divider.setLeftAndRightPadding(DpUtil.dip2px(16), 0);
         historyResultsRcv.addItemDecoration(divider);
-        searchAdapter = new SearchAdapter(this, searchHistoryData);
-        searchAdapter.setOnSearchHistoryClickListener(this);
-        historyResultsRcv.setAdapter(searchAdapter);
+        searchHistoryAdapter = new SearchHistoryAdapter(this, searchHistoryData);
+        searchHistoryAdapter.setOnSearchHistoryClickListener(this);
+        historyResultsRcv.setAdapter(searchHistoryAdapter);
         searchEt.setVisibility(View.VISIBLE);
         searchEt.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -102,6 +116,10 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
                     if (!TextUtils.isEmpty(searchEt.getText().toString().trim())
                             && searchHistoryData.size() == 0) {
                         SearchHistoryUtil.insertSearchHistory(searchEt.getText().toString().trim());
+                        tvHistoryResult.setVisibility(View.GONE);
+                        tvSearchResult.setVisibility(View.VISIBLE);
+                        historyResultsRcv.setVisibility(View.GONE);
+                        itemResultsRcv.setVisibility(View.VISIBLE);/*TODO 写到这里*/
                         doSearch(searchEt.getText().toString());
                     }
                     return true;
@@ -121,7 +139,7 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
                 if (event.getRawX() > tvHistoryResult.getWidth() -
                         tvHistoryResult.getCompoundDrawables()[2].getBounds().width()) {
                     SearchHistoryUtil.deleteAllHistory();
-                    searchAdapter.setSearchHistory(null);
+                    searchHistoryAdapter.setSearchedHistory(null);
                     return true;
                 }
                 return false;
@@ -144,7 +162,7 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
                 } else {
                     searchHistoryData = SearchHistoryUtil.getAllHistory();
                 }
-                searchAdapter.setSearchHistory(searchHistoryData);
+                searchHistoryAdapter.setSearchedHistory(searchHistoryData);
             }
         });
     }
@@ -156,22 +174,37 @@ public class SearchActivity extends BaseActivity implements RcvItemClickListener
      *email 1013773046@qq.com
      */
     private void doSearch(String s) {
-        switch (searchTag){
-            case AppConstants.KEY_HOME_SEARCH:
+        if (TextUtils.isEmpty(searchEt.getText().toString())) {
+            ToastHelper.getInstance()._toast("搜索内容为空");
+            return;
+        }
+        String _str = "";
+        try {
+            _str = URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        switch (searchTag) {
+            case AppConstants.KEY_RESTAURANT_SEARCH:
+                if (restaurantSearchPresenter == null)
+                    restaurantSearchPresenter = new RestaurantSearchPresenter(this);
+                restaurantSearchPresenter.getSearchRestaurant(AppConstants.SEARCHRESTAURANTS, _str, searchIndex);
                 break;
-            case AppConstants.KEY_MERCHANT_SEARCH_BY_SELL:
-                break;
-            case AppConstants.KEY_MERCHANT_SEARCH_BY_DIS:
-                break;
-            case AppConstants.KEY_MERCHANT_SEARCH_BY_RATE:
+            case AppConstants.KEY_HOTFOOD_SEARCH:
+                if (hotFoodSearchPresenter == null)
+                    hotFoodSearchPresenter = new HotFoodSearchPresenter(this);
+                hotFoodSearchPresenter.getSearchHotFood(AppConstants.HOTFOOD, _str, searchIndex);
                 break;
         }
     }
 
-
     @Override
     protected void showSuccess(Object s) {
+        if (s instanceof RestaurantSearchUrlBean.RestaurantSearchBean) {
 
+        } else {
+
+        }
     }
 
     @Override

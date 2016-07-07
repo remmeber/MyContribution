@@ -8,7 +8,6 @@ import com.rhg.qf.R;
 import com.rhg.qf.bean.ShopDetailUriBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.ShopDetailPresenter;
-import com.rhg.qf.mvp.presenter.ShopDetailPresenterImpl;
 import com.rhg.qf.ui.FragmentController;
 import com.rhg.qf.widget.VerticalTabLayout;
 
@@ -35,7 +34,7 @@ public class ShopDetailFoodFragment extends BaseFragment {
     String merchantId;
 
     public ShopDetailFoodFragment() {
-        shopDetailPresenter = new ShopDetailPresenterImpl(this);
+        shopDetailPresenter = new ShopDetailPresenter(this);
     }
 
 

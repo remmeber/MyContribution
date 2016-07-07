@@ -18,7 +18,7 @@ import butterknife.OnClick;
  * time：2016/6/22 14:41
  * email：1013773046@qq.com
  */
-public class PersonalOrderActivity extends BaseActivity {
+public class PersonalOrderActivity extends BaseFragmentActivity {
 
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;

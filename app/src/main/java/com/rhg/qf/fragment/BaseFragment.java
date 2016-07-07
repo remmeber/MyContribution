@@ -4,6 +4,7 @@ package com.rhg.qf.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,8 +95,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     public void getLocation(LocationService locationService, MyLocationListener mLocationListener) {
     }
-
-
     /*默认不定位，如果需要定位，子类需要重写该方法*/
     public LocationService GetMapService() {
         return null;
@@ -111,6 +110,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
      * 从网络获取数据，在new的时候只加载一次，后期都需要refresh才能更新
      */
     public void loadData() {
+        Log.i("RHG", "LOAD");
     }
 
     protected abstract void initData();

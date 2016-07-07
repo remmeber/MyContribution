@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.QFoodShoppingCartExplAdapter;
+import com.rhg.qf.adapter.QFoodShoppingCartExplAdapter;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;

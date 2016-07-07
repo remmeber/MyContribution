@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.rhg.qf.MeiTuanActivity;
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.QFoodGridViewAdapter;
+import com.rhg.qf.adapter.QFoodGridViewAdapter;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
 
 import java.util.ArrayList;

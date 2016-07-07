@@ -9,13 +9,11 @@ import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.bean.RecommendListUrlBean;
-import com.rhg.qf.bean.SearchUrlBean;
+import com.rhg.qf.bean.RestaurantSearchUrlBean;
 import com.rhg.qf.bean.ShopDetailUriBean;
 import com.rhg.qf.bean.SignInBean;
 import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
-
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -111,7 +109,7 @@ public interface QFoodApiService {
     @FormUrlEncoded
     @POST("Table/Json.php")
     Observable<AddressUrlBean> getAddress(@Field("Table") String address,
-                                                            @Field("ID") String userId);
+                                          @Field("ID") String userId);
 
 
     /*修改地址*/
@@ -124,11 +122,17 @@ public interface QFoodApiService {
                                      @Field("Address") String address,
                                      @Field("Pwd") String pwd);
 
+    /*
+     *desc 厅搜索接口，入口位于主页和所有店铺页
+     *author rhg
+     *time 2016/7/7 17:12
+     *email 1013773046@qq.com
+     */
     @FormUrlEncoded
     @POST("Table/Json.php")
-    Observable<SearchUrlBean> getSearchResult(@Field("Table") String searchRestaurants,
-                                              @Field("Restaurantkey") String searchContent,
-                                              @Field("Order") String style);
+    Observable<MerchantUrlBean> getRestaurantSearchResult(@Field("Table") String searchRestaurants,
+                                                                  @Field("Restaurantkey") String searchContent,
+                                                                  @Field("Order") String style);
 
     @FormUrlEncoded
     @POST("Table/Json.php")
@@ -136,12 +140,18 @@ public interface QFoodApiService {
     Observable<HotFoodUrlBean> getHotGoods(@Field("Table") String hotFood,
                                            @Field("Order") String style);
 
+    /*
+     *desc 热销单品搜索，入口位于热销单品页面
+     *author rhg
+     *time 2016/7/7 17:12
+     *email 1013773046@qq.com
+     */
     @FormUrlEncoded
     @POST("Table/Json.php")
     /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
     Observable<HotFoodSearchUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
                                                           @Field("Hotfoodkey") String searchContent,
-                                                          @Field("Order") String style);
+                                                          @Field("Order") String order);
 
     /*@POST(QFoodApi.WXPAY_CREATE_ORDER_URL)
     Observable<String> getPrepayId(@QueryMap Map<String, String> orderParams);*/

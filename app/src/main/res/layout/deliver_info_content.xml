@@ -14,22 +14,23 @@
 
         <com.rhg.qf.widget.CircleImageView
             android:id="@+id/ci_head"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_camera_with_circle"
-            android:layout_marginTop="@dimen/margin_big"
-            android:layout_centerHorizontal="true" />
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:src="@drawable/ic_camera_with_circle" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/tv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ci_head"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_little"
             android:layout_marginTop="@dimen/margin_little"
-            android:textSize="@dimen/text_big"
-            tools:text="设置头像" />
+            android:textSize="@dimen/text_medium"
+            tools:text="设置头像" />-->
     </RelativeLayout>
 
     <EditText
@@ -43,80 +44,76 @@
         android:layout_marginEnd="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="@dimen/margin_small">
+        android:layout_marginStart="50dp">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:hint="真实姓名"
+            tools:hint="真实姓名"
             android:imeOptions="actionNext"
             android:singleLine="true"
             android:textSize="@dimen/text_big" />
     </android.support.design.widget.TextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/et_id_wrap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="@dimen/margin_small">
+     <android.support.design.widget.TextInputLayout
+         android:id="@+id/et_id_wrap"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="50dp"
+         android:layout_marginLeft="50dp"
+         android:layout_marginRight="50dp"
+         android:layout_marginStart="50dp">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:hint="身份证号"
-            android:imeOptions="actionNext"
-            android:singleLine="true"
-            android:textSize="@dimen/text_big" />
-    </android.support.design.widget.TextInputLayout>
+         <EditText
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center_vertical"
+             tools:hint="身份证号"
+             android:imeOptions="actionNext"
+             android:singleLine="true"
+             android:textSize="@dimen/text_big" />
+     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/et_phone_wrap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="@dimen/margin_small">
+     <android.support.design.widget.TextInputLayout
+         android:id="@+id/et_phone_wrap"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="50dp"
+         android:layout_marginLeft="50dp"
+         android:layout_marginRight="50dp"
+         android:layout_marginStart="50dp">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:hint="手机号"
-            android:inputType="phone"
-            android:textSize="@dimen/text_big" />
+         <EditText
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center_vertical"
+             tools:hint="手机号"
+             android:inputType="phone"
+             android:textSize="@dimen/text_big" />
 
-    </android.support.design.widget.TextInputLayout>
+     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/et_place_wrap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="@dimen/margin_small">
+     <android.support.design.widget.TextInputLayout
+         android:id="@+id/et_place_wrap"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="50dp"
+         android:layout_marginLeft="50dp"
+         android:layout_marginRight="50dp"
+         android:layout_marginStart="50dp">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:hint="配送区域"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:textSize="@dimen/text_big" />
+         <EditText
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center_vertical"
+             tools:hint="配送区域"
+             android:imeOptions="actionDone"
+             android:singleLine="true"
+             android:textSize="@dimen/text_big" />
 
-    </android.support.design.widget.TextInputLayout>
+     </android.support.design.widget.TextInputLayout>
 
 
     <TextView
@@ -127,7 +124,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginTop="@dimen/margin_little"
         android:background="@drawable/btn_green_style"
         android:gravity="center"
         android:paddingBottom="@dimen/margin_small"

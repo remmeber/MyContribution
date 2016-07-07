@@ -11,7 +11,7 @@ import com.rhg.qf.constants.AppConstants;
 public class HotFoodDistanceFm extends AbstractHotFoodFragment {
 
     @Override
-    protected String getHotFoodType() {
+    protected int getHotFoodType() {
         return AppConstants.DISTANCE;
     }
 }

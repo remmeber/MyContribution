@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.SearchActivity;
-import com.rhg.qf.apapter.QFoodVpAdapter;
+import com.rhg.qf.adapter.QFoodVpAdapter;
 import com.rhg.qf.constants.AppConstants;
 
 import java.util.ArrayList;
@@ -154,20 +154,9 @@ public class SellerFragment extends BaseFragment {
     }
 
     private void doSearch(int position) {
-        int searchTag = -1;
-        switch (position) {
-            case 0:
-                searchTag = AppConstants.KEY_MERCHANT_SEARCH_BY_SELL;
-                break;
-            case 1:
-                searchTag = AppConstants.KEY_MERCHANT_SEARCH_BY_DIS;
-                break;
-            case 2:
-                searchTag = AppConstants.KEY_MERCHANT_SEARCH_BY_RATE;
-                break;
-        }
         Intent _intent = new Intent(getActivity(), SearchActivity.class);
-        _intent.putExtra(AppConstants.KEY_SEARCH_TAG, searchTag);
+        _intent.putExtra(AppConstants.KEY_SEARCH_TAG, AppConstants.KEY_RESTAURANT_SEARCH);
+        _intent.putExtra(AppConstants.KEY_SEARCH_INDEX, position + 1);
         startActivity(_intent);
     }
 }

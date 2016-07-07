@@ -10,12 +10,11 @@ import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
 import com.rhg.qf.activity.ShopDetailActivity;
-import com.rhg.qf.apapter.QFoodMerchantAdapter;
+import com.rhg.qf.adapter.QFoodMerchantAdapter;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.MerchantsPresenter;
-import com.rhg.qf.mvp.presenter.MerchantsPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +39,11 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
     List<MerchantUrlBean.MerchantBean> dataBySellNumberModels = new ArrayList<>();
     MerchantsPresenter getMerchantsOrderBySellNumberPresenter;
     QFoodMerchantAdapter qFoodMerchantAdapter;
-
     int merchantsType;
 
     public AbstractMerchantsFragment() {
         merchantsType = getMerchantsFmType();
-        getMerchantsOrderBySellNumberPresenter = new MerchantsPresenterImpl(this);
+        getMerchantsOrderBySellNumberPresenter = new MerchantsPresenter(this);
     }
 
     public void setContext(Context context) {
@@ -66,12 +64,11 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
-        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
         commonRecycle.setAdapter(qFoodMerchantAdapter);
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", merchantsType);
+                getMerchantsOrderBySellNumberPresenter.getMerchants(AppConstants.RESTAURANTS, merchantsType);
             }
         });
     }
@@ -83,7 +80,7 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        getMerchantsOrderBySellNumberPresenter.getMerchants("restaurants", merchantsType);
+        getMerchantsOrderBySellNumberPresenter.getMerchants(AppConstants.RESTAURANTS, merchantsType);
     }
 
     @Override

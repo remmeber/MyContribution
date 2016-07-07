@@ -30,7 +30,7 @@ import java.util.Map;
 public class MyFragment extends BaseFragment implements View.OnClickListener {
     boolean hasAccount = true;
 
-    FrameLayout flTAB;
+//    FrameLayout flTAB;
     ImageView userHeader;
     TextView userName;
     //TODO-------------------------------我的订单栏---------------------------------------------
@@ -62,7 +62,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView(View view) {
-        flTAB = (FrameLayout) view.findViewById(R.id.fl_tab);
+//        flTAB = (FrameLayout) view.findViewById(R.id.fl_tab);
 
         userHeader = (ImageView) view.findViewById(R.id.userHeader);
         userName = (TextView) view.findViewById(R.id.userName);
@@ -89,7 +89,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        flTAB.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+//        flTAB.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
         if (AccountUtil.getInstance().hasAccount()) {

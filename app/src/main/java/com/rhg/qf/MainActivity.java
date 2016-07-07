@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.rhg.qf.activity.BaseActivity;
+import com.rhg.qf.activity.BaseFragmentActivity;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.fragment.HomeFragment;
 import com.rhg.qf.fragment.MyFragment;
@@ -16,7 +16,7 @@ import com.rhg.qf.fragment.ShoppingCartFragment;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.ui.FragmentController;
 
-public class MainActivity extends BaseActivity implements BaseView
+public class MainActivity extends BaseFragmentActivity implements BaseView
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {
     FragmentController fragmentController;

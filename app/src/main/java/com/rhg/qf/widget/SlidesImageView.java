@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.rhg.qf.apapter.SlidesImageAdapter;
+import com.rhg.qf.adapter.SlidesImageAdapter;
 import com.rhg.qf.impl.SlidesViewChangeListener;
 import com.rhg.qf.utils.AnimationUtils;
 

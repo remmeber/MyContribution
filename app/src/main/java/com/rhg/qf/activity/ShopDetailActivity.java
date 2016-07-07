@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
-import com.rhg.qf.apapter.QFoodVpAdapter;
+import com.rhg.qf.adapter.QFoodVpAdapter;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.fragment.ShopDetailFoodFragment;
 import com.rhg.qf.fragment.ShopDetailFragment;
@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * time：2016/5/28 16:15
  * email：1013773046@qq.com
  */
-public class ShopDetailActivity extends BaseActivity {
+public class ShopDetailActivity extends BaseFragmentActivity {
 
     @Bind(R.id.iv_shop_detail_logo)
     ImageView ivShopLogo;

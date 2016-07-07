@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.rhg.qf.apapter.TimerImageAdapter;
+import com.rhg.qf.adapter.TimerImageAdapter;
 import com.rhg.qf.impl.ImageChangeListener;
 import com.rhg.qf.utils.AnimationUtils;
 

@@ -48,10 +48,7 @@
             android:name="com.squareup.leakcanary.DisplayLeakService"
             android:enabled="false" />
 
-        <activity
-            android:name="com.rhg.qf.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name="com.rhg.qf.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -88,7 +85,7 @@
             android:name="com.rhg.qf.activity.SearchActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.rhg.qf.activity.HotSellActivity"
+            android:name=".activity.HotFoodActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.rhg.qf.activity.DeliverRegisterActivity"

@@ -24,7 +24,6 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
     Context mContext;
     Button btCamera;
     Button btGallery;
-    UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
     private ChoosePicListener choosePicListener;
 
     public ModifyHeadImageDialog(Context context) {

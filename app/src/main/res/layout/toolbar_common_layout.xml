@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_tab"
     android:layout_width="match_parent"
-    android:layout_height="81dp"
+    android:layout_height="56dp"
     tools:background="@color/colorGreenNormal"
     tools:ignore="contentDescription">
 
@@ -11,7 +11,6 @@
         android:id="@+id/tb_center_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:textColor="@color/black"
@@ -22,7 +21,6 @@
         android:id="@+id/tb_left_iv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
         tools:src="@drawable/ic_chevron_left_black" />
 
     <LinearLayout
@@ -30,7 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:layout_marginTop="25dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -61,15 +58,15 @@
         android:layout_marginLeft="@dimen/margin_huge"
         android:layout_marginRight="@dimen/margin_little"
         android:layout_marginStart="@dimen/margin_huge"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="10dp"
         android:background="@null"
         android:drawableEnd="@drawable/ic_search_black"
         android:drawablePadding="@dimen/margin_little"
         android:drawableRight="@drawable/ic_search_black"
-        android:hint="@string/searchActivityHint"
         android:imeOptions="actionDone"
         android:singleLine="true"
         android:textColorHint="@color/colorTextOrder"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:hint="@string/etSearchHint" />
 
 </FrameLayout>

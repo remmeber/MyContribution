@@ -75,11 +75,10 @@ public class AppConstants {
     public static final String KEY_NOTE = "note";
     public static final String KEY_DELETE = "delete";
     public static final String KEY_ORDER_TAG = "order_tag";
+    public static final String KEY_SEARCH_INDEX = "search_index";
     public static final String KEY_SEARCH_TAG = "search_tag";
-    public static final int KEY_HOME_SEARCH = 30;// TODO: 首页搜索的KEY
-    public static final int KEY_MERCHANT_SEARCH_BY_SELL = 31;// TODO: 所有店铺按销量的KEY
-    public static final int KEY_MERCHANT_SEARCH_BY_DIS = 32;// TODO: 所有店铺按距离的KEY
-    public static final int KEY_MERCHANT_SEARCH_BY_RATE = 33;// TODO: 所有店铺按评分的KEY
+    public static final int KEY_RESTAURANT_SEARCH = 30;// TODO: 首页和商家页面搜索餐厅的KEY
+    public static final int KEY_HOTFOOD_SEARCH = 31;// TODO: 热销商品搜索的KEY
     public static final int KEY_BACK_2_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
 
     /*for headImage*/
@@ -100,23 +99,25 @@ public class AppConstants {
     public static final int MERCHANT_DISTANCE = 1;
     public static final int MERCHANT_RATE = 2;
     /*Order*/
-    public static final String ORDER_ALL = "0";
-    public static final String ORDER_UNPAID = "1";
-    public static final String ORDER_DELIVERING = "2";
-    public static final String ORDER_COMPLETE = "3";
-    public static final String ORDER_DRAWBACK = "4";
+    public static final int ORDER_ALL = 0;
+    public static final int ORDER_UNPAID = 1;
+    public static final int ORDER_DELIVERING = 2;
+    public static final int ORDER_COMPLETE = 3;
+    public static final int ORDER_DRAWBACK = 4;
 
     /*HotFood*/
-    public static final String OVERALL = "0";
-    public static final String SELLNUMBER = "1";
-    public static final String DISTANCE = "2";
-    public static final String RATE = "3";
+    public static final int OVERALL = 0;
+    public static final int SELLNUMBER = 1;
+    public static final int DISTANCE = 2;
+    public static final int RATE = 3;
 
     /*后台交互信息*/
     public static final String TABLE_CLIENT = "client";
     public static final String TABLE_FOODMESSAGE = "foodmessage";
     public static final String TABLE_FOOD = "food";
-    public static final String TABLE_RESTAURANTS = "restaurants";
+    public static final String RESTAURANTS = "restaurants";
+    public static final String SEARCHRESTAURANTS = "searchrestaurants";
+    public static final String HOTFOOD = "hotfood";
     public static final String TABLE_ORDER = "order";
     public static final String ADDRESS_TABLE = "address";
 

@@ -10,12 +10,11 @@ import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
 import com.rhg.qf.activity.GoodsDetailActivity;
-import com.rhg.qf.apapter.GoodsListAdapter;
+import com.rhg.qf.adapter.GoodsListAdapter;
 import com.rhg.qf.bean.ShopDetailUriBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.ShopDetailPresenter;
-import com.rhg.qf.mvp.presenter.ShopDetailPresenterImpl;
 import com.rhg.qf.widget.VerticalTabLayout;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
 
 
     public FoodTypeFragment() {
-        shopDetailPresenter = new ShopDetailPresenterImpl(this);
+        shopDetailPresenter = new ShopDetailPresenter(this);
     }
 
     @Override

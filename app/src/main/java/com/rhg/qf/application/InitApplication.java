@@ -13,7 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseActivity;
+import com.rhg.qf.activity.BaseFragmentActivity;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.utils.AccountUtil;
@@ -39,7 +39,7 @@ public class InitApplication extends Application {
     private static InitApplication initApplication;
     public LocationService locationService;
     public Vibrator mVibrator;
-    private HashMap<String, WeakReference<BaseActivity>> activityList = new HashMap<String, WeakReference<BaseActivity>>();
+    private HashMap<String, WeakReference<BaseFragmentActivity>> activityList = new HashMap<String, WeakReference<BaseFragmentActivity>>();
     private HashMap<String, WeakReference<Object>> objectList = new HashMap<>();
     private RefWatcher refWatcher;
 
@@ -69,14 +69,14 @@ public class InitApplication extends Application {
         }
     }
 
-    public void addActivity(BaseActivity activity) {
+    public void addActivity(BaseFragmentActivity activity) {
         if (null != activity) {
             Log.i("RHG", "********* add Activity " + activity.getClass().getName());
             activityList.put(activity.getClass().getName(), new WeakReference<>(activity));
         }
     }
 
-    public void removeActivity(BaseActivity activity) {
+    public void removeActivity(BaseFragmentActivity activity) {
         if (null != activity) {
             Log.i("RHG", "********* remove Activity " + activity.getClass().getName());
             activityList.remove(activity.getClass().getName());
@@ -89,7 +89,7 @@ public class InitApplication extends Application {
 
     public void exit() {
         for (String key : activityList.keySet()) {
-            WeakReference<BaseActivity> activity = activityList.get(key);
+            WeakReference<BaseFragmentActivity> activity = activityList.get(key);
             if (activity != null && activity.get() != null) {
                 Log.i("RHG", "********* Exit " + activity.get().getClass().getSimpleName());
                 activity.get().finish();

@@ -20,7 +20,7 @@ import butterknife.OnClick;
  *time 2016/7/6 21:37
  *email 1013773046@qq.com
  */
-public class DeliverStateNoneActivity extends BaseActivity {
+public class DeliverStateNoneActivity extends BaseFragmentActivity {
 
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;

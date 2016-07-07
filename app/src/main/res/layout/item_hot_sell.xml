@@ -154,10 +154,9 @@
             android:id="@+id/hot_sell_total_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/hot_sell_deliver_distance"
-            android:layout_alignStart="@+id/hot_sell_deliver_distance"
+            android:layout_alignRight="@+id/hot_sell_deliver_distance"
+            android:layout_alignEnd="@+id/hot_sell_deliver_distance"
             android:layout_alignTop="@+id/hot_sell_deliver_money"
-            android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="@string/countMoney"
             android:textColor="@color/colorRecommend_Red" />
