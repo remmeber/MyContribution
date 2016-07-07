@@ -104,7 +104,6 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
     public void showSuccess(Object o) {
         dataBySellNumberModels = (List<MerchantUrlBean.MerchantBean>) o;
         qFoodMerchantAdapter.setmData(dataBySellNumberModels);
-        qFoodMerchantAdapter.notifyDataSetChanged();
         if (commonSwipe.isRefreshing())
             commonSwipe.setRefreshing(false);
         if (commonRefresh.getVisibility() == View.VISIBLE) {

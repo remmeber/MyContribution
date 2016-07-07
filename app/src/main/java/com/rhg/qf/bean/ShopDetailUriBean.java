@@ -3,8 +3,10 @@ package com.rhg.qf.bean;
 import java.util.List;
 
 /**
- * 作者：rememberon 2016/6/3
- * 邮箱：1013773046@qq.com
+ *desc:
+ *author：remember
+ *time：2016/7/7 23:49
+ *email：1013773046@qq.com
  */
 public class ShopDetailUriBean {
     /**

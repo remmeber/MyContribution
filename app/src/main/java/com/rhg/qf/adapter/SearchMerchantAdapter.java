@@ -33,7 +33,7 @@ public class SearchMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBea
     }
 
     @Override
-    protected void bindBodyData(final BodyViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
+    protected void bindBodyData(final BodyViewHolder holder,final MerchantUrlBean.MerchantBean data, int type) {
         holder.sellerName.setText(data.getName());
         ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
         holder.sellerDistance.setText(String.format(Locale.ENGLISH,
@@ -47,7 +47,7 @@ public class SearchMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBea
             @Override
             public void onClick(View v) {
                 if (getOnRcvItemClickListener() != null)
-                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
+                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), data);
             }
         });
 

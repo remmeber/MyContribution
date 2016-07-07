@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.adapter.HotFoodAdapter;
 import com.rhg.qf.adapter.SearchHistoryAdapter;
-import com.rhg.qf.bean.RestaurantSearchUrlBean;
+import com.rhg.qf.adapter.SearchMerchantAdapter;
+import com.rhg.qf.bean.HotFoodUrlBean;
+import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.HotFoodSearchPresenter;
@@ -27,6 +30,7 @@ import com.rhg.qf.widget.RecycleViewDivider;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -38,8 +42,7 @@ import butterknife.OnClick;
  * time：2016/6/18 13:10
  * email：1013773046@qq.com
  */
-public class SearchActivity extends BaseFragmentActivity implements RcvItemClickListener,
-        View.OnClickListener {
+public class SearchActivity extends BaseFragmentActivity implements View.OnClickListener {
 
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;
@@ -55,12 +58,38 @@ public class SearchActivity extends BaseFragmentActivity implements RcvItemClick
     RecyclerView historyResultsRcv;
     @Bind(R.id.itemResultsRcv)
     RecyclerView itemResultsRcv;
+
     SearchHistoryAdapter searchHistoryAdapter;
+    HotFoodAdapter hotFoodAdapter;
+    SearchMerchantAdapter searchMerchantAdapter;
+
     private List<String> searchHistoryData;
+    List<MerchantUrlBean.MerchantBean> merchantBeanList;
+    List<HotFoodUrlBean.HotFoodBean> hotFoodBeanList;
+
     RestaurantSearchPresenter restaurantSearchPresenter;
     HotFoodSearchPresenter hotFoodSearchPresenter;
+
     private int searchTag;
     private int searchIndex;
+    boolean isShow;
+    private RcvItemClickListener itemClick = new RcvItemClickListener() {
+        @Override
+        public void onItemClickListener(int position, Object item) {
+            if (item instanceof String) {
+                searchEt.setText((String) item);
+                historyResultsRcv.setVisibility(View.GONE);
+                tvHistoryResult.setVisibility(View.GONE);
+                itemResultsRcv.setVisibility(View.VISIBLE);
+                tvSearchResult.setVisibility(View.VISIBLE);
+                isShow = false;
+                return;
+            }
+            if (item instanceof MerchantUrlBean.MerchantBean || item instanceof HotFoodUrlBean.HotFoodBean) {
+            /*TODO 跳转到详情页面*/
+            }
+        }
+    };
 
     @Override
     public void dataReceive(Intent intent) {
@@ -99,8 +128,17 @@ public class SearchActivity extends BaseFragmentActivity implements RcvItemClick
         historyResultsRcv.setHasFixedSize(false);
         divider.setLeftAndRightPadding(DpUtil.dip2px(16), 0);
         historyResultsRcv.addItemDecoration(divider);
+        if (searchTag == AppConstants.KEY_RESTAURANT_SEARCH) {
+            merchantBeanList = new ArrayList<>();
+            searchMerchantAdapter = new SearchMerchantAdapter(this, merchantBeanList);
+            searchMerchantAdapter.setOnRcvItemClickListener(itemClick);
+        } else {
+            hotFoodBeanList = new ArrayList<>();
+            hotFoodAdapter = new HotFoodAdapter(this, hotFoodBeanList);
+            hotFoodAdapter.setOnRcvItemClickListener(itemClick);
+        }
         searchHistoryAdapter = new SearchHistoryAdapter(this, searchHistoryData);
-        searchHistoryAdapter.setOnSearchHistoryClickListener(this);
+        searchHistoryAdapter.setOnSearchHistoryClickListener(itemClick);
         historyResultsRcv.setAdapter(searchHistoryAdapter);
         searchEt.setVisibility(View.VISIBLE);
         searchEt.setOnTouchListener(new View.OnTouchListener() {
@@ -116,10 +154,12 @@ public class SearchActivity extends BaseFragmentActivity implements RcvItemClick
                     if (!TextUtils.isEmpty(searchEt.getText().toString().trim())
                             && searchHistoryData.size() == 0) {
                         SearchHistoryUtil.insertSearchHistory(searchEt.getText().toString().trim());
-                        tvHistoryResult.setVisibility(View.GONE);
-                        tvSearchResult.setVisibility(View.VISIBLE);
-                        historyResultsRcv.setVisibility(View.GONE);
-                        itemResultsRcv.setVisibility(View.VISIBLE);/*TODO 写到这里*/
+                        /*切换到内容搜索*/
+                        tvHistoryResult.setVisibility(View.GONE);/* 隐藏历史搜索textView*/
+                        tvSearchResult.setVisibility(View.VISIBLE);/* 显示内容搜索textView*/
+                        historyResultsRcv.setVisibility(View.GONE);/* 隐藏历史搜索recycleView*/
+                        itemResultsRcv.setVisibility(View.VISIBLE);/* 显示内容搜索recycleView*/
+                        isShow = false;
                         doSearch(searchEt.getText().toString());
                     }
                     return true;
@@ -156,6 +196,14 @@ public class SearchActivity extends BaseFragmentActivity implements RcvItemClick
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!isShow) {
+                    /*切换到历史搜索*/
+                    tvHistoryResult.setVisibility(View.VISIBLE);/* 隐藏历史搜索textView*/
+                    tvSearchResult.setVisibility(View.GONE);/* 显示内容搜索textView*/
+                    historyResultsRcv.setVisibility(View.VISIBLE);/*隐藏历史搜索recycleView*/
+                    itemResultsRcv.setVisibility(View.GONE);/* 显示内容搜索recycleView*/
+                    isShow = true;
+                }
                 searchHistoryData.clear();
                 if (s.toString().trim().length() != 0) {
                     searchHistoryData = SearchHistoryUtil.getHistoryByName(s.toString().trim());
@@ -200,10 +248,10 @@ public class SearchActivity extends BaseFragmentActivity implements RcvItemClick
 
     @Override
     protected void showSuccess(Object s) {
-        if (s instanceof RestaurantSearchUrlBean.RestaurantSearchBean) {
-
+        if (s instanceof MerchantUrlBean.MerchantBean) {
+            searchMerchantAdapter.setmData((List<MerchantUrlBean.MerchantBean>) s);
         } else {
-
+            hotFoodAdapter.setHotFoodBeanList((List<HotFoodUrlBean.HotFoodBean>) s);
         }
     }
 
@@ -223,15 +271,15 @@ public class SearchActivity extends BaseFragmentActivity implements RcvItemClick
         }
     }
 
+
     @Override
-    public void onItemClickListener(int position, Object item) {
-        if (item instanceof String) {
-            searchEt.setText((String) item);
-            historyResultsRcv.setVisibility(View.GONE);
-            tvHistoryResult.setVisibility(View.GONE);
-            itemResultsRcv.setVisibility(View.VISIBLE);
-            tvSearchResult.setVisibility(View.VISIBLE);
-            ToastHelper.getInstance()._toast("搜索");
-        }
+    protected void onDestroy() {
+        restaurantSearchPresenter = null;
+        hotFoodSearchPresenter = null;
+        searchMerchantAdapter = null;
+        hotFoodAdapter = null;
+        itemClick = null;
+        super.onDestroy();
+
     }
 }

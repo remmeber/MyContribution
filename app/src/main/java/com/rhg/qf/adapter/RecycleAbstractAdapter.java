@@ -56,6 +56,7 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
 
     public void setmData(List<T> mData) {
         this.mData = mData;
+        notifyDataSetChanged();
     }
 
     public boolean getHasFooter() {

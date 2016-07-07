@@ -16,6 +16,7 @@ import com.rhg.qf.fragment.ShoppingCartFragment;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.ui.FragmentController;
 
+/*http://www.biaonimeia.com/sharelink/privateproject/u1hy06pJRJkvjBQ*/
 public class MainActivity extends BaseFragmentActivity implements BaseView
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {

@@ -101,7 +101,6 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         if (commonSwipe.isRefreshing())
             commonSwipe.setRefreshing(false);
         qFoodOrderAdapter.setmData((List<OrderUrlBean.OrderBean>) o);
-        qFoodOrderAdapter.notifyDataSetChanged();
         if (commonRefresh.getVisibility() == View.VISIBLE)
             commonRefresh.setVisibility(View.GONE);
     }
