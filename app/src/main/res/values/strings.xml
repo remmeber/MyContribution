@@ -58,6 +58,7 @@
     <string name="tvDistance">距离%s米</string>
     <string name="tvDeliverRequire">满%s起送</string>
     <string name="tvDeliverFee">配送费%s元</string>
+    <string name="tvOrderNum">订单号%s</string>
     <string name="goPay">去付款</string>
     <string name="tvDrawback">申请退款</string>
     <string name="tvSummation">合计</string>
