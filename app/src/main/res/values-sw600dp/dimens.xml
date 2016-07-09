@@ -6,4 +6,5 @@
     <dimen name="activity_vertical_margin">32dp</dimen>
 
     <dimen name="header_image_size">130dp</dimen>
+    <dimen name="text_little_small">20sp</dimen>
 </resources>

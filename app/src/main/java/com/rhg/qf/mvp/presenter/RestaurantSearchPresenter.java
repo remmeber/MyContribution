@@ -1,5 +1,7 @@
 package com.rhg.qf.mvp.presenter;
 
+import android.util.Log;
+
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.mvp.model.RestaurantSearchModel;
 import com.rhg.qf.mvp.view.BaseView;
@@ -30,7 +32,7 @@ public class RestaurantSearchPresenter {
                                     int style) {
         restaurantSearchModel.getSearchRestaurants(searchRestaurants, searchContent, style)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<MerchantUrlBean.MerchantBean>>() {
+                .subscribe(new Observer<MerchantUrlBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -42,7 +44,7 @@ public class RestaurantSearchPresenter {
                     }
 
                     @Override
-                    public void onNext(List<MerchantUrlBean.MerchantBean> merchantBeen) {
+                    public void onNext(MerchantUrlBean merchantBeen) {
                         restaurantSearchResult.showData(merchantBeen);
                     }
                 });

@@ -21,7 +21,8 @@ public class HomeModel {
 
     public Observable<HomeBean> getHomeData() {
         QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
-        return Observable.zip(qFoodApiService.getBannerUrl(),
+        return Observable.zip(
+                qFoodApiService.getBannerUrl(),
                 qFoodApiService.getFavorableFood(),
                 qFoodApiService.getRecommendList(),
                 qFoodApiService.getMessage(),

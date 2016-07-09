@@ -25,7 +25,7 @@
 
 
     <application
-        android:name="com.rhg.qf.application.InitApplication"
+        android:name=".application.InitApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -48,7 +48,7 @@
             android:name="com.squareup.leakcanary.DisplayLeakService"
             android:enabled="false" />
 
-        <activity android:name="com.rhg.qf.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,55 +58,58 @@
 
 
         <activity
-            android:name="com.rhg.qf.activity.OrderListActivity"
+            android:name=".activity.OrderListActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.rhg.qf.activity.OrderDetailActivity"
-            android:configChanges="orientation|screenSize" />
-
-        <activity
-            android:name="com.rhg.qf.activity.DeliverInfoActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.rhg.qf.activity.GoodsDetailActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.rhg.qf.activity.ShopDetailActivity"
+            android:name=".activity.OrderDetailActivity"
             android:configChanges="orientation|screenSize" />
 
         <activity
-            android:name="com.rhg.qf.activity.AddressActivity"
+            android:name=".activity.DeliverInfoActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.GoodsDetailActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.ShopDetailActivity"
+            android:configChanges="orientation|screenSize" />
+
+        <activity
+            android:name=".activity.AddressActivity"
             android:configChanges="orientation|screenSize" />
 
         <activity
             android:name=".activity.AddOrNewAddressActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.rhg.qf.activity.SearchActivity"
+            android:name=".activity.SearchActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".activity.HotFoodActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.rhg.qf.activity.DeliverRegisterActivity"
+            android:name=".activity.DeliverRegisterActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.rhg.qf.activity.DeliverStateNoneActivity"
+            android:name=".activity.DeliverStateNoneActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.rhg.qf.activity.PersonalOrderActivity"
+            android:name=".activity.PersonalOrderActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.DeliverOrderActivity"
             android:configChanges="orientation|screenSize" />
 
 
-        <!-- alipay sdk begin -->
+        <!-- 支付宝 -->
         <activity
-            android:name="com.rhg.qf.pay.PayDemoActivity"
+            android:name=".pay.PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
 
         <activity
-            android:name="com.rhg.qf.pay.H5PayDemoActivity"
+            android:name=".pay.H5PayDemoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
@@ -119,7 +122,7 @@
 
         <!--微信-->
         <activity
-            android:name="com.rhg.qf.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTop"
@@ -127,13 +130,13 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name="com.rhg.qf.wxapi.WXPayEntryActivity"
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
 
         <activity
 
-            android:name="com.rhg.qf.activity.PayActivity"
+            android:name=".activity.PayActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
@@ -190,41 +193,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <!-- alipay sdk end -->
-
-
-        <!--<receiver
-            android:name=""
-            android:permission="com.tencent.mm.plugin.permission.SEND">
-            <intent-filter>
-                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
-            </intent-filter>
-        </receiver>-->
-
-        <!-- WeChat-->
-        <!-- <activity
-             android:name=".pay.weixin.api.WXEntryActivity"
-             android:exported="true" />
-         <activity
-             android:name=".pay.weixin.SendToWXActivity"
-             android:label="@string/app_name"/>
-
-         <activity
-             android:name=".pay.weixin.GetFromWXActivity"
-             android:label="@string/app_name"/>
-
-         <activity
-             android:name=".pay.weixin.ShowFromWXActivity"
-             android:label="@string/app_name"/>
-         &lt;!&ndash; WeChat&ndash;&gt;
-         <receiver
-             android:name=".pay.weixin.AppRegister"
-             android:permission="com.tencent.mm.plugin.permission.SEND" >
-             <intent-filter>
-                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
-             </intent-filter>
-         </receiver>-->
-
 
     </application>
 

@@ -37,8 +37,10 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dataReceive(getIntent());
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
+        loadingData();
         initData();
     }
 
@@ -122,6 +124,7 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
             return ev.getX() < left || ev.getX() > right || ev.getY() < top || ev.getY() > bottom;
         } else return false;
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (null != this.getCurrentFocus() && this.getCurrentFocus() instanceof EditText) {

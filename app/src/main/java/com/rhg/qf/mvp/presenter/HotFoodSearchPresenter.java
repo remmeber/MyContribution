@@ -1,10 +1,11 @@
 package com.rhg.qf.mvp.presenter;
 
+import android.util.Log;
+
 import com.rhg.qf.bean.HotFoodSearchUrlBean;
+import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.mvp.model.HotFoodSearchModel;
 import com.rhg.qf.mvp.view.BaseView;
-
-import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,7 +31,7 @@ public class HotFoodSearchPresenter {
                                  int order) {
         hotFoodSearchModel.getSearchHotFood(searchRestaurants, searchContent, order)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<HotFoodSearchUrlBean.HotFoodSearchBean>>() {
+                .subscribe(new Observer<HotFoodUrlBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -42,9 +43,10 @@ public class HotFoodSearchPresenter {
                     }
 
                     @Override
-                    public void onNext(List<HotFoodSearchUrlBean.HotFoodSearchBean> hotFoodSearchBeen) {
+                    public void onNext(HotFoodUrlBean hotFoodSearchBeen) {
                         hotFoodSearchResult.showData(hotFoodSearchBeen);
                     }
+
                 });
     }
 }

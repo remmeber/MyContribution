@@ -2,6 +2,7 @@ package com.rhg.qf.mvp.model;
 
 
 import com.rhg.qf.bean.HotFoodSearchUrlBean;
+import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import java.util.List;
@@ -17,11 +18,11 @@ import rx.functions.Func1;
  *email 1013773046@qq.com
  */
 public class HotFoodSearchModel {
-    public Observable<List<HotFoodSearchUrlBean.HotFoodSearchBean>> getSearchHotFood(String searchHotFood,
-                                                                                     final String searchContent,
-                                                                                     int order) {
+    public Observable<HotFoodUrlBean> getSearchHotFood(String searchHotFood,
+                                                       final String searchContent,
+                                                       int order) {
         return QFoodApiMamager.getInstant().getQFoodApiService().getHotGoodsForSearch(searchHotFood, searchContent, String.valueOf(order))
-                .flatMap(new Func1<HotFoodSearchUrlBean, Observable<List<HotFoodSearchUrlBean.HotFoodSearchBean>>>() {
+               /* .flatMap(new Func1<HotFoodSearchUrlBean, Observable<List<HotFoodSearchUrlBean.HotFoodSearchBean>>>() {
                     @Override
                     public Observable<List<HotFoodSearchUrlBean.HotFoodSearchBean>> call(final HotFoodSearchUrlBean hotFoodSearchUrlBean) {
                         return Observable.create(new Observable.OnSubscribe<List<HotFoodSearchUrlBean.HotFoodSearchBean>>() {
@@ -31,6 +32,6 @@ public class HotFoodSearchModel {
                             }
                         });
                     }
-                });
+                })*/;
     }
 }

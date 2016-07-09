@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +31,7 @@ import com.rhg.qf.bean.TextTypeBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.utils.BannerController;
+import com.rhg.qf.widget.MyGridView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -283,12 +283,12 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private class FavorableTypeViewHolder extends RecyclerView.ViewHolder {
-        private final GridView gridView;
+        private final MyGridView gridView;
         private QFoodGridViewAdapter dpGridViewAdapter;
 
         public FavorableTypeViewHolder(View itemView, int position) {
             super(itemView);
-            gridView = (GridView) itemView.findViewById(R.id.gridview);
+            gridView = (MyGridView) itemView.findViewById(R.id.gridview);
             gridView.setNumColumns(3);
             dpGridViewAdapter = ((FavorableTypeModel) mData.get(position)).getDpGridViewAdapter();
             gridView.setAdapter(dpGridViewAdapter);

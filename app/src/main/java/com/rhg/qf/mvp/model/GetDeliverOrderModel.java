@@ -1,0 +1,33 @@
+package com.rhg.qf.mvp.model;
+
+import com.rhg.qf.bean.DeliverOrderUrlBean;
+import com.rhg.qf.mvp.api.QFoodApiMamager;
+
+import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
+
+/*
+ *desc 获取跑腿员订单model
+ *author rhg
+ *time 2016/7/9 12:27
+ *email 1013773046@qq.com
+ */
+public class GetDeliverOrderModel {
+    public Observable<List<DeliverOrderUrlBean.DeliverOrderBean>> getDeliverOrder(String deliverOrder, String deliverId) {
+        return QFoodApiMamager.getInstant().getQFoodApiService().getDeliverOrder(deliverOrder, deliverId)
+                .flatMap(new Func1<DeliverOrderUrlBean, Observable<List<DeliverOrderUrlBean.DeliverOrderBean>>>() {
+                    @Override
+                    public Observable<List<DeliverOrderUrlBean.DeliverOrderBean>> call(final DeliverOrderUrlBean deliverOrderUrlBean) {
+                        return Observable.create(new Observable.OnSubscribe<List<DeliverOrderUrlBean.DeliverOrderBean>>() {
+                            @Override
+                            public void call(Subscriber<? super List<DeliverOrderUrlBean.DeliverOrderBean>> subscriber) {
+                                subscriber.onNext(deliverOrderUrlBean.getRows());
+                            }
+                        });
+                    }
+                });
+    }
+}

@@ -2,14 +2,15 @@ package com.rhg.qf.mvp.api;
 
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.BannerTypeUrlBean;
+import com.rhg.qf.bean.DeliverOrderUrlBean;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
 import com.rhg.qf.bean.GoodsDetailUrlBean;
+import com.rhg.qf.bean.HeadMerchantUrlBean;
 import com.rhg.qf.bean.HotFoodSearchUrlBean;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.bean.RecommendListUrlBean;
-import com.rhg.qf.bean.RestaurantSearchUrlBean;
 import com.rhg.qf.bean.ShopDetailUriBean;
 import com.rhg.qf.bean.SignInBean;
 import com.rhg.qf.bean.TestBean;
@@ -46,14 +47,18 @@ public interface QFoodApiService {
     @GET("json/restaurant.html")
     Observable<RecommendListUrlBean> getRecommendList();
 
-    /*所有店铺*/
+    /*所有店铺head*/
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<HeadMerchantUrlBean> getHeadMerchant(@Field("Table") String toprestaurants);
+    /*所有店铺body*/
     @FormUrlEncoded
     @POST("Table/Json.php")
 //table : restaurants,order：0.按销量 1.按距离 2.按评分
-    Observable<MerchantUrlBean> getAllShop(@Field("Table") String table,
-                                           @Field("Order") int order,
-                                           @Field("X") String longitude,
-                                           @Field("Y") String latitude);
+    Observable<MerchantUrlBean> getBodyMerchants(@Field("Table") String table,
+                                                 @Field("Order") int order,
+                                                 @Field("X") String longitude,
+                                                 @Field("Y") String latitude);
 
     /*店铺详情*/
     @FormUrlEncoded
@@ -69,13 +74,19 @@ public interface QFoodApiService {
     Observable<GoodsDetailUrlBean> getGoodsDetail(@Field("Table") String table,
                                                   @Field("Foodid") int foodId);
 
-    /*订单详情*/
+    /*用户订单详情*/
     @FormUrlEncoded
     @POST("Table/Json.php")
     //order:foodmessage;userId:用户ID;style:0.全部、1.待付款、2.进行中、3.已完成、、4.已退款
     Observable<OrderUrlBean> getOrderDetail(@Field("Table") String order,
                                             @Field("Client") String userId,
                                             @Field("Style") String style);
+
+    /*跑腿员订单详情*/
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<DeliverOrderUrlBean> getDeliverOrder(@Field("Table") String deliverorder,
+                                                    @Field("Deliver") String deliverId);
 
     /*upload head image*/
     @Multipart
@@ -131,8 +142,8 @@ public interface QFoodApiService {
     @FormUrlEncoded
     @POST("Table/Json.php")
     Observable<MerchantUrlBean> getRestaurantSearchResult(@Field("Table") String searchRestaurants,
-                                                                  @Field("Restaurantkey") String searchContent,
-                                                                  @Field("Order") String style);
+                                                          @Field("Restaurantkey") String searchContent,
+                                                          @Field("Order") String style);
 
     @FormUrlEncoded
     @POST("Table/Json.php")
@@ -149,7 +160,7 @@ public interface QFoodApiService {
     @FormUrlEncoded
     @POST("Table/Json.php")
     /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
-    Observable<HotFoodSearchUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
+    Observable<HotFoodUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
                                                           @Field("Hotfoodkey") String searchContent,
                                                           @Field("Order") String order);
 

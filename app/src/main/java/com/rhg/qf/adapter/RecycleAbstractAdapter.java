@@ -2,6 +2,7 @@ package com.rhg.qf.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -91,14 +92,13 @@ public abstract class RecycleAbstractAdapter<T> extends RecyclerView.Adapter<Rec
 
     protected abstract int getLayoutResId(int viewType);
 
-
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (type == AppConstants.TypeHome || type == AppConstants.TypeOrder) {
             bindBodyItemViewHolder((BodyViewHolder) holder, position, type);
             return;
         }
-        //TODO 刷商家页数据
+        //TODO 商家页数据
         switch (getItemViewType(position)) {
             case AppConstants.TypeBody:
                 bindBodyItemViewHolder((BodyViewHolder) holder, position, type);

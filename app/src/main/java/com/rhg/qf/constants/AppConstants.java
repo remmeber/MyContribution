@@ -81,6 +81,7 @@ public class AppConstants {
     public static final int KEY_HOTFOOD_SEARCH = 31;// TODO: 热销商品搜索的KEY
     public static final int KEY_BACK_2_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
 
+
     /*for headImage*/
     public static final int CODE_GALLERY_REQUEST = 10;//TODO:From Local
     public static final int CODE_GALLERY_REQUEST_KITKAT = 20;//TODO:From Local
@@ -104,6 +105,10 @@ public class AppConstants {
     public static final int ORDER_DELIVERING = 2;
     public static final int ORDER_COMPLETE = 3;
     public static final int ORDER_DRAWBACK = 4;
+    /*订单配送*/
+    public static final String ORDER_START = "开始送货";
+    public static final String ORDER_DELIVER_COMPLETE = "确认送达";
+    public static final String ORDER_DELIVER_FINISH = "确认收货";
 
     /*HotFood*/
     public static final int OVERALL = 0;
@@ -120,6 +125,7 @@ public class AppConstants {
     public static final String HOTFOOD = "hotfood";
     public static final String TABLE_ORDER = "order";
     public static final String ADDRESS_TABLE = "address";
+    public static final String DELIVER_ORDER ="deliverorder";
 
     /**
      * 响应结果，正确

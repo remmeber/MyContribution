@@ -69,12 +69,12 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
     protected void bindBodyData(final BodyViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
         holder.sellerName.setText(data.getName());
         ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
-        holder.sellerDistance.setText(String.format(Locale.ENGLISH,
+        holder.demandMoney.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDeliverRequire), data.getDistance()));
         holder.foodType.setText(data.getStyle());
         holder.deliverMoney.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDeliverFee), data.getFee()));
-        holder.demandMoney.setText(String.format(Locale.ENGLISH,
+        holder.sellerDistance.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDistance), data.getDelivery()));
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
