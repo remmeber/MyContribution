@@ -83,6 +83,8 @@ public class SearchActivity extends BaseFragmentActivity implements View.OnClick
                 itemResultsRcv.setVisibility(View.VISIBLE);
                 tvSearchResult.setVisibility(View.VISIBLE);
                 isShow = false;
+                searchEt.setText((String) item);
+                doSearch(searchEt.getText().toString());
                 return;
             }
             if (item instanceof MerchantUrlBean.MerchantBean || item instanceof HotFoodUrlBean.HotFoodBean) {
@@ -116,15 +118,14 @@ public class SearchActivity extends BaseFragmentActivity implements View.OnClick
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
                 DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive));
 
         itemResultsRcv.setHasFixedSize(false);
-        itemResultsRcv.setLayoutManager(linearLayoutManager);
+        itemResultsRcv.setLayoutManager(new LinearLayoutManager(this));
         itemResultsRcv.addItemDecoration(divider);
 
-        historyResultsRcv.setLayoutManager(linearLayoutManager);
+        historyResultsRcv.setLayoutManager(new LinearLayoutManager(this));
         historyResultsRcv.setHasFixedSize(false);
         divider.setLeftAndRightPadding(DpUtil.dip2px(16), 0);
         historyResultsRcv.addItemDecoration(divider);
@@ -151,8 +152,7 @@ public class SearchActivity extends BaseFragmentActivity implements View.OnClick
                 }
                 if (event.getRawX() > searchEt.getWidth() -
                         searchEt.getCompoundDrawables()[2].getBounds().width()) {
-                    if (!TextUtils.isEmpty(searchEt.getText().toString().trim())
-                            && searchHistoryData.size() == 0) {
+                    if (searchHistoryData.size() == 0) {
                         SearchHistoryUtil.insertSearchHistory(searchEt.getText().toString().trim());
                         /*切换到内容搜索*/
                         tvHistoryResult.setVisibility(View.GONE);/* 隐藏历史搜索textView*/
