@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.mvp.presenter.DIYOrderPresenter;
 import com.rhg.qf.utils.ToastHelper;
 
 import butterknife.Bind;
@@ -18,7 +20,7 @@ import butterknife.OnClick;
  * time：2016/6/22 14:41
  * email：1013773046@qq.com
  */
-public class PersonalOrderActivity extends BaseFragmentActivity {
+public class DIYOrderActivity extends BaseAppcompactActivity {
 
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;
@@ -26,26 +28,30 @@ public class PersonalOrderActivity extends BaseFragmentActivity {
     FrameLayout flTab;
     @Bind(R.id.et_user_input)
     EditText etUserInput;
+    @Bind(R.id.tb_center_tv)
+    TextView tbCenterTv;
+
+    DIYOrderPresenter commitDIYOrderPresenter;
 
     @Override
     protected int getLayoutResId() {
         return R.layout.personal_order;
     }
 
-    @Override
-    protected void initView(View view) {
-
-    }
 
     @Override
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbCenterTv.setText("自主点餐");
     }
 
     @Override
     protected void showSuccess(Object s) {
-
+        if (s instanceof String) {
+            ToastHelper.getInstance()._toast(s.toString());
+            etUserInput.setText("");
+        }
     }
 
     @Override
@@ -65,7 +71,10 @@ public class PersonalOrderActivity extends BaseFragmentActivity {
                     ToastHelper.getInstance()._toast("请输入您想要的菜品");
                     break;
                 }
-                finish();
+                if (commitDIYOrderPresenter == null)
+                    commitDIYOrderPresenter = new DIYOrderPresenter(this);
+                commitDIYOrderPresenter.commitDIYOrder("1", etUserInput.getText().toString());
         }
     }
+
 }

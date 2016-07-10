@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.GoodsDetailActivity;
 import com.rhg.qf.activity.HotFoodActivity;
-import com.rhg.qf.activity.PersonalOrderActivity;
+import com.rhg.qf.activity.DIYOrderActivity;
 import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
 import com.rhg.qf.adapter.QFoodGridViewAdapter;
@@ -272,7 +272,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 break;
             case R.id.home_tl_right_ll:
                 doFeedback();
-                startActivity(new Intent(getContext(), PersonalOrderActivity.class));
+                startActivity(new Intent(getContext(), DIYOrderActivity.class));
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.adapter.PayItemAdapter;
+import com.rhg.qf.bean.PayBean;
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +34,7 @@ import butterknife.OnClick;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class PayActivity extends BasePayActivity {
+public class PayActivity extends BasePayActivity implements PayItemAdapter.PayItemClickListener {
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -49,6 +56,8 @@ public class PayActivity extends BasePayActivity {
     @Bind(R.id.iv_cash_check)
     ImageView ivCashCheck;
 
+    List<PayBean> payList = new ArrayList<>();
+    private PayItemAdapter payItemAdapter;
 
     @Override
     protected OrderInfo OnOrderCreate() {
@@ -66,10 +75,10 @@ public class PayActivity extends BasePayActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pay_layout);
         ButterKnife.bind(this);
-        initData();
+        initData(getIntent());
     }
 
-    protected void initData() {
+    protected void initData(Intent intent) {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tbCenterTv.setText(getResources().getString(R.string.tvPayTitle));
@@ -77,10 +86,22 @@ public class PayActivity extends BasePayActivity {
         tvReceiverPhone.setText("联系方式：00001111");
         tvReceiverAddress.setText("收货地址：江苏省南京市江宁区东南大学");
 
+        PayBean _payBean = new PayBean();
+        _payBean.setProductName("");
+        _payBean.setChecked(true);
+        _payBean.setProductId("1");
+        _payBean.setProductPic(intent.getStringExtra(AppConstants.KEY_IMAGE));
+        _payBean.setProductPrice(intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE));
+        payList.add(_payBean);
+
         rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
         rcvItemPay.setHasFixedSize(true);
         rcvItemPay.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
                 DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
+        payItemAdapter = new PayItemAdapter(this, payList);
+        payItemAdapter.setOnPayItemClick(this);
+        rcvItemPay.setAdapter(payItemAdapter);
+
         RegisterBasePay(null, null, null, null, null, null);
 //        BuildOrderInfo()
     }
@@ -114,7 +135,10 @@ public class PayActivity extends BasePayActivity {
                 ToastHelper.getInstance()._toast("编辑");
                 break;
             case R.id.bt_pay_affirmance:
-                ToastHelper.getInstance()._toast("支付");
+                if (getCheckCount(payList) == 0) {
+                    ToastHelper.getInstance()._toast("当前未选择商品！");
+                    return;
+                }
                 Pay(v);
                 /*payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {
@@ -180,5 +204,41 @@ public class PayActivity extends BasePayActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onPayItemClick(int position) {
+        if (payList.get(position).isChecked()) {
+            payList.get(position).setChecked(false);
+        } else
+            payList.get(position).setChecked(true);
+        payItemAdapter.setPayList(payList);
+    }
+
+    private int getCheckCount(List<PayBean> payList) {
+        int count = 0;
+        for (PayBean _payBean : payList) {
+            if (_payBean.isChecked())
+                count++;
+        }
+        return count;
+    }
+
+    private List<String> getCheckItemId(List<PayBean> payList) {
+        List<String> _list = new ArrayList<>();
+        for (PayBean _payBean : payList) {
+            if (_payBean.isChecked())
+                _list.add(_payBean.getProductId());
+        }
+        return _list;
+    }
+
+    private int getCheckItemTotalMoney(List<PayBean> payList) {
+        int count = 0;
+        for (PayBean _payBean : payList) {
+            if (_payBean.isChecked())
+                count += Integer.valueOf(_payBean.getProductPrice());
+        }
+        return count;
     }
 }

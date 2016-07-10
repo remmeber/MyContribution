@@ -106,10 +106,11 @@ public class AppConstants {
     public static final int ORDER_DELIVERING = 2;
     public static final int ORDER_COMPLETE = 3;
     public static final int ORDER_DRAWBACK = 4;
+
     /*订单配送*/
     public static final String ORDER_START = "开始送货";
     public static final String ORDER_DELIVER_COMPLETE = "确认送达";
-    public static final String ORDER_DELIVER_FINISH = "确认收货";
+    public static final String ORDER_DELIVER_FINISH = "已完成";
 
     /*HotFood*/
     public static final int OVERALL = 0;
@@ -130,6 +131,7 @@ public class AppConstants {
     public static final String DELIVER_ORDER = "deliverorder";
     public static final String MERCHANT_INFO = "restaurantdetail";
     public static final String ORDER_DETAIL = "orderdetail";
+    public static final String ORDER_STYLE = "orderstyle";
 
     /**
      * 响应结果，正确

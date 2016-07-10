@@ -94,7 +94,7 @@
             android:name=".activity.DeliverStateNoneActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".activity.PersonalOrderActivity"
+            android:name=".activity.DIYOrderActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".activity.DeliverOrderActivity"

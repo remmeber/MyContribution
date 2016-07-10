@@ -11,6 +11,7 @@ import com.rhg.qf.bean.HeadMerchantUrlBean;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.bean.MerchantInfoDetailUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
+import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.bean.ShopDetailUrlBean;
@@ -20,6 +21,7 @@ import com.rhg.qf.bean.TextTypeBean;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -201,26 +203,32 @@ public interface QFoodApiService {
 
 
     @FormUrlEncoded
-    @POST("Table/JsonSQL/ Updateorder.php")
+    @POST("Table/JsonSQL/AddNewOrder.php")
+    Observable<BaseBean> createOrder(@Body NewOrderBean newOrderBean);
+
+
     /*TODO 修改跑腿员订单的状态 */
+    @FormUrlEncoded
+    @POST("Table/JsonSQL/Updateorder.php")
     Observable<BaseBean> modifyDeliverOrderState(@Field("ID") String orderId,
                                                  @Field("Message") String content);
 
 
-    @FormUrlEncoded
-    @POST("Table/JsonSQL/ ClientHope.php")
     /*TODO 自主点单 */
-    Observable<BaseBean> diyOrderFood(@Field("ID") String orderId);
+    @FormUrlEncoded
+    @POST("Table/JsonSQL/ClientHope.php")
+    Observable<BaseBean> diyOrderFood(@Field("Client") String orderId,
+                                      @Field("Message") String content);
 
+    /*TODO 跑腿员信息补充 */
     @FormUrlEncoded
     @POST("Table/JsonSQL/AddDeliver.php")
-    /*TODO 跑腿员信息补充 */
-    Observable<BaseBean> diyOrderFood(@Field("Name") String name,
-                                      @Field("PersonId") String personId,
-                                      @Field("Phonenumber") String phoneNum,
-                                      @Field("Pwd") String pwd,
-                                      @Field("Area") String area,
-                                      @Field("ClientID") String clientId);
+    Observable<BaseBean> compliteDeliverInfo(@Field("Name") String name,
+                                             @Field("PersonId") String personId,
+                                             @Field("Phonenumber") String phoneNum,
+                                             @Field("Pwd") String pwd,
+                                             @Field("Area") String area,
+                                             @Field("ClientID") String clientId);
     /*@POST(QFoodApi.WXPAY_CREATE_ORDER_URL)
     Observable<String> getPrepayId(@QueryMap Map<String, String> orderParams);*/
 }

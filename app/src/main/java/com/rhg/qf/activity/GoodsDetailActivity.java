@@ -26,7 +26,6 @@ import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.ShoppingCartWithNumber;
-import com.rhg.qf.widget.UIAlertView;
 import com.umeng.socialize.media.UMImage;
 
 import java.util.Locale;
@@ -69,13 +68,13 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     //    private boolean isLike;
 
     Bundle bundle;
-
     GoodsDetailPresenter goodsDetailPresenter;
     String foodId;
     private boolean isNeedLoc;
     private String location;
     private MyLocationListener myLocationListener;
-    private String temp_productId;
+    private String price;
+    String image;
 
 
     public GoodsDetailActivity() {
@@ -203,6 +202,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     }
 
     private void bindData(GoodsDetailUrlBean.GoodsDetailBean _bean) {
+        image = _bean.getPicsrc().get(0);
         ivBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
 
             @Override
@@ -214,8 +214,9 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         tvSellNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.sellNumber),
                 _bean.getMonthlySales()));
         tvDescriptionContent.setText(_bean.getMessage());
+        price = _bean.getPrice();
         tvPriceNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
-                _bean.getPrice()));
+                price));
     }
 
     @OnClick({R.id.tb_left_iv, R.id.tb_right_ll/*, R.id.ivAddToShoppingCart*/, R.id.ivShare,
@@ -282,9 +283,18 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 dialogShow();
                 break;*/
             case R.id.bt_buy:
+                if (Integer.valueOf(tvNum.getText().toString()) == 0) {
+                    ToastHelper.getInstance()._toast("未选择商品数量");
+                    return;
+                }
                 Intent intent = new Intent(GoodsDetailActivity.this,
                         PayActivity.class);
                                            /*todo 带上参数*/
+                intent.putExtra(AppConstants.KEY_PRODUCT_NAME, tvGoodsName.getText().toString());
+                intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
+                intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,
+                        String.valueOf(Integer.valueOf(tvNum.getText().toString()) * Integer.valueOf(price)));
+                intent.putExtra(AppConstants.KEY_IMAGE, image);
                 startActivity(intent);
                 break;
         }

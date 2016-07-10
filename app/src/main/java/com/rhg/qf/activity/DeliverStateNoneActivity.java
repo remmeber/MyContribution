@@ -1,9 +1,12 @@
 package com.rhg.qf.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.DeliverStatePresenter;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.LineProgress;
 import com.rhg.qf.widget.MyRatingBar;
@@ -20,7 +23,7 @@ import butterknife.OnClick;
  *time 2016/7/6 21:37
  *email 1013773046@qq.com
  */
-public class DeliverStateNoneActivity extends BaseFragmentActivity {
+public class DeliverStateNoneActivity extends BaseAppcompactActivity {
 
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;
@@ -31,16 +34,25 @@ public class DeliverStateNoneActivity extends BaseFragmentActivity {
     @Bind(R.id.rb_deliver_service)
     MyRatingBar rbDeliverService;
 
+    String orderId;
+    DeliverStatePresenter getDeliverStatePresenter;
+
+    @Override
+    public void dataReceive(Intent intent) {
+        orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
+    }
+
+    @Override
+    public void loadingData() {
+        getDeliverStatePresenter = new DeliverStatePresenter(this);
+        getDeliverStatePresenter.getDeliverState(AppConstants.ORDER_STYLE,/*orderId*/"1");
+    }
 
     @Override
     protected int getLayoutResId() {
         return R.layout.food_deliver_layout;
     }
 
-    @Override
-    protected void initView(View view) {
-
-    }
 
     @Override
     protected void initData() {
@@ -51,7 +63,9 @@ public class DeliverStateNoneActivity extends BaseFragmentActivity {
 
     @Override
     protected void showSuccess(Object s) {
-
+        if (s instanceof String) {
+            foodDeliverProgress.setState(2);
+        }
     }
 
     @Override

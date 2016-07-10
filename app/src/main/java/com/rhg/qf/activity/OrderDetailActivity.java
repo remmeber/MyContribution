@@ -14,7 +14,9 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.FoodsDetailAdapter;
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.ModifyUserOrderPresenter;
 import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
+import com.rhg.qf.utils.ToastHelper;
 
 import java.util.Locale;
 
@@ -62,6 +64,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     TextView tvEdit;
 
     OrderDetailPresenter getOrderDetailPresenter;
+    ModifyUserOrderPresenter modifyUserOrderPresenter;
 
     String orderId;
     int orderTag;
@@ -132,6 +135,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     protected void showSuccess(Object s) {
         if (s instanceof OrderDetailUrlBean.OrderDetailBean)
             setData((OrderDetailUrlBean.OrderDetailBean) s);
+        if (s instanceof String)
+            ToastHelper.getInstance()._toast((String) s);
     }
 
     private void setData(OrderDetailUrlBean.OrderDetailBean orderDetail) {
@@ -159,8 +164,25 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                 finish();
                 break;
             case R.id.btDrawback:
+                if (modifyUserOrderPresenter == null)
+                    modifyUserOrderPresenter = new ModifyUserOrderPresenter(this);
+                modifyUserOrderPresenter.modifyUserOrderState("1"/*订单号*/, "0"/*0:退单，1,：完成*/);
                 break;
             case R.id.btPayOrRateOrConform:
+                if (orderTag == AppConstants.ORDER_DELIVERING) {
+                    Intent intent = new Intent(this, DeliverStateNoneActivity.class);
+                    intent.putExtra(AppConstants.KEY_ORDER_ID, orderId);
+                    startActivity(intent);
+                }
+                if (orderTag == AppConstants.ORDER_UNPAID) {
+                    Intent intent = new Intent(this, PayActivity.class);
+                    intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "");
+                    intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
+                    intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,
+                            String.valueOf(orderPrice));
+                    intent.putExtra(AppConstants.KEY_IMAGE, "");
+                    startActivity(intent);
+                }
                 break;
         }
     }
