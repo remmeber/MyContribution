@@ -218,7 +218,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 _bean.getPrice()));
     }
 
-    @OnClick({R.id.tb_left_iv, R.id.tb_right_ll, R.id.ivAddToShoppingCart, R.id.ivShare,
+    @OnClick({R.id.tb_left_iv, R.id.tb_right_ll/*, R.id.ivAddToShoppingCart*/, R.id.ivShare,
             R.id.ivReduce, R.id.ivAdd, R.id.bt_buy})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -278,9 +278,9 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                     }
                 });
                 break;
-            case R.id.ivAddToShoppingCart:
+            /*case R.id.ivAddToShoppingCart:
                 dialogShow();
-                break;
+                break;*/
             case R.id.bt_buy:
                 Intent intent = new Intent(GoodsDetailActivity.this,
                         PayActivity.class);
@@ -290,13 +290,15 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         }
     }
 
-    private void dialogShow() {
+    /*private void dialogShow() {
         final UIAlertView delDialog = new UIAlertView(this, "温馨提示", "加入购物车成功!",
                 "继续购买", "前往购物车");
         delDialog.show();
         delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
                                        @Override
                                        public void doLeft() {
+                                           tvNum.setText(String.valueOf(Integer.parseInt(tvNum.getText().toString()) + 1));
+
                                            delDialog.dismiss();
                                        }
 
@@ -311,7 +313,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                                        }
                                    }
         );
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

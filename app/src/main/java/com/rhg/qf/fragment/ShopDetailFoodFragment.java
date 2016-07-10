@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.rhg.qf.R;
-import com.rhg.qf.bean.ShopDetailUriBean;
+import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.ShopDetailPresenter;
 import com.rhg.qf.ui.FragmentController;
@@ -28,7 +28,7 @@ public class ShopDetailFoodFragment extends BaseFragment {
     FragmentController fragmentController;
     Fragment[] fragments;
 
-    List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
+    List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList;
     ShopDetailPresenter shopDetailPresenter;
 
     String merchantId;
@@ -81,7 +81,7 @@ public class ShopDetailFoodFragment extends BaseFragment {
 
     @Override
     public void showSuccess(Object o) {
-        shopDetailBeanList = (List<ShopDetailUriBean.ShopDetailBean>) o;
+        shopDetailBeanList = (List<ShopDetailUrlBean.ShopDetailBean>) o;
         /*((FoodTypeFragment) fragments[verticalTabLayout.getCurrentPosition()])
                 .setShopDetailBeanList(shopDetailBeanList);*/
     }

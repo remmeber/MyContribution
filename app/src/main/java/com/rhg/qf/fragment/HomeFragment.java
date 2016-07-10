@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void loadData() {
-        homePresenter.getHomeData();
+        homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
     }
 
     @Override
@@ -157,7 +157,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 if (TextUtils.isEmpty(tlLeftTV.getText()) || "null".equals(tlLeftTV.getText())) {
                     reStartLocation();
                 }
-                homePresenter.getHomeData();
+                homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
             }
         });
 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
-import com.rhg.qf.bean.ShopDetailUriBean;
+import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.impl.RcvItemClickListener;
 
 import java.util.List;
@@ -28,15 +28,15 @@ import butterknife.ButterKnife;
  */
 public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
-    List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
-    private RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> onGoodsItemClickListener;
+    List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList;
+    private RcvItemClickListener<ShopDetailUrlBean.ShopDetailBean> onGoodsItemClickListener;
 
-    public GoodsListAdapter(Context context, List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
+    public GoodsListAdapter(Context context, List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList) {
         this.context = context;
         this.shopDetailBeanList = shopDetailBeanList;
     }
 
-    public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
+    public void setShopDetailBeanList(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList) {
         this.shopDetailBeanList = shopDetailBeanList;
     }
 
@@ -50,12 +50,12 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         GoodsDetailViewHolder goodsDetailViewHolder = (GoodsDetailViewHolder) holder;
-        ShopDetailUriBean.ShopDetailBean shopDetailBean = shopDetailBeanList.get(position);
+        ShopDetailUrlBean.ShopDetailBean shopDetailBean = shopDetailBeanList.get(position);
         bindData(goodsDetailViewHolder, shopDetailBean);
     }
 
     private void bindData(final GoodsDetailViewHolder goodsDetailViewHolder,
-                          final ShopDetailUriBean.ShopDetailBean shopDetailBean) {
+                          final ShopDetailUrlBean.ShopDetailBean shopDetailBean) {
         ImageLoader.getInstance().displayImage(shopDetailBean.getPic(),
                 goodsDetailViewHolder.ivGoodsDetail);
         goodsDetailViewHolder.tvGoodsDetailName.setText(shopDetailBean.getName());
@@ -78,7 +78,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return shopDetailBeanList == null ? 0 : shopDetailBeanList.size();
     }
 
-    public void setOnGoodsItemClickListener(RcvItemClickListener<ShopDetailUriBean.ShopDetailBean>
+    public void setOnGoodsItemClickListener(RcvItemClickListener<ShopDetailUrlBean.ShopDetailBean>
                                                     onGoodsItemClickListener) {
         this.onGoodsItemClickListener = onGoodsItemClickListener;
     }

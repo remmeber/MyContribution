@@ -23,8 +23,8 @@ public class HomePresenter {
         homeModel = new HomeModel();
     }
 
-    public void getHomeData() {
-        homeModel.getHomeData().observeOn(AndroidSchedulers.mainThread())
+    public void getHomeData(String headrestaurants) {
+        homeModel.getHomeData(headrestaurants).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<HomeBean>() {
                     @Override

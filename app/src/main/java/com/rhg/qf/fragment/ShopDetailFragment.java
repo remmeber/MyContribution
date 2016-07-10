@@ -5,7 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.bean.MerchantInfoDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.MerchantInfoDetailPresenter;
+
+import java.util.Locale;
 
 import butterknife.Bind;
 
@@ -22,32 +26,19 @@ public class ShopDetailFragment extends BaseFragment {
     TextView tvShopAddress;
     @Bind(R.id.tv_seller_note)
     TextView tvSellerNote;
+    String merchantId;
 
-    String phoneNumber;
-    String Address;
-    String sellerNote;
+    MerchantInfoDetailPresenter getMerchantInfoPresenter;
 
     @Override
     public void receiveData(Bundle arguments) {
-        String _address = getResources().getString(R.string.addrss);
-        String _note = getResources().getString(R.string.note);
-        if (arguments != null) {
-            phoneNumber = arguments.getString(AppConstants.KEY_OR_SP_PHONE);
-            String _temp = arguments.getString(AppConstants.KEY_ADDRESS);
-            if (_temp == null || "".equals(_temp))
-                Address = _address + "无";
-            else
-                Address = _address + _temp;
-            _temp = arguments.getString(AppConstants.KEY_NOTE);
-            if (_temp == null || "".equals(_temp))
-                sellerNote = _note + "无";
-            else
-                sellerNote = _note + _temp;
-        } else {
-            phoneNumber = "0246813579";
-            Address = _address + "江苏省南京市江宁区秣周东路无线谷";
-            sellerNote = _note + "无线谷是一个非常神奇的地方";
-        }
+        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
+    }
+
+    @Override
+    public void loadData() {
+        getMerchantInfoPresenter = new MerchantInfoDetailPresenter(this);
+        getMerchantInfoPresenter.getMerchantInfo(AppConstants.MERCHANT_INFO, "1");
     }
 
     @Override
@@ -57,9 +48,6 @@ public class ShopDetailFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        tvPhoneNumber.setText(phoneNumber);
-        tvShopAddress.setText(Address);
-        tvSellerNote.setText(sellerNote);
     }
 
     @Override
@@ -68,11 +56,19 @@ public class ShopDetailFragment extends BaseFragment {
 
     @Override
     protected void showFailed() {
-
     }
 
     @Override
     public void showSuccess(Object o) {
+        if (o instanceof MerchantInfoDetailUrlBean.MerchantInfoDetailBean) {
+            MerchantInfoDetailUrlBean.MerchantInfoDetailBean _data = (MerchantInfoDetailUrlBean.MerchantInfoDetailBean) o;
+            tvPhoneNumber.setText(String.format(Locale.ENGLISH, getContext().getResources().getString(R.string.tvContactPhone),
+                    _data.getPhonenumber()));
+            tvShopAddress.setText(String.format(Locale.ENGLISH, getContext().getResources().getString(R.string.tvMerchantAddress),
+                    _data.getAddress()));
+            tvSellerNote.setText(String.format(Locale.ENGLISH, getContext().getResources().getString(R.string.tvMerchantNote),
+                    _data.getMessage()));
+        }
 
     }
 }

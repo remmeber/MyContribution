@@ -1,31 +1,29 @@
 package com.rhg.qf.mvp.model;
 
-import com.rhg.qf.bean.OrderUrlBean;
-import com.rhg.qf.mvp.api.QFoodApiMamager;
 
-import java.util.List;
+import com.rhg.qf.bean.OrderDetailUrlBean;
+import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 
-/**
- * desc:mvp测试实现
- * author：remember
- * time：2016/5/28 17:00
- * email：1013773046@qq.com
+/*
+ *desc
+ *author rhg
+ *time 2016/7/10 17:20
+ *email 1013773046@qq.com
  */
 public class OrderDetailModel {
-
-    public Observable<List<OrderUrlBean.OrderBean>> getOrderDetail(String table, String userId, int style) {
-        return QFoodApiMamager.getInstant().getQFoodApiService().getOrderDetail(table, userId, String.valueOf(style))
-                .flatMap(new Func1<OrderUrlBean, Observable<List<OrderUrlBean.OrderBean>>>() {
+    public Observable<OrderDetailUrlBean.OrderDetailBean> getOrderDetail(final String orderDetail, String orderId) {
+        return QFoodApiMamager.getInstant().getQFoodApiService().getOrderDetail(orderDetail, orderId)
+                .flatMap(new Func1<OrderDetailUrlBean, Observable<OrderDetailUrlBean.OrderDetailBean>>() {
                     @Override
-                    public Observable<List<OrderUrlBean.OrderBean>> call(final OrderUrlBean orderUrlBean) {
-                        return Observable.create(new Observable.OnSubscribe<List<OrderUrlBean.OrderBean>>() {
+                    public Observable<OrderDetailUrlBean.OrderDetailBean> call(final OrderDetailUrlBean orderDetailUrlBean) {
+                        return Observable.create(new Observable.OnSubscribe<OrderDetailUrlBean.OrderDetailBean>() {
                             @Override
-                            public void call(Subscriber<? super List<OrderUrlBean.OrderBean>> subscriber) {
-                                subscriber.onNext(orderUrlBean.getRows());
+                            public void call(Subscriber<? super OrderDetailUrlBean.OrderDetailBean> subscriber) {
+                                subscriber.onNext(orderDetailUrlBean.getRows().get(0));
                             }
                         });
                     }

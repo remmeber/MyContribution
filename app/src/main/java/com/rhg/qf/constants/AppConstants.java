@@ -67,6 +67,7 @@ public class AppConstants {
     public static final String KEY_PRODUCT_NAME = "product_name";
     public static final String KEY_MERCHANT_ID = "merchant_id";
     public static final String KEY_PRODUCT_ID = "product_id";
+    public static final String KEY_ORDER_ID = "order_id";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_MERCHANT_LOGO = "merchant_logo";
     public static final String KEY_PRODUCT_PRICE = "product_price";
@@ -121,11 +122,14 @@ public class AppConstants {
     public static final String TABLE_FOODMESSAGE = "foodmessage";
     public static final String TABLE_FOOD = "food";
     public static final String RESTAURANTS = "restaurants";
+    public static final String HOME_RESTAURANTS = "headrestaurants";
     public static final String SEARCHRESTAURANTS = "searchrestaurants";
     public static final String HOTFOOD = "hotfood";
     public static final String TABLE_ORDER = "order";
     public static final String ADDRESS_TABLE = "address";
-    public static final String DELIVER_ORDER ="deliverorder";
+    public static final String DELIVER_ORDER = "deliverorder";
+    public static final String MERCHANT_INFO = "restaurantdetail";
+    public static final String ORDER_DETAIL = "orderdetail";
 
     /**
      * 响应结果，正确

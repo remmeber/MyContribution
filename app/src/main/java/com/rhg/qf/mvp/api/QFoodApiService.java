@@ -9,9 +9,11 @@ import com.rhg.qf.bean.FavorableFoodUrlBean;
 import com.rhg.qf.bean.GoodsDetailUrlBean;
 import com.rhg.qf.bean.HeadMerchantUrlBean;
 import com.rhg.qf.bean.HotFoodUrlBean;
+import com.rhg.qf.bean.MerchantInfoDetailUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
+import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
-import com.rhg.qf.bean.ShopDetailUriBean;
+import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.bean.SignInBean;
 import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
@@ -64,12 +66,20 @@ public interface QFoodApiService {
                                                  @Field("X") String longitude,
                                                  @Field("Y") String latitude);
 
-    /*店铺详情*/
+    /*店铺食品详情*/
     @FormUrlEncoded
     @POST("Table/Json.php")
     //table:food; merchantId:商家Id号
-    Observable<ShopDetailUriBean> getShopDetail(@Field("Table") String food,
-                                                @Field("Restaurant") int merchantId);
+    Observable<ShopDetailUrlBean> getMerchantFoods(@Field("Table") String food,
+                                                   @Field("Restaurant") int merchantId);
+
+    /*店铺信息详情*/
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    //table:food; merchantId:商家Id号
+    Observable<MerchantInfoDetailUrlBean> getMerchantInfo(@Field("Table") String restaurantdetail,
+                                                          @Field("ID") String merchantId);
+
 
     /*商品详情*/
     @FormUrlEncoded
@@ -78,13 +88,20 @@ public interface QFoodApiService {
     Observable<GoodsDetailUrlBean> getGoodsDetail(@Field("Table") String table,
                                                   @Field("Foodid") int foodId);
 
-    /*用户订单详情*/
+
+    /*用户订单列表 API4*/
     @FormUrlEncoded
     @POST("Table/Json.php")
     //order:foodmessage;userId:用户ID;style:0.全部、1.待付款、2.进行中、3.已完成、、4.已退款
-    Observable<OrderUrlBean> getOrderDetail(@Field("Table") String order,
-                                            @Field("Client") String userId,
-                                            @Field("Style") String style);
+    Observable<OrderUrlBean> getOrders(@Field("Table") String order,
+                                       @Field("Client") String userId,
+                                       @Field("Style") String style);
+
+    /*订单详情*/
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<OrderDetailUrlBean> getOrderDetail(@Field("Table") String orderDetail,
+                                                  @Field("ID") String orderId);
 
     /*跑腿员订单详情 API19*/
     @FormUrlEncoded

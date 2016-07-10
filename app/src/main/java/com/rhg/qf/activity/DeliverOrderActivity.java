@@ -13,6 +13,7 @@ import com.rhg.qf.adapter.DeliverOrderItemAdapter;
 import com.rhg.qf.bean.DeliverOrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
+import com.rhg.qf.mvp.presenter.DeliverOrderPresenter;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
 
@@ -47,12 +48,12 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     SwipeRefreshLayout commonSwipe;
     private List<DeliverOrderUrlBean.DeliverOrderBean> deliverOrderBeanList = new ArrayList<>();
     private DeliverOrderItemAdapter deliverOrderItemAdapter;
-    GetDeliverOrderPresenter getDeliverOrder;
+    DeliverOrderPresenter getDeliverOrder;
 
     @Override
     public void loadingData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        getDeliverOrder = new GetDeliverOrderPresenter(this);
+        getDeliverOrder = new DeliverOrderPresenter(this);
         getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, "1");
     }
 
