@@ -1,34 +1,34 @@
 package com.rhg.qf.mvp.presenter;
 
-import com.rhg.qf.bean.OrderUrlBean;
+import android.util.Log;
+
+import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.mvp.model.OrderDetailModel;
 import com.rhg.qf.mvp.view.BaseView;
-
-import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * desc:mvp presenter 测试实现类
- * author：remember
- * time：2016/5/28 17:02
- * email：1013773046@qq.com
+/*
+ *desc
+ *author rhg
+ *time 2016/7/10 19:18
+ *email 1013773046@qq.com
  */
 public class OrderDetailPresenter {
-    BaseView testView;
-    OrderDetailModel orderDetailModel;
+    BaseView getOrderDetailView;
+    OrderDetailModel getOrderDetailModel;
 
-    public OrderDetailPresenter(BaseView baseView) {
-        testView = baseView;
-        orderDetailModel = new OrderDetailModel();
+    public OrderDetailPresenter(BaseView getOrderDetailView) {
+        this.getOrderDetailView = getOrderDetailView;
+        getOrderDetailModel = new OrderDetailModel();
     }
 
-    public void getData(String table, String userId, int style) {
-        orderDetailModel.getOrderDetail(table, userId, style).observeOn(AndroidSchedulers.mainThread())
+    public void getOrderDetail(final String orderDetail, String orderId) {
+        getOrderDetailModel.getOrderDetail(orderDetail, orderId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<OrderUrlBean.OrderBean>>() {
+                .subscribe(new Observer<OrderDetailUrlBean.OrderDetailBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -36,12 +36,13 @@ public class OrderDetailPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("RHG", e.getMessage());
                     }
 
                     @Override
-                    public void onNext(List<OrderUrlBean.OrderBean> orderBeanList) {
-                        testView.showData(orderBeanList);
+                    public void onNext(OrderDetailUrlBean.OrderDetailBean orderDetailUrlBean) {
+                        Log.i("RHG", "SUCCESS");
+                        getOrderDetailView.showData(orderDetailUrlBean);
                     }
                 });
     }

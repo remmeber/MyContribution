@@ -8,7 +8,7 @@ import java.util.List;
  *time：2016/7/7 23:49
  *email：1013773046@qq.com
  */
-public class ShopDetailUriBean {
+public class ShopDetailUrlBean {
     /**
      * result : 0
      * msg : 请求成功

@@ -10,6 +10,7 @@ import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * desc:
@@ -37,11 +38,12 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
 
     @Override
     protected void bindBodyData(final BodyViewHolder holder, final OrderUrlBean.OrderBean data, int type) {
-        holder.sellerName.setText("ddddddd");
+        holder.sellerName.setText("");
         ImageLoader.getInstance().displayImage(AppConstants.images[0], holder.sellerImage);
         holder.tv_state.setText(data.getStyle());
         holder.tv_orderTime.setText(data.getOtime());
-        holder.tv_orderTag.setText(data.getID());
+        holder.tv_orderTag.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvOrderNumber),
+                data.getID()));
         holder.tv_totalMoney.setText(String.format(context.getResources().getString(R.string.countMoney),
                 data.getPrice()));
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {

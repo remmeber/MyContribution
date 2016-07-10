@@ -1,6 +1,6 @@
 package com.rhg.qf.mvp.model;
 
-import com.rhg.qf.bean.ShopDetailUriBean;
+import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import java.util.List;
@@ -17,18 +17,18 @@ import rx.functions.Func1;
  */
 public class ShopDetailModel {
 
-    public Observable<List<ShopDetailUriBean.ShopDetailBean>> getShopDetail(String table, String merchantId) {
+    public Observable<List<ShopDetailUrlBean.ShopDetailBean>> getShopDetail(String table, String merchantId) {
         return QFoodApiMamager.getInstant().getQFoodApiService().
-                getShopDetail(table, Integer.valueOf(merchantId))
-                .flatMap(new Func1<ShopDetailUriBean, Observable<List<ShopDetailUriBean.ShopDetailBean>>>() {
+                getMerchantFoods(table, Integer.valueOf(merchantId))
+                .flatMap(new Func1<ShopDetailUrlBean, Observable<List<ShopDetailUrlBean.ShopDetailBean>>>() {
 
                     @Override
-                    public Observable<List<ShopDetailUriBean.ShopDetailBean>>
-                    call(final ShopDetailUriBean shopDetailUriBean) {
-                        return Observable.create(new Observable.OnSubscribe<List<ShopDetailUriBean.ShopDetailBean>>() {
+                    public Observable<List<ShopDetailUrlBean.ShopDetailBean>>
+                    call(final ShopDetailUrlBean shopDetailUrlBean) {
+                        return Observable.create(new Observable.OnSubscribe<List<ShopDetailUrlBean.ShopDetailBean>>() {
                             @Override
-                            public void call(Subscriber<? super List<ShopDetailUriBean.ShopDetailBean>> subscriber) {
-                                subscriber.onNext(shopDetailUriBean.getRows());
+                            public void call(Subscriber<? super List<ShopDetailUrlBean.ShopDetailBean>> subscriber) {
+                                subscriber.onNext(shopDetailUrlBean.getRows());
                             }
                         });
                     }

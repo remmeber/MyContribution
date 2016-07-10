@@ -11,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.adapter.FoodsDetailAdapter;
+import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
 
 import java.util.Locale;
 
@@ -24,7 +27,7 @@ import butterknife.OnClick;
  *time 2016/6/22 20:31
  *email 1013773046@qq.com
  */
-public class OrderDetailActivity extends BaseFragmentActivity {
+public class OrderDetailActivity extends BaseAppcompactActivity {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
@@ -58,19 +61,29 @@ public class OrderDetailActivity extends BaseFragmentActivity {
     @Bind(R.id.tv_edit)
     TextView tvEdit;
 
+    OrderDetailPresenter getOrderDetailPresenter;
+
+    String orderId;
     int orderTag;
-    String orderReceiver;
-    String orderPhone;
-    String orderAddress;
     String orderPrice;
+    private FoodsDetailAdapter foodsDetailAdapter;
+    OrderDetailUrlBean.OrderDetailBean foodBean = new OrderDetailUrlBean.OrderDetailBean();
 
     @Override
     public void dataReceive(Intent intent) {
+        orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
+        orderPrice = intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE);
         orderTag = intent.getIntExtra(AppConstants.KEY_ORDER_TAG, -1);
+        /*
         orderReceiver = intent.getStringExtra(AppConstants.SP_USER_NAME);
         orderPhone = intent.getStringExtra(AppConstants.KEY_OR_SP_PHONE);
-        orderAddress = intent.getStringExtra(AppConstants.KEY_ADDRESS);
-        orderPrice = intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE);
+        orderAddress = intent.getStringExtra(AppConstants.KEY_ADDRESS);*/
+    }
+
+    @Override
+    public void loadingData() {
+        getOrderDetailPresenter = new OrderDetailPresenter(this);
+        getOrderDetailPresenter.getOrderDetail(AppConstants.ORDER_DETAIL,/*orderId */"1");
     }
 
     @Override
@@ -79,30 +92,19 @@ public class OrderDetailActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void initView(View view) {
-
-    }
-
-    @Override
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        tvReceiver.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
-                orderReceiver));
-        tvReceiverPhone.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
-                orderPhone));
-        tvReceiverAddress.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
-                orderAddress));
         ivEditRight.setVisibility(View.GONE);
         tvEdit.setVisibility(View.GONE);
-        tvOrderNote.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvNote),
-                "无"));
-        tvMerchantName.setText("黄焖鸡");/*接口中订单名字*/
-        btDrawback.setVisibility(View.GONE);
+        if (orderTag != AppConstants.ORDER_DELIVERING)
+            btDrawback.setVisibility(View.GONE);
         /*recycleview*/
         rcyPayItem.setLayoutManager(new LinearLayoutManager(this));
-        rcyPayItem.setHasFixedSize(false);
+        rcyPayItem.setHasFixedSize(true);
+        foodsDetailAdapter = new FoodsDetailAdapter(this, foodBean);
+        rcyPayItem.setAdapter(foodsDetailAdapter);
         /*recycleview*/
 
         lyTotalCount.setVisibility(View.VISIBLE);
@@ -128,7 +130,21 @@ public class OrderDetailActivity extends BaseFragmentActivity {
 
     @Override
     protected void showSuccess(Object s) {
+        if (s instanceof OrderDetailUrlBean.OrderDetailBean)
+            setData((OrderDetailUrlBean.OrderDetailBean) s);
+    }
 
+    private void setData(OrderDetailUrlBean.OrderDetailBean orderDetail) {
+        tvReceiver.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
+                orderDetail.getReceiver()));
+        tvReceiverPhone.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
+                "123456789"));
+        tvReceiverAddress.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
+                orderDetail.getAddress()));
+        tvOrderNote.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvNote),
+                /*TODO 缺少note*/"无"));
+        tvMerchantName.setText("");/*接口中订单名字*/
+        foodsDetailAdapter.setFoodsBeanList(orderDetail);
     }
 
     @Override

@@ -62,7 +62,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
             merchantAddress = bundle.getString(AppConstants.KEY_ADDRESS, "无");
             merchantNote = bundle.getString(AppConstants.KEY_NOTE, "无");
         } else {
-            merchantName = "东大东食府";
+            merchantName = "";
             merchantId = "";
             shopLogoUrl = "http://img2.3lian.com/2014/f2/37/d/40.jpg";
         }
@@ -95,10 +95,6 @@ public class ShopDetailActivity extends BaseFragmentActivity {
         fragment.setArguments(bundle);
         fragments.add(fragment);
         fragment = new ShopDetailFragment();
-        bundle = new Bundle();
-        bundle.putString(AppConstants.KEY_OR_SP_PHONE, merchantPhone);
-        bundle.putString(AppConstants.KEY_ADDRESS, merchantAddress);
-        bundle.putString(AppConstants.KEY_NOTE, merchantNote);
         fragment.setArguments(bundle);
         fragments.add(fragment);
         QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,

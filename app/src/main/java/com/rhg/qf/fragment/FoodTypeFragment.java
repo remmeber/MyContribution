@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.GoodsDetailActivity;
 import com.rhg.qf.adapter.GoodsListAdapter;
-import com.rhg.qf.bean.ShopDetailUriBean;
+import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.ShopDetailPresenter;
@@ -28,9 +28,9 @@ import butterknife.Bind;
  * time：2016/5/28 16:43
  * email：1013773046@qq.com
  */
-public class FoodTypeFragment extends BaseFragment implements RcvItemClickListener<ShopDetailUriBean.ShopDetailBean> {
+public class FoodTypeFragment extends BaseFragment implements RcvItemClickListener<ShopDetailUrlBean.ShopDetailBean> {
     //    private int tag;
-    List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList;
+    List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList;
     GoodsListAdapter goodsListAdapter;
     ShopDetailPresenter shopDetailPresenter;
 
@@ -61,7 +61,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        shopDetailPresenter.getShopDetail("food", merchantId);
+        shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                shopDetailPresenter.getShopDetail("food", merchantId);
+                shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);
             }
 
         });
@@ -102,7 +102,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
 
     @Override
     public void showSuccess(Object o) {
-        shopDetailBeanList = (List<ShopDetailUriBean.ShopDetailBean>) o;
+        shopDetailBeanList = (List<ShopDetailUrlBean.ShopDetailBean>) o;
         if (goodsListAdapter != null) {
             goodsListAdapter.setShopDetailBeanList(shopDetailBeanList);
             goodsListAdapter.notifyDataSetChanged();
@@ -114,7 +114,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     }
 
     @Override
-    public void onItemClickListener(int position, ShopDetailUriBean.ShopDetailBean item) {
+    public void onItemClickListener(int position, ShopDetailUrlBean.ShopDetailBean item) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         /*intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
@@ -124,7 +124,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         startActivityForResult(intent, 1);
     }
 
-   /* public void setShopDetailBeanList(List<ShopDetailUriBean.ShopDetailBean> shopDetailBeanList) {
+   /* public void setShopDetailBeanList(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList) {
         this.shopDetailBeanList = shopDetailBeanList;
         if (swipeRefreshLayout.isRefreshing())
             swipeRefreshLayout.setRefreshing(false);

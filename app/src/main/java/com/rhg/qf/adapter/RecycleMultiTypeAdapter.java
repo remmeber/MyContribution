@@ -26,7 +26,6 @@ import com.rhg.qf.bean.FooterTypeModel;
 import com.rhg.qf.bean.HeaderTypeModel;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.RecommendListTypeModel;
-import com.rhg.qf.bean.RecommendListUrlBean;
 import com.rhg.qf.bean.RecommendTextTypeModel;
 import com.rhg.qf.bean.TextTypeBean;
 import com.rhg.qf.constants.AppConstants;
@@ -36,6 +35,7 @@ import com.rhg.qf.widget.MyGridView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * desc:复合类型recycleview 适配器
@@ -107,7 +107,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 return /*new RecommendListTypeViewHolder(layoutInflater.inflate(R.layout.recommend_list_rcv, parent, false), viewType);*/
                         new BodyViewHolder(View.inflate(context, R.layout.item_sell_body, null), AppConstants.TypeHome);
             case TYPE_FOOTER:
-                return new FooterTypeViewHolder(layoutInflater.inflate(R.layout.recyclefooter, parent, false));
+                return new FooterTypeViewHolder(layoutInflater.inflate(R.layout.rcv_footer_layout, parent, false));
             default:
                 return null;
         }
@@ -197,7 +197,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         final MerchantUrlBean.MerchantBean data = listData.getRecommendShopBeanEntity().get(position - 5);
         holder.sellerName.setText(data.getName());
         ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
-        holder.sellerDistance.setText(data.getDistance());
+        holder.sellerDistance.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvDistance),
+                data.getDistance()));
         holder.foodType.setText(data.getStyle());
         if (onItemClickListener != null)
             holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
@@ -209,8 +210,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindViewHolderFooter(FooterTypeViewHolder holder, FooterTypeModel data, int position) {
-        holder.button.setText(data.getText());
-        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
+        holder.footerText.setText(context.getResources().getString(R.string.footerText));
     }
 
     @Override
@@ -305,17 +305,12 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private class FooterTypeViewHolder extends RecyclerView.ViewHolder {
-        private final Button button;
+        TextView footerText;
 
         public FooterTypeViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.footerButton);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "footer is click", Toast.LENGTH_SHORT).show();
-                }
-            });
+            footerText = (TextView) itemView.findViewById(R.id.footerView);
+
         }
     }
 

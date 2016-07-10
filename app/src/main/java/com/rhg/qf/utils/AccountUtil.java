@@ -63,7 +63,7 @@ public class AccountUtil {
         user.setCName(getStringByKey(AppConstants.SP_USER_NAME));
         user.setPhonenumber(getStringByKey(AppConstants.KEY_OR_SP_PHONE));
 //        user.setPwd(getStringByKey(AppConstants.SP_PASSWORD));
-        user.setPic(getStringByKey(AppConstants.HEAD_IMAGE_NAME));
+        user.setPic(getStringByKey(AppConstants.SP_HEAD_IMAGE));
         return user;
     }
 

@@ -13,7 +13,7 @@ import com.rhg.qf.adapter.QFoodOrderAdapter;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
-import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
+import com.rhg.qf.mvp.presenter.OrdersPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +36,12 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     SwipeRefreshLayout commonSwipe;
     QFoodOrderAdapter qFoodOrderAdapter;
     List<OrderUrlBean.OrderBean> orderBeanList = new ArrayList<>();
-    OrderDetailPresenter rderDetailPresenter;
+    OrdersPresenter getOrdersPresenter;
     String userId;
     int style;
 
     public AbstractOrderFragment() {
-        rderDetailPresenter = new OrderDetailPresenter(this);
+        getOrdersPresenter = new OrdersPresenter(this);
         userId = "1";/*从数据库中获取*/
         style = getFmTag();
     }
@@ -60,7 +60,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        rderDetailPresenter.getData(AppConstants.TABLE_ORDER, userId, style);
+        getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, style);
     }
 
     @Override
@@ -73,7 +73,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                rderDetailPresenter.getData(AppConstants.TABLE_ORDER, userId, style);
+                getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, style);
             }
 
         });
@@ -108,11 +108,12 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Override
     public void onItemClickListener(int position, OrderUrlBean.OrderBean item) {
         Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
-        _intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());
-        _intent.putExtra(AppConstants.KEY_ADDRESS, item.getAddress());
-        _intent.putExtra(AppConstants.KEY_OR_SP_PHONE, item.getPhone());
+        _intent.putExtra(AppConstants.KEY_ORDER_ID,item.getID());
         _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
         _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
+        /*_intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());
+        _intent.putExtra(AppConstants.KEY_ADDRESS, item.getAddress());
+        _intent.putExtra(AppConstants.KEY_OR_SP_PHONE, item.getPhone());;*/
         startActivity(_intent);
     }
 

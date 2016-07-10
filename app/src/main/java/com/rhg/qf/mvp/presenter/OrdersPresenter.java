@@ -1,7 +1,7 @@
 package com.rhg.qf.mvp.presenter;
 
-import com.rhg.qf.bean.ShopDetailUrlBean;
-import com.rhg.qf.mvp.model.ShopDetailModel;
+import com.rhg.qf.bean.OrderUrlBean;
+import com.rhg.qf.mvp.model.OrdersModel;
 import com.rhg.qf.mvp.view.BaseView;
 
 import java.util.List;
@@ -16,18 +16,19 @@ import rx.schedulers.Schedulers;
  * time：2016/5/28 17:02
  * email：1013773046@qq.com
  */
-public class ShopDetailPresenter {
+public class OrdersPresenter {
     BaseView testView;
-    ShopDetailModel shopDetailModel;
+    OrdersModel getOrdersModel;
 
-    public ShopDetailPresenter(BaseView baseView) {
+    public OrdersPresenter(BaseView baseView) {
         testView = baseView;
-        shopDetailModel = new ShopDetailModel();
+        getOrdersModel = new OrdersModel();
     }
-    public void getShopDetail(String table, String merchantId) {
-        shopDetailModel.getShopDetail(table, merchantId).observeOn(AndroidSchedulers.mainThread())
+
+    public void getOrders(String table, String userId, int style) {
+        getOrdersModel.getOrders(table, userId, style).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<ShopDetailUrlBean.ShopDetailBean>>() {
+                .subscribe(new Observer<List<OrderUrlBean.OrderBean>>() {
                     @Override
                     public void onCompleted() {
 
@@ -39,8 +40,8 @@ public class ShopDetailPresenter {
                     }
 
                     @Override
-                    public void onNext(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeen) {
-                        testView.showData(shopDetailBeen);
+                    public void onNext(List<OrderUrlBean.OrderBean> orderBeanList) {
+                        testView.showData(orderBeanList);
                     }
                 });
     }
