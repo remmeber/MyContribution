@@ -12,7 +12,7 @@ public class HomeBean {
     List<BannerTypeUrlBean.BannerEntity> bannerEntityList;
     TextTypeBean textTypeBean;
     List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodEntityList;
-    List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntityList;
+    List<MerchantUrlBean.MerchantBean> recommendShopBeanEntityList;
 
     public List<BannerTypeUrlBean.BannerEntity> getBannerEntityList() {
         return bannerEntityList;
@@ -38,11 +38,11 @@ public class HomeBean {
         this.favorableFoodEntityList = favorableFoodEntityList;
     }
 
-    public List<RecommendListUrlBean.RecommendShopBeanEntity> getRecommendShopBeanEntityList() {
+    public List<MerchantUrlBean.MerchantBean> getRecommendShopBeanEntityList() {
         return recommendShopBeanEntityList;
     }
 
-    public void setRecommendShopBeanEntityList(List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntityList) {
+    public void setRecommendShopBeanEntityList(List<MerchantUrlBean.MerchantBean> recommendShopBeanEntityList) {
         this.recommendShopBeanEntityList = recommendShopBeanEntityList;
     }
 }

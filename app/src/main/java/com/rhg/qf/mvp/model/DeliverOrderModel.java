@@ -9,14 +9,16 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 
-/*
- *desc 获取跑腿员订单model
- *author rhg
- *time 2016/7/9 12:27
- *email 1013773046@qq.com
+/**
+ *desc:跑腿员订单model
+ *author：remember
+ *time：2016/7/10 11:14
+ *email：1013773046@qq.com
  */
-public class GetDeliverOrderModel {
-    public Observable<List<DeliverOrderUrlBean.DeliverOrderBean>> getDeliverOrder(String deliverOrder, String deliverId) {
+public class DeliverOrderModel {
+
+    public Observable<List<DeliverOrderUrlBean.DeliverOrderBean>> getDeliverOrder(String deliverOrder,
+                                                                                  String deliverId) {
         return QFoodApiMamager.getInstant().getQFoodApiService().getDeliverOrder(deliverOrder, deliverId)
                 .flatMap(new Func1<DeliverOrderUrlBean, Observable<List<DeliverOrderUrlBean.DeliverOrderBean>>>() {
                     @Override

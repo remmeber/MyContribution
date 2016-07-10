@@ -29,6 +29,7 @@ import com.rhg.qf.bean.FavorableTypeModel;
 import com.rhg.qf.bean.FooterTypeModel;
 import com.rhg.qf.bean.HeaderTypeModel;
 import com.rhg.qf.bean.HomeBean;
+import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.RecommendListTypeModel;
 import com.rhg.qf.bean.RecommendListUrlBean;
 import com.rhg.qf.bean.RecommendTextTypeModel;
@@ -52,7 +53,8 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
-        RecycleMultiTypeAdapter.OnGridItemClickListener, RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity>,
+        RecycleMultiTypeAdapter.OnGridItemClickListener,
+        RcvItemClickListener<MerchantUrlBean.MerchantBean>,
         View.OnClickListener {
     FavorableTypeModel favorableTypeModel;
     List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodBeen = new ArrayList<>();
@@ -309,7 +311,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     }
 
     @Override
-    public void onItemClickListener(int position, RecommendListUrlBean.RecommendShopBeanEntity item) {
+    public void onItemClickListener(int position, MerchantUrlBean.MerchantBean item) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         /*todo 传递参数*/
         intent.putExtra(AppConstants.KEY_OR_SP_PHONE, "1234567890");
@@ -318,7 +320,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getName());
-        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, item.getSrc());
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, item.getPic());
         startActivity(intent);
     }
 }

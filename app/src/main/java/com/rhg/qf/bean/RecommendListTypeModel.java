@@ -9,14 +9,14 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class RecommendListTypeModel {
-    List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity;
+    List<MerchantUrlBean.MerchantBean> recommendShopBeanEntity;
 
-    public List<RecommendListUrlBean.RecommendShopBeanEntity> getRecommendShopBeanEntity() {
+    public List<MerchantUrlBean.MerchantBean> getRecommendShopBeanEntity() {
         return recommendShopBeanEntity;
     }
 
     public void setRecommendShopBeanEntity(
-            List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntity) {
+            List<MerchantUrlBean.MerchantBean> recommendShopBeanEntity) {
         this.recommendShopBeanEntity = recommendShopBeanEntity;
 
     }

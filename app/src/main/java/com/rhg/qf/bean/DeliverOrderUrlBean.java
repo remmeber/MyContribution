@@ -10,11 +10,12 @@ import java.util.List;
  */
 public class DeliverOrderUrlBean {
 
+
     /**
      * result : 0
      * msg : 请求成功
      * total : 6
-     * rows : [{"ID":"25","Name":"黄焖鸡米饭","Fee":"5"},{"ID":"26","Name":"黄焖鸡米饭","Fee":"5"}]
+     * rows : [{"ID":"25","Style":"待接单","Name":"黄焖鸡米饭","Fee":"5"},{"ID":"26","Style":"待接单","Name":"黄焖鸡米饭","Fee":"5"}]
      */
 
     private int result;
@@ -22,6 +23,7 @@ public class DeliverOrderUrlBean {
     private int total;
     /**
      * ID : 25
+     * Style : 待接单
      * Name : 黄焖鸡米饭
      * Fee : 5
      */
@@ -62,9 +64,9 @@ public class DeliverOrderUrlBean {
 
     public static class DeliverOrderBean {
         private String ID;
+        private String Style;
         private String Name;
         private String Fee;
-        private String Style;
 
         public String getID() {
             return ID;
@@ -72,6 +74,14 @@ public class DeliverOrderUrlBean {
 
         public void setID(String ID) {
             this.ID = ID;
+        }
+
+        public String getStyle() {
+            return Style;
+        }
+
+        public void setStyle(String Style) {
+            this.Style = Style;
         }
 
         public String getName() {
@@ -88,14 +98,6 @@ public class DeliverOrderUrlBean {
 
         public void setFee(String Fee) {
             this.Fee = Fee;
-        }
-
-        public String getStyle() {
-            return Style;
-        }
-
-        public void setStyle(String style) {
-            Style = style;
         }
     }
 }

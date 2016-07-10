@@ -3,10 +3,11 @@ package com.rhg.qf.mvp.model;
 import com.rhg.qf.bean.BannerTypeUrlBean;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
 import com.rhg.qf.bean.HomeBean;
-import com.rhg.qf.bean.RecommendListUrlBean;
+import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.TextTypeBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 import com.rhg.qf.mvp.api.QFoodApiService;
+import com.rhg.qf.utils.AccountUtil;
 
 import rx.Observable;
 import rx.functions.Func4;
@@ -19,19 +20,21 @@ import rx.functions.Func4;
  */
 public class HomeModel {
 
-    public Observable<HomeBean> getHomeData() {
+    public Observable<HomeBean> getHomeData(String headrestaurants) {
         QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
+        String x = AccountUtil.getInstance().getLongitude();
+        String y = AccountUtil.getInstance().getLatitude();
         return Observable.zip(
                 qFoodApiService.getBannerUrl(),
                 qFoodApiService.getFavorableFood(),
-                qFoodApiService.getRecommendList(),
+                qFoodApiService.getHomeMerchants(headrestaurants, x, y),
                 qFoodApiService.getMessage(),
                 new Func4<BannerTypeUrlBean, FavorableFoodUrlBean,
-                        RecommendListUrlBean, TextTypeBean, HomeBean>() {
+                        MerchantUrlBean, TextTypeBean, HomeBean>() {
                     @Override
                     public HomeBean call(BannerTypeUrlBean bannerTypeUrlBean,
                                          FavorableFoodUrlBean favorableFoodUrlBean,
-                                         RecommendListUrlBean recommendListUrlBean,
+                                         MerchantUrlBean recommendListUrlBean,
                                          TextTypeBean textTypeBean
                     ) {
                         HomeBean _homeBean = new HomeBean();

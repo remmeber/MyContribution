@@ -13,7 +13,6 @@ import com.rhg.qf.adapter.DeliverOrderItemAdapter;
 import com.rhg.qf.bean.DeliverOrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
-import com.rhg.qf.mvp.presenter.GetDeliverOrderPresenter;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
 

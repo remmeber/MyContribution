@@ -24,6 +24,7 @@ import com.rhg.qf.bean.FavorableFoodUrlBean;
 import com.rhg.qf.bean.FavorableTypeModel;
 import com.rhg.qf.bean.FooterTypeModel;
 import com.rhg.qf.bean.HeaderTypeModel;
+import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.RecommendListTypeModel;
 import com.rhg.qf.bean.RecommendListUrlBean;
 import com.rhg.qf.bean.RecommendTextTypeModel;
@@ -61,7 +62,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     //-------------------------------for banner click callback--------------------------------------
     private OnBannerClickListener onBannerClickListener;
     private OnGridItemClickListener onGridItemClickListener;
-    private RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClickListener;
+    private RcvItemClickListener<MerchantUrlBean.MerchantBean> onItemClickListener;
 
     public RecycleMultiTypeAdapter(Context context, List<Object> mData) {
         this.context = context;
@@ -193,11 +194,11 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     private void bindViewHolderRecommendList(final BodyViewHolder holder, RecommendListTypeModel listData, int position) {
 //        holder.homeRecycleAdapter.notifyDataSetChanged();
 //        holder.homeRecycleAdapter.setOnRcvItemClickListener(data.getOnItemClick());
-        final RecommendListUrlBean.RecommendShopBeanEntity data = listData.getRecommendShopBeanEntity().get(position - 5);
+        final MerchantUrlBean.MerchantBean data = listData.getRecommendShopBeanEntity().get(position - 5);
         holder.sellerName.setText(data.getName());
-        ImageLoader.getInstance().displayImage(data.getSrc(), holder.sellerImage);
+        ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
         holder.sellerDistance.setText(data.getDistance());
-//        holder.foodType.setText(data.getFoodType());
+        holder.foodType.setText(data.getStyle());
         if (onItemClickListener != null)
             holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -236,7 +237,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.onGridItemClickListener = onGridItemClickListener;
     }
 
-    public void setOnItemClickListener(RcvItemClickListener<RecommendListUrlBean.RecommendShopBeanEntity> onItemClickListener) {
+    public void setOnItemClickListener(RcvItemClickListener<MerchantUrlBean.MerchantBean> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
