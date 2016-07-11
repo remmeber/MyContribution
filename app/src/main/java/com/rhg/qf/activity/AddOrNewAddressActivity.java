@@ -2,6 +2,7 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -14,7 +15,7 @@ import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
-import com.rhg.qf.utils.DataUtil;
+import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
 import com.rhg.qf.utils.ToastHelper;
 
 import butterknife.Bind;
@@ -44,7 +45,8 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     EditText addNewAddressContentDetail;
 
     private int resultCode;
-    private StringBuilder address;
+    AddOrUpdateAddressPresenter addOrUpdateAddress;
+    private String orderId;
 
 
     @Override
@@ -56,6 +58,8 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
             resultCode = AppConstants.BACK_WITH_UPDATE;
             ToastHelper.getInstance()._toast("修改地址");
             AddressUrlBean.AddressBean _address = intent.getParcelableExtra(AppConstants.KEY_ADDRESS);
+            orderId = _address.getID();
+            Log.i("RHG", orderId);
             addNewAddressContactPersonContent.setText(_address.getName());
             addNewAddressContactsContent.setText(_address.getPhone());
             addNewAddressContactAddressContent.setText(_address.getAddress());
@@ -96,6 +100,8 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
 
     @Override
     protected void showSuccess(Object s) {
+//        setResult(resultCode, new Intent().putExtra(AppConstants.KEY_ADDRESS, addressBean));
+        finish();
     }
 
     @Override
@@ -133,7 +139,6 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                     break;
                 }
                 AddressUrlBean.AddressBean addressBean = new AddressUrlBean.AddressBean();
-                addressBean.setID(DataUtil.getCurrentTime());
                 addressBean.setName(addNewAddressContactPersonContent.getText().toString());
                 addressBean.setPhone(addNewAddressContactsContent.getText().toString());
                 String _address = addNewAddressContactAddressContent.getText().toString();
@@ -143,8 +148,10 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                         .append(addNewAddressContentDetail.getText().toString());*/
                 addressBean.setAddress(_address);
                 /*TODO 以下代码需要在提交地址保存至数据库成功后执行*/
-                setResult(resultCode, new Intent().putExtra(AppConstants.KEY_ADDRESS, addressBean));
-                finish();
+                if (addOrUpdateAddress == null)
+                    addOrUpdateAddress = new AddOrUpdateAddressPresenter(this);
+                addOrUpdateAddress.addOrUpdateAddress(orderId, addressBean.getName(),
+                        addressBean.getPhone(), addressBean.getAddress());
                 /*AddressUtil.insertAddress(addressBean);*/
                 break;
             case R.id.add_new_address_location:
@@ -157,7 +164,7 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
 
     @Override
     public void onBackPressed() {
-        setResult(resultCode, null);/*不需要做任何事情*/
+//        setResult(resultCode, null);/*不需要做任何事情*/
         super.onBackPressed();
     }
 }

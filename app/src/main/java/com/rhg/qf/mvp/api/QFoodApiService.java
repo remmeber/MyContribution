@@ -130,14 +130,6 @@ public interface QFoodApiService {
                                       @Field("Client") String userName,
                                       @Field("Pwd") String pwd);
 
-    /*添加地址*/
-    @FormUrlEncoded
-    @POST("Table/JsonSQL/UpdateAddress.php")
-    Observable<String> addAddress(@Field("Client") String userName,
-                                  @Field("Pwd") String pwd,
-                                  @Field("Name") String name,
-                                  @Field("Phone") String phone,
-                                  @Field("Address") String address);
 
     /*获取地址*/
     @FormUrlEncoded
@@ -146,15 +138,29 @@ public interface QFoodApiService {
                                           @Field("ID") String userId);
 
 
+    /*添加地址*/
+    @FormUrlEncoded
+    @POST("Table/JsonSQL/AddAddress.php")
+    Observable<BaseBean> addAddress(@Field("Client") String userName,
+                                    @Field("Pwd") String pwd,
+                                    @Field("Name") String name,
+                                    @Field("Phone") String phone,
+                                    @Field("Address") String address);
+
     /*修改地址*/
     @FormUrlEncoded
     @POST("Table/JsonSQL/UpdateAddress.php")
-    Observable<String> updateAddress(@Field("Client") String userName,
-                                     @Field("ID") String id,
-                                     @Field("Name") String name,
-                                     @Field("Phone") String phone,
-                                     @Field("Address") String address,
-                                     @Field("Pwd") String pwd);
+    Observable<BaseBean> updateAddress(@Field("Client") String userName,
+                                       @Field("ID") String id,
+                                       @Field("Name") String name,
+                                       @Field("Phone") String phone,
+                                       @Field("Address") String address,
+                                       @Field("Pwd") String pwd);
+
+    /*删除地址*/
+    @FormUrlEncoded
+    @POST("Table/JsonSQL/DeleteAddress.php")
+    Observable<BaseBean> deleteAddress(@Field("ID") String addressId);
 
     /*
      *desc 厅搜索接口，入口位于主页和所有店铺页
