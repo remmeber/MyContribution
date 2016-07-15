@@ -239,6 +239,4 @@ public interface QFoodApiService {
                                             @Field("Pwd") String pwd,
                                             @Field("Area") String area,
                                             @Field("ClientID") String clientId);
-    /*@POST(QFoodApi.WXPAY_CREATE_ORDER_URL)
-    Observable<String> getPrepayId(@QueryMap Map<String, String> orderParams);*/
 }
