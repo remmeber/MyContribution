@@ -26,8 +26,8 @@ public class QFoodGridViewAdapter extends QFoodBaseAdapter<FavorableFoodUrlBean.
 
     @Override
     public void convert(QFoodGridAdapterViewHolder holder, FavorableFoodUrlBean.FavorableFoodEntity model, int position) {
-        holder.setImageUrl(R.id.gridview_imageView, model.getSrc());
-        holder.setText(R.id.gridview_delete, model.getTitle());
+        holder.setImageUrl(R.id.grid_imageView, model.getSrc());
+        holder.setText(R.id.grid_title, model.getTitle());
 //        holder.setHeaderColor(R.id.VipTextHeadView, mContext.getResources().getColor(R.color.black));
     }
 }

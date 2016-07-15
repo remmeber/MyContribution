@@ -16,7 +16,7 @@ public class NewOrderBean {
      * Address : 杭州下沙
      * Phone : 1383838438
      * Price : 200
-     * food : [{"ID1":"1"},{"ID2":"2"}]
+     * Food : [{"ID":"1","Num":"1"},{"ID":"2","Num":"1"}]
      */
 
     private String Client;
@@ -25,10 +25,11 @@ public class NewOrderBean {
     private String Phone;
     private String Price;
     /**
-     * ID1 : 1
+     * ID : 1
+     * Num : 1
      */
 
-    private List<FoodBean> food;
+    private List<FoodBean> Food;
 
     public String getClient() {
         return Client;
@@ -71,22 +72,31 @@ public class NewOrderBean {
     }
 
     public List<FoodBean> getFood() {
-        return food;
+        return Food;
     }
 
-    public void setFood(List<FoodBean> food) {
-        this.food = food;
+    public void setFood(List<FoodBean> Food) {
+        this.Food = Food;
     }
 
     public static class FoodBean {
-        private String foodId;
+        private String ID;
+        private String Num;
 
-        public String getFoodId() {
-            return foodId;
+        public String getID() {
+            return ID;
         }
 
-        public void setFoodId(String foodId) {
-            this.foodId = foodId;
+        public void setID(String ID) {
+            this.ID = ID;
+        }
+
+        public String getNum() {
+            return Num;
+        }
+
+        public void setNum(String Num) {
+            this.Num = Num;
         }
     }
 }

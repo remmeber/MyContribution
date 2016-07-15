@@ -63,13 +63,22 @@ public class HotFoodUrlBean {
     }
 
     public static class HotFoodBean {
+        private String ID;
         private String RName;
         private String FName;
         private String Stars;
         private String Delivery;
         private String Fee;
-        private String Distance;
         private String Price;
+        private String Pic;
+
+        public String getID() {
+            return ID;
+        }
+
+        public void setID(String ID) {
+            this.ID = ID;
+        }
 
         public String getRName() {
             return RName;
@@ -111,20 +120,20 @@ public class HotFoodUrlBean {
             this.Fee = Fee;
         }
 
-        public String getDistance() {
-            return Distance;
-        }
-
-        public void setDistance(String Distance) {
-            this.Distance = Distance;
-        }
-
         public String getPrice() {
             return Price;
         }
 
         public void setPrice(String Price) {
             this.Price = Price;
+        }
+
+        public String getPic() {
+            return Pic;
+        }
+
+        public void setPic(String pic) {
+            Pic = pic;
         }
     }
 }

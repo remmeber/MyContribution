@@ -22,7 +22,9 @@ import rx.functions.Func1;
  */
 public class UploadAndSaveImageModel {
 
-    public Observable<String> UploadAndSaveImage(File file, String userName, String pwd) {
+    public Observable<String> UploadAndSaveImage(File file) {
+        String userName = "19216801";
+        String pwd = "123";
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
         RequestBody desc_userName =
                 RequestBody.create(

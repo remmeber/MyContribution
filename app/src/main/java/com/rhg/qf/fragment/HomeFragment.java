@@ -14,9 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.activity.GoodsDetailActivity;
-import com.rhg.qf.activity.HotFoodActivity;
 import com.rhg.qf.activity.DIYOrderActivity;
+import com.rhg.qf.activity.HotFoodActivity;
 import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
 import com.rhg.qf.adapter.QFoodGridViewAdapter;
@@ -298,16 +297,14 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[3]);
         startActivity(intent);*/
 
-        startActivity(new Intent(getContext(), HotFoodActivity.class));
+//        startActivity(new Intent(getContext(), HotFoodActivity.class));
     }
 
     @Override
     public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity) {
-        Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
-        /*intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
-        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
-        startActivityForResult(intent, AppConstants.INTENT_FOR_RESULT);
+        Intent intent = new Intent(getContext(), HotFoodActivity.class);
+        intent.putExtra(AppConstants.KEY_PRODUCT_NAME, favorableFoodEntity.getTitle());
+        startActivity(intent);
     }
 
     @Override

@@ -11,8 +11,10 @@ import android.widget.Toast;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.AddressActivity;
 import com.rhg.qf.activity.DeliverInfoActivity;
+import com.rhg.qf.activity.DeliverOrderActivity;
 import com.rhg.qf.activity.DeliverRegisterActivity;
 import com.rhg.qf.activity.AddOrNewAddressActivity;
+import com.rhg.qf.activity.DeliverStateNoneActivity;
 import com.rhg.qf.activity.OrderListActivity;
 import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.third.UmengUtil;
@@ -184,7 +186,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
 //                if (isSignIn)
-                startActivity(new Intent(getContext(), DeliverInfoActivity.class));
+                startActivity(new Intent(getContext(), /*DeliverInfoActivity*/DeliverOrderActivity.class));
                 /*else
                     ToastHelper.getInstance()._toast("请登录");*/
                 break;

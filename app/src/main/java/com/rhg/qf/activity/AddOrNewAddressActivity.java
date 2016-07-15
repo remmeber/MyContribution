@@ -2,7 +2,6 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -53,16 +52,15 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     public void dataReceive(Intent intent) {
         if (intent.getParcelableExtra(AppConstants.KEY_ADDRESS) == null) {
             resultCode = AppConstants.BACK_WITH_ADD;
-            ToastHelper.getInstance()._toast("增加地址");
         } else {
             resultCode = AppConstants.BACK_WITH_UPDATE;
-            ToastHelper.getInstance()._toast("修改地址");
             AddressUrlBean.AddressBean _address = intent.getParcelableExtra(AppConstants.KEY_ADDRESS);
             orderId = _address.getID();
-            Log.i("RHG", orderId);
             addNewAddressContactPersonContent.setText(_address.getName());
             addNewAddressContactsContent.setText(_address.getPhone());
             addNewAddressContactAddressContent.setText(_address.getAddress());
+            if (_address.getDetail() != null)
+                addNewAddressContentDetail.setText(_address.getDetail());
 
         }
     }
@@ -138,20 +136,23 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                     ToastHelper.getInstance()._toast(getResources().getString(R.string.contactAddress_Null));
                     break;
                 }
-                AddressUrlBean.AddressBean addressBean = new AddressUrlBean.AddressBean();
+               /* AddressUrlBean.AddressBean addressBean = new AddressUrlBean.AddressBean();
                 addressBean.setName(addNewAddressContactPersonContent.getText().toString());
                 addressBean.setPhone(addNewAddressContactsContent.getText().toString());
                 String _address = addNewAddressContactAddressContent.getText().toString();
-                _address = _address.concat(addNewAddressContentDetail.getText().toString());
+                _address = _address.concat(addNewAddressContentDetail.getText().toString());*/
 //                StringBuilder _address = new StringBuilder();
                /* _address.append(addNewAddressContactAddressContent.getText().toString())
                         .append(addNewAddressContentDetail.getText().toString());*/
-                addressBean.setAddress(_address);
+//                addressBean.setAddress(_address);
                 /*TODO 以下代码需要在提交地址保存至数据库成功后执行*/
                 if (addOrUpdateAddress == null)
                     addOrUpdateAddress = new AddOrUpdateAddressPresenter(this);
-                addOrUpdateAddress.addOrUpdateAddress(orderId, addressBean.getName(),
-                        addressBean.getPhone(), addressBean.getAddress());
+                addOrUpdateAddress.addOrUpdateAddress(orderId, addNewAddressContactPersonContent.getText().toString(),
+                        addNewAddressContactsContent.getText().toString(),
+                        addNewAddressContactAddressContent.getText().toString(),
+                        addNewAddressContentDetail.getText().toString(),
+                        null);
                 /*AddressUtil.insertAddress(addressBean);*/
                 break;
             case R.id.add_new_address_location:

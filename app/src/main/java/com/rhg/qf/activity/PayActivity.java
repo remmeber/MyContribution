@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.PayItemAdapter;
+import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.PayBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.pay.BasePayActivity;
@@ -102,7 +103,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
 
-        RegisterBasePay(null, null, null, null, null, null);
+        RegisterBasePay(null, null, null, InitApplication.WXID, null, null);
 //        BuildOrderInfo()
     }
 

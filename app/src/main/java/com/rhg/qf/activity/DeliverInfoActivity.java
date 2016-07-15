@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.api.QFoodApi;
+import com.rhg.qf.mvp.presenter.PerfectDeliverInfoPresenter;
 import com.rhg.qf.mvp.presenter.UploadAndSaveImagePresenter;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.DataUtil;
@@ -67,9 +68,8 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
     private static final String CROP = "com.android.camera.action.CROP";
     ModifyHeadImageDialog modifyHeadImageDialog;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
+    PerfectDeliverInfoPresenter perfectDeliverInfoPresenter;
     String imageStr = "";
-    String userID = "19216801";
-    String passWord = "123";
     Uri fileUri = null;
 
     @Override
@@ -95,7 +95,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
             ImageLoader.getInstance().displayImage(imageStr, headView);
         } else {
             imageStr = QFoodApi.BASE_URL + "Pic/ClientPic/" +
-                    /*AccountUtil.getInstance().getUserID()*/userID + ".jpg";
+                    /*AccountUtil.getInstance().getUserID()*/"19216801" + ".jpg";
             ImageLoader.getInstance().displayImage(imageStr, headView);
             AccountUtil.getInstance().setHeadImageUrl(imageStr);
         }
@@ -106,7 +106,11 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
 
     @Override
     protected void showSuccess(Object s) {
-        ImageLoader.getInstance().displayImage((String) s, headView);
+        if (s instanceof String) {
+            if (((String) s).contains("/"))
+                ImageLoader.getInstance().displayImage((String) s, headView);
+            else ToastHelper.getInstance()._toast((String) s);
+        }
     }
 
     @Override
@@ -170,7 +174,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
                     Log.i("RHG", "文件存在" + _file.getName());
                 } else
                     Log.i("RHG", "文件不存在");*/
-                uploadAndSaveImagePresenter.UploadAndSaveImage(_file, userID, passWord);
+                uploadAndSaveImagePresenter.UploadAndSaveImage(_file/*, userID, passWord*/);
                 /*ImageLoader.getInstance().clearMemoryCache();
                 ImageLoader.getInstance().clearDiskCache();*/
                 break;
@@ -279,6 +283,28 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
                 finish();
                 break;
             case R.id.bt_save:
+                if ("".equals(etNameWrap.getEditText().getText().toString())) {
+                    ToastHelper.getInstance()._toast("真实姓名为空");
+                    break;
+                }
+                if ("".equals(etIdWrap.getEditText().getText().toString())) {
+                    ToastHelper.getInstance()._toast("身份证为空");
+                    break;
+                }
+                if ("".equals(etPhoneWrap.getEditText().getText().toString())) {
+                    ToastHelper.getInstance()._toast("手机号码为空");
+                    break;
+                }
+                if ("".equals(etPlaceWrap.getEditText().getText().toString())) {
+                    ToastHelper.getInstance()._toast("配送范围为空");
+                    break;
+                }
+                if (perfectDeliverInfoPresenter == null)
+                    perfectDeliverInfoPresenter = new PerfectDeliverInfoPresenter(DeliverInfoActivity.this);
+                perfectDeliverInfoPresenter.perfectDeliverInfo(etNameWrap.getEditText().getText().toString(),
+                        etIdWrap.getEditText().getText().toString(),
+                        etPhoneWrap.getEditText().getText().toString(),
+                        etPlaceWrap.getEditText().getText().toString());
                 break;
             case R.id.bt_exit:
                 finish();

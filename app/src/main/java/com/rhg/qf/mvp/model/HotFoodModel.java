@@ -16,8 +16,8 @@ import rx.functions.Func1;
  * email：1013773046@qq.com
  */
 public class HotFoodModel {
-    public Observable<List<HotFoodUrlBean.HotFoodBean>> getHotFood(String hotFood, int orderType) {
-        return QFoodApiMamager.getInstant().getQFoodApiService().getHotGoods(hotFood, String.valueOf(orderType))
+    public Observable<List<HotFoodUrlBean.HotFoodBean>> getHotFood(String hotFood, int orderType, String key) {
+        return QFoodApiMamager.getInstant().getQFoodApiService().getHotGoods(hotFood, String.valueOf(orderType), key)
                 .flatMap(new Func1<HotFoodUrlBean, Observable<List<HotFoodUrlBean.HotFoodBean>>>() {
                     @Override
                     public Observable<List<HotFoodUrlBean.HotFoodBean>> call(final HotFoodUrlBean hotFoodUrlBean) {

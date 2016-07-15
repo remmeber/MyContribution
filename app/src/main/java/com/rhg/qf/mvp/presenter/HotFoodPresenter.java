@@ -25,8 +25,8 @@ public class HotFoodPresenter{
         hotFoodModel = new HotFoodModel();
     }
 
-    public void getHotFoods(final String hotFood, int orderType) {
-        hotFoodModel.getHotFood(hotFood, orderType).observeOn(AndroidSchedulers.mainThread())
+    public void getHotFoods(final String hotFood, int orderType, String key) {
+        hotFoodModel.getHotFood(hotFood, orderType,key).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<HotFoodUrlBean.HotFoodBean>>() {
                     @Override

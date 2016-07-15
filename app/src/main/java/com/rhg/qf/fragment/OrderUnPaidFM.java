@@ -11,6 +11,6 @@ import com.rhg.qf.constants.AppConstants;
 public class OrderUnPaidFM extends AbstractOrderFragment {
     @Override
     protected int getFmTag() {
-        return AppConstants.ORDER_UNPAID;
+        return AppConstants.USER_ORDER_UNPAID;
     }
 }

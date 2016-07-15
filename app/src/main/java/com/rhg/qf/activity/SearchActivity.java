@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -245,7 +244,7 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
             case AppConstants.KEY_HOTFOOD_SEARCH:
                 if (hotFoodSearchPresenter == null)
                     hotFoodSearchPresenter = new HotFoodSearchPresenter(this);
-                hotFoodSearchPresenter.getSearchHotFood(AppConstants.HOTFOOD, s, searchIndex);
+                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCHHOTFOOD, s, searchIndex);
                 break;
         }
     }

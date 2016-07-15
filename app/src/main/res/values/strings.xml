@@ -63,6 +63,21 @@
     <string name="goPay">去付款</string>
     <string name="tvDrawback">申请退款</string>
     <string name="tvSummation">合计</string>
+    <!--
+    /*跑腿员订单配送*/
+    public static final String DELIVER_ORDER_UNPAID = "待付款";
+    public static final String DELIVER_ORDER_UNACCEPT = "待接单";
+    public static final String DELIVER_ORDER_ACCEPT = "已接单";
+    public static final String DELIVER_ORDER_DELIVERING = "配送中";
+    public static final String DELIVER_ORDER_COMPLETE = "已完成";
+    public static final String DELIVER_ORDER_OTHER = "其他";-->
+    <string name="deliverOrderUnpaid">等待付款</string>
+    <string name="deliverOrderUnAccept">等待接单</string>
+    <string name="deliverOrderAccept">已经接单</string>
+    <string name="deliverOrderDelivering">开始配送</string>
+    <string name="deliverOrderDeliverComplete">确认送达</string>
+    <string name="deliverOrderFinish">订单完成</string>
+    <string name="deliverOrderOther">其他</string>
     <!--订单相关-->
 
     <!--我的页面-->

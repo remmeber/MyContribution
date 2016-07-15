@@ -14,7 +14,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.FoodsDetailAdapter;
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
-import com.rhg.qf.mvp.presenter.ModifyUserOrderPresenter;
+import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
 import com.rhg.qf.utils.ToastHelper;
 
@@ -64,7 +64,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     TextView tvEdit;
 
     OrderDetailPresenter getOrderDetailPresenter;
-    ModifyUserOrderPresenter modifyUserOrderPresenter;
+    ModifyOrderPresenter modifyOrderPresenter;
 
     String orderId;
     int orderTag;
@@ -101,7 +101,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         ivEditRight.setVisibility(View.GONE);
         tvEdit.setVisibility(View.GONE);
-        if (orderTag != AppConstants.ORDER_DELIVERING)
+        if (orderTag != AppConstants.USER_ORDER_DELIVERING)
             btDrawback.setVisibility(View.GONE);
         /*recycleview*/
         rcyPayItem.setLayoutManager(new LinearLayoutManager(this));
@@ -117,15 +117,15 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     }
 
     private void setText(TextView btPayOrRateOrConform) {
-        if (AppConstants.ORDER_UNPAID == orderTag) {
+        if (AppConstants.USER_ORDER_UNPAID == orderTag) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.goPay));
             return;
         }
-        if (AppConstants.ORDER_DELIVERING == orderTag) {
+        if (AppConstants.USER_ORDER_DELIVERING == orderTag) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.conformReceive));
             return;
         }
-        if (AppConstants.ORDER_COMPLETE == orderTag
+        if (AppConstants.USER_ORDER_COMPLETE == orderTag
                 || AppConstants.ORDER_DRAWBACK == orderTag) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.goEvaluate));
         }
@@ -164,17 +164,17 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                 finish();
                 break;
             case R.id.btDrawback:
-                if (modifyUserOrderPresenter == null)
-                    modifyUserOrderPresenter = new ModifyUserOrderPresenter(this);
-                modifyUserOrderPresenter.modifyUserOrderState("1"/*订单号*/, "0"/*0:退单，1,：完成*/);
+                if (modifyOrderPresenter == null)
+                    modifyOrderPresenter = new ModifyOrderPresenter(this);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState("1"/*订单号*/, "0"/*0:退单，1,：完成*/);
                 break;
             case R.id.btPayOrRateOrConform:
-                if (orderTag == AppConstants.ORDER_DELIVERING) {
+                if (orderTag == AppConstants.USER_ORDER_DELIVERING) {
                     Intent intent = new Intent(this, DeliverStateNoneActivity.class);
                     intent.putExtra(AppConstants.KEY_ORDER_ID, orderId);
                     startActivity(intent);
                 }
-                if (orderTag == AppConstants.ORDER_UNPAID) {
+                if (orderTag == AppConstants.USER_ORDER_UNPAID) {
                     Intent intent = new Intent(this, PayActivity.class);
                     intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "");
                     intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");

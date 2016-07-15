@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.HotFoodViewHolder;
 import com.rhg.qf.bean.HotFoodUrlBean;
@@ -51,7 +52,7 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View v) {
                 if (onRcvItemClickListener != null)
                     onRcvItemClickListener.onItemClickListener(hotFoodViewHolder.getAdapterPosition(),
-                            null);
+                            hotFoodBeanList.get(hotFoodViewHolder.getAdapterPosition()));
             }
         });
         bindData(hotFoodViewHolder, hotFoodBeanList.get(position));
@@ -60,15 +61,15 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void bindData(HotFoodViewHolder hotFoodViewHolder,
                           HotFoodUrlBean.HotFoodBean hotFoodBean) {
         hotFoodViewHolder.hotSellMerchantName.setText(hotFoodBean.getRName());
-        /*ImageLoader.getInstance().displayImage(R.drawable.recommend_default_icon_1,
-                hotFoodViewHolder.hotSellFoodImage);*/
-        hotFoodViewHolder.hotSellFoodImage.setImageDrawable(
-                context.getResources().getDrawable(R.drawable.recommend_default_icon_1));
+        ImageLoader.getInstance().displayImage(hotFoodBean.getPic(),
+                hotFoodViewHolder.hotSellFoodImage);
+        /*hotFoodViewHolder.hotSellFoodImage.setImageDrawable(
+                context.getResources().getDrawable(R.drawable.recommend_default_icon_1));*/
         hotFoodViewHolder.hotSellFoodName.setText(hotFoodBean.getFName());
         hotFoodViewHolder.hotSellDeliverRequire.setText(hotFoodBean.getDelivery());
         hotFoodViewHolder.hotSellDeliverMoney.setText(hotFoodBean.getFee());
         hotFoodViewHolder.hotSellRatingBar.setStarRating(Float.parseFloat(hotFoodBean.getStars()));
-        hotFoodViewHolder.hotSellDeliverDistance.setText(hotFoodBean.getDistance());
+//        hotFoodViewHolder.hotSellDeliverDistance.setText(hotFoodBean.getDistance());
         hotFoodViewHolder.hotSellTotalMoney.setText(String.format(
                 context.getResources().getString(R.string.countMoney), hotFoodBean.getPrice()
         ));
@@ -76,7 +77,7 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return hotFoodBeanList.size() == 0 ? 0 : hotFoodBeanList.size();
+        return hotFoodBeanList == null ? 0 : hotFoodBeanList.size();
     }
 
     /*public class HotFoodViewHolder extends RecyclerView.ViewHolder {

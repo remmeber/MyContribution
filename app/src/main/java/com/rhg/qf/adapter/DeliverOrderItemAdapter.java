@@ -2,6 +2,7 @@ package com.rhg.qf.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -52,6 +53,10 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
     @Override
     public void onBindViewHolder(final DeliverOrderItemAdapter.DeliverOrderViewHolder holder, int position) {
         final String _style = deliverOrderBeanList.get(position).getStyle();
+        Log.i("RHG", _style);
+        /*if (position % 2 == 0)
+            _style = "60";
+        else _style = "80";*/
         setStyleAndBackground(holder, _style);
         fillContent(holder, deliverOrderBeanList.get(position));
         holder.rlOrderInfo.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +70,8 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
         holder.tvOrderInd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (_style.equals(AppConstants.ORDER_START)) {
-                    if (onStyleChange != null)
-                        onStyleChange.onStyleChange(_style, holder.getAdapterPosition());
-                }
+                if (onStyleChange != null)
+                    onStyleChange.onStyleChange(_style, holder.getAdapterPosition());
             }
         });
     }
@@ -76,26 +79,40 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
     private void fillContent(DeliverOrderViewHolder holder, DeliverOrderUrlBean.DeliverOrderBean deliverOrderBean) {
         holder.tvOrderMerchantName.setText(deliverOrderBean.getName());
         holder.tvOrderMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                deliverOrderBean.getFee()));
+                deliverOrderBean.getFee() == null ? "" : deliverOrderBean.getFee()));
         holder.tvOrderNum.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvOrderNumber),
                 deliverOrderBean.getID()));
     }
 
     private void setStyleAndBackground(DeliverOrderViewHolder holder, String style) {
         switch (style) {
-            case AppConstants.ORDER_START:
-                holder.tvOrderInd.setText(AppConstants.ORDER_START);
+            /*case AppConstants.DELIVER_ORDER_UNPAID:
+                holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderUnpaid));
                 holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorRecommend_Red));
                 holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_red));
-                break;
-            case AppConstants.ORDER_DELIVER_COMPLETE:
-                holder.tvOrderInd.setText(AppConstants.ORDER_DELIVER_COMPLETE);
+                break;*/
+            case AppConstants.DELIVER_ORDER_UNACCEPT:
+                holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderUnAccept));
                 holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorGreenNormal));
+                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorRecommend_Red));
                 holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_green));
                 break;
-            case AppConstants.ORDER_DELIVER_FINISH:
-                holder.tvOrderInd.setText(AppConstants.ORDER_DELIVER_FINISH);
+            case AppConstants.DELIVER_ORDER_ACCEPT:
+                holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderAccept));
+                holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorRecommend_Red));
+                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorRecommend_Red));
+                holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_red));
+                break;
+            case AppConstants.DELIVER_ORDER_DELIVERING:
+                holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderDelivering));
+                holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorGreenNormal));
+                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorGreenNormal));
+                holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_green));
+                break;
+            case AppConstants.DELIVER_ORDER_COMPLETE:
+                holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderFinish));
                 holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorInActive));
+                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorInActive));
                 holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_gray));
                 holder.rlOrderInfo.setClickable(false);
                 break;

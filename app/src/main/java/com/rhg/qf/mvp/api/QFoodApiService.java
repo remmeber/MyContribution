@@ -45,8 +45,9 @@ public interface QFoodApiService {
     @GET("json/message.html")
     Observable<TextTypeBean> getMessage();
 
-    @GET("json/food.html")
-    Observable<FavorableFoodUrlBean> getFavorableFood();
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<FavorableFoodUrlBean> getFavorableFood(@Field("Table") String headHot);
 
     @FormUrlEncoded
     @POST("Table/Json.php")
@@ -105,12 +106,6 @@ public interface QFoodApiService {
     Observable<OrderDetailUrlBean> getOrderDetail(@Field("Table") String orderDetail,
                                                   @Field("ID") String orderId);
 
-    /*跑腿员订单详情 API19*/
-    @FormUrlEncoded
-    @POST("Table/Json.php")
-    Observable<DeliverOrderUrlBean> getDeliverOrder(@Field("Table") String deliverorder,
-                                                    @Field("Deliver") String deliverId);
-
     /*upload head image*/
     @Multipart
     @POST("Clientpic2.php")
@@ -130,13 +125,11 @@ public interface QFoodApiService {
                                       @Field("Client") String userName,
                                       @Field("Pwd") String pwd);
 
-
     /*获取地址*/
     @FormUrlEncoded
     @POST("Table/Json.php")
     Observable<AddressUrlBean> getAddress(@Field("Table") String address,
                                           @Field("ID") String userId);
-
 
     /*添加地址*/
     @FormUrlEncoded
@@ -145,7 +138,8 @@ public interface QFoodApiService {
                                     @Field("Pwd") String pwd,
                                     @Field("Name") String name,
                                     @Field("Phone") String phone,
-                                    @Field("Address") String address);
+                                    @Field("Address") String address,
+                                    @Field("Detail") String detail);
 
     /*修改地址*/
     @FormUrlEncoded
@@ -159,8 +153,9 @@ public interface QFoodApiService {
 
     /*删除地址*/
     @FormUrlEncoded
-    @POST("Table/JsonSQL/DeleteAddress.php")
-    Observable<BaseBean> deleteAddress(@Field("ID") String addressId);
+    @POST("Table/JsonSQL/{AddressChange}.php")/*DeleteAddress*/
+    Observable<BaseBean> changeAddress(@Path("AddressChange") String opt,
+                                       @Field("ID") String addressId);
 
     /*
      *desc 厅搜索接口，入口位于主页和所有店铺页
@@ -178,7 +173,8 @@ public interface QFoodApiService {
     @POST("Table/Json.php")
     /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
     Observable<HotFoodUrlBean> getHotGoods(@Field("Table") String hotFood,
-                                           @Field("Order") String style);
+                                           @Field("Order") String style,
+                                           @Field("Key") String key);
 
     /*
      *desc 热销单品搜索，入口位于热销单品页面
@@ -191,7 +187,16 @@ public interface QFoodApiService {
     /*style:0表示默认 1表示按销量 2表示按距离 3表示按评分*/
     Observable<HotFoodUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
                                                     @Field("Hotfoodkey") String searchContent,
-                                                    @Field("Order") String order);
+                                                    @Field("Order") String order,
+                                                    @Field("X") String X,
+                                                    @Field("Y") String Y);
+
+
+    /*跑腿员订单详情 API19*/
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<DeliverOrderUrlBean> getDeliverOrder(@Field("Table") String deliverorder,
+                                                    @Field("Deliver") String deliverId);
 
     /*跑腿员订单配送查询 API20*/
     @FormUrlEncoded
@@ -202,10 +207,10 @@ public interface QFoodApiService {
 
     @FormUrlEncoded
     @POST("Table/JsonSQL/Orderover.php")
-    /*style =0 :请求退单；style = 1:完成订单
-     TODO 用户修改订单状态 */
-    Observable<BaseBean> modifyUserOrderState(@Field("ID") String orderId,
-                                              @Field("Style") String style);
+    /*style =0 :请求退单，用于用户；style = 1:完成订单，跑腿员和用户均可
+     TODO 修改用户、跑腿员订单状态 */
+    Observable<BaseBean> modifyOrderState(@Field("ID") String orderId,
+                                          @Field("Style") String style);
 
 
     @FormUrlEncoded
@@ -213,12 +218,11 @@ public interface QFoodApiService {
     Observable<BaseBean> createOrder(@Body NewOrderBean newOrderBean);
 
 
-    /*TODO 修改跑腿员订单的状态 */
+    /*TODO 修改跑腿员订单的状态 API15*/
     @FormUrlEncoded
-    @POST("Table/JsonSQL/Updateorder.php")
-    Observable<BaseBean> modifyDeliverOrderState(@Field("ID") String orderId,
-                                                 @Field("Message") String content);
-
+    @POST("Table/JsonSQL/{deliverState}.php")/*UPDATE_ORDER_DELIVER、UPDATE_ORDER_DELIVER、UPdateorderwait*/
+    Observable<BaseBean> modifyDeliverOrderState(@Path("deliverState") String deliverState,
+                                                 @Field("ID") String orderId);
 
     /*TODO 自主点单 */
     @FormUrlEncoded
@@ -229,12 +233,12 @@ public interface QFoodApiService {
     /*TODO 跑腿员信息补充 */
     @FormUrlEncoded
     @POST("Table/JsonSQL/AddDeliver.php")
-    Observable<BaseBean> compliteDeliverInfo(@Field("Name") String name,
-                                             @Field("PersonId") String personId,
-                                             @Field("Phonenumber") String phoneNum,
-                                             @Field("Pwd") String pwd,
-                                             @Field("Area") String area,
-                                             @Field("ClientID") String clientId);
+    Observable<BaseBean> perfectDeliverInfo(@Field("Name") String name,
+                                            @Field("PersonId") String personId,
+                                            @Field("Phonenumber") String phoneNum,
+                                            @Field("Pwd") String pwd,
+                                            @Field("Area") String area,
+                                            @Field("ClientID") String clientId);
     /*@POST(QFoodApi.WXPAY_CREATE_ORDER_URL)
     Observable<String> getPrepayId(@QueryMap Map<String, String> orderParams);*/
 }

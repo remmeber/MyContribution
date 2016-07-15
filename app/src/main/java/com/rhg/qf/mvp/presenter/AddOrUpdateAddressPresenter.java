@@ -22,8 +22,9 @@ public class AddOrUpdateAddressPresenter {
         addAddressModel = new AddressModel();
     }
 
-    public void addOrUpdateAddress(String orderId, String user, String phone, String address) {
-        addAddressModel.addOrUpdateAddress(orderId, user, phone, address)
+    public void addOrUpdateAddress(String orderId, String user, String phone, String address, String detail,
+                                   String opt) {
+        addAddressModel.addOrUpdateAddress(orderId, user, phone, address,detail,opt)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {

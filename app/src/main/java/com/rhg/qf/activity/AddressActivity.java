@@ -51,6 +51,8 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     int longClickPosition = -1;
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenter(this);
+
+    AddOrUpdateAddressPresenter addOrUpdateAddressPresenter = new AddOrUpdateAddressPresenter(this);
     private static final int DELETE = 0;
     private static final int MODIFY = 1;
     private AddressAdapter.deleteListener deleteListener = new AddressAdapter.deleteListener() {
@@ -156,7 +158,6 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             return;
         }
         addressBeanList = (List<AddressUrlBean.AddressBean>) s;
-        addressBeanList.get(0).setChecked(true);
         addressAdapter.setAddressBeanList(addressBeanList);
         if (srlAddress.isRefreshing())
             srlAddress.setRefreshing(false);
@@ -174,14 +175,16 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             selectOne(position);
             addressAdapter.notifyDataSetChanged();
             lastPosition = position;
+            addOrUpdateAddressPresenter.addOrUpdateAddress(addressBeanList.get(position).getID(),
+                    null, null, null, null, "1");
         }
     }
 
     private void selectOne(int position) {
         for (int i = 0; i < addressBeanList.size(); i++) {
             if (position == i)
-                addressBeanList.get(i).setChecked(true);
-            else addressBeanList.get(i).setChecked(false);
+                addressBeanList.get(i).setDefault("1");
+            else addressBeanList.get(i).setDefault("0");
         }
     }
 
@@ -221,9 +224,9 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
                                        public void doRight() {
                                            delDialog.dismiss();
                                            if (tag == DELETE) {
-                                               new AddOrUpdateAddressPresenter(AddressActivity.this)
+                                               addOrUpdateAddressPresenter
                                                        .addOrUpdateAddress(addressBeanList.get(position).getID(),
-                                                               null, null, null);
+                                                               null, null, null, null, "0");
                                            } else {
                                                AddressUrlBean.AddressBean _addressBean = addressBeanList.get(position);
                                                Intent _intent = new Intent(AddressActivity.this, AddOrNewAddressActivity.class);

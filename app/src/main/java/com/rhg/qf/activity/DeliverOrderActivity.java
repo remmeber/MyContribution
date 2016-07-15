@@ -3,6 +3,7 @@ package com.rhg.qf.activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,7 +15,9 @@ import com.rhg.qf.bean.DeliverOrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.DeliverOrderPresenter;
+import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
@@ -48,7 +51,8 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     SwipeRefreshLayout commonSwipe;
     private List<DeliverOrderUrlBean.DeliverOrderBean> deliverOrderBeanList = new ArrayList<>();
     private DeliverOrderItemAdapter deliverOrderItemAdapter;
-    DeliverOrderPresenter getDeliverOrder;
+    DeliverOrderPresenter getDeliverOrder;/*获取跑腿员订单接口*/
+    ModifyOrderPresenter modifyOrderPresenter;/*修改跑腿员订单接口*/
 
     @Override
     public void loadingData() {
@@ -74,7 +78,8 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                /*TODO refresh*/
+
+                getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, "1");
             }
         });
     }
@@ -86,6 +91,10 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
 
     @Override
     protected void showSuccess(Object s) {
+        if (s instanceof String) {
+            ToastHelper.getInstance()._toast((String) s);
+            return;
+        }
         deliverOrderBeanList = (List<DeliverOrderUrlBean.DeliverOrderBean>) s;
         deliverOrderItemAdapter.setDeliverOrderBeanList(deliverOrderBeanList);
         if (commonRefresh.getVisibility() == View.VISIBLE)
@@ -119,14 +128,28 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
 
     @Override
     public void onStyleChange(String style, int position) {
+        if (modifyOrderPresenter == null)
+            modifyOrderPresenter = new ModifyOrderPresenter(this);
         switch (style) {
-            case AppConstants.ORDER_START:
-                deliverOrderBeanList.get(position).setStyle(AppConstants.ORDER_DELIVER_COMPLETE);
+            case AppConstants.DELIVER_ORDER_UNACCEPT:
+
+                Log.i("RHG", "MODIFY DONE");
+                deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_ACCEPT);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
+                        AppConstants.UPDATE_ORDER_WAIT);
                 break;
-            case AppConstants.ORDER_DELIVER_COMPLETE:
-                deliverOrderBeanList.get(position).setStyle(AppConstants.ORDER_DELIVER_FINISH);
+            case AppConstants.DELIVER_ORDER_ACCEPT:
+                deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_DELIVERING);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
+                        AppConstants.UPDATE_ORDER_DELIVER);
+                break;
+            case AppConstants.DELIVER_ORDER_DELIVERING:
+                deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_COMPLETE);
+                deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
+                        "1");/*1表示已完成*/
                 break;
             default:
                 break;

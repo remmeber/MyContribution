@@ -102,15 +102,17 @@ public class AppConstants {
     public static final int MERCHANT_RATE = 2;
     /*Order*/
     public static final int ORDER_ALL = 0;
-    public static final int ORDER_UNPAID = 1;
-    public static final int ORDER_DELIVERING = 2;
-    public static final int ORDER_COMPLETE = 3;
+    public static final int USER_ORDER_UNPAID = 1;
+    public static final int USER_ORDER_DELIVERING = 2;
+    public static final int USER_ORDER_COMPLETE = 3;
     public static final int ORDER_DRAWBACK = 4;
 
-    /*订单配送*/
-    public static final String ORDER_START = "开始送货";
-    public static final String ORDER_DELIVER_COMPLETE = "确认送达";
-    public static final String ORDER_DELIVER_FINISH = "已完成";
+    public static final String DELIVER_ORDER_UNPAID = "20"/*"待付款"*/;
+    public static final String DELIVER_ORDER_UNACCEPT = "40"/*"待接单"*/;
+    public static final String DELIVER_ORDER_ACCEPT = "60"/*"已接单"*/;
+    public static final String DELIVER_ORDER_DELIVERING = "80"/*"配送中"*/;
+    public static final String DELIVER_ORDER_COMPLETE = "100"/*"已完成"*/;
+    public static final String DELIVER_ORDER_OTHER = "0";/*其他*/
 
     /*HotFood*/
     public static final int OVERALL = 0;
@@ -125,6 +127,7 @@ public class AppConstants {
     public static final String RESTAURANTS = "restaurants";
     public static final String HOME_RESTAURANTS = "headrestaurants";
     public static final String SEARCHRESTAURANTS = "searchrestaurants";
+    public static final String SEARCHHOTFOOD = "searchhotfood";
     public static final String HOTFOOD = "hotfood";
     public static final String TABLE_ORDER = "order";
     public static final String ADDRESS_TABLE = "address";
@@ -132,6 +135,13 @@ public class AppConstants {
     public static final String MERCHANT_INFO = "restaurantdetail";
     public static final String ORDER_DETAIL = "orderdetail";
     public static final String ORDER_STYLE = "orderstyle";
+    public static final String HEAD_HOT = "headhot";
+    public static final String DELETE_ADDRESS = "DeleteAddress";
+    public static final String DEFAULT_ADDRESS = "ChooseDefault";
+
+    public static final String UPDATE_ORDER_DELIVER = "UPdateorderdeliver";
+    public static final String UPDATE_ORDER_UNPAID = "UPdateorderPaid";
+    public static final String UPDATE_ORDER_WAIT = "UPdateorderwait";
 
     /**
      * 响应结果，正确
