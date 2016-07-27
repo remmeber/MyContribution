@@ -19,9 +19,10 @@ import com.rhg.qf.bean.SignInBean;
 import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -212,10 +213,14 @@ public interface QFoodApiService {
     Observable<BaseBean> modifyOrderState(@Field("ID") String orderId,
                                           @Field("Style") String style);
 
-
     @FormUrlEncoded
     @POST("Table/JsonSQL/AddNewOrder.php")
-    Observable<BaseBean> createOrder(@Body NewOrderBean newOrderBean);
+    Observable<BaseBean> createOrder(@Field("Address") String address,
+                                     @Field("Client") String client,
+                                     @Field("Receiver") String receiver,
+                                     @Field("Phone") String phone,
+                                     @Field("Price") String price,
+                                     @Field("Food") List<NewOrderBean.FoodBean> foodBeen);
 
 
     /*TODO 修改跑腿员订单的状态 API15*/

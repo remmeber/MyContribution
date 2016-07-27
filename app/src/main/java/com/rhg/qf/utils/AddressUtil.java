@@ -8,8 +8,10 @@ import com.rhg.qf.datebase.AccountDao;
 import java.util.List;
 
 /**
- * 作者：rememberon 2016/6/5
- * 邮箱：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/7/19 23:55
+ * email：1013773046@qq.com
  */
 public class AddressUtil {
     /**
@@ -61,5 +63,15 @@ public class AddressUtil {
      */
     public static List<AddressUrlBean.AddressBean> getAddressList() {
         return AccountDao.getInstance().getAddressList();
+    }
+
+    /**
+     * desc:获取默认地址
+     * author：remember
+     * time：2016/7/20 0:15
+     * email：1013773046@qq.com
+     */
+    public static AddressUrlBean.AddressBean getDefaultAddress() {
+        return AccountDao.getInstance().getAddressByDefault();
     }
 }

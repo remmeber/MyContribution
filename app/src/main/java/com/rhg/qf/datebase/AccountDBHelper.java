@@ -59,7 +59,9 @@ public class AccountDBHelper extends SQLiteOpenHelper {
                 + AppConstants.ADDRESS_ID + " text,"
                 + AppConstants.NAME_FOR_ADDRESS + " text,"
                 + AppConstants.PHONE_FOR_ADDRESS + " text,"
-                + AppConstants.ADDRESS_CONTENT + " text"
+                + AppConstants.ADDRESS + " text,"
+                + AppConstants.ADDRESS_DETAIL + " text,"
+                + AppConstants.ADDRESS_DEFAULT + " text"
                 + ");";
         db.execSQL(CREATE_TB_ADDRESS);
         String CREATE_TB_SHOPPING_CART = "create table " + Q_SHOPPING_CART_TABLE + "("

@@ -3,10 +3,10 @@ package com.rhg.qf.bean;
 import java.util.List;
 
 /**
- *desc:用于新建订单
- *author：remember
- *time：2016/7/11 0:27
- *email：1013773046@qq.com
+ * desc:用于新建订单
+ * author：remember
+ * time：2016/7/11 0:27
+ * email：1013773046@qq.com
  */
 public class NewOrderBean {
 
@@ -24,11 +24,6 @@ public class NewOrderBean {
     private String Address;
     private String Phone;
     private String Price;
-    /**
-     * ID : 1
-     * Num : 1
-     */
-
     private List<FoodBean> Food;
 
     public String getClient() {

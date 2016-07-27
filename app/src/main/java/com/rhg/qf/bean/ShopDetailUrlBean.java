@@ -29,6 +29,7 @@ public class ShopDetailUrlBean {
      */
 
     private List<ShopDetailBean> rows;
+    private List<String> Varietys;
 
     public String getResult() {
         return result;
@@ -62,6 +63,14 @@ public class ShopDetailUrlBean {
         this.rows = rows;
     }
 
+    public List<String> getVarietys() {
+        return Varietys;
+    }
+
+    public void setVarietys(List<String> Varietys) {
+        this.Varietys = Varietys;
+    }
+
     public static class ShopDetailBean {
         private String ID;
         private String Name;
@@ -69,6 +78,7 @@ public class ShopDetailUrlBean {
         private String MonthlySales;
         private String Style;
         private String Pic;
+        private String Variety;
 
         public String getID() {
             return ID;
@@ -116,6 +126,14 @@ public class ShopDetailUrlBean {
 
         public void setPic(String pic) {
             Pic = pic;
+        }
+
+        public String getVariety() {
+            return Variety;
+        }
+
+        public void setVariety(String variety) {
+            Variety = variety;
         }
     }
 }

@@ -155,14 +155,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         addressModify.setTag(8);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (hidden)
-            Log.i("RHG", "My:hide");
-        else
-            Log.i("RHG", "My:show");
-    }
-
     private View getViewById(View parent, int centerId, int targetId) {
         return parent.findViewById(centerId).findViewById(targetId);
     }
@@ -206,7 +198,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 Toast.makeText(getContext(), R.string.orderComplete, Toast.LENGTH_SHORT).show();
                 break;
             case 3://TODO 登录
-                Toast.makeText(getContext(), R.string.workerSignIn, Toast.LENGTH_SHORT).show();
+                doLogin();
                 break;
             case 4://TODO 注册
                 startActivity(new Intent(getContext(), DeliverRegisterActivity.class));
@@ -237,7 +229,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     /*TODO 登录*/
-    private void doLogin() {
+    private void  doLogin() {
         signUtil = new UmengUtil(getActivity());
         signUtil.SignIn(SHARE_MEDIA.WEIXIN, new SignInListener() {
             @Override

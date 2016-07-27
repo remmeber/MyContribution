@@ -1,5 +1,7 @@
 package com.rhg.qf.mvp.model;
 
+import android.util.Log;
+
 import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
@@ -16,7 +18,9 @@ import rx.functions.Func1;
  */
 public class NewOrderModel {
     public Observable<String> createNewOrder(NewOrderBean newOrderBean) {
-        return QFoodApiMamager.getInstant().getQFoodApiService().createOrder(newOrderBean)
+        return QFoodApiMamager.getInstant().getQFoodApiService().createOrder(newOrderBean.getAddress(),
+                newOrderBean.getClient(), newOrderBean.getReceiver(), newOrderBean.getPhone(),
+                newOrderBean.getPrice(), newOrderBean.getFood())
                 .flatMap(new Func1<BaseBean, Observable<String>>() {
                     @Override
                     public Observable<String> call(final BaseBean baseBean) {
@@ -24,7 +28,7 @@ public class NewOrderModel {
                             @Override
                             public void call(Subscriber<? super String> subscriber) {
                                 if (baseBean.getResult() == 0)
-                                    subscriber.onNext(baseBean.getMsg());
+                                    subscriber.onNext("订单生成成功");
                             }
                         });
                     }

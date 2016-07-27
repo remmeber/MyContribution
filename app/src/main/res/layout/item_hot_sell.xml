@@ -129,10 +129,10 @@
             android:layout_alignRight="@+id/hot_sell_deliver_distance"
             app:space_width="2dp"
             app:star_height="@dimen/material_size_medium"
-            app:star_hollow="@drawable/ic_star_gray"
+            app:star_solid="@drawable/star_green"
+            app:star_hollow="@drawable/star_gray"
             app:star_max="5"
             app:star_rating="0"
-            app:star_solid="@drawable/ic_star_green"
             app:star_width="@dimen/material_size_medium" />
 
         <TextView

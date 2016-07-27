@@ -61,8 +61,10 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         });
 //        holder.rlPayCheck.setOnClickListener(this);
         holder.lyTotalCount.setVisibility(View.VISIBLE);
+        int _totalPrice = Integer.valueOf(payList.get(position).getProductPrice()) *
+                Integer.valueOf(payList.get(position).getProductNumber());
         holder.tvTotalMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                payList.get(position).getProductPrice()));
+                String.valueOf(_totalPrice)));
         ImageLoader.getInstance().displayImage(payList.get(position).getProductPic(), holder.ivPayImage);
     }
 

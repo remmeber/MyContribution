@@ -16,8 +16,10 @@ import android.view.View;
 import com.rhg.qf.R;
 
 /**
- * 作者：rememberon 2016/6/19
- * 邮箱：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/7/18 23:26
+ * email：1013773046@qq.com
  */
 public class MyRatingBar extends View {
     //星星水平排列
@@ -56,15 +58,17 @@ public class MyRatingBar extends View {
         starMaxNumber = a.getInt(R.styleable.MyRatingBar_star_max, 0);
         starRating = a.getFloat(R.styleable.MyRatingBar_star_rating, 0);
         isIndicator = a.getBoolean(R.styleable.MyRatingBar_star_isIndicator, true);
-        mSolidBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), a.getResourceId(R.styleable.MyRatingBar_star_solid, 0)));
-        mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), a.getResourceId(R.styleable.MyRatingBar_star_hollow, 0)));
+        mSolidBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.star_green));
+        mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.star_gray));
         mOrientation = a.getInt(R.styleable.MyRatingBar_star_orientation, HORIZONTAL);
         a.recycle();
     }
 
     public MyRatingBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        paint = new Paint();
+        /*paint = new Paint();
         rectSrc = new Rect();
         dstF = new Rect();
         this.context = context;
@@ -79,7 +83,7 @@ public class MyRatingBar extends View {
         mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(),
                 a.getResourceId(R.styleable.MyRatingBar_star_hollow, 0)));
         mOrientation = a.getInt(R.styleable.MyRatingBar_star_orientation, HORIZONTAL);
-        a.recycle();
+        a.recycle();*/
     }
 
     @Override

@@ -16,6 +16,9 @@ import com.rhg.qf.fragment.ShoppingCartFragment;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.ui.FragmentController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*http://www.biaonimeia.com/sharelink/privateproject/u1hy06pJRJkvjBQ*/
 public class MainActivity extends BaseFragmentActivity implements BaseView
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
@@ -63,12 +66,12 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
     @Override
     protected void initData() {
 //        loadRootFragment(R.id.content_fragment, HomeFragment.newInstance());
-        Fragment[] fragments = new Fragment[4];
+        List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = new HomeFragment();
-        fragments[0] = homeFragment;
-        fragments[1] = new SellerFragment();
-        fragments[2] = new MyFragment();
-        fragments[3] = new ShoppingCartFragment();
+        fragments.add(homeFragment);
+        fragments.add(new SellerFragment());
+        fragments.add(new MyFragment());
+        fragments.add(new ShoppingCartFragment());
         fragmentController = new FragmentController(getSupportFragmentManager(),
                 fragments, R.id.content_fragment);
 

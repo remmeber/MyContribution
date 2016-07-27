@@ -59,14 +59,6 @@ public class SellerFragment extends BaseFragment {
 
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (hidden)
-            Log.i("RHG", "SELLER:hide");
-        else
-            Log.i("RHG", "SELLER:show");
-    }
-
-    @Override
     public int getLayoutResId() {
         return R.layout.all_shop_home_layout;
     }

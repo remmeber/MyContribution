@@ -292,8 +292,8 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                                            /*todo 带上参数*/
                 intent.putExtra(AppConstants.KEY_PRODUCT_NAME, tvGoodsName.getText().toString());
                 intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
-                intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,
-                        String.valueOf(Integer.valueOf(tvNum.getText().toString()) * Integer.valueOf(price)));
+                intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, price);
+                intent.putExtra(AppConstants.KEY_PRODUCT_NUMBER, tvNum.getText().toString());
                 intent.putExtra(AppConstants.KEY_IMAGE, image);
                 startActivity(intent);
                 break;

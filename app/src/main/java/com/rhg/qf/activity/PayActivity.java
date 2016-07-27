@@ -12,11 +12,14 @@ import android.widget.TextView;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.PayItemAdapter;
 import com.rhg.qf.application.InitApplication;
+import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.PayBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.NewOrderPresenter;
 import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
+import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -58,17 +61,37 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     ImageView ivCashCheck;
 
     List<PayBean> payList = new ArrayList<>();
+    NewOrderBean newOrderBean;
     private PayItemAdapter payItemAdapter;
+    NewOrderPresenter createOrderPresenter;
 
     @Override
     protected OrderInfo OnOrderCreate() {
+        if (newOrderBean == null)
+            newOrderBean = new NewOrderBean();
+        generateOrder(newOrderBean);
+        if (createOrderPresenter == null)
+            createOrderPresenter = new NewOrderPresenter(this);
+        createOrderPresenter.createNewOrder(newOrderBean);
         if (PayType.WeixinPay.equals(payType)) {
-            return BuildOrderInfo(null, null, null, null, null, null, null);
+            return BuildOrderInfo("微信支付", "90m", "www.baidu.com", "19919919191", "黄焖鸡米饭支付", "100",
+                    "10.129.216.53");
         }
         if (PayType.AliPay.equals(payType)) {
             return BuildOrderInfo(null, null, null, null, null, null, null);
         }
         return null;
+    }
+
+    private void generateOrder(NewOrderBean newOrderBean) {
+        newOrderBean.setReceiver(/*AddressUtil.getDefaultAddress().getName()*/"阮湖岗");
+        newOrderBean.setPhone(/*AddressUtil.getDefaultAddress().getPhone()*/"15261898929");
+        newOrderBean.setAddress(/*AddressUtil.getDefaultAddress().getAddress().concat(
+                AddressUtil.getDefaultAddress().getDetail()*/"江苏省南京市江宁区秣周东路无线谷"
+        );
+        newOrderBean.setFood(getCheckedFood(payList));
+        newOrderBean.setClient("19216801");
+        newOrderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
     }
 
     @Override
@@ -93,6 +116,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         _payBean.setProductId("1");
         _payBean.setProductPic(intent.getStringExtra(AppConstants.KEY_IMAGE));
         _payBean.setProductPrice(intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE));
+        _payBean.setProductNumber(intent.getStringExtra(AppConstants.KEY_PRODUCT_NUMBER));
         payList.add(_payBean);
 
         rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
@@ -103,7 +127,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
 
-        RegisterBasePay(null, null, null, InitApplication.WXID, null, null);
+        RegisterBasePay(null, null, null, InitApplication.WXID, "10000100", null);
 //        BuildOrderInfo()
     }
 
@@ -140,6 +164,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     ToastHelper.getInstance()._toast("当前未选择商品！");
                     return;
                 }
+
                 Pay(v);
                 /*payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {
@@ -225,13 +250,17 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         return count;
     }
 
-    private List<String> getCheckItemId(List<PayBean> payList) {
-        List<String> _list = new ArrayList<>();
+    private List<NewOrderBean.FoodBean> getCheckedFood(List<PayBean> payList) {
+        List<NewOrderBean.FoodBean> _bean = new ArrayList<>();
         for (PayBean _payBean : payList) {
-            if (_payBean.isChecked())
-                _list.add(_payBean.getProductId());
+            if (_payBean.isChecked()) {
+                NewOrderBean.FoodBean foodBean = new NewOrderBean.FoodBean();
+                foodBean.setID(_payBean.getProductId());
+                foodBean.setNum(_payBean.getProductNumber());
+                _bean.add(foodBean);
+            }
         }
-        return _list;
+        return _bean;
     }
 
     private int getCheckItemTotalMoney(List<PayBean> payList) {
@@ -241,5 +270,12 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                 count += Integer.valueOf(_payBean.getProductPrice());
         }
         return count;
+    }
+
+    @Override
+    public void showData(Object o) {
+        if (o instanceof String) {
+            ToastHelper.getInstance()._toast((String) o);
+        }
     }
 }

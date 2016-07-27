@@ -1,5 +1,7 @@
 package com.rhg.qf.mvp.presenter;
 
+import android.util.Log;
+
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.mvp.model.NewOrderModel;
 import com.rhg.qf.mvp.view.BaseView;
@@ -29,12 +31,11 @@ public class NewOrderPresenter {
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("RHG", "error:" + e.getMessage() + "\ncause:" + e.getCause());
                     }
 
                     @Override

@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.rhg.qf.bean.OrderXml;
-import com.rhg.qf.mvp.api.PayService;
-import com.rhg.qf.mvp.api.QFoodApi;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.pays.IPayable;
@@ -16,16 +13,20 @@ import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * desc:
@@ -34,7 +35,7 @@ import rx.functions.Func1;
  * email：1013773046@qq.com
  */
 public class WxPay implements IPayable {
-
+    OkHttpClient client = null;
     //微信sdk对象
     private IWXAPI msgApi;
     //生成预付单需要的参数
@@ -86,7 +87,6 @@ public class WxPay implements IPayable {
             paramsForPrepay = packageParams;//将参数保存一份，待调用支付时使用
             String sign = Sign(packageParams);
             packageParams.put("sign", sign);/*签名*/
-
             String xmlstring = XmlUtil.MapToXml(packageParams);
 
             return new OrderInfo(xmlstring);
@@ -106,69 +106,20 @@ public class WxPay implements IPayable {
             msgApi.detach();
     }
 
-    public Observable<String> GetPrepayId(final OrderInfo orderInfo) {
-
-//        getPrepayId.getPrepayId(orderInfo.GetContent());
-        String content;
+    public String GetPrepayId(final OrderInfo orderInfo) {
+        String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        Log.i("RHG", "orderInfo:" + orderInfo.GetContent());
         final Map<String, String> orderMap = XmlUtil.DecodeXmlToMap(orderInfo.GetContent());
-        /*content = */
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(QFoodApi.WXPAY_CREATE_ORDER_URL)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        final PayService service = retrofit.create(PayService.class);
-        return service.getPrepayId(orderMap)
-                .flatMap(new Func1<OrderXml, Observable<String>>() {
-                    @Override
-                    public Observable<String> call(final OrderXml orderXml) {
-                        Log.i("RHG", "return:" + orderXml.getReturn_msg());
-                        return Observable.create(new Observable.OnSubscribe<String>() {
-                            @Override
-                            public void call(Subscriber<? super String> subscriber) {
-                                subscriber.onNext(orderXml.getPrepay_id());
-                            }
-                        });
-                    }
-                });
+        byte[] response = post(url, orderInfo.GetContent());
+        try {
+            JSONObject _json = new JSONObject(new String(response));
+            return _json.getString("prepay_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
 
-        /*QFoodApiMamager.getInstant().getQFoodApiService().getPrepayId(orderMap)
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())*/
-                /*.flatMap(new Func1<String, Observable<String>>() {
-                    @Override
-                    public Observable<String> call(final String s) {
-                        return Observable.create(new Observable.OnSubscribe<String>() {
-                            @Override
-                            public void call(Subscriber<? super String> subscriber) {
-                                subscriber.onNext(s);
-                            }
-                        });
-                    }
-                })*/
-        /*.subscribe(new Observer<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i("RHG", "message: " + e.getMessage() + "cause:" + e.getCause());
-
-            }
-
-            @Override
-            public void onNext(String s) {
-                Log.i("RHG", "RETURN " + s);
-            }
-        });*/
-        /*Log.i("RHG", content);
-        Map<String, String> xml = null;
-        xml = XmlUtil.DecodeXmlToMap(content);
-        if (xml != null)
-            return xml.get("prepay_id");
-        else*/
-      /*  String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        /*String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
         byte[] buf = Util.httpPost(url, orderInfo.GetContent());
         Map<String, String> xml = null;
         if (buf != null) {
@@ -209,9 +160,28 @@ public class WxPay implements IPayable {
 
         req.sign = Sign(signParams);
         return req;
-
     }
 
+    byte[] post(String url, String json) {
+        RequestBody formBody = RequestBody.create(MediaType.parse("text/xml;charset=UTF-8"),json);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+        if (client == null)
+            client = new OkHttpClient();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                Log.i("RHG", response.body().string());
+                return response.body().bytes();
+            } else return null;
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
     private String GetNonceStr() {
         Random random = new Random();

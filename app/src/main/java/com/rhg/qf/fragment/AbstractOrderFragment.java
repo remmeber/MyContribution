@@ -42,7 +42,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
 
     public AbstractOrderFragment() {
         getOrdersPresenter = new OrdersPresenter(this);
-        userId = "1";/*从数据库中获取*/
+        userId = "19216801";/*从数据库中获取*/
         style = getFmTag();
     }
 

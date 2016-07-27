@@ -2,6 +2,7 @@ package com.rhg.qf.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -41,7 +42,7 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new HotFoodViewHolder(View.inflate(context, R.layout.item_hot_sell, null));
+        return new HotFoodViewHolder(LayoutInflater.from(context).inflate(R.layout.item_hot_sell,parent,false));
     }
 
     @Override

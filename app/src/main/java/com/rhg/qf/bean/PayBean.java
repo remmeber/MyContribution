@@ -11,6 +11,7 @@ public class PayBean {
     String productName;
     String productPrice;
     String productPic;
+    String productNumber;
     boolean isChecked;
 
     public String getProductId() {
@@ -43,6 +44,14 @@ public class PayBean {
 
     public void setProductPic(String productPic) {
         this.productPic = productPic;
+    }
+
+    public String getProductNumber() {
+        return productNumber;
+    }
+
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
     }
 
     public boolean isChecked() {

@@ -125,13 +125,8 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (hidden)
-            Log.i("RHG", "Home:hide");
-        else
-            Log.i("RHG", "Home:show");
-    }
+
+
 
     @Override
     protected void initData() {
@@ -206,7 +201,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void showSuccess(Object o) {
-        Log.i("RHG", "Get data success");
         HomeBean _homeBean = (HomeBean) o;
         /*set null */
 

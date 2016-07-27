@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -14,6 +15,7 @@ import com.rhg.qf.adapter.GoodsListAdapter;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
+import com.rhg.qf.impl.RefreshListener;
 import com.rhg.qf.mvp.presenter.ShopDetailPresenter;
 import com.rhg.qf.widget.VerticalTabLayout;
 
@@ -44,13 +46,13 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
 
 
     public FoodTypeFragment() {
-        shopDetailPresenter = new ShopDetailPresenter(this);
+//        shopDetailPresenter = new ShopDetailPresenter(this);
     }
 
     @Override
     public void receiveData(Bundle arguments) {
         // TODO: 获取数据
-        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
+//        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
     }
 
     @Override
@@ -60,12 +62,13 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
 
     @Override
     public void loadData() {
-        commonRefresh.setVisibility(View.VISIBLE);
-        shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);
+        /*commonRefresh.setVisibility(View.VISIBLE);
+        shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);*/
     }
 
     @Override
     protected void initData() {
+        Log.i("RHG", "INIT");
         if (shopDetailBeanList == null)
             shopDetailBeanList = new ArrayList<>();
         /*for (int i = 0; i < 4; i++) {
@@ -84,11 +87,22 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);
+                /*shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);*/
+                if (refreshListener != null)
+                    refreshListener.load();
+                else
+                    new Error("refresh interface can not be null");
             }
 
         });
     }
+
+    RefreshListener refreshListener;
+
+    public void setRefreshListener(RefreshListener refreshListener) {
+        this.refreshListener = refreshListener;
+    }
+
 
     @Override
     protected void initView(View view) {
@@ -102,7 +116,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
 
     @Override
     public void showSuccess(Object o) {
-        shopDetailBeanList = (List<ShopDetailUrlBean.ShopDetailBean>) o;
+       /* shopDetailBeanList = (List<ShopDetailUrlBean.ShopDetailBean>) o;
         if (goodsListAdapter != null) {
             goodsListAdapter.setShopDetailBeanList(shopDetailBeanList);
             goodsListAdapter.notifyDataSetChanged();
@@ -110,7 +124,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         if (commonSwipe.isRefreshing())
             commonSwipe.setRefreshing(false);
         if (commonRefresh.getVisibility() == View.VISIBLE)
-            commonRefresh.setVisibility(View.GONE);
+            commonRefresh.setVisibility(View.GONE);*/
     }
 
     @Override
@@ -124,22 +138,12 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         startActivityForResult(intent, 1);
     }
 
-   /* public void setShopDetailBeanList(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList) {
+    public void setShopDetailBeanList(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList) {
         this.shopDetailBeanList = shopDetailBeanList;
-        if (swipeRefreshLayout.isRefreshing())
-            swipeRefreshLayout.setRefreshing(false);
-        if (goodsListAdapter != null) {
-            goodsListAdapter.setShopDetailBeanList(shopDetailBeanList);
-            goodsListAdapter.notifyDataSetChanged();
-        }
-    }
-*/
-/*
-    public int getFragmentTag() {
-        return tag;
     }
 
-    public void setFragmentTag(int tag) {
-        this.tag = tag;
-    }*/
+    public void finishLoad() {
+        if (commonSwipe.isRefreshing())
+            commonSwipe.setRefreshing(false);
+    }
 }

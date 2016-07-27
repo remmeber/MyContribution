@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 
+import java.util.List;
+
 /**
  * Created by remember on 2016/5/20.
  */
@@ -32,7 +34,7 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
     int unSelectTextColor;
     int selectBgColor;
     int unSelectBgColor;
-    private String[] titles;
+    private List<String> titles;
     private VerticalTabClickListener mVerticalTabClickListener;
 
     public VerticalTabLayout(Context context) {
@@ -101,7 +103,7 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
 
     private void notifyDataSetChanged() {
         mLayout.removeAllViews();
-        this.tabCount = titles.length;
+        this.tabCount = titles == null ? 0 : titles.size();
         for (int i = 0; i < tabCount; i++) {
             final int position = i;
             TextView textview = new TextView(mContext);
@@ -112,7 +114,7 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
             _lp.setMargins(dip2px(5), dip2px(15), dip2px(5), dip2px(5));
             textview.setLayoutParams(_lp);
             textview.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-            CharSequence pageTitle = titles[i];
+            CharSequence pageTitle = titles.get(i);
             textview.setText(pageTitle);
             if (i == 0) {
                 textview.setTextColor(selectTextColor);
@@ -173,12 +175,12 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
 
     }
 
-    public void setTitles(String[] titles) {
+    public void setTitles(List<String> titles) {
         this.titles = titles;
         notifyDataSetChanged();
     }
 
     public interface VerticalTabClickListener {
-        public void onVerticalTabClick(int position);
+        void onVerticalTabClick(int position);
     }
 }
