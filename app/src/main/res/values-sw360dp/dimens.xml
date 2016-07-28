@@ -5,7 +5,7 @@
     <dimen name="activity_horizontal_margin">24dp</dimen>
     <dimen name="activity_vertical_margin">24dp</dimen>
 
-
+    <dimen name="image_margin">5dp</dimen>
     <dimen name="header_image_size">80dp</dimen>
     <dimen name="food_image_size">60dp</dimen>
     <dimen name="text_little_small">12sp</dimen>

@@ -74,6 +74,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
                 getResources().getColor(R.color.colorInActive)));
         hotFoodAdapter = new HotFoodAdapter(getContext(), hotFoodBeanList);
         commonRecycle.setAdapter(hotFoodAdapter);
+        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

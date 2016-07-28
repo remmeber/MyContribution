@@ -50,8 +50,8 @@
         android:layout_height="34dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/margin_little"
+        android:layout_marginRight="@dimen/margin_little"
         android:layout_toEndOf="@id/home_tl_left_rl"
         android:layout_toLeftOf="@+id/home_tl_right_ll"
         android:layout_toRightOf="@id/home_tl_left_rl"
@@ -66,31 +66,14 @@
         android:textColor="@color/colorSearchHint"
         android:textSize="@dimen/text_large" />
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/home_tl_right_ll"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/home_tl_right_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:color/transparent"
-            tools:ignore="contentDescription"
-            tools:src="@drawable/ic_search_black" />
-
-        <TextView
-            android:id="@+id/home_tl_right_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="反馈"
-            android:textColor="@color/colorToolbarGreen" />
-    </LinearLayout>
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
+        android:src="@mipmap/ic_diy_order"
+        android:orientation="vertical"/>
 </RelativeLayout>

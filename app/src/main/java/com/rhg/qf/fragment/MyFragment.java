@@ -1,20 +1,17 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rhg.qf.R;
+import com.rhg.qf.activity.AddOrNewAddressActivity;
 import com.rhg.qf.activity.AddressActivity;
 import com.rhg.qf.activity.DeliverInfoActivity;
 import com.rhg.qf.activity.DeliverOrderActivity;
 import com.rhg.qf.activity.DeliverRegisterActivity;
-import com.rhg.qf.activity.AddOrNewAddressActivity;
-import com.rhg.qf.activity.DeliverStateNoneActivity;
 import com.rhg.qf.activity.OrderListActivity;
 import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.third.UmengUtil;
@@ -32,7 +29,7 @@ import java.util.Map;
 public class MyFragment extends BaseFragment implements View.OnClickListener {
     boolean hasAccount = true;
 
-//    FrameLayout flTAB;
+    //    FrameLayout flTAB;
     ImageView userHeader;
     TextView userName;
     //TODO-------------------------------我的订单栏---------------------------------------------
@@ -194,7 +191,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             case 1://TODO  取消
                 Toast.makeText(getContext(), R.string.cancel, Toast.LENGTH_SHORT).show();
                 break;
-            case 2://TODO 修改
+            case 2://TODO
                 Toast.makeText(getContext(), R.string.orderComplete, Toast.LENGTH_SHORT).show();
                 break;
             case 3://TODO 登录
@@ -204,7 +201,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), DeliverRegisterActivity.class));
                 break;
             case 5://TODO 修改
-                Toast.makeText(getContext(), R.string.wokerAndAddrModify, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), DeliverInfoActivity.class));
                 break;
             case R.id.profileAddress://TODO 我的地址右箭头
                 /*获取所有地址*/
@@ -229,7 +226,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     /*TODO 登录*/
-    private void  doLogin() {
+    private void doLogin() {
         signUtil = new UmengUtil(getActivity());
         signUtil.SignIn(SHARE_MEDIA.WEIXIN, new SignInListener() {
             @Override

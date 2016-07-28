@@ -58,7 +58,7 @@ public class ShoppingCartFragment extends BaseFragment {
     public ShoppingCartFragment() {
         Log.i(TAG, "ShoppingCartFragment ");
         shoppingCartBeanList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        /*for (int i = 0; i < 6; i++) {
             ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
             shoppingCartBean.setMerchantName("iiiii");
             shoppingCartBean.setMerID("2015051800");
@@ -74,7 +74,7 @@ public class ShoppingCartFragment extends BaseFragment {
             }
             shoppingCartBean.setGoods(goodsList);
             shoppingCartBeanList.add(shoppingCartBean);
-        }
+        }*/
     }
 
     //----------------------------------------------------------------------------------------------
@@ -93,11 +93,11 @@ public class ShoppingCartFragment extends BaseFragment {
     protected void initData() {
         fl_tab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbCenterTV.setText(getResources().getString(R.string.shoppingCart));
-        tbRightTV.setText("编辑");
+        tbRightTV.setText(getResources().getString(R.string.tvEdit));
+        srlShoppingCart.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         srlShoppingCart.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i("RHG", "refresh is done");
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

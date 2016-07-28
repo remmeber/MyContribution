@@ -65,6 +65,7 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
         commonRecycle.setAdapter(qFoodMerchantAdapter);
+        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

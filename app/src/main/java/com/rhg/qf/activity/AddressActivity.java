@@ -122,6 +122,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
                 ToastHelper.getInstance()._toast("删除：" + position);
             }
         });*/
+        srlAddress.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorGreenNormal));
         srlAddress.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

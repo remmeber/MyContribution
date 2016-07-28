@@ -8,7 +8,7 @@
     <string name="allStore">所有店铺</string>
 
     <!--Home-->
-    <string name="footerText">没有啦~~\n每天5加哦~</string>
+    <string name="footerText">没有啦~~\n每天5家哦~</string>
     <!--Home-->
 
     <!-- profile -->
@@ -97,6 +97,7 @@
     <string name="contactAddress_Null">收货地址为空</string>
     <string name="contactAddressDetail">补充详细地址(如门牌号、楼层号)</string>
     <string name="tvSave">保存</string>
+    <string name="tvEdit">编辑</string>
     <!--收货地址-->
 
     <!--收货-->

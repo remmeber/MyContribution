@@ -81,7 +81,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
     protected void initData() {
         uploadAndSaveImagePresenter = new UploadAndSaveImagePresenter(this);
         tb_common.setBackgroundResource(R.color.colorGreenNormal);
-        tbRightTv.setText("编辑");
+        tbRightTv.setText(getResources().getString(R.string.tvEdit));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         etNameWrap.setHint("真实姓名");
         etNameWrap.setError("");
@@ -144,7 +144,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_CANCELED) {
-            ToastHelper.getInstance()._toast("CANCEL");
+            ToastHelper.getInstance().displayToastWithQuickClose("取消");
             return;
         }
         switch (requestCode) {
@@ -284,19 +284,19 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
                 break;
             case R.id.bt_save:
                 if ("".equals(etNameWrap.getEditText().getText().toString())) {
-                    ToastHelper.getInstance()._toast("真实姓名为空");
+                    ToastHelper.getInstance().displayToastWithQuickClose("真实姓名为空");
                     break;
                 }
                 if ("".equals(etIdWrap.getEditText().getText().toString())) {
-                    ToastHelper.getInstance()._toast("身份证为空");
+                    ToastHelper.getInstance().displayToastWithQuickClose("身份证为空");
                     break;
                 }
                 if ("".equals(etPhoneWrap.getEditText().getText().toString())) {
-                    ToastHelper.getInstance()._toast("手机号码为空");
+                    ToastHelper.getInstance().displayToastWithQuickClose("手机号码为空");
                     break;
                 }
                 if ("".equals(etPlaceWrap.getEditText().getText().toString())) {
-                    ToastHelper.getInstance()._toast("配送范围为空");
+                    ToastHelper.getInstance().displayToastWithQuickClose("配送范围为空");
                     break;
                 }
                 if (perfectDeliverInfoPresenter == null)

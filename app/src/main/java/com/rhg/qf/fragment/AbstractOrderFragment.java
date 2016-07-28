@@ -70,6 +70,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         commonRecycle.setLayoutManager(linearLayoutManager);
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setAdapter(qFoodOrderAdapter);
+        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

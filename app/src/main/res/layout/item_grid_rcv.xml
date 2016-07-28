@@ -10,21 +10,34 @@
         android:id="@+id/grid_imageView"
         android:layout_width="@dimen/header_image_size"
         android:layout_height="@dimen/header_image_size"
-        android:layout_marginTop="@dimen/margin_little"
-        android:layout_marginBottom="@dimen/margin_little"
         android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/margin_little"
+        android:layout_marginTop="@dimen/margin_little"
+        tools:src="@drawable/recommend_default_icon_1" />
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/relativeLayout"
+        android:layout_toStartOf="@+id/relativeLayout"
+        android:src="@drawable/top"
+        android:visibility="gone"
+        tools:ignore="contentDescription" />
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/grid_imageView"
         android:layout_toRightOf="@id/grid_imageView"
         android:background="@drawable/bg_green"
-        android:paddingRight="@dimen/margin_little"
-        android:paddingLeft="@dimen/margin_little">
+        android:paddingLeft="@dimen/margin_little"
+        android:paddingRight="@dimen/margin_little">
 
         <TextView
             android:id="@+id/grid_title"

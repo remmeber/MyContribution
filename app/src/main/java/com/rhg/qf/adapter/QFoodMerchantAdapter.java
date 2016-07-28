@@ -54,8 +54,7 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
                 context.getResources().getString(R.string.tvDeliverRequire), data.getDelivery()));
         holder.headerdelivermoney.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDeliverFee), data.getFee()));
-        holder.headerdistance.setText(String.format(Locale.ENGLISH,
-                context.getResources().getString(R.string.tvDistance), data.getDistance()));
+        holder.headerdistance.setText(data.getDistance());
         holder.headerlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

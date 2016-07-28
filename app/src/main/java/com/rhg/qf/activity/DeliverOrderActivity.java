@@ -75,6 +75,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
         deliverOrderItemAdapter.setOnStyleChange(this);
         commonRecycle.setAdapter(deliverOrderItemAdapter);
 
+        commonSwipe.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

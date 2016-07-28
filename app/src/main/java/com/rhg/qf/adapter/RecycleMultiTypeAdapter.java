@@ -140,8 +140,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindViewHolderHeader(HeaderTypeViewHolder holder, HeaderTypeModel data, int position) {
-        holder.button.setText(data.getText());
-        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));
+       /* holder.button.setText(data.getText());
+        holder.button.setBackgroundColor(context.getResources().getColor(data.getColor()));*/
     }
 
     private void bindViewHolderBanner(BannerTypeViewHolder holder, final BannerTypeBean data) {
@@ -249,17 +249,17 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private class HeaderTypeViewHolder extends RecyclerView.ViewHolder {
-        private final Button button;
+//        private final Button button;
 
         public HeaderTypeViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.headerButton);
+            /*button = (Button) itemView.findViewById(R.id.headerButton);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "header is click", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 

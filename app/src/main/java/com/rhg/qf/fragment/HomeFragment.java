@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,7 +75,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     ImageView tlLeftIV;
     TextView tlLeftTV;
     TextView tlCenterTV;
-    LinearLayout tlRightLL;
+    ImageView tlRightLL;
     ImageView tlRightIV;
     TextView tlRightTV;
     /*toolbar 相关*/
@@ -112,8 +111,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
         tlCenterTV = (TextView) view.findViewById(R.id.home_tl_center_tv);
 
-        tlRightLL = (LinearLayout) view.findViewById(R.id.home_tl_right_ll);
-        tlRightIV = (ImageView) view.findViewById(R.id.home_tl_right_iv);
+        tlRightLL = (ImageView) view.findViewById(R.id.home_tl_right_ll);
 
         home_rcv = (RecyclerView) view.findViewById(R.id.home_recycle);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_swipe);
@@ -124,8 +122,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     public void loadData() {
         homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
     }
-
-
 
 
     @Override
@@ -145,6 +141,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         home_rcv.setLayoutManager(linearLayoutManager);
         home_rcv.setHasFixedSize(false);
         home_rcv.setAdapter(recycleMultiTypeAdapter);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -170,17 +167,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     @Override
     public MyLocationListener getLocationListener() {
         return myLocationListener;
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -244,12 +230,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
 
-    //TODO 扫一扫
-    private void doFeedback() {
-        ToastHelper.getInstance()._toast("反馈");
-    }
-
-
     //--------------------------------点击事件回调---------------------------------------------------
 
     @Override
@@ -264,7 +244,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 doSearch();
                 break;
             case R.id.home_tl_right_ll:
-                doFeedback();
                 startActivity(new Intent(getContext(), DIYOrderActivity.class));
                 break;
         }
@@ -280,7 +259,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
-        Log.i("RHG", bannerEntity.getID() + ", " + bannerEntity.getSrc());
         /*Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         *//*todo 传递参数*//*
         intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
