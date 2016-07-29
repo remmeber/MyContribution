@@ -171,7 +171,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             tvNum.setText("0");
             ivAddToShoppingCart.setNum("0");
         }
-        ivAddToShoppingCart.setDrawable(R.drawable.ic_shopping_cart_green);
+//        ivAddToShoppingCart.setDrawable(R.drawable.ic_shopping_cart_green);
         ivBanner.startTurning(2000);
         ivBanner.setPageIndicator(AppConstants.IMAGE_INDICTORS);
     }
@@ -229,7 +229,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.tb_right_ll:
-                ToastHelper.getInstance()._toast("修改定位");
+                ToastHelper.getInstance().displayToastWithQuickClose("正在获取定位...");
                 break;
             case R.id.ivReduce:
                 int t = Integer.valueOf(tvNum.getText().toString());
@@ -261,7 +261,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             case R.id.ivShare:
                 UmengUtil umengUtil = new UmengUtil(this);
                 UMImage imageMedia = new UMImage(this, /*AccountUtil.getInstance().getHeadImageUrl()*/R.drawable.recommend_default_icon_1);
-                ShareModel shareModel = new ShareModel("QFood", "好吃", imageMedia);
+                ShareModel shareModel = new ShareModel("黄焖鸡米饭", "好吃", imageMedia);
                 umengUtil.Share(shareModel, new ShareListener() {
                     @Override
                     public void shareSuccess(String message) {
@@ -284,7 +284,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 break;*/
             case R.id.bt_buy:
                 if (Integer.valueOf(tvNum.getText().toString()) == 0) {
-                    ToastHelper.getInstance()._toast("未选择商品数量");
+                    ToastHelper.getInstance().displayToastWithQuickClose("未选择商品数量");
                     return;
                 }
                 Intent intent = new Intent(GoodsDetailActivity.this,

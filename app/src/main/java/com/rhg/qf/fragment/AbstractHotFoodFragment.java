@@ -1,5 +1,6 @@
 package com.rhg.qf.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
+import com.rhg.qf.activity.GoodsDetailActivity;
 import com.rhg.qf.adapter.HotFoodAdapter;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.constants.AppConstants;
@@ -78,7 +80,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                hotFoodPresenter.getHotFoods(AppConstants.SEARCHHOTFOOD, hotFoodType,foodName);
+                hotFoodPresenter.getHotFoods(AppConstants.SEARCHHOTFOOD, hotFoodType, foodName);
             }
         });
     }
@@ -115,7 +117,9 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
 
     @Override
     public void onItemClickListener(int position, HotFoodUrlBean.HotFoodBean item) {
-        ToastHelper.getInstance()._toast("点击：" + position);
+        Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
+        startActivity(intent);
     }
 
 }

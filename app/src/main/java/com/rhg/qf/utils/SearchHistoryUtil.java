@@ -1,5 +1,7 @@
 package com.rhg.qf.utils;
 
+import android.util.Log;
+
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.datebase.AccountDao;
 

@@ -2,16 +2,15 @@ package com.rhg.qf.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.utils.ImageUtils;
+import com.rhg.qf.utils.DpUtil;
 
 /*
  *desc
@@ -21,68 +20,121 @@ import com.rhg.qf.utils.ImageUtils;
  */
 public class ShoppingCartWithNumber extends FrameLayout {
     private static final int DEFAULT_BACK_COLOR = Color.GREEN;
-    TextView tv_goodsNum;
+    Context context;
     ImageView iv_goodsCart;
+    boolean isVisible;
+    String number = "2";
+    float r = DpUtil.dip2px(15);
+    float text_size = 10;
+    int width;
+    int height;
     private int backColor;
+    Paint circlePaint;
+    Paint textPaint;
 
     public ShoppingCartWithNumber(Context context) {
         this(context, null);
-//        this(context, null);
     }
 
     public ShoppingCartWithNumber(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context);
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ShoppingCartWithNumber);
-        if (a.hasValue(R.styleable.ShoppingCartWithNumber_tint_color)) {
-            backColor = a.getColor(R.styleable.ShoppingCartWithNumber_tint_color, DEFAULT_BACK_COLOR);
-
-        }
-        a.recycle();
+        this(context, attrs, 0);
     }
 
     public ShoppingCartWithNumber(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ShoppingCartWithNumber);
+        if (a.hasValue(R.styleable.ShoppingCartWithNumber_tint_color)) {
+            backColor = a.getColor(R.styleable.ShoppingCartWithNumber_tint_color, DEFAULT_BACK_COLOR);
+        }
+        if (a.hasValue(R.styleable.ShoppingCartWithNumber_text_size)) {
+            text_size = a.getDimensionPixelSize(R.styleable.ShoppingCartWithNumber_text_size, sp2px(text_size));
+        }
+        a.recycle();
+        initView(context);
+        circlePaint = getCirclePaint();
+        textPaint = getTextPaint();
 //        initView(context);
     }
 
+    private Paint getTextPaint() {
+        Paint _paint = new Paint();
+        _paint.setColor(Color.BLACK);
+        _paint.setAntiAlias(true);
+        _paint.setTextSize(sp2px(10));
+        return _paint;
+    }
+
+    protected int sp2px(float sp) {
+        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (sp * scale + 0.5f);
+    }
+
+    private Paint getCirclePaint() {
+        Paint _paint = new Paint();
+        _paint.setColor(backColor);
+        _paint.setStyle(Paint.Style.FILL);
+        _paint.setAntiAlias(true);
+        return _paint;
+    }
+
     private void initView(Context context) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.shopping_cart_with_number, this, true);
-        tv_goodsNum = (TextView) view.findViewById(R.id.tv_goods_num);
-        iv_goodsCart = (ImageView) view.findViewById(R.id.iv_shopping_cart);
+        setWillNotDraw(false);
+        setBackground(context.getResources().getDrawable(R.drawable.ic_shopping_cart_green));
+        /*iv_goodsCart = new ImageView(context);
+        iv_goodsCart.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_shopping_cart_green));
+        addView(iv_goodsCart);*/
 //        ImageUtils.TintFill(iv_goodsCart, iv_goodsCart.getDrawable(), backColor);
     }
 
-    public int getNum() {
-        if (tv_goodsNum.getVisibility() == GONE)
-            return 0;
-        String _string_num = tv_goodsNum.getText().toString();
-        return Integer.valueOf(_string_num);
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(DpUtil.dip2px(36), DpUtil.dip2px(36));
     }
 
-    public void setNum(String num) {
-        if (tv_goodsNum != null) {
-            if (Integer.valueOf(num) == 0)
-                setNumVisible(false);
-            else {
-                setNumVisible(true);
-                tv_goodsNum.setText(num);
-            }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        width = w;
+        height = h;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Paint.FontMetrics fm = textPaint.getFontMetrics();
+        if (!" ".equals(number) && !"0".equals(number)) {
+            canvas.drawCircle(width - r / 2, r / 2, r / 2, circlePaint);
+            canvas.drawText(number, width - r / 2 - textPaint.measureText(number) / 2,
+                    r / 2 - (fm.descent + fm.ascent) / 2, textPaint);
+        } else {
+            canvas.drawCircle(width - r, r, 0, circlePaint);
+            canvas.drawText("", width - r, r - text_size / 2, textPaint);
         }
     }
 
-    public void setDrawable(int resID) {
-//        iv_goodsCart.setImageDrawable(getResources().getDrawable(resID));
-        ImageUtils.TintFill(iv_goodsCart, getResources().getDrawable(resID), backColor);
+    public int getNum() {
+        return Integer.valueOf(number);
     }
 
-    private void setNumVisible(boolean visible) {
+    public void setNum(String num) {
+        number = num;
+        requestLayout();
+    }
+
+   /* public void setDrawable(int resID) {
+//        iv_goodsCart.setImageDrawable(getResources().getDrawable(resID));
+        ImageUtils.TintFill(iv_goodsCart, getResources().getDrawable(resID), backColor);
+    }*/
+
+    /*private void setNumVisible(boolean visible) {
         if (tv_goodsNum != null) {
             if (visible)
                 tv_goodsNum.setVisibility(VISIBLE);
             else tv_goodsNum.setVisibility(GONE);
         }
-    }
+    }*/
 
 }

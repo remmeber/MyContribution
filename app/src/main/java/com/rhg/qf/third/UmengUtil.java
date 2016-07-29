@@ -77,11 +77,12 @@ public class UmengUtil {
             shareListener.shareCancel("分享取消");
         }
     };
+    private ShareAction shareAction;
 
     public UmengUtil(Activity activity) {
         this.activity = activity;
         if (umShareAPI == null)
-            umShareAPI = UMShareAPI.get(this.activity);
+            umShareAPI = UMShareAPI.get(activity);
     }
 
     public void SignIn(SHARE_MEDIA share_media, SignInListener signInListener) {
@@ -91,7 +92,9 @@ public class UmengUtil {
 
     public void Share(ShareModel shareModel, ShareListener shareListener) {
         this.shareListener = shareListener;
-        new ShareAction(activity).setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN,
+        if (shareAction == null)
+            shareAction = new ShareAction(activity);
+        shareAction.setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN,
                 SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE).withTitle(shareModel.getTitle())
                 .withText(shareModel.getContent())
                 .withMedia(shareModel.getImageMedia())

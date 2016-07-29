@@ -178,8 +178,9 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
                 if (event.getAction() != MotionEvent.ACTION_UP) {
                     return true;
                 }
-                if (event.getRawX() > tvHistoryResult.getWidth() -
-                        tvHistoryResult.getCompoundDrawables()[2].getBounds().width()) {
+                if (event.getRawX() > tvHistoryResult.getWidth()
+                        - tvHistoryResult.getCompoundDrawables()[2].getBounds().width()
+                        - tvHistoryResult.getPaddingRight()) {
                     SearchHistoryUtil.deleteAllHistory();
                     searchHistoryAdapter.setSearchedHistory(null);
                     return true;
@@ -225,7 +226,7 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
      */
     private void doSearch(String s) {
         if (TextUtils.isEmpty(searchEt.getText().toString())) {
-            ToastHelper.getInstance()._toast("搜索内容为空");
+            ToastHelper.getInstance().displayToastWithQuickClose("搜索内容为空");
             return;
         }
         /*String _str = "";

@@ -16,7 +16,10 @@ import com.rhg.qf.R;
 import java.util.List;
 
 /**
- * Created by remember on 2016/5/20.
+ *desc:
+ *author：remember 
+ *time：2016/7/29 22:44
+ *email：1013773046@qq.com
  */
 public class VerticalTabLayout extends FrameLayout implements View.OnClickListener {
     private final static int DEFAULT_SELECT_TEXT_COLOR = Color.WHITE;
@@ -99,6 +102,7 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
         if (a.hasValue(R.styleable.VerticalTabLayout_item_unclick_bg_color)) {
             unSelectBgColor = a.getColor(R.styleable.VerticalTabLayout_item_unclick_bg_color, DEFAULT_UNSELECT_BG_COLOR);
         }
+        a.recycle();
     }
 
     private void notifyDataSetChanged() {

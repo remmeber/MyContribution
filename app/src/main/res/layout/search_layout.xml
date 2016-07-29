@@ -38,11 +38,11 @@
             android:background="@drawable/cv_goods_bg"
             android:paddingBottom="@dimen/margin_little"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/margin_little"
             android:textSize="@dimen/text_medium"
             android:visibility="gone"
-            tools:text="@string/searchResult" />
+            android:text="@string/searchResult" />
     </FrameLayout>
 
     <!--<View
