@@ -5,6 +5,7 @@ import com.rhg.qf.bean.FavorableFoodUrlBean;
 import com.rhg.qf.bean.HomeBean;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.TextTypeBean;
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 import com.rhg.qf.mvp.api.QFoodApiService;
 import com.rhg.qf.utils.AccountUtil;
@@ -26,7 +27,7 @@ public class HomeModel {
         String y = AccountUtil.getInstance().getLatitude();
         return Observable.zip(
                 qFoodApiService.getBannerUrl(),
-                qFoodApiService.getFavorableFood(),
+                qFoodApiService.getFavorableFood(AppConstants.HEAD_HOT),
                 qFoodApiService.getHomeMerchants(headrestaurants, x, y),
                 qFoodApiService.getMessage(),
                 new Func4<BannerTypeUrlBean, FavorableFoodUrlBean,

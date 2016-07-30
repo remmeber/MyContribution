@@ -20,7 +20,7 @@ public class XmlUtil {
         for (Map.Entry<String, String> entry : params.entrySet()) {
             sb.append("<").append(entry.getKey()).append(">");
             sb.append(entry.getValue());
-            sb.append("<").append(entry.getKey()).append(">");
+            sb.append("</").append(entry.getKey()).append(">");
         }
         sb.append("</xml>");
 
@@ -35,14 +35,12 @@ public class XmlUtil {
             parser.setInput(new StringReader(content));
             int event = parser.getEventType();
             while (event != XmlPullParser.END_DOCUMENT) {
-
                 String nodeName = parser.getName();
                 switch (event) {
                     case XmlPullParser.START_DOCUMENT:
 
                         break;
                     case XmlPullParser.START_TAG:
-
                         if (!"xml".equals(nodeName)) {
                             xml.put(nodeName, parser.nextText());
                         }
@@ -55,7 +53,7 @@ public class XmlUtil {
 
             return xml;
         } catch (Exception e) {
-            Log.e("orion", e.toString());
+            Log.e("RHG", e.toString());
         }
         return null;
     }

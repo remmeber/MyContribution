@@ -132,7 +132,7 @@ public class DeliverRegisterActivity extends BaseFragmentActivity {
                     break;
                 }
                 if (!isChecked) {
-                    ToastHelper.getInstance()._toast("请同意协议");
+                    ToastHelper.getInstance()._toast("请阅读协议");
                     break;
                 }
                 if (countTimer.isRunning()) {
@@ -145,12 +145,21 @@ public class DeliverRegisterActivity extends BaseFragmentActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (countTimer.isRunning())
+            countTimer.onFinish();
+        countTimer.removeView();
+        countTimer = null;
+        super.onDestroy();
+    }
+
     /*
-     *desc 将手机号注册到服务器端
-     *author rhg
-     *time 2016/7/6 22:02
-     *email 1013773046@qq.com
-     */
+         *desc 将手机号注册到服务器端
+         *author rhg
+         *time 2016/7/6 22:02
+         *email 1013773046@qq.com
+         */
     private void register2Server(String s) {
 
     }

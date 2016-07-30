@@ -25,8 +25,8 @@ public class UploadAndSaveImagePresenter {
         uploadAndSaveImageModel = new UploadAndSaveImageModel();
     }
 
-    public void UploadAndSaveImage(File file, String userName, String pwd) {
-        uploadAndSaveImageModel.UploadAndSaveImage(file, userName, pwd).observeOn(AndroidSchedulers.mainThread())
+    public void UploadAndSaveImage(File file) {
+        uploadAndSaveImageModel.UploadAndSaveImage(file).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override

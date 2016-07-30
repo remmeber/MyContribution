@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -47,9 +48,16 @@ public class HotFoodActivity extends BaseFragmentActivity {
     ViewPager vpHotSell;
 
     List<Fragment> fragments = new ArrayList<>();
+    String foodName;
 
     public HotFoodActivity() {
     }
+
+    @Override
+    public void dataReceive(Intent intent) {
+        foodName = intent.getStringExtra(AppConstants.KEY_PRODUCT_NAME);
+    }
+
 
     @Override
     protected int getLayoutResId() {
@@ -63,10 +71,20 @@ public class HotFoodActivity extends BaseFragmentActivity {
 
     @Override
     protected void initData() {
-        fragments.add(new OverallHotFoodFm());
-        fragments.add(new HotFoodDistanceFm());
-        fragments.add(new HotFoodSellNumberFm());
-        fragments.add(new HotFoodRateFm());
+        Bundle _bundle = new Bundle();
+        _bundle.putString(AppConstants.KEY_PRODUCT_NAME, foodName);
+        OverallHotFoodFm overallHotFoodFm = new OverallHotFoodFm();
+        overallHotFoodFm.setArguments(_bundle);
+        HotFoodDistanceFm hotFoodDistanceFm = new HotFoodDistanceFm();
+        hotFoodDistanceFm.setArguments(_bundle);
+        HotFoodSellNumberFm hotFoodSellNumberFm = new HotFoodSellNumberFm();
+        hotFoodSellNumberFm.setArguments(_bundle);
+        HotFoodRateFm hotFoodRateFm = new HotFoodRateFm();
+        hotFoodRateFm.setArguments(_bundle);
+        fragments.add(overallHotFoodFm);
+        fragments.add(hotFoodDistanceFm);
+        fragments.add(hotFoodSellNumberFm);
+        fragments.add(hotFoodRateFm);
         tbBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbTitle.setText("热销单品");

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">家家美食</string>
-    <string name="searchHint">&#160;&#160;&#160;search</string>
+    <string name="searchHint">search</string>
     <string name="Home">首页</string>
     <string name="Merchant">商家</string>
     <string name="User">我的</string>
@@ -8,7 +8,7 @@
     <string name="allStore">所有店铺</string>
 
     <!--Home-->
-    <string name="footerText">没有啦~~\n每天5加哦~</string>
+    <string name="footerText">没有啦~~\n每天5家哦~</string>
     <!--Home-->
 
     <!-- profile -->
@@ -56,13 +56,28 @@
     <string name="tvContactPhone">联系方式:%s</string>
     <string name="tvReceiveAddress">收货地址:%s</string>
     <string name="tvNote">备注:%s</string>
-    <string name="tvDistance">距离%s米</string>
+    <string name="tvDistance">距离%sKm</string>
     <string name="tvDeliverRequire">满%s起送</string>
     <string name="tvDeliverFee">配送费%s元</string>
     <string name="tvOrderNumber">订单号: %s</string>
     <string name="goPay">去付款</string>
     <string name="tvDrawback">申请退款</string>
     <string name="tvSummation">合计</string>
+    <!--
+    /*跑腿员订单配送*/
+    public static final String DELIVER_ORDER_UNPAID = "待付款";
+    public static final String DELIVER_ORDER_UNACCEPT = "待接单";
+    public static final String DELIVER_ORDER_ACCEPT = "已接单";
+    public static final String DELIVER_ORDER_DELIVERING = "配送中";
+    public static final String DELIVER_ORDER_COMPLETE = "已完成";
+    public static final String DELIVER_ORDER_OTHER = "其他";-->
+    <string name="deliverOrderUnpaid">等待付款</string>
+    <string name="deliverOrderUnAccept">等待接单</string>
+    <string name="deliverOrderAccept">已经接单</string>
+    <string name="deliverOrderDelivering">开始配送</string>
+    <string name="deliverOrderDeliverComplete">确认送达</string>
+    <string name="deliverOrderFinish">订单完成</string>
+    <string name="deliverOrderOther">其他</string>
     <!--订单相关-->
 
     <!--我的页面-->
@@ -82,6 +97,7 @@
     <string name="contactAddress_Null">收货地址为空</string>
     <string name="contactAddressDetail">补充详细地址(如门牌号、楼层号)</string>
     <string name="tvSave">保存</string>
+    <string name="tvEdit">编辑</string>
     <!--收货地址-->
 
     <!--收货-->
@@ -112,24 +128,7 @@
     <string name="getCheckNumber">获取验证码</string>
     <string name="haveRead">我已经阅读同意了本地美食服务协议</string>
     <string name="completeRegister">完成注册</string>
-    <string name="agreement">转眼间一个学期又过了，\n
-        也意味着研究生的英语学习已经结束。\n
-        英语本学期教学目标很明确，课程要教会\n
-        我们研究生如何用英语去发表国际论文，从中\n
-        我也获益匪浅。孙老师对于论文每一部分的讲解\n
-        的生动细腻，有利于我们课程学习；助教每周为我\n
-        们总结雅思的写作方法、句子，有利于我们提升写\n
-        作；外教的课程以讨论为主，有利于我们拓宽思维。\n
-        感谢一年的英语学习，感谢孙老师、助教、外教一年的付出。\n
-    转眼间一个学期又过了，\n
-        也意味着研究生的英语学习已经结束。\n
-        英语本学期教学目标很明确，课程要教会\n
-        我们研究生如何用英语去发表国际论文，从中\n
-        我也获益匪浅。孙老师对于论文每一部分的讲解\n
-        的生动细腻，有利于我们课程学习；助教每周为我\n
-        们总结雅思的写作方法、句子，有利于我们提升写\n
-        作；外教的课程以讨论为主，有利于我们拓宽思维。\n
-        感谢一年的英语学习，感谢孙老师、助教、外教一年的付出。</string>
+    <string name="agreement">协议</string>
     <!--register-->
     <!--test-->
 

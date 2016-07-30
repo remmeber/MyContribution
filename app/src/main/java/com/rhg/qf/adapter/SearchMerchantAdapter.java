@@ -41,7 +41,6 @@ public class SearchMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBea
 
     @Override
     protected void bindBodyData(final BodyViewHolder holder, final MerchantUrlBean.MerchantBean data, int type) {
-        Log.i("RHG", "DONE");
         holder.sellerName.setText(data.getName());
         ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
         holder.demandMoney.setText(String.format(Locale.ENGLISH,
@@ -49,8 +48,7 @@ public class SearchMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBea
         holder.foodType.setText(data.getStyle());
         holder.deliverMoney.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDeliverFee), data.getFee()));
-        holder.sellerDistance.setText(String.format(Locale.ENGLISH,
-                context.getResources().getString(R.string.tvDistance), data.getDistance()));
+        holder.sellerDistance.setText(data.getDistance());
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

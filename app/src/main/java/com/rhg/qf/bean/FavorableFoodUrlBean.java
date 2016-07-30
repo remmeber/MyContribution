@@ -44,7 +44,6 @@ public class FavorableFoodUrlBean {
         private String ID;
         private String Title;
         private String Src;
-        private String Jump;
 
         public String getID() {
             return ID;
@@ -68,14 +67,6 @@ public class FavorableFoodUrlBean {
 
         public void setSrc(String Src) {
             this.Src = Src;
-        }
-
-        public String getJump() {
-            return Jump;
-        }
-
-        public void setJump(String Jump) {
-            this.Jump = Jump;
         }
     }
 

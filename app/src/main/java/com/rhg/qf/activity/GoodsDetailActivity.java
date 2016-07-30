@@ -26,7 +26,6 @@ import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.ShoppingCartWithNumber;
-import com.rhg.qf.widget.UIAlertView;
 import com.umeng.socialize.media.UMImage;
 
 import java.util.Locale;
@@ -69,13 +68,13 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     //    private boolean isLike;
 
     Bundle bundle;
-
     GoodsDetailPresenter goodsDetailPresenter;
     String foodId;
     private boolean isNeedLoc;
     private String location;
     private MyLocationListener myLocationListener;
-    private String temp_productId;
+    private String price;
+    String image;
 
 
     public GoodsDetailActivity() {
@@ -172,7 +171,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             tvNum.setText("0");
             ivAddToShoppingCart.setNum("0");
         }
-        ivAddToShoppingCart.setDrawable(R.drawable.ic_shopping_cart_green);
+//        ivAddToShoppingCart.setDrawable(R.drawable.ic_shopping_cart_green);
         ivBanner.startTurning(2000);
         ivBanner.setPageIndicator(AppConstants.IMAGE_INDICTORS);
     }
@@ -203,6 +202,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     }
 
     private void bindData(GoodsDetailUrlBean.GoodsDetailBean _bean) {
+        image = _bean.getPicsrc().get(0);
         ivBanner.setPages(new CBViewHolderCreator<BannerImageHolder>() {
 
             @Override
@@ -214,8 +214,9 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         tvSellNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.sellNumber),
                 _bean.getMonthlySales()));
         tvDescriptionContent.setText(_bean.getMessage());
+        price = _bean.getPrice();
         tvPriceNumber.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
-                _bean.getPrice()));
+                price));
     }
 
     @OnClick({R.id.tb_left_iv, R.id.tb_right_ll/*, R.id.ivAddToShoppingCart*/, R.id.ivShare,
@@ -228,7 +229,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.tb_right_ll:
-                ToastHelper.getInstance()._toast("修改定位");
+                ToastHelper.getInstance().displayToastWithQuickClose("正在获取定位...");
                 break;
             case R.id.ivReduce:
                 int t = Integer.valueOf(tvNum.getText().toString());
@@ -259,8 +260,8 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 break;*/
             case R.id.ivShare:
                 UmengUtil umengUtil = new UmengUtil(this);
-                UMImage imageMedia = new UMImage(this, /*AccountUtil.getInstance().getHeadImageUrl()*/R.drawable.recommend_default_icon_1);
-                ShareModel shareModel = new ShareModel("QFood", "好吃", imageMedia);
+                UMImage imageMedia = new UMImage(this, image);
+                ShareModel shareModel = new ShareModel("黄焖鸡米饭", "好吃", imageMedia);
                 umengUtil.Share(shareModel, new ShareListener() {
                     @Override
                     public void shareSuccess(String message) {
@@ -282,9 +283,18 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 dialogShow();
                 break;*/
             case R.id.bt_buy:
+                if (Integer.valueOf(tvNum.getText().toString()) == 0) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("未选择商品数量");
+                    return;
+                }
                 Intent intent = new Intent(GoodsDetailActivity.this,
                         PayActivity.class);
                                            /*todo 带上参数*/
+                intent.putExtra(AppConstants.KEY_PRODUCT_NAME, tvGoodsName.getText().toString());
+                intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
+                intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, price);
+                intent.putExtra(AppConstants.KEY_PRODUCT_NUMBER, tvNum.getText().toString());
+                intent.putExtra(AppConstants.KEY_IMAGE, image);
                 startActivity(intent);
                 break;
         }

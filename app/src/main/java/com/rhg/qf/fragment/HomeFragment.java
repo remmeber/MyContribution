@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,9 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.activity.GoodsDetailActivity;
+import com.rhg.qf.activity.DIYOrderActivity;
 import com.rhg.qf.activity.HotFoodActivity;
-import com.rhg.qf.activity.PersonalOrderActivity;
 import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
 import com.rhg.qf.adapter.QFoodGridViewAdapter;
@@ -57,10 +55,8 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         RcvItemClickListener<MerchantUrlBean.MerchantBean>,
         View.OnClickListener {
     FavorableTypeModel favorableTypeModel;
-    List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodBeen = new ArrayList<>();
 
     BannerTypeBean bannerTypeBean;
-    List<BannerTypeUrlBean.BannerEntity> bannerTypeBeanList = new ArrayList<>();
 
     TextTypeBean textTypeBean;
 
@@ -77,7 +73,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     ImageView tlLeftIV;
     TextView tlLeftTV;
     TextView tlCenterTV;
-    LinearLayout tlRightLL;
+    ImageView tlRightLL;
     ImageView tlRightIV;
     TextView tlRightTV;
     /*toolbar 相关*/
@@ -113,8 +109,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
         tlCenterTV = (TextView) view.findViewById(R.id.home_tl_center_tv);
 
-        tlRightLL = (LinearLayout) view.findViewById(R.id.home_tl_right_ll);
-        tlRightIV = (ImageView) view.findViewById(R.id.home_tl_right_iv);
+        tlRightLL = (ImageView) view.findViewById(R.id.home_tl_right_ll);
 
         home_rcv = (RecyclerView) view.findViewById(R.id.home_recycle);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_swipe);
@@ -126,13 +121,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (hidden)
-            Log.i("RHG", "Home:hide");
-        else
-            Log.i("RHG", "Home:show");
-    }
 
     @Override
     protected void initData() {
@@ -151,6 +139,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         home_rcv.setLayoutManager(linearLayoutManager);
         home_rcv.setHasFixedSize(false);
         home_rcv.setAdapter(recycleMultiTypeAdapter);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -178,17 +167,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         return myLocationListener;
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -207,7 +185,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void showSuccess(Object o) {
-        Log.i("RHG", "Get data success");
         HomeBean _homeBean = (HomeBean) o;
         /*set null */
 
@@ -251,12 +228,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
 
-    //TODO 扫一扫
-    private void doFeedback() {
-        ToastHelper.getInstance()._toast("反馈");
-    }
-
-
     //--------------------------------点击事件回调---------------------------------------------------
 
     @Override
@@ -271,8 +242,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 doSearch();
                 break;
             case R.id.home_tl_right_ll:
-                doFeedback();
-                startActivity(new Intent(getContext(), PersonalOrderActivity.class));
+                startActivity(new Intent(getContext(), DIYOrderActivity.class));
                 break;
         }
     }
@@ -287,7 +257,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
-        Log.i("RHG", bannerEntity.getID() + ", " + bannerEntity.getSrc());
         /*Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         *//*todo 传递参数*//*
         intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
@@ -298,16 +267,14 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[3]);
         startActivity(intent);*/
 
-        startActivity(new Intent(getContext(), HotFoodActivity.class));
+//        startActivity(new Intent(getContext(), HotFoodActivity.class));
     }
 
     @Override
     public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity) {
-        Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
-        /*intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
-        intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
-        startActivityForResult(intent, AppConstants.INTENT_FOR_RESULT);
+        Intent intent = new Intent(getContext(), HotFoodActivity.class);
+        intent.putExtra(AppConstants.KEY_PRODUCT_NAME, favorableFoodEntity.getTitle());
+        startActivity(intent);
     }
 
     @Override

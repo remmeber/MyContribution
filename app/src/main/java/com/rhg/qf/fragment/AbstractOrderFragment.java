@@ -42,7 +42,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
 
     public AbstractOrderFragment() {
         getOrdersPresenter = new OrdersPresenter(this);
-        userId = "1";/*从数据库中获取*/
+        userId = "19216801";/*从数据库中获取*/
         style = getFmTag();
     }
 
@@ -70,6 +70,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         commonRecycle.setLayoutManager(linearLayoutManager);
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setAdapter(qFoodOrderAdapter);
+        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

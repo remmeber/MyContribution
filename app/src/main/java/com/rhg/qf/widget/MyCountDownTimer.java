@@ -20,7 +20,6 @@ public class MyCountDownTimer extends CountDownTimer {
         if (view instanceof TextView) {
             countDownText = (TextView) view;
         }
-        Log.i("RHG", "" + countDownText);
     }
 
     @Override
@@ -33,10 +32,14 @@ public class MyCountDownTimer extends CountDownTimer {
 
     @Override
     public void onFinish() {
-        cancel();
         isFinish = true;
         countDownText.setClickable(true);
         countDownText.setText("获取验证码");
+        cancel();
+    }
+
+    public void removeView(){
+        countDownText = null;
     }
 
     public boolean isRunning() {

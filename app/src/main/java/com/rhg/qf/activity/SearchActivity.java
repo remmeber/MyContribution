@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -179,8 +178,9 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
                 if (event.getAction() != MotionEvent.ACTION_UP) {
                     return true;
                 }
-                if (event.getRawX() > tvHistoryResult.getWidth() -
-                        tvHistoryResult.getCompoundDrawables()[2].getBounds().width()) {
+                if (event.getRawX() > tvHistoryResult.getWidth()
+                        - tvHistoryResult.getCompoundDrawables()[2].getBounds().width()
+                        - tvHistoryResult.getPaddingRight()) {
                     SearchHistoryUtil.deleteAllHistory();
                     searchHistoryAdapter.setSearchedHistory(null);
                     return true;
@@ -226,7 +226,7 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
      */
     private void doSearch(String s) {
         if (TextUtils.isEmpty(searchEt.getText().toString())) {
-            ToastHelper.getInstance()._toast("搜索内容为空");
+            ToastHelper.getInstance().displayToastWithQuickClose("搜索内容为空");
             return;
         }
         /*String _str = "";
@@ -245,7 +245,7 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
             case AppConstants.KEY_HOTFOOD_SEARCH:
                 if (hotFoodSearchPresenter == null)
                     hotFoodSearchPresenter = new HotFoodSearchPresenter(this);
-                hotFoodSearchPresenter.getSearchHotFood(AppConstants.HOTFOOD, s, searchIndex);
+                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCHHOTFOOD, s, searchIndex);
                 break;
         }
     }

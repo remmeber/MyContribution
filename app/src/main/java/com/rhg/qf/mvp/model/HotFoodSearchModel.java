@@ -1,15 +1,11 @@
 package com.rhg.qf.mvp.model;
 
 
-import com.rhg.qf.bean.HotFoodSearchUrlBean;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
-
-import java.util.List;
+import com.rhg.qf.utils.AccountUtil;
 
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
 
 /*
  *desc
@@ -21,7 +17,13 @@ public class HotFoodSearchModel {
     public Observable<HotFoodUrlBean> getSearchHotFood(String searchHotFood,
                                                        final String searchContent,
                                                        int order) {
-        return QFoodApiMamager.getInstant().getQFoodApiService().getHotGoodsForSearch(searchHotFood, searchContent, String.valueOf(order))
+        String X = AccountUtil.getInstance().getLongitude();
+        String Y = AccountUtil.getInstance().getLatitude();
+        return QFoodApiMamager.getInstant().getQFoodApiService().getHotGoodsForSearch(searchHotFood,
+                searchContent,
+                String.valueOf(order),
+                X,
+                Y);
                /* .flatMap(new Func1<HotFoodSearchUrlBean, Observable<List<HotFoodSearchUrlBean.HotFoodSearchBean>>>() {
                     @Override
                     public Observable<List<HotFoodSearchUrlBean.HotFoodSearchBean>> call(final HotFoodSearchUrlBean hotFoodSearchUrlBean) {
@@ -32,6 +34,6 @@ public class HotFoodSearchModel {
                             }
                         });
                     }
-                })*/;
+                })*/
     }
 }

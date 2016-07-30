@@ -5,10 +5,10 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
@@ -16,11 +16,7 @@ import com.rhg.qf.pay.model.ali.PayResult;
 import com.rhg.qf.pay.pays.IPayable;
 import com.rhg.qf.pay.pays.PaysFactory;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-public abstract class BasePayActivity extends Activity {
+public abstract class BasePayActivity extends Activity implements BaseView {
 
     private static final int PAY_FLAG = 1;
     /**
@@ -62,6 +58,7 @@ public abstract class BasePayActivity extends Activity {
             }
         }
     };
+
 
     /**
      * 警告（比如：还没有确定支付结果，在等待支付结果确认）回调方法。开发者可根据各自业务override该方法
@@ -120,38 +117,33 @@ public abstract class BasePayActivity extends Activity {
         payThread.start();
     }
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
 
     private void PayWeixin() {
-
-        payManager = PaysFactory.GetInstance(payType);
-        // 1.注册appId
-        payManager.RegisterApp(BasePayActivity.this, KeyLibs.weixin_appId);
+        if (payManager == null) {
+            payManager = PaysFactory.GetInstance(payType);
+            // 1.注册appId
+            payManager.RegisterApp(BasePayActivity.this, KeyLibs.weixin_appId);
+        }
 
         // 2.开发者统一传入订单相关参数，生成规范化的订单（支付宝支付第一步；微信支付第二步）
         // ------调用重写方法
         final OrderInfo orderInfo = OnOrderCreate();
         // 3.调用统一下单api生成预付单
-        payManager.GetPrepayId(orderInfo).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onCompleted() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String prepayId = payManager.GetPrepayId(orderInfo);
+                // 4.调起支付
+                payManager.Pay(null, null, prepayId);
+            }
+        }).start();
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.i("RHG", "return:" + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(String orderXml) {
-                        Log.i("RHG", "return:" + orderXml);
-                        payManager.Pay(null, null, orderXml);
-                    }
-                });
-        /*// 4.调起支付
-        payManager.Pay(null, null, prepayId);*/
 
     }
 

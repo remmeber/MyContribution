@@ -148,7 +148,7 @@ public class InitApplication extends Application {
     //------网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
-                showImageForEmptyUri(R.drawable.recommend_default_icon_2)
+                showImageForEmptyUri(R.drawable.ic_pic_failed)
                 .cacheInMemory(true).cacheOnDisk(true).build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(

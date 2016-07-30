@@ -9,7 +9,19 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class BannerTypeUrlBean {
+
+
+    /**
+     * result : 0
+     * msg : 请求成功
+     */
+
+    private int result;
+
+    private String msg;
+
     String total;
+
     List<BannerEntity> rows;
 
     public String getTotal() {
@@ -28,9 +40,20 @@ public class BannerTypeUrlBean {
         this.rows = rows;
     }
 
-    @Override
-    public String toString() {
-        return "total: " + total + " result: " + rows;
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public static class BannerEntity {
@@ -38,7 +61,6 @@ public class BannerTypeUrlBean {
         String ID;
         String Title;
         String Src;
-        String Jump;
 
         public String getID() {
             return ID;
@@ -64,17 +86,9 @@ public class BannerTypeUrlBean {
             Src = src;
         }
 
-        public String getJump() {
-            return Jump;
-        }
-
-        public void setJump(String jump) {
-            Jump = jump;
-        }
-
         @Override
         public String toString() {
-            return "ID: " + ID + " Title: " + Title + " Src: " + Src + " Jump: " + Jump;
+            return "ID: " + ID + " Title: " + Title + " Src: " + Src;
         }
     }
 }

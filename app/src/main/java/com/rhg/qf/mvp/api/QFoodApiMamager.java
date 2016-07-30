@@ -5,6 +5,7 @@ import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -26,15 +27,13 @@ public class QFoodApiMamager {
     private final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
         public Response intercept(Interceptor.Chain chain) throws IOException {
-            Request request = chain.request();
             if (!NetUtil.isConnected(InitApplication.getInstance())) {
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        .build();
                 ToastHelper.getInstance()._toast("no network");
+                return null;
             }
-            Response originalResponse = chain.proceed(request);
-            if (NetUtil.isConnected(InitApplication.getInstance())) {
+            Request request = chain.request();
+            return chain.proceed(request);
+          /*  if (NetUtil.isConnected(InitApplication.getInstance())) {
                 //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
                 String cacheControl = request.cacheControl().toString();
                 return originalResponse.newBuilder()
@@ -46,7 +45,7 @@ public class QFoodApiMamager {
                         .header("Cache-Control", "public, only-if-cached, max-stale=86400")
                         .removeHeader("Pragma")
                         .build();
-            }
+            }*/
         }
     };
     private QFoodApiService QFoodApiService;
@@ -64,18 +63,11 @@ public class QFoodApiMamager {
                 .addInterceptor(loggingInterceptor)
                 .build();*/
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request();
-//                        Response response = chain.proceed(request);
-                        /*BufferedSink bufferedSink = new Buffer();
-                        Log.i("RHG", request.body().writeTo(bufferedSink));*/
-                        return chain.proceed(request);
-                    }
-                }).build();
+                .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
+                .readTimeout(5000, TimeUnit.MILLISECONDS)
+                .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                .writeTimeout(5000, TimeUnit.MILLISECONDS).build();
         Retrofit retrofit = new Retrofit.Builder()
-//                .client(ProgressHelper.addProgress(builder).build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(QFoodApi.BASE_URL)

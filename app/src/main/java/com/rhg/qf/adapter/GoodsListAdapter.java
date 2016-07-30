@@ -38,11 +38,12 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setShopDetailBeanList(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList) {
         this.shopDetailBeanList = shopDetailBeanList;
+        notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View.inflate(context,R.layout.item_goods_layout,parent); TODO 用View.inflate会采用默认的warpcontent布局
+//        View.inflate(context,R.layout.item_goods_layout,parent); TODO 用View.inflate会采用默认的wrap_content布局
         LayoutInflater inflater = LayoutInflater.from(context);
         return new GoodsDetailViewHolder(inflater.inflate(R.layout.item_goods_layout, parent, false));
     }

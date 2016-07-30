@@ -35,7 +35,7 @@
             android:layout_alignRight="@+id/headerline"
             android:layout_centerVertical="true"
             android:padding="@dimen/margin_little"
-            android:src="@drawable/ic_chevron_right_black" />
+            android:src="@drawable/ic_chevron_right_green" />
 
         <View
             android:id="@+id/headerline"

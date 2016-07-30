@@ -14,7 +14,7 @@ public class KeyLibs {
     public static String ali_privateKey = null;
     // appId（在请同时修改  androidmanifest.xml里面，.PayActivityd里的属性
     //       <data android:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid）
-    public static String weixin_appId = InitApplication.WXID;
+    public static String weixin_appId = null;
     // 商户号
     public static String weixin_mchId = null;
     //API密钥

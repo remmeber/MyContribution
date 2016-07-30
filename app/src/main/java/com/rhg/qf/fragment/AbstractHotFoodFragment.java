@@ -1,5 +1,7 @@
 package com.rhg.qf.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
+import com.rhg.qf.activity.GoodsDetailActivity;
 import com.rhg.qf.adapter.HotFoodAdapter;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.constants.AppConstants;
@@ -39,6 +42,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     HotFoodAdapter hotFoodAdapter;
     HotFoodPresenter hotFoodPresenter;
     int hotFoodType;
+    String foodName;
 
     public AbstractHotFoodFragment() {
         hotFoodPresenter = new HotFoodPresenter(this);
@@ -47,6 +51,10 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
 
     protected abstract int getHotFoodType();
 
+    @Override
+    public void receiveData(Bundle arguments) {
+        foodName = arguments.getString(AppConstants.KEY_PRODUCT_NAME, "");
+    }
 
     @Override
     public int getLayoutResId() {
@@ -56,7 +64,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        hotFoodPresenter.getHotFoods(AppConstants.HOTFOOD, hotFoodType);
+        hotFoodPresenter.getHotFoods(AppConstants.HOTFOOD, hotFoodType, foodName);
     }
 
     @Override
@@ -68,10 +76,11 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
                 getResources().getColor(R.color.colorInActive)));
         hotFoodAdapter = new HotFoodAdapter(getContext(), hotFoodBeanList);
         commonRecycle.setAdapter(hotFoodAdapter);
+        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                hotFoodPresenter.getHotFoods(AppConstants.HOTFOOD, hotFoodType);
+                hotFoodPresenter.getHotFoods(AppConstants.SEARCHHOTFOOD, hotFoodType, foodName);
             }
         });
     }
@@ -108,7 +117,9 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
 
     @Override
     public void onItemClickListener(int position, HotFoodUrlBean.HotFoodBean item) {
-        ToastHelper.getInstance()._toast("点击：" + position);
+        Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
+        startActivity(intent);
     }
 
 }

@@ -29,6 +29,8 @@ android {
             signingConfig signingConfigs.rhg
         }
     }
+    productFlavors {
+    }
 }
 
 

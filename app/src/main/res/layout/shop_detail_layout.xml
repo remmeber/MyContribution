@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="135dp"
             android:scaleType="fitXY"
-            tools:src="@drawable/recommend_default_icon_1" />
+            tools:src="@drawable/ic_pic_failed" />
 
         <ImageView
             android:id="@+id/iv_shop_detail_back"

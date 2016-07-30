@@ -71,7 +71,8 @@ public class AddressUrlBean {
         private String Name;
         private String Phone;
         private String Address;
-        private boolean isChecked;
+        private String Default;
+        private String Detail;
 
         public AddressBean() {
         }
@@ -82,7 +83,8 @@ public class AddressUrlBean {
             Name = source.readString();
             Phone = source.readString();
             Address = source.readString();
-            source.readBooleanArray(new boolean[]{isChecked});
+            Default = source.readString();
+            Detail = source.readString();
         }
 
         public String getID() {
@@ -125,14 +127,21 @@ public class AddressUrlBean {
             this.Address = Address;
         }
 
-        public boolean isChecked() {
-            return isChecked;
+        public String getDefault() {
+            return Default;
         }
 
-        public void setChecked(boolean checked) {
-            isChecked = checked;
+        public void setDefault(String Default) {
+            this.Default = Default;
         }
 
+        public String getDetail() {
+            return Detail;
+        }
+
+        public void setDetail(String detail) {
+            Detail = detail;
+        }
 
         public static final Parcelable.Creator<AddressBean> CREATOR = new Creator<AddressBean>() {
             @Override
@@ -158,7 +167,8 @@ public class AddressUrlBean {
             parcel.writeString(Name);
             parcel.writeString(Phone);
             parcel.writeString(Address);
-            parcel.writeBooleanArray(new boolean[]{isChecked});
+            parcel.writeString(Default);
+            parcel.writeString(Detail);
         }
     }
 }

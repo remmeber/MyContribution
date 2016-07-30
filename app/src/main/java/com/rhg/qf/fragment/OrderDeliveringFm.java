@@ -11,6 +11,6 @@ import com.rhg.qf.constants.AppConstants;
 public class OrderDeliveringFm extends AbstractOrderFragment {
     @Override
     protected int getFmTag() {
-        return AppConstants.ORDER_DELIVERING;
+        return AppConstants.USER_ORDER_DELIVERING;
     }
 }

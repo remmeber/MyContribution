@@ -64,12 +64,10 @@ public class PointView extends LinearLayout implements ViewPager.OnPageChangeLis
             lp.rightMargin = 10;
             addView(icon, lp);
         }
-        Log.d(TAG, ">>>>>" + mViewPager.getCurrentItem());
         updatePoint(mViewPager.getCurrentItem());
     }
 
     private void updatePoint(int position) {
-        Log.d(TAG, ">>>mCurrentPos" + mCurrentPos);
         if (mCurrentPos != position) {
             if (mCurrentPos == -1) {
                 ((ImageView) getChildAt(position)).setImageResource(R.drawable.bg_global_search_textbox_home);
@@ -104,7 +102,6 @@ public class PointView extends LinearLayout implements ViewPager.OnPageChangeLis
     @Override
     public void onPageSelected(int position) {
         updatePoint(position);
-        Log.d(TAG, ">>>pos" + position);
         if (mPointViewChangeListener != null)
             mPointViewChangeListener.onPageSelected(position);
     }

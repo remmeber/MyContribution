@@ -11,6 +11,6 @@ import com.rhg.qf.constants.AppConstants;
 public class OrderCompleteFm extends AbstractOrderFragment {
     @Override
     protected int getFmTag() {
-        return AppConstants.ORDER_COMPLETE;
+        return AppConstants.USER_ORDER_COMPLETE;
     }
 }

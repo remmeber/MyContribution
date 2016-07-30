@@ -12,6 +12,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.AddressAdapter;
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
@@ -50,6 +51,8 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     int longClickPosition = -1;
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenter(this);
+
+    AddOrUpdateAddressPresenter addOrUpdateAddressPresenter = new AddOrUpdateAddressPresenter(this);
     private static final int DELETE = 0;
     private static final int MODIFY = 1;
     private AddressAdapter.deleteListener deleteListener = new AddressAdapter.deleteListener() {
@@ -119,6 +122,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
                 ToastHelper.getInstance()._toast("删除：" + position);
             }
         });*/
+        srlAddress.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorGreenNormal));
         srlAddress.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -130,7 +134,8 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null)
+        getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, "1");
+        /*if (data == null)
             return;
         AddressUrlBean.AddressBean _addressBean = data.getParcelableExtra(AppConstants.KEY_ADDRESS);
         if (requestCode == AppConstants.BACK_WITH_UPDATE) {
@@ -141,16 +146,19 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             addressAdapter.updateAddressBeanList(addressBeanList, longClickPosition);
             rcyAddress.smoothScrollToPosition(longClickPosition);
         } else {
-            addressBeanList.add(0, _addressBean);/*插入到第一条*/
+            addressBeanList.add(0, _addressBean);*//*插入到第一条*//*
             addressAdapter.insertAddressBeanList(addressBeanList, 0);
             rcyAddress.smoothScrollToPosition(0);
-        }
+        }*/
     }
 
     @Override
     protected void showSuccess(Object s) {
+        if (s instanceof String) {
+            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, "1");
+            return;
+        }
         addressBeanList = (List<AddressUrlBean.AddressBean>) s;
-        addressBeanList.get(0).setChecked(true);
         addressAdapter.setAddressBeanList(addressBeanList);
         if (srlAddress.isRefreshing())
             srlAddress.setRefreshing(false);
@@ -168,14 +176,16 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             selectOne(position);
             addressAdapter.notifyDataSetChanged();
             lastPosition = position;
+            addOrUpdateAddressPresenter.addOrUpdateAddress(addressBeanList.get(position).getID(),
+                    null, null, null, null, "1");
         }
     }
 
     private void selectOne(int position) {
         for (int i = 0; i < addressBeanList.size(); i++) {
             if (position == i)
-                addressBeanList.get(i).setChecked(true);
-            else addressBeanList.get(i).setChecked(false);
+                addressBeanList.get(i).setDefault("1");
+            else addressBeanList.get(i).setDefault("0");
         }
     }
 
@@ -186,7 +196,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             case R.id.bt_add_new_address:
                 Intent _intent = new Intent(this, AddOrNewAddressActivity.class);
                 startActivityForResult(_intent, AppConstants.BACK_WITH_ADD);
-                _intent.setComponent(null);/*TODO 对于intent内存泄漏可能有用*/
+//                _intent.setComponent(null);/*TODO 对于intent内存泄漏可能有用*/
                 break;
             case R.id.tb_left_iv:
                 finish();
@@ -215,8 +225,9 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
                                        public void doRight() {
                                            delDialog.dismiss();
                                            if (tag == DELETE) {
-                                               addressBeanList.remove(position);
-                                               addressAdapter.notifyItemRemoved(position);
+                                               addOrUpdateAddressPresenter
+                                                       .addOrUpdateAddress(addressBeanList.get(position).getID(),
+                                                               null, null, null, null, "0");
                                            } else {
                                                AddressUrlBean.AddressBean _addressBean = addressBeanList.get(position);
                                                Intent _intent = new Intent(AddressActivity.this, AddOrNewAddressActivity.class);

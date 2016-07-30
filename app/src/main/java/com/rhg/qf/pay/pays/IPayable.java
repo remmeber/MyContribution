@@ -2,6 +2,7 @@ package com.rhg.qf.pay.pays;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 
 import com.rhg.qf.pay.model.OrderInfo;
 
@@ -56,7 +57,7 @@ public interface IPayable {
      * @param orderInfo 规范的订单参数信息
      * @return
      */
-    Observable<String> GetPrepayId(OrderInfo orderInfo);
+    String GetPrepayId(OrderInfo orderInfo);
 
     void unRegisterApp();
 }

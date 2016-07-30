@@ -1,5 +1,6 @@
 package com.rhg.qf.mvp.presenter;
 
+import com.rhg.qf.bean.ShopDetailLocalModel;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.mvp.model.ShopDetailModel;
 import com.rhg.qf.mvp.view.BaseView;
@@ -27,7 +28,7 @@ public class ShopDetailPresenter {
     public void getShopDetail(String table, String merchantId) {
         shopDetailModel.getShopDetail(table, merchantId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<ShopDetailUrlBean.ShopDetailBean>>() {
+                .subscribe(new Observer<ShopDetailLocalModel>() {
                     @Override
                     public void onCompleted() {
 
@@ -39,8 +40,8 @@ public class ShopDetailPresenter {
                     }
 
                     @Override
-                    public void onNext(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeen) {
-                        testView.showData(shopDetailBeen);
+                    public void onNext(ShopDetailLocalModel shopDetailLocalModel) {
+                        testView.showData(shopDetailLocalModel);
                     }
                 });
     }

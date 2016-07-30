@@ -25,7 +25,6 @@ public class AppConstants {
     public static final String[] SHOP_DETAIL_TITLES = new String[]{"菜品", "店铺详情"};
     public static final String[] SELL_TITLES = new String[]{"按销量", "按距离", "按评分"};
     public static final String[] ORDER_TITLES = new String[]{"待付款", "进行中", "已完成", "已退款"};
-    public static final String[] SHOP_TITLES = new String[]{"热销排行", "超值套餐", "店铺优惠", "必点饮品", "最新优惠"};
     public static final String[] HOT_SELL_TITLES = new String[]{"综合", "距离", "销量", "评分"};
     //---------------------------店铺复用------------------------------------------------------------
     public static final int TypeHome = 0;
@@ -68,6 +67,7 @@ public class AppConstants {
     public static final String KEY_MERCHANT_ID = "merchant_id";
     public static final String KEY_PRODUCT_ID = "product_id";
     public static final String KEY_ORDER_ID = "order_id";
+    public static final String KEY_PRODUCT_NUMBER = "product_num";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_MERCHANT_LOGO = "merchant_logo";
     public static final String KEY_PRODUCT_PRICE = "product_price";
@@ -93,8 +93,10 @@ public class AppConstants {
     /*Address*/
     public static final String NAME_FOR_ADDRESS = "address_name";
     public static final String PHONE_FOR_ADDRESS = "address_phone";
-    public static final String ADDRESS_CONTENT = "address_content";
+    public static final String ADDRESS = "address";
+    public static final String ADDRESS_DETAIL = "address_detail";
     public static final String ADDRESS_ID = "address_id";
+    public static final String ADDRESS_DEFAULT = "address_default";
 
     /*Merchant*/
     public static final int MERCHANT_SELLNUMBER = 0;
@@ -102,14 +104,17 @@ public class AppConstants {
     public static final int MERCHANT_RATE = 2;
     /*Order*/
     public static final int ORDER_ALL = 0;
-    public static final int ORDER_UNPAID = 1;
-    public static final int ORDER_DELIVERING = 2;
-    public static final int ORDER_COMPLETE = 3;
+    public static final int USER_ORDER_UNPAID = 1;
+    public static final int USER_ORDER_DELIVERING = 2;
+    public static final int USER_ORDER_COMPLETE = 3;
     public static final int ORDER_DRAWBACK = 4;
-    /*订单配送*/
-    public static final String ORDER_START = "开始送货";
-    public static final String ORDER_DELIVER_COMPLETE = "确认送达";
-    public static final String ORDER_DELIVER_FINISH = "确认收货";
+
+    public static final String DELIVER_ORDER_UNPAID = "20"/*"待付款"*/;
+    public static final String DELIVER_ORDER_UNACCEPT = "40"/*"待接单"*/;
+    public static final String DELIVER_ORDER_ACCEPT = "60"/*"已接单"*/;
+    public static final String DELIVER_ORDER_DELIVERING = "80"/*"配送中"*/;
+    public static final String DELIVER_ORDER_COMPLETE = "100"/*"已完成"*/;
+    public static final String DELIVER_ORDER_OTHER = "0";/*其他*/
 
     /*HotFood*/
     public static final int OVERALL = 0;
@@ -124,12 +129,21 @@ public class AppConstants {
     public static final String RESTAURANTS = "restaurants";
     public static final String HOME_RESTAURANTS = "headrestaurants";
     public static final String SEARCHRESTAURANTS = "searchrestaurants";
+    public static final String SEARCHHOTFOOD = "searchhotfood";
     public static final String HOTFOOD = "hotfood";
     public static final String TABLE_ORDER = "order";
     public static final String ADDRESS_TABLE = "address";
     public static final String DELIVER_ORDER = "deliverorder";
     public static final String MERCHANT_INFO = "restaurantdetail";
     public static final String ORDER_DETAIL = "orderdetail";
+    public static final String ORDER_STYLE = "orderstyle";
+    public static final String HEAD_HOT = "headhot";
+    public static final String DELETE_ADDRESS = "DeleteAddress";
+    public static final String DEFAULT_ADDRESS = "ChooseDefault";
+
+    public static final String UPDATE_ORDER_DELIVER = "UPdateorderdeliver";
+    public static final String UPDATE_ORDER_UNPAID = "UPdateorderPaid";
+    public static final String UPDATE_ORDER_WAIT = "UPdateorderwait";
 
     /**
      * 响应结果，正确

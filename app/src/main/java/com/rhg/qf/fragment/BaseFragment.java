@@ -40,7 +40,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
@@ -77,6 +76,14 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint())
+            super.onPause();
+        else super.onResume();
+    }
+
     public void reStartLocation() {
         if (locationService == null) {
             locationService = GetMapService();
@@ -95,6 +102,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     public void getLocation(LocationService locationService, MyLocationListener mLocationListener) {
     }
+
     /*默认不定位，如果需要定位，子类需要重写该方法*/
     public LocationService GetMapService() {
         return null;
@@ -110,7 +118,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
      * 从网络获取数据，在new的时候只加载一次，后期都需要refresh才能更新
      */
     public void loadData() {
-        Log.i("RHG", "LOAD");
     }
 
     protected abstract void initData();
@@ -144,13 +151,27 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public void showLocFailed(String s) {
     }
 
-    @Override
+    /*@Override
     public void onStop() {
         super.onStop();
         if (locationService != null) {
             locationService.unregisterListener(mLocationListener); //注销掉监听
             locationService.stop(); //停止定位服务
         }
+    }*/
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (locationService != null) {
+            locationService.unregisterListener(mLocationListener); //注销掉监听
+            locationService.stop(); //停止定位服务
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override

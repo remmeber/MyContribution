@@ -3,11 +3,11 @@ package com.rhg.qf.datebase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.constants.AppConstants;
-import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,9 @@ public class AccountDao {
         values.put(AppConstants.ADDRESS_ID, addressBean.getID());
         values.put(AppConstants.NAME_FOR_ADDRESS, addressBean.getName());
         values.put(AppConstants.PHONE_FOR_ADDRESS, addressBean.getPhone());
-        values.put(AppConstants.ADDRESS_CONTENT, addressBean.getAddress());
+        values.put(AppConstants.ADDRESS, addressBean.getAddress());
+        values.put(AppConstants.ADDRESS_DETAIL, addressBean.getDetail());
+        values.put(AppConstants.ADDRESS_DEFAULT, addressBean.getDefault());
         db.insert(AccountDBHelper.Q_ADDRESS_TABLE, null, values);
         close();
     }
@@ -172,7 +174,7 @@ public class AccountDao {
         ContentValues values = new ContentValues();
         values.put(AppConstants.NAME_FOR_ADDRESS, updateItems.getName());
         values.put(AppConstants.PHONE_FOR_ADDRESS, updateItems.getPhone());
-        values.put(AppConstants.ADDRESS_CONTENT, updateItems.getAddress());
+        values.put(AppConstants.ADDRESS, updateItems.getAddress());
         db.update(AccountDBHelper.Q_ADDRESS_TABLE, values, AppConstants.ADDRESS_ID + "=?",
                 new String[]{whereArg});
         close();
@@ -220,7 +222,9 @@ public class AccountDao {
                 AppConstants.ADDRESS_ID,
                 AppConstants.NAME_FOR_ADDRESS,
                 AppConstants.PHONE_FOR_ADDRESS,
-                AppConstants.ADDRESS_CONTENT};
+                AppConstants.ADDRESS,
+                AppConstants.ADDRESS_DETAIL,
+                AppConstants.ADDRESS_DEFAULT};
         String selection = AppConstants.ADDRESS_ID + "=?";
         db = AccountDBHelper.getInstance().getReadableDatabase();
         cursor = db.query(AccountDBHelper.Q_ADDRESS_TABLE, columns, selection, null, null,
@@ -232,6 +236,8 @@ public class AccountDao {
                 String Name = cursor.getString(1);
                 String phone = cursor.getString(2);
                 String address = cursor.getString(3);
+                String detail = cursor.getString(4);
+                String address_default = cursor.getString(5);
                 if (id != null && !"".equals(id)) {
                     addressBean.setID(id);
                 }
@@ -244,11 +250,48 @@ public class AccountDao {
                 if (address != null && !"".equals(address)) {
                     addressBean.setAddress(address);
                 }
+                addressBean.setDetail(detail);
+                addressBean.setDefault(address_default);
                 addressBeanList.add(addressBean);
             } while (cursor.moveToNext());
         }
         cursor.close();
         return addressBeanList;
+    }
+
+
+    public AddressUrlBean.AddressBean getAddressByDefault() {
+        AddressUrlBean.AddressBean _defaultAddress = null;
+        String selection = AppConstants.ADDRESS_DEFAULT + "=1";
+        String[] columns = new String[]{
+                AppConstants.ADDRESS_ID,
+                AppConstants.NAME_FOR_ADDRESS,
+                AppConstants.PHONE_FOR_ADDRESS,
+                AppConstants.ADDRESS,
+                AppConstants.ADDRESS_DETAIL,
+                AppConstants.ADDRESS_DEFAULT};
+        db = AccountDBHelper.getInstance().getReadableDatabase();
+        cursor = db.query(AccountDBHelper.Q_ADDRESS_TABLE, columns,
+                selection, null, null,
+                null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                _defaultAddress = new AddressUrlBean.AddressBean();
+                String id = cursor.getString(0);
+                String Name = cursor.getString(1);
+                String phone = cursor.getString(2);
+                String address = cursor.getString(3);
+                String detail = cursor.getString(4);
+                String address_default = cursor.getString(5);
+                _defaultAddress.setID(id);
+                _defaultAddress.setName(Name);
+                _defaultAddress.setPhone(phone);
+                _defaultAddress.setAddress(address);
+                _defaultAddress.setDetail(detail);
+                _defaultAddress.setDefault(address_default);
+            } while (cursor.moveToNext());
+        }
+        return _defaultAddress;
     }
 
     public List<String> queryHistory(String searchContent) {
@@ -296,7 +339,7 @@ public class AccountDao {
         db = AccountDBHelper.getInstance().getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put("searched", historyContent);
-        ToastHelper.getInstance()._toast("插入第" + db.insert(AccountDBHelper.Q_SEARCH_HISTORY_TABLE, null, values));
+        db.insert(AccountDBHelper.Q_SEARCH_HISTORY_TABLE, null, values);
         close();
     }
 

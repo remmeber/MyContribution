@@ -78,10 +78,11 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.slideView.setTag(holder.getAdapterPosition());
         holder.tvReceiver.setText(addressBean.getName());
         holder.tvPhone.setText(addressBean.getPhone());
-        holder.tvAddress.setText(addressBean.getAddress());
-        boolean isChecked = addressBean.isChecked();
+        String _str = addressBean.getAddress().concat(addressBean.getDetail());
+        holder.tvAddress.setText(_str);
+        String defaultAddress = addressBean.getDefault();
         holder.rlAddress.setTag(holder.getAdapterPosition());
-        setImage(isChecked, holder.ivCheck);
+        setImage(defaultAddress, holder.ivCheck);
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +96,8 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.rlAddress.setOnClickListener(this);*/
     }
 
-    private void setImage(boolean isChecked, ImageView ivCheck) {
-        if (isChecked) {
+    private void setImage(String isChecked, ImageView ivCheck) {
+        if ("1".equals(isChecked)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ivCheck.setImageDrawable(context.getDrawable(R.drawable.ic_check_green));
             } else

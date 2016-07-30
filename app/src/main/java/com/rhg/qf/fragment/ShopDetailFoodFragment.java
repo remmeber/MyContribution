@@ -2,15 +2,20 @@ package com.rhg.qf.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
 import com.rhg.qf.R;
+import com.rhg.qf.bean.ShopDetailLocalModel;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.impl.RefreshListener;
 import com.rhg.qf.mvp.presenter.ShopDetailPresenter;
 import com.rhg.qf.ui.FragmentController;
 import com.rhg.qf.widget.VerticalTabLayout;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -21,22 +26,29 @@ import butterknife.Bind;
  * time：2016/5/28 16:48
  * email：1013773046@qq.com
  */
-public class ShopDetailFoodFragment extends BaseFragment {
+public class ShopDetailFoodFragment extends BaseFragment implements RefreshListener {
     @Bind(R.id.vt_selector)
     VerticalTabLayout verticalTabLayout;
 
     FragmentController fragmentController;
-    Fragment[] fragments;
+    List<Fragment> fragments = new ArrayList<>();
 
-    List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList;
+    ShopDetailLocalModel shopDetailLocalModel;
     ShopDetailPresenter shopDetailPresenter;
 
     String merchantId;
+    private List<String> titles;
+    private Date endDate;
 
     public ShopDetailFoodFragment() {
         shopDetailPresenter = new ShopDetailPresenter(this);
     }
 
+
+    @Override
+    public void loadData() {
+        shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);
+    }
 
     @Override
     public int getLayoutResId() {
@@ -50,15 +62,14 @@ public class ShopDetailFoodFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        verticalTabLayout.setTitles(AppConstants.SHOP_TITLES);
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         bundle.putString(AppConstants.KEY_MERCHANT_ID, merchantId);
         fragments = new Fragment[5];
         for (int i = 0; i < fragments.length; i++) {
             FoodTypeFragment fragment = new FoodTypeFragment();
             fragment.setArguments(bundle);
             fragments[i] = fragment;
-        }
+        }*/
         fragmentController = new FragmentController(getChildFragmentManager(), fragments, R.id.fl_shop_detail);
         verticalTabLayout.setOnVerticalTabClickListener(new VerticalTabLayout.VerticalTabClickListener() {
             @Override
@@ -76,14 +87,41 @@ public class ShopDetailFoodFragment extends BaseFragment {
 
     @Override
     protected void showFailed() {
-
     }
 
     @Override
     public void showSuccess(Object o) {
-        shopDetailBeanList = (List<ShopDetailUrlBean.ShopDetailBean>) o;
-        /*((FoodTypeFragment) fragments[verticalTabLayout.getCurrentPosition()])
-                .setShopDetailBeanList(shopDetailBeanList);*/
+        if (o instanceof ShopDetailLocalModel) {
+            shopDetailLocalModel = (ShopDetailLocalModel) o;
+            verticalTabLayout.setTitles(shopDetailLocalModel.getVarietys());
+            int start = -1;
+            int end = -1;
+            FoodTypeFragment fragment;
+            for (int i = 0; i < shopDetailLocalModel.getVarietys().size(); i++) {
+                fragment = i >= fragments.size() ? new FoodTypeFragment() : ((FoodTypeFragment) fragments.get(i));
+                fragment.setRefreshListener(this);
+                List<ShopDetailUrlBean.ShopDetailBean> _shopDetailBeanList = new ArrayList<>();
+                for (int j = start + 1; j < shopDetailLocalModel.getShopDetailBean().size(); j++) {
+                    if (shopDetailLocalModel.getShopDetailBean().get(j).getVariety()
+                            .equals(shopDetailLocalModel.getVarietys().get(i))) {
+                        _shopDetailBeanList.add(shopDetailLocalModel.getShopDetailBean().get(j));
+                        end++;
+                    } else {
+                        start = end;
+                        break;
+                    }
+                }
+                fragment.setShopDetailBeanList(_shopDetailBeanList);
+                if (i >= fragments.size())
+                    fragmentController.addFm(fragment);
+            }
+            ((FoodTypeFragment) fragmentController.getCurrentFM()).finishLoad();
+        }
+
     }
 
+    @Override
+    public void load() {
+        shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);
+    }
 }
