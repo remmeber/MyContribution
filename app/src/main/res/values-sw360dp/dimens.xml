@@ -9,5 +9,5 @@
     <dimen name="header_image_size">80dp</dimen>
     <dimen name="food_image_size">60dp</dimen>
     <dimen name="text_little_small">12sp</dimen>
-    <dimen name="text_small">10dp</dimen>
+    <dimen name="text_small">10sp</dimen>
 </resources>

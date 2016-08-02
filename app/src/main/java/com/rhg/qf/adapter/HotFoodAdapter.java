@@ -81,30 +81,4 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return hotFoodBeanList == null ? 0 : hotFoodBeanList.size();
     }
 
-    /*public class HotFoodViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.hot_sell_merchant_name)
-        TextView hotSellMerchantName;
-        @Bind(R.id.hot_sell_food_image)
-        ImageView hotSellFoodImage;
-        @Bind(R.id.hot_sell_food_name)
-        TextView hotSellFoodName;
-        @Bind(R.id.hot_sell_deliver_require)
-        TextView hotSellDeliverRequire;
-        @Bind(R.id.hot_sell_deliver_money)
-        TextView hotSellDeliverMoney;
-        @Bind(R.id.hot_sell_rating_bar)
-        MyRatingBar hotSellRatingBar;
-        @Bind(R.id.hot_sell_deliver_distance)
-        TextView hotSellDeliverDistance;
-        @Bind(R.id.hot_sell_total_money)
-        TextView hotSellTotalMoney;
-        @Bind(R.id.hot_sell_ll)
-        LinearLayout hotSellLl;
-
-        HotFoodViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-
-    }*/
 }

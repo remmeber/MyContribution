@@ -13,7 +13,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.utils.DpUtil;
 
 /*
- *desc
+ *desc 带有数字显示的购物车
  *author rhg
  *time 2016/6/20 16:06
  *email 1013773046@qq.com

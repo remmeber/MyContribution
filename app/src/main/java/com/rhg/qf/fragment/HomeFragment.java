@@ -55,10 +55,8 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         RcvItemClickListener<MerchantUrlBean.MerchantBean>,
         View.OnClickListener {
     FavorableTypeModel favorableTypeModel;
-    List<FavorableFoodUrlBean.FavorableFoodEntity> favorableFoodBeen = new ArrayList<>();
 
     BannerTypeBean bannerTypeBean;
-    List<BannerTypeUrlBean.BannerEntity> bannerTypeBeanList = new ArrayList<>();
 
     TextTypeBean textTypeBean;
 

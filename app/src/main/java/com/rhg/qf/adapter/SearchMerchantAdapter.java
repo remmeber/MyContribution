@@ -41,7 +41,6 @@ public class SearchMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBea
 
     @Override
     protected void bindBodyData(final BodyViewHolder holder, final MerchantUrlBean.MerchantBean data, int type) {
-        Log.i("RHG", "DONE");
         holder.sellerName.setText(data.getName());
         ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
         holder.demandMoney.setText(String.format(Locale.ENGLISH,

@@ -260,7 +260,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 break;*/
             case R.id.ivShare:
                 UmengUtil umengUtil = new UmengUtil(this);
-                UMImage imageMedia = new UMImage(this, /*AccountUtil.getInstance().getHeadImageUrl()*/R.drawable.recommend_default_icon_1);
+                UMImage imageMedia = new UMImage(this, image);
                 ShareModel shareModel = new ShareModel("黄焖鸡米饭", "好吃", imageMedia);
                 umengUtil.Share(shareModel, new ShareListener() {
                     @Override

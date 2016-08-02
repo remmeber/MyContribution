@@ -2,7 +2,6 @@ package com.rhg.qf.pay.pays.wx;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
@@ -20,8 +19,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -108,7 +107,6 @@ public class WxPay implements IPayable {
 
     public String GetPrepayId(final OrderInfo orderInfo) {
         String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-        Log.i("RHG", "orderInfo:" + orderInfo.GetContent());
         final Map<String, String> orderMap = XmlUtil.DecodeXmlToMap(orderInfo.GetContent());
         byte[] response = post(url, orderInfo.GetContent());
         try {
@@ -163,23 +161,22 @@ public class WxPay implements IPayable {
     }
 
     byte[] post(String url, String json) {
-        RequestBody formBody = RequestBody.create(MediaType.parse("text/xml;charset=UTF-8"),json);
+        RequestBody formBody = RequestBody.create(MediaType.parse("text/xml;charset=UTF-8"), json);
 
         Request request = new Request.Builder()
                 .url(url)
                 .post(formBody)
                 .build();
         if (client == null)
-            client = new OkHttpClient();
+            client = new OkHttpClient.Builder().readTimeout(5000, TimeUnit.MILLISECONDS)
+                    .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                    .writeTimeout(5000, TimeUnit.MILLISECONDS).build();
         Response response = null;
         try {
             response = client.newCall(request).execute();
-            if (response.isSuccessful()) {
-                Log.i("RHG", response.body().string());
-                return response.body().bytes();
-            } else return null;
+            return response.body().bytes();
         } catch (IOException e) {
-            return null;
+            return null;/*处理超时等异常*/
         }
     }
 

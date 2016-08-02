@@ -21,7 +21,7 @@ public class HeaderViewHolder extends RecyclerView.ViewHolder {
 
     public HeaderViewHolder(View itemView, int type) {
         super(itemView);
-        headerstoreimage = (ImageView) itemView.findViewById(R.id.headerstoreiamge);
+        headerstoreimage = (ImageView) itemView.findViewById(R.id.shop_header_image);
         headerstorename = (TextView) itemView.findViewById(R.id.headerstorename);
         headerdemandmoney = (TextView) itemView.findViewById(R.id.headerdemandmoney);
         headerdelivermoney = (TextView) itemView.findViewById(R.id.headerdelivermoney);

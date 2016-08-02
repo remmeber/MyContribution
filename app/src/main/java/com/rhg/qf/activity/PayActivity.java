@@ -19,7 +19,6 @@ import com.rhg.qf.mvp.presenter.NewOrderPresenter;
 import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
-import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -67,9 +66,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     @Override
     protected OrderInfo OnOrderCreate() {
-        if (newOrderBean == null)
-            newOrderBean = new NewOrderBean();
-        generateOrder(newOrderBean);
+        newOrderBean = generateOrder();
         if (createOrderPresenter == null)
             createOrderPresenter = new NewOrderPresenter(this);
         createOrderPresenter.createNewOrder(newOrderBean);
@@ -83,15 +80,17 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         return null;
     }
 
-    private void generateOrder(NewOrderBean newOrderBean) {
-        newOrderBean.setReceiver(/*AddressUtil.getDefaultAddress().getName()*/"阮湖岗");
-        newOrderBean.setPhone(/*AddressUtil.getDefaultAddress().getPhone()*/"15261898929");
-        newOrderBean.setAddress(/*AddressUtil.getDefaultAddress().getAddress().concat(
+    private NewOrderBean generateOrder() {
+        NewOrderBean _orderBean = new NewOrderBean();
+        _orderBean.setReceiver(/*AddressUtil.getDefaultAddress().getName()*/"阮湖岗");
+        _orderBean.setPhone(/*AddressUtil.getDefaultAddress().getPhone()*/"15261898929");
+        _orderBean.setAddress(/*AddressUtil.getDefaultAddress().getAddress().concat(
                 AddressUtil.getDefaultAddress().getDetail()*/"江苏省南京市江宁区秣周东路无线谷"
         );
-        newOrderBean.setFood(getCheckedFood(payList));
-        newOrderBean.setClient("19216801");
-        newOrderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
+        _orderBean.setFood(getCheckedFood(payList));
+        _orderBean.setClient("19216801");
+        _orderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
+        return _orderBean;
     }
 
     @Override
