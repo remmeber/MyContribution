@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
-import com.rhg.qf.bean.PayBean;
+import com.rhg.qf.bean.PayModel;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,14 +27,14 @@ import butterknife.ButterKnife;
  */
 public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemViewHolder> {
     Context context;
-    List<PayBean> payList;
+    List<PayModel.PayBean> payList;
 
-    public PayItemAdapter(Context context, List<PayBean> payList) {
+    public PayItemAdapter(Context context, List<PayModel.PayBean> payList) {
         this.context = context;
         this.payList = payList;
     }
 
-    public void setPayList(List<PayBean> payList) {
+    public void setPayList(List<PayModel.PayBean> payList) {
         this.payList = payList;
         notifyDataSetChanged();
     }
@@ -61,8 +61,12 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         });
 //        holder.rlPayCheck.setOnClickListener(this);
         holder.lyTotalCount.setVisibility(View.VISIBLE);
-        int _totalPrice = Integer.valueOf(payList.get(position).getProductPrice()) *
-                Integer.valueOf(payList.get(position).getProductNumber());
+        int _totalPrice;
+        if ("0".equals(payList.get(position).getProductNumber()))
+            _totalPrice = Integer.valueOf(payList.get(position).getProductPrice());
+        else
+            _totalPrice = Integer.valueOf(payList.get(position).getProductPrice()) *
+                    Integer.valueOf(payList.get(position).getProductNumber());
         holder.tvTotalMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
                 String.valueOf(_totalPrice)));
         ImageLoader.getInstance().displayImage(payList.get(position).getProductPic(), holder.ivPayImage);

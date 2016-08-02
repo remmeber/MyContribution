@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,11 +14,13 @@ import android.widget.TextView;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.FoodsDetailAdapter;
 import com.rhg.qf.bean.OrderDetailUrlBean;
+import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
 import com.rhg.qf.utils.ToastHelper;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -86,7 +89,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     @Override
     public void loadingData() {
         getOrderDetailPresenter = new OrderDetailPresenter(this);
-        getOrderDetailPresenter.getOrderDetail(AppConstants.ORDER_DETAIL,/*orderId */"1");
+        getOrderDetailPresenter.getOrderDetail(AppConstants.ORDER_DETAIL, /*orderId*/"1");
     }
 
     @Override
@@ -133,8 +136,10 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
 
     @Override
     protected void showSuccess(Object s) {
-        if (s instanceof OrderDetailUrlBean.OrderDetailBean)
+        if (s instanceof OrderDetailUrlBean.OrderDetailBean) {
+            foodBean = (OrderDetailUrlBean.OrderDetailBean) s;
             setData((OrderDetailUrlBean.OrderDetailBean) s);
+        }
         if (s instanceof String)
             ToastHelper.getInstance()._toast((String) s);
     }
@@ -175,12 +180,25 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                     startActivity(intent);
                 }
                 if (orderTag == AppConstants.USER_ORDER_UNPAID) {
+                    if (foodsDetailAdapter.getItemCount() == 0)
+                        return;
                     Intent intent = new Intent(this, PayActivity.class);
-                    intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "");
-                    intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
-                    intent.putExtra(AppConstants.KEY_PRODUCT_PRICE,
-                            String.valueOf(orderPrice));
-                    intent.putExtra(AppConstants.KEY_IMAGE, "");
+                    PayModel payModel = new PayModel();
+                    payModel.setReceiver(tvReceiver.getText().toString());
+                    payModel.setPhone(tvReceiverPhone.getText().toString());
+                    payModel.setAddress(tvReceiverAddress.getText().toString());
+                    ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
+                    PayModel.PayBean _pay = new PayModel.PayBean();
+                    _pay.setProductName("");
+                    _pay.setChecked(true);
+                    _pay.setProductId("1");
+                    int count = 0;
+                    _pay.setProductNumber(String.valueOf(count));
+                    _pay.setProductPic("");
+                    _pay.setProductPrice(String.valueOf(orderPrice) == null ? "0" : String.valueOf(orderPrice));
+                    payBeen.add(_pay);
+                    payModel.setPayBeanList(payBeen);
+                    intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
                     startActivity(intent);
                 }
                 break;

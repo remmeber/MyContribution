@@ -78,6 +78,8 @@ public class AppConstants {
     public static final String KEY_ORDER_TAG = "order_tag";
     public static final String KEY_SEARCH_INDEX = "search_index";
     public static final String KEY_SEARCH_TAG = "search_tag";
+    public static final String KEY_PARCELABLE_LIST = "parcelable_list";
+    public static final String KEY_PARCELABLE = "parcelable";
     public static final int KEY_RESTAURANT_SEARCH = 30;// TODO: 首页和商家页面搜索餐厅的KEY
     public static final int KEY_HOTFOOD_SEARCH = 31;// TODO: 热销商品搜索的KEY
     public static final int KEY_BACK_2_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY

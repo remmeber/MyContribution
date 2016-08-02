@@ -13,6 +13,7 @@ import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.impl.RcvItemClickListener;
 
 import java.util.List;
+import java.util.Locale;
 
 /*
  *desc 热销单品页面以及热销搜索适配器
@@ -42,7 +43,7 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new HotFoodViewHolder(LayoutInflater.from(context).inflate(R.layout.item_hot_sell,parent,false));
+        return new HotFoodViewHolder(LayoutInflater.from(context).inflate(R.layout.item_hot_sell, parent, false));
     }
 
     @Override
@@ -67,8 +68,10 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         /*hotFoodViewHolder.hotSellFoodImage.setImageDrawable(
                 context.getResources().getDrawable(R.drawable.recommend_default_icon_1));*/
         hotFoodViewHolder.hotSellFoodName.setText(hotFoodBean.getFName());
-        hotFoodViewHolder.hotSellDeliverRequire.setText(hotFoodBean.getDelivery());
-        hotFoodViewHolder.hotSellDeliverMoney.setText(hotFoodBean.getFee());
+        hotFoodViewHolder.hotSellDeliverRequire.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDeliverRequire), hotFoodBean.getDelivery()));
+        hotFoodViewHolder.hotSellDeliverMoney.setText(String.format(Locale.ENGLISH,
+                context.getResources().getString(R.string.tvDeliverRequire), hotFoodBean.getFee()));
         hotFoodViewHolder.hotSellRatingBar.setStarRating(Float.parseFloat(hotFoodBean.getStars()));
 //        hotFoodViewHolder.hotSellDeliverDistance.setText(hotFoodBean.getDistance());
         hotFoodViewHolder.hotSellTotalMoney.setText(String.format(

@@ -1,5 +1,7 @@
 package com.rhg.qf.locationservice;
 
+import android.util.Log;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.rhg.qf.mvp.model.LocModel;
@@ -65,6 +67,7 @@ public class MyLocationListener implements BDLocationListener {
                 }
             }*/
             if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+                sb += location.getProvince() + ",";
                 sb += location.getCity() + ",";
                 sb += location.getDistrict() + ",";
                 sb += location.getLatitude() + ",";
@@ -80,6 +83,7 @@ public class MyLocationListener implements BDLocationListener {
                 sb.append("\ndescribe : ");
                 sb.append("gps定位成功");*/
             } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+                sb += location.getProvince() + ",";
                 sb += location.getCity() + ",";
                 sb += location.getDistrict() + ",";
                 AccountUtil.getInstance().setLatitude(String.valueOf(location.getLatitude()));
@@ -102,6 +106,7 @@ public class MyLocationListener implements BDLocationListener {
                 sb += "error,";
                 sb += "无法获取有效定位";
             } else {
+                sb += location.getProvince() + ",";
                 sb += location.getCity() + ",";
                 sb += location.getDistrict() + ",";
                 sb += location.getLatitude() + ",";

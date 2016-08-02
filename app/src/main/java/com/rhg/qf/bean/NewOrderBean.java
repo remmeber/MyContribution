@@ -1,5 +1,6 @@
 package com.rhg.qf.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**

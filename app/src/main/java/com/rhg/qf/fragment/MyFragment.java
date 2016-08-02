@@ -1,6 +1,9 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,11 +16,15 @@ import com.rhg.qf.activity.DeliverInfoActivity;
 import com.rhg.qf.activity.DeliverOrderActivity;
 import com.rhg.qf.activity.DeliverRegisterActivity;
 import com.rhg.qf.activity.OrderListActivity;
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.DataUtil;
+import com.rhg.qf.widget.ModifyHeadImageDialog;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -26,7 +33,7 @@ import java.util.Map;
  * time：2016/5/28 16:44
  * email：1013773046@qq.com
  */
-public class MyFragment extends BaseFragment implements View.OnClickListener {
+public class MyFragment extends BaseFragment implements View.OnClickListener ,ModifyHeadImageDialog.ChoosePicListener{
     boolean hasAccount = true;
 
     //    FrameLayout flTAB;
@@ -53,6 +60,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     boolean isSignIn;
     UmengUtil signUtil = null;
+    ModifyHeadImageDialog modifyHeadImageDialog;
+    Uri fileUri = null;
 
     @Override
     public int getLayoutResId() {
@@ -180,7 +189,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     ToastHelper.getInstance()._toast("请登录");*/
                 break;
             case R.id.userHeader://TODO 更改头像
-                Toast.makeText(getContext(), R.string.modifyHeader, Toast.LENGTH_SHORT).show();
+                if (modifyHeadImageDialog == null) {
+                    modifyHeadImageDialog = new ModifyHeadImageDialog(getContext());
+                    modifyHeadImageDialog.setChoosePicListener(this);
+                }
+                modifyHeadImageDialog.show();
                 break;
             case R.id.userName://TODO 点击登录
                 doLogin();
@@ -195,10 +208,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 Toast.makeText(getContext(), R.string.orderComplete, Toast.LENGTH_SHORT).show();
                 break;
             case 3://TODO 登录
-                doLogin();
+//                doLogin();
                 break;
             case 4://TODO 注册
-                startActivity(new Intent(getContext(), DeliverRegisterActivity.class));
+//                startActivity(new Intent(getContext(), DeliverRegisterActivity.class));
                 break;
             case 5://TODO 修改
                 startActivity(new Intent(getContext(), DeliverInfoActivity.class));
@@ -242,5 +255,27 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                ToastHelper.getInstance()._toast(errorMessage);
             }
         });
+    }
+
+    @Override
+    public void chooseFromGallery() {
+        Intent intentFromGallery = new Intent();
+        intentFromGallery.addCategory(Intent.CATEGORY_OPENABLE);
+        intentFromGallery.setType("image/*");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            intentFromGallery.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            startActivityForResult(intentFromGallery, AppConstants.CODE_GALLERY_REQUEST_KITKAT);
+        } else {
+            intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intentFromGallery, AppConstants.CODE_GALLERY_REQUEST);
+        }
+    }
+
+    @Override
+    public void chooseFromCamera() {
+        Intent intentFromCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = Uri.fromFile(new File(AppConstants.f_Path, DataUtil.getCurrentTime())); // create a file to save the image
+        intentFromCamera.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+        startActivityForResult(intentFromCamera, AppConstants.CODE_CAMERA_REQUEST);
     }
 }

@@ -66,6 +66,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Override
     protected void initData() {
         qFoodOrderAdapter = new QFoodOrderAdapter(getContext(), orderBeanList);
+        qFoodOrderAdapter.setOnRcvItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         commonRecycle.setLayoutManager(linearLayoutManager);
         commonRecycle.setHasFixedSize(true);
@@ -85,17 +86,6 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        qFoodOrderAdapter.setOnRcvItemClickListener(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        qFoodOrderAdapter.setOnRcvItemClickListener(null);
-    }
 
     @Override
     public void showSuccess(Object o) {
@@ -109,7 +99,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Override
     public void onItemClickListener(int position, OrderUrlBean.OrderBean item) {
         Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
-        _intent.putExtra(AppConstants.KEY_ORDER_ID,item.getID());
+        _intent.putExtra(AppConstants.KEY_ORDER_ID, item.getID());
         _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
         _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
         /*_intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());

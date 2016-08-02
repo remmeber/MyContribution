@@ -64,6 +64,7 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
+        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
         commonRecycle.setAdapter(qFoodMerchantAdapter);
         commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,21 +85,11 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         getMerchantsOrderBySellNumberPresenter.getMerchants(AppConstants.RESTAURANTS, merchantsType);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        qFoodMerchantAdapter.setOnRcvItemClickListener(this);
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        qFoodMerchantAdapter.setOnRcvItemClickListener(null);
-    }
 
     @Override
     protected void showFailed() {
-
+        qFoodMerchantAdapter.setOnRcvItemClickListener(null);
     }
 
     @Override

@@ -85,9 +85,13 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
                 tvSearchResult.setVisibility(View.VISIBLE);
                 return;
             }
-            if (item instanceof MerchantUrlBean.MerchantBean || item instanceof HotFoodUrlBean.HotFoodBean) {
-            /*TODO 跳转到详情页面*/
+            Intent intent = new Intent(SearchActivity.this, GoodsDetailActivity.class);
+            if (item instanceof MerchantUrlBean.MerchantBean) {
+                intent.putExtra(AppConstants.KEY_PRODUCT_ID, ((MerchantUrlBean.MerchantBean) item).getID());
+            } else if (item instanceof HotFoodUrlBean.HotFoodBean) {
+                intent.putExtra(AppConstants.KEY_PRODUCT_ID, ((HotFoodUrlBean.HotFoodBean) item).getID());
             }
+            startActivity(intent);
         }
     };
 

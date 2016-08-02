@@ -16,7 +16,6 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.HotFoodPresenter;
 import com.rhg.qf.utils.DpUtil;
-import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
@@ -75,6 +74,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
                 LinearLayoutManager.HORIZONTAL, DpUtil.dip2px(2),
                 getResources().getColor(R.color.colorInActive)));
         hotFoodAdapter = new HotFoodAdapter(getContext(), hotFoodBeanList);
+        hotFoodAdapter.setOnRcvItemClickListener(this);
         commonRecycle.setAdapter(hotFoodAdapter);
         commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,6 +84,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
             }
         });
     }
+
 
     @Override
     protected void initView(View view) {
@@ -101,18 +102,6 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
             commonRefresh.setVisibility(View.GONE);
         if (commonSwipe.isRefreshing())
             commonSwipe.setRefreshing(false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        hotFoodAdapter.setOnRcvItemClickListener(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        hotFoodAdapter.setOnRcvItemClickListener(null);
     }
 
     @Override
