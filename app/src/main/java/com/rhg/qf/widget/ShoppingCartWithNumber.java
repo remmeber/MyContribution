@@ -1,10 +1,12 @@
 package com.rhg.qf.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -78,6 +80,7 @@ public class ShoppingCartWithNumber extends FrameLayout {
         return _paint;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void initView(Context context) {
         setWillNotDraw(false);
         setBackground(context.getResources().getDrawable(R.drawable.ic_shopping_cart_green));
@@ -121,7 +124,7 @@ public class ShoppingCartWithNumber extends FrameLayout {
 
     public void setNum(String num) {
         number = num;
-        requestLayout();
+        invalidate();
     }
 
    /* public void setDrawable(int resID) {
