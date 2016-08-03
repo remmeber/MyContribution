@@ -54,9 +54,10 @@ public class AppConstants {
     public static final int INTENT_NO_RESULT = 102;
 
     /*signin*/
-    public static final String USERNAME_QQ = "screen_name";
-    public static final String PROFILE_IMAGE_QQ = "profile_image_url";
+    public static final String USERNAME_WX = "nickname";
+    public static final String PROFILE_IMAGE_WX = "headimgurl";
     /*signin*/
+
 
     /**
      * Intent/Bundle 传递Bean的KEY

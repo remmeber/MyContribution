@@ -1,30 +1,24 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.AddOrNewAddressActivity;
 import com.rhg.qf.activity.AddressActivity;
 import com.rhg.qf.activity.DeliverInfoActivity;
 import com.rhg.qf.activity.DeliverOrderActivity;
-import com.rhg.qf.activity.DeliverRegisterActivity;
 import com.rhg.qf.activity.OrderListActivity;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.DataUtil;
-import com.rhg.qf.widget.ModifyHeadImageDialog;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import java.io.File;
 import java.util.Map;
 
 /**
@@ -33,7 +27,7 @@ import java.util.Map;
  * time：2016/5/28 16:44
  * email：1013773046@qq.com
  */
-public class MyFragment extends BaseFragment implements View.OnClickListener ,ModifyHeadImageDialog.ChoosePicListener{
+public class MyFragment extends BaseFragment implements View.OnClickListener {
     boolean hasAccount = true;
 
     //    FrameLayout flTAB;
@@ -60,8 +54,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener ,Mo
 
     boolean isSignIn;
     UmengUtil signUtil = null;
-    ModifyHeadImageDialog modifyHeadImageDialog;
-    Uri fileUri = null;
 
     @Override
     public int getLayoutResId() {
@@ -188,13 +180,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener ,Mo
                 /*else
                     ToastHelper.getInstance()._toast("请登录");*/
                 break;
-            case R.id.userHeader://TODO 更改头像
+            /*case R.id.userHeader://TODO 更改头像
                 if (modifyHeadImageDialog == null) {
                     modifyHeadImageDialog = new ModifyHeadImageDialog(getContext());
                     modifyHeadImageDialog.setChoosePicListener(this);
                 }
                 modifyHeadImageDialog.show();
-                break;
+                break;*/
             case R.id.userName://TODO 点击登录
                 doLogin();
                 break;
@@ -240,10 +232,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener ,Mo
 
     /*TODO 登录*/
     private void doLogin() {
-        signUtil = new UmengUtil(getActivity());
+        if (signUtil == null)
+            signUtil = new UmengUtil(getActivity());
         signUtil.SignIn(SHARE_MEDIA.WEIXIN, new SignInListener() {
             @Override
             public void signSuccess(Map<String, String> infoMap) {
+                userName.setText(infoMap.get(AppConstants.USERNAME_WX));
+                ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_WX), userHeader);
                 /*userName.setText(infoMap.get(AppConstants.USERNAME_QQ));
                 ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_QQ),
                         userHeader);
@@ -255,27 +250,5 @@ public class MyFragment extends BaseFragment implements View.OnClickListener ,Mo
 //                ToastHelper.getInstance()._toast(errorMessage);
             }
         });
-    }
-
-    @Override
-    public void chooseFromGallery() {
-        Intent intentFromGallery = new Intent();
-        intentFromGallery.addCategory(Intent.CATEGORY_OPENABLE);
-        intentFromGallery.setType("image/*");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            intentFromGallery.setAction(Intent.ACTION_OPEN_DOCUMENT);
-            startActivityForResult(intentFromGallery, AppConstants.CODE_GALLERY_REQUEST_KITKAT);
-        } else {
-            intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intentFromGallery, AppConstants.CODE_GALLERY_REQUEST);
-        }
-    }
-
-    @Override
-    public void chooseFromCamera() {
-        Intent intentFromCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = Uri.fromFile(new File(AppConstants.f_Path, DataUtil.getCurrentTime())); // create a file to save the image
-        intentFromCamera.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
-        startActivityForResult(intentFromCamera, AppConstants.CODE_CAMERA_REQUEST);
     }
 }

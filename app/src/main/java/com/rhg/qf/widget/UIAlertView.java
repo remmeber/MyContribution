@@ -59,7 +59,10 @@ public class UIAlertView extends Dialog {
             tvTitle.setText(title);
         }
         tvMessage.setText(message);
-        tvLeft.setText(buttonLeftText);
+        if ("".equals(buttonLeftText))
+            tvLeft.setVisibility(View.GONE);
+        else
+            tvLeft.setText(buttonLeftText);
         tvRight.setText(buttonRightText);
 
         tvLeft.setOnClickListener(new clickListener());
@@ -78,9 +81,9 @@ public class UIAlertView extends Dialog {
     }
 
     public interface ClickListenerInterface {
-        public void doLeft();
+        void doLeft();
 
-        public void doRight();
+        void doRight();
     }
 
     private class clickListener implements View.OnClickListener {

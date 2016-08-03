@@ -3,7 +3,6 @@ package com.rhg.qf.activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,6 +18,7 @@ import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
+import com.rhg.qf.widget.UIAlertView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +53,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     private DeliverOrderItemAdapter deliverOrderItemAdapter;
     DeliverOrderPresenter getDeliverOrder;/*获取跑腿员订单接口*/
     ModifyOrderPresenter modifyOrderPresenter;/*修改跑腿员订单接口*/
+    UIAlertView delDialog;
 
     @Override
     public void loadingData() {
@@ -80,7 +81,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
             @Override
             public void onRefresh() {
 
-                getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, "1");
+                getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, "19216801");
             }
         });
     }
@@ -119,6 +120,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
             case R.id.bt_order_snatch:
                 btOrderSnatch.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
                 btOrderProgress.setBackgroundColor(getResources().getColor(R.color.white));
+                showDelDialog("正在改造，敬请期待");
                 break;
             case R.id.bt_order_progress:
                 btOrderProgress.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
@@ -133,8 +135,6 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
             modifyOrderPresenter = new ModifyOrderPresenter(this);
         switch (style) {
             case AppConstants.DELIVER_ORDER_UNACCEPT:
-
-                Log.i("RHG", "MODIFY DONE");
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_ACCEPT);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
                 modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
@@ -160,5 +160,32 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     @Override
     public void onItemClickListener(int position, DeliverOrderUrlBean.DeliverOrderBean item) {
 
+    }
+
+    private void showDelDialog(final String content) {
+        if (delDialog == null) {
+            delDialog = new UIAlertView(this, "温馨提示", content,
+                    "", "知道啦");
+            delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
+                                           @Override
+                                           public void doLeft() {
+                                           }
+
+                                           @Override
+                                           public void doRight() {
+                                               delDialog.dismiss();
+                                               btOrderProgress.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+                                               btOrderSnatch.setBackgroundColor(getResources().getColor(R.color.white));
+
+                                           }
+                                       }
+            );
+        }
+        delDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
