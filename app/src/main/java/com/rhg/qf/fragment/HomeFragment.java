@@ -74,8 +74,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     TextView tlLeftTV;
     TextView tlCenterTV;
     ImageView tlRightLL;
-    ImageView tlRightIV;
-    TextView tlRightTV;
     /*toolbar 相关*/
 
     HomePresenter homePresenter;
@@ -186,7 +184,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     @Override
     public void showSuccess(Object o) {
         HomeBean _homeBean = (HomeBean) o;
-        /*set null */
 
         bannerTypeBean.setBannerEntityList(_homeBean.getBannerEntityList());
         favorableTypeModel.setFavorableFoodBeen(_homeBean.getFavorableFoodEntityList());
@@ -228,7 +225,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
 
-    //--------------------------------点击事件回调---------------------------------------------------
 
     @Override
     public void onClick(View v) {
@@ -247,7 +243,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         }
     }
 
-    /*调起搜索页面，标志参数为AppConstants.KEY_RESTAURANT_SEARCH*/
     private void doSearch() {
         Intent _intent = new Intent(getActivity(), SearchActivity.class);
         _intent.putExtra(AppConstants.KEY_SEARCH_TAG, AppConstants.KEY_RESTAURANT_SEARCH);

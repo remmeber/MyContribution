@@ -109,7 +109,8 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
 
     @Override
     public void showLocSuccess(String s) {
-        addNewAddressContactAddressContent.setText(s);
+        String[] _str = s.split(",");
+        addNewAddressContactAddressContent.setText(_str[0].concat(_str[1]).concat(_str[2]));
     }
 
     @Override

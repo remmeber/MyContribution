@@ -80,18 +80,29 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint())
-            super.onPause();
-        else super.onResume();
+            unVisible();
+        else visible();
     }
+
+    public void unVisible() {
+        Log.i("RHG", "unVisible");
+    }
+
+    public void visible() {
+        Log.i("RHG", "visible");
+
+    }
+
 
     public void reStartLocation() {
         if (locationService == null) {
             locationService = GetMapService();
         }
         if (mLocationListener == null) {
-            locationService.registerListener(mLocationListener = getLocationListener());
+            mLocationListener = getLocationListener();
             locationService.setLocationOption(locationService.getDefaultLocationClientOption());
         }
+        locationService.registerListener(mLocationListener);
 //        getLocation(locationService, mLocationListener);
         mLocationListener.getLocation(locationService);
     }
@@ -133,7 +144,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
                 if (location_str[1].equals("error"))
                     showLocFailed(location_str[2]);
                 else
-                    showLocSuccess(location_str[2]);
+                    showLocSuccess(location_str[3]);
                 if (locationService != null) {
                     locationService.stop();
                 }

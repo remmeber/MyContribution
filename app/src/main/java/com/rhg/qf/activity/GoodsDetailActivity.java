@@ -14,6 +14,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BannerImageHolder;
 import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.GoodsDetailUrlBean;
+import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.bean.ShareModel;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.datebase.AccountDao;
@@ -28,6 +29,7 @@ import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.ShoppingCartWithNumber;
 import com.umeng.socialize.media.UMImage;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -178,8 +180,9 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
 
     @Override
     public void showLocSuccess(String s) {
-        tbRightTv.setText(s);
-        AccountUtil.getInstance().setLocation(s);
+        String[] _str = s.split(",");
+        tbRightTv.setText(_str[2]);
+        AccountUtil.getInstance().setLocation(_str[2]);
     }
 
     @Override
@@ -229,7 +232,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.tb_right_ll:
-                ToastHelper.getInstance().displayToastWithQuickClose("正在获取定位...");
+                reStartLocation();
                 break;
             case R.id.ivReduce:
                 int t = Integer.valueOf(tvNum.getText().toString());
@@ -289,12 +292,21 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 }
                 Intent intent = new Intent(GoodsDetailActivity.this,
                         PayActivity.class);
-                                           /*todo 带上参数*/
-                intent.putExtra(AppConstants.KEY_PRODUCT_NAME, tvGoodsName.getText().toString());
-                intent.putExtra(AppConstants.KEY_PRODUCT_ID, "1");
-                intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, price);
-                intent.putExtra(AppConstants.KEY_PRODUCT_NUMBER, tvNum.getText().toString());
-                intent.putExtra(AppConstants.KEY_IMAGE, image);
+                PayModel payModel = new PayModel();
+                payModel.setReceiver("阮湖岗");
+                payModel.setPhone("111111111");
+                payModel.setAddress("江苏省南京市江宁区东南大学");
+                ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
+                PayModel.PayBean _pay = new PayModel.PayBean();
+                _pay.setProductName(tvGoodsName.getText().toString());
+                _pay.setChecked(true);
+                _pay.setProductId("1");
+                _pay.setProductNumber(tvNum.getText().toString());
+                _pay.setProductPic(image);
+                _pay.setProductPrice(price);
+                payBeen.add(_pay);
+                payModel.setPayBeanList(payBeen);
+                intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
                 startActivity(intent);
                 break;
         }

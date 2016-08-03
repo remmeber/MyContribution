@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
 import com.rhg.qf.application.InitApplication;
-import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
@@ -75,14 +73,11 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
         if (locationService == null)
             locationService = GetMapService();
         if (mLocationListener == null) {
-            Log.d("RHG", "Location listener is null");
             locationService.registerListener(mLocationListener = getLocationListener());
             locationService.setLocationOption(locationService.getDefaultLocationClientOption());
         } else {
             mLocationListener.getLocation(locationService);
         }
-        if (AppConstants.DEBUG)
-            Log.i("RHG", "重启定位");
     }
 
     public MyLocationListener getLocationListener() {
@@ -128,7 +123,6 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (null != this.getCurrentFocus() && this.getCurrentFocus() instanceof EditText) {
-
             return KeyBoardUtil.closeKeybord((EditText) this.getCurrentFocus(), this);
         }
         return super.onTouchEvent(event);
@@ -139,6 +133,10 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.bind(this);
+        if (locationService != null) {
+            locationService.stop();
+            locationService.unregisterListener(mLocationListener);
+        }
         RefWatcher refWatcher = InitApplication.getRefWatcher(this);
         refWatcher.watch(this);
     }
@@ -161,7 +159,8 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
                     if (locationService != null) {
                         locationService.stop();
                     }
-                    showLocSuccess(location_str[2]);
+                    showLocSuccess(location_str[1].concat(",").concat(location_str[2])
+                            .concat(",").concat(location_str[3]));
                 }
             } else {
                 showSuccess(_str);

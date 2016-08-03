@@ -130,17 +130,17 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             locationService = GetMapService();
         if (mLocationListener == null) {
             Log.d("RHG", "Location listener is null");
-            locationService.registerListener(mLocationListener = getLocationListener());
+            mLocationListener = getLocationListener();
             locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-        } else {
-            mLocationListener.getLocation(locationService);
         }
+        locationService.registerListener(mLocationListener);
+        mLocationListener.getLocation(locationService);
         if (AppConstants.DEBUG)
             Log.i("RHG", "重启定位");
     }
 
     public MyLocationListener getLocationListener() {
-        return null;
+        return new MyLocationListener(this);
     }
 
     /*public void getLocation(LocationService locationService, MyLocationListener mLocationListener) {
@@ -149,7 +149,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     /*默认不定位，如果需要定位，子类需要重写该方法*/
     public LocationService GetMapService() {
-        return null;
+        return InitApplication.getInstance().locationService;
     }
 
     public void dataReceive(Intent intent) {
@@ -168,7 +168,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     @Override
     protected void onPause() {
         super.onPause();
-//        unregisterReceiver(receiver);
     }
 
     @Override
@@ -232,7 +231,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
                     if (locationService != null) {
                         locationService.stop();
                     }
-                    showLocSuccess(location_str[2]);
+                    showLocSuccess(location_str[1].concat(",").concat(location_str[2])
+                            .concat(",").concat(location_str[3]));
                 }
             } else {
                 showSuccess(_str);

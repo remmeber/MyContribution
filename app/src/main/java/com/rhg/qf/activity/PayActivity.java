@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -13,7 +14,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.PayItemAdapter;
 import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.NewOrderBean;
-import com.rhg.qf.bean.PayBean;
+import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.NewOrderPresenter;
 import com.rhg.qf.pay.BasePayActivity;
@@ -59,10 +60,11 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     @Bind(R.id.iv_cash_check)
     ImageView ivCashCheck;
 
-    List<PayBean> payList = new ArrayList<>();
+    ArrayList<PayModel.PayBean> payList = new ArrayList<>();
     NewOrderBean newOrderBean;
     private PayItemAdapter payItemAdapter;
     NewOrderPresenter createOrderPresenter;
+
 
     @Override
     protected OrderInfo OnOrderCreate() {
@@ -102,21 +104,16 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     }
 
     protected void initData(Intent intent) {
+        tbCenterTv.setText(getResources().getString(R.string.tvPayTitle));
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        tbCenterTv.setText(getResources().getString(R.string.tvPayTitle));
-        tvReceiver.setText("收货人：哈哈");
-        tvReceiverPhone.setText("联系方式：00001111");
-        tvReceiverAddress.setText("收货地址：江苏省南京市江宁区东南大学");
-
-        PayBean _payBean = new PayBean();
-        _payBean.setProductName("");
-        _payBean.setChecked(true);
-        _payBean.setProductId("1");
-        _payBean.setProductPic(intent.getStringExtra(AppConstants.KEY_IMAGE));
-        _payBean.setProductPrice(intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE));
-        _payBean.setProductNumber(intent.getStringExtra(AppConstants.KEY_PRODUCT_NUMBER));
-        payList.add(_payBean);
+        PayModel payModel = intent.getParcelableExtra(AppConstants.KEY_PARCELABLE);
+        if (payModel != null) {
+            tvReceiver.setText(payModel.getReceiver());
+            tvReceiverPhone.setText(payModel.getPhone());
+            tvReceiverAddress.setText(payModel.getAddress());
+            payList.addAll(payModel.getPayBeanList());
+        }
 
         rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
         rcvItemPay.setHasFixedSize(true);
@@ -240,18 +237,18 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         payItemAdapter.setPayList(payList);
     }
 
-    private int getCheckCount(List<PayBean> payList) {
+    private int getCheckCount(List<PayModel.PayBean> payList) {
         int count = 0;
-        for (PayBean _payBean : payList) {
+        for (PayModel.PayBean _payBean : payList) {
             if (_payBean.isChecked())
                 count++;
         }
         return count;
     }
 
-    private List<NewOrderBean.FoodBean> getCheckedFood(List<PayBean> payList) {
+    private List<NewOrderBean.FoodBean> getCheckedFood(List<PayModel.PayBean> payList) {
         List<NewOrderBean.FoodBean> _bean = new ArrayList<>();
-        for (PayBean _payBean : payList) {
+        for (PayModel.PayBean _payBean : payList) {
             if (_payBean.isChecked()) {
                 NewOrderBean.FoodBean foodBean = new NewOrderBean.FoodBean();
                 foodBean.setID(_payBean.getProductId());
@@ -262,9 +259,9 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         return _bean;
     }
 
-    private int getCheckItemTotalMoney(List<PayBean> payList) {
+    private int getCheckItemTotalMoney(List<PayModel.PayBean> payList) {
         int count = 0;
-        for (PayBean _payBean : payList) {
+        for (PayModel.PayBean _payBean : payList) {
             if (_payBean.isChecked())
                 count += Integer.valueOf(_payBean.getProductPrice());
         }
