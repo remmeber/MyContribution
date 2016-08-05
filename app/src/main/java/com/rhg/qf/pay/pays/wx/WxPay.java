@@ -2,11 +2,13 @@ package com.rhg.qf.pay.pays.wx;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.pays.IPayable;
 import com.rhg.qf.pay.security.wx.MD5;
+import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.utils.XmlUtil;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -45,7 +47,7 @@ public class WxPay implements IPayable {
 
     @Override
     public String Pay(Activity activity, OrderInfo orderInfo, String prepayId) {
-        boolean isSuccess = msgApi.sendReq(BuildCallAppParams(GetPrepayId(orderInfo)));
+        boolean isSuccess = msgApi.sendReq(BuildCallAppParams(prepayId));
         return String.valueOf(isSuccess);
     }
 
