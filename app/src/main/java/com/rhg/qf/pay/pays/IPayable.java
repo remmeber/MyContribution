@@ -2,11 +2,10 @@ package com.rhg.qf.pay.pays;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 
 import com.rhg.qf.pay.model.OrderInfo;
 
-import rx.Observable;
+import java.lang.ref.WeakReference;
 
 
 public interface IPayable {

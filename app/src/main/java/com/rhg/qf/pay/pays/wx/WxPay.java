@@ -12,9 +12,6 @@ import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +45,7 @@ public class WxPay implements IPayable {
 
     @Override
     public String Pay(Activity activity, OrderInfo orderInfo, String prepayId) {
-        boolean isSuccess = msgApi.sendReq(BuildCallAppParams(prepayId));
+        boolean isSuccess = msgApi.sendReq(BuildCallAppParams(GetPrepayId(orderInfo)));
         return String.valueOf(isSuccess);
     }
 
@@ -56,11 +53,8 @@ public class WxPay implements IPayable {
     public OrderInfo BuildOrderInfo(String body, String invalidTime,
                                     String notifyUrl, String tradeNo,
                                     String subject, String totalFee, String spbillCreateIp) {
-//        StringBuffer xml = new StringBuffer();
-
         try {
             String nonceStr = GetNonceStr();
-
 //            xml.append("</xml>");
             /*List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
             packageParams.add(new BasicNameValuePair("appid", KeyLibs.weixin_appId));
@@ -101,21 +95,25 @@ public class WxPay implements IPayable {
     }
 
     public void unRegisterApp() {
-        if (msgApi != null)
-            msgApi.detach();
+        if (msgApi != null) {
+            msgApi.unregisterApp();
+        }
     }
 
     public String GetPrepayId(final OrderInfo orderInfo) {
         String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-        final Map<String, String> orderMap = XmlUtil.DecodeXmlToMap(orderInfo.GetContent());
         byte[] response = post(url, orderInfo.GetContent());
-        try {
-            JSONObject _json = new JSONObject(new String(response));
-            return _json.getString("prepay_id");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String content = new String(response);
+        content = content.replace("<![CDATA[", "");
+        content = content.replace("]]>", "");
+        Map<String, String> map = XmlUtil.DecodeXmlToMap(content);
+        if (map == null) {
+            return "";
         }
-        return "";
+        if (map.get("prepay_id") == null) {
+            return "";
+        }
+        return map.get("prepay_id");
 
         /*String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
         byte[] buf = Util.httpPost(url, orderInfo.GetContent());

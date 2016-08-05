@@ -54,6 +54,9 @@ public class UserBean {
         private String Pwd;
         private String Pic;
 
+        public User() {
+        }
+
         protected User(Parcel in) {
             ID = in.readString();
             CName = in.readString();

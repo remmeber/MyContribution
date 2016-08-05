@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,8 +23,12 @@ import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -77,7 +80,8 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     "10.129.216.53");
         }
         if (PayType.AliPay.equals(payType)) {
-            return BuildOrderInfo(null, null, null, null, null, null, null);
+            return BuildOrderInfo("支付宝支付", "30m", "http://notify.msp.hk/notify.htm", getOutTradeNo(), "黄焖鸡米饭支付", "0.01",
+                    "10.129.216.53");
         }
         return null;
     }
@@ -123,7 +127,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
 
-        RegisterBasePay(null, null, null, InitApplication.WXID, "10000100", null);
+        RegisterBasePay(/*KeyLibs.ali_partner, KeyLibs.ali_sellerId, KeyLibs.ali_privateKey,*/ InitApplication.WXID, "10000100", null);
 //        BuildOrderInfo()
     }
 
@@ -273,5 +277,19 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         if (o instanceof String) {
             ToastHelper.getInstance()._toast((String) o);
         }
+    }
+
+    /**
+     * get the out_trade_no for an order. 生成商户订单号，该值在商户端应保持唯一（可自定义格式规范）
+     */
+    private String getOutTradeNo() {
+        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+        Date date = new Date();
+        String key = format.format(date);
+
+        Random r = new Random();
+        key = key + r.nextInt();
+        key = key.substring(0, 15);
+        return key;
     }
 }

@@ -1,5 +1,7 @@
 package com.rhg.qf.pay.security.ali;
 
+import android.util.Log;
+
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -29,7 +31,7 @@ public class SignUtils {
 
             return Base64.encode(signed);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.i("RHG", e.getMessage() + "," + e.getCause());
         }
 
         return null;

@@ -5,8 +5,8 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.pay.model.KeyLibs;
@@ -15,10 +15,16 @@ import com.rhg.qf.pay.model.PayType;
 import com.rhg.qf.pay.model.ali.PayResult;
 import com.rhg.qf.pay.pays.IPayable;
 import com.rhg.qf.pay.pays.PaysFactory;
+import com.rhg.qf.pay.pays.ali.AliPay;
+import com.rhg.qf.pay.pays.wx.WxPay;
+
+import java.lang.ref.WeakReference;
 
 public abstract class BasePayActivity extends Activity implements BaseView {
 
     private static final int PAY_FLAG = 1;
+    private static final int PAY_ALI = 2;
+    private static final int PAY_WX = 3;
     /**
      * 默认方式微信支付（微信支付被选中）
      */
@@ -27,9 +33,24 @@ public abstract class BasePayActivity extends Activity implements BaseView {
      * 支付实体对象。通过该对象调用接口生成规范的订单信息并进行支付
      */
     private IPayable payManager;
+
+    WeakReference<BasePayActivity> activityWeakReference =
+            new WeakReference<BasePayActivity>(BasePayActivity.this);
     // 支付宝支付完成后，多线程回调主线程handler
-    private Handler mHandler = new Handler() {
+    private final MyHandler mHandler = new MyHandler(activityWeakReference);
+
+    private static class MyHandler extends Handler {
+        WeakReference<BasePayActivity> mActivityReference;
+
+        MyHandler(WeakReference<BasePayActivity> activity) {
+            mActivityReference = activity;
+        }
+
+        @Override
         public void handleMessage(Message msg) {
+            final BasePayActivity activity = mActivityReference.get();
+            if (activity == null)
+                return;
             switch (msg.what) {
                 case PAY_FLAG:
                     PayResult payResult = new PayResult((String) msg.obj);
@@ -39,25 +60,55 @@ public abstract class BasePayActivity extends Activity implements BaseView {
 
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // ----------调用重写方法
-                        showSuccess("支付成功");
+                        activity.showSuccess("支付成功");
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认。
                         if (TextUtils.equals(resultStatus, "8000")) {
                             // ---------调用重写方法
-                            Warning("支付结果确认中");
+                            activity.Warning("支付结果确认中");
                         } else {
                             // -------调用重写方法
-                            showError("支付失败");
+                            Log.i("RHG", resultStatus);
+                            activity.showError("支付失败");
                         }
                     }
                     break;
-
+                case PAY_ALI:
+                    break;
+                case PAY_WX:
+                    break;
                 default:
                     break;
             }
+
         }
-    };
+    }
+
+    MyThread thread = null;
+
+    private static class MyThread extends Thread {
+        private boolean mRunning = false;
+        WeakReference<BasePayActivity> weakReference;
+        OrderInfo orderInfo;
+
+        public MyThread(WeakReference<BasePayActivity> activity, OrderInfo orderInfo) {
+            weakReference = activity;
+            this.orderInfo = orderInfo;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            BasePayActivity activity = weakReference.get();
+            if (activity == null)
+                return;
+        }
+
+        public void close() {
+            mRunning = false;
+        }
+    }
 
 
     /**
@@ -75,8 +126,6 @@ public abstract class BasePayActivity extends Activity implements BaseView {
      * @param v
      */
     public void Pay(View v) {
-        Toast.makeText(this, "支付方式：" + payType, Toast.LENGTH_SHORT).show();
-
         switch (payType) {
             case AliPay:
                 PayAli();
@@ -94,38 +143,34 @@ public abstract class BasePayActivity extends Activity implements BaseView {
     private void PayAli() {
 
         // 构造支付对象，调用支付接口，获取支付结果
-        payManager = PaysFactory.GetInstance(payType);
+        if (payManager == null || payManager instanceof WxPay) {
+            if (payManager != null)
+                payManager.unRegisterApp();
+            payManager = PaysFactory.GetInstance(payType);
+        }
 
         // 1.开发者统一传入订单相关参数，生成规范化的订单（支付宝支付第一步；微信支付第二步）
         // ------调用重写方法
         final OrderInfo orderInfo = OnOrderCreate();
 
         // 2.调用支付方法
-        Thread payThread = new Thread(new Runnable() {
-
+        Thread aliThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 String result = payManager.Pay(BasePayActivity.this, orderInfo,
                         null);
                 // 回调，通知主线程
-                Message msg = new Message();
-                msg.what = PAY_FLAG;
-                msg.obj = result;
-                mHandler.sendMessage(msg);
+                Message _msg = new Message();
+                _msg.what = PAY_FLAG;
+                _msg.obj = result;
+                mHandler.sendMessage(_msg);
             }
         });
-        payThread.start();
+        aliThread.start();
     }
 
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
-
     private void PayWeixin() {
-        if (payManager == null) {
+        if (payManager == null || payManager instanceof AliPay) {
             payManager = PaysFactory.GetInstance(payType);
             // 1.注册appId
             payManager.RegisterApp(BasePayActivity.this, KeyLibs.weixin_appId);
@@ -180,14 +225,14 @@ public abstract class BasePayActivity extends Activity implements BaseView {
      * @param aliPrivateKey    支付宝支付秘钥
      * @param weixinPrivateKey 微信支付秘钥
      */
-    public void RegisterBasePay(String aliPartner, String aliSellerId,
-                                String aliPrivateKey, String weixinAppId, String weixinMchId,
+    public void RegisterBasePay(/*String aliPartner, String aliSellerId,
+                                String aliPrivateKey,*/ String weixinAppId, String weixinMchId,
                                 String weixinPrivateKey) {
-        KeyLibs.ali_partner = aliPartner;
-        KeyLibs.ali_sellerId = aliSellerId;
+//        KeyLibs.ali_partner = aliPartner;
+//        KeyLibs.ali_sellerId = aliSellerId;
+//        KeyLibs.ali_privateKey = aliPrivateKey;
         KeyLibs.weixin_appId = weixinAppId;
         KeyLibs.weixin_mchId = weixinMchId;
-        KeyLibs.ali_privateKey = aliPrivateKey;
         KeyLibs.weixin_privateKey = weixinPrivateKey;
     }
 
@@ -203,6 +248,8 @@ public abstract class BasePayActivity extends Activity implements BaseView {
     protected void onDestroy() {
         if (payManager != null)
             payManager.unRegisterApp();
+        mHandler.removeCallbacksAndMessages(null);
+//        thread.close();
         super.onDestroy();
     }
 }
