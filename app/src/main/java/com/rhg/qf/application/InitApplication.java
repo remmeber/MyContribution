@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.BaseFragmentActivity;
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.utils.AccountUtil;
@@ -103,7 +104,8 @@ public class InitApplication extends Application {
     public void onCreate() {
         initBDMap();
         super.onCreate();
-        refWatcher = LeakCanary.install(this);
+        if (AppConstants.DEBUG)
+            refWatcher = LeakCanary.install(this);
         initApplication = this;
         initAccountUtil();
         initDBHelper();

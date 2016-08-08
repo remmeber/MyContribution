@@ -14,6 +14,7 @@ import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
+import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -88,8 +89,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
         addressBeanList = AddressUtil.getAddressList();
         if (addressBeanList.size() == 0) {
             /*TODO 加一个进度*/
-            String userId = /*AccountUtil.getInstance().getUserID()*/"1";
-            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, userId);
+            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
         }
     }
 
@@ -126,7 +126,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
         srlAddress.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, "1");
+                getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
             }
         });
     }
@@ -134,7 +134,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, "1");
+        getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
         /*if (data == null)
             return;
         AddressUrlBean.AddressBean _addressBean = data.getParcelableExtra(AppConstants.KEY_ADDRESS);
@@ -155,7 +155,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     @Override
     protected void showSuccess(Object s) {
         if (s instanceof String) {
-            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE, "1");
+            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
             return;
         }
         addressBeanList = (List<AddressUrlBean.AddressBean>) s;

@@ -1,10 +1,11 @@
 package com.rhg.qf.impl;
 
 import java.util.Map;
-
 /**
- * 作者：rememberon 2016/6/17
- * 邮箱：1013773046@qq.com
+ *desc:
+ *author：remember 
+ *time：2016/8/8 2:17
+ *email：1013773046@qq.com
  */
 public interface SignInListener {
     public void signSuccess(Map<String, String> infoMap);

@@ -1,10 +1,10 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
@@ -13,10 +13,14 @@ import com.rhg.qf.activity.AddressActivity;
 import com.rhg.qf.activity.DeliverInfoActivity;
 import com.rhg.qf.activity.DeliverOrderActivity;
 import com.rhg.qf.activity.OrderListActivity;
+import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.SignInListener;
+import com.rhg.qf.mvp.presenter.UserSignInPresenter;
+import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.ToastHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
@@ -54,6 +58,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     boolean isSignIn;
     UmengUtil signUtil = null;
+    UserSignInPresenter userSignInPresenter;
+    UserSignUpPresenter userSignUpPresenter;
+    String nickName;
+    String openid;
+    String unionid;
+    String headImageUrl;
 
     @Override
     public int getLayoutResId() {
@@ -88,17 +98,32 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (!isSignIn && AccountUtil.getInstance().hasAccount()) {
+            isSignIn = true;
+            userName.setText(AccountUtil.getInstance().getNickName());
+            ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
+        }
+    }
+
+    @Override
     protected void initData() {
 //        flTAB.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
         if (AccountUtil.getInstance().hasAccount()) {
-            userName.setText("账户存在");
+            userName.setText(AccountUtil.getInstance().getNickName());
+            userName.setClickable(false);
+            ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(),
+                    userHeader);
             isSignIn = true;
-        } else userName.setText("请登录");
+        } else {
+            userName.setText("请登录");
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示
-        userName.setOnClickListener(this);//TODO 如果本地有账户则直接登录，否则需要点击登录
-        userName.setTag(R.id.userName);
+            userName.setOnClickListener(this);//TODO 如果本地有账户则直接登录，否则需要点击登录
+            userName.setTag(R.id.userName);
+        }
 
 
         myInfo.setText(R.string.myOrder);
@@ -164,19 +189,53 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void showSuccess(Object o) {
+        if (o == null) {/*没有登录成功*/
+            ToastHelper.getInstance()._toast("注册");
+            if (userSignUpPresenter == null)
+                userSignUpPresenter = new UserSignUpPresenter(this);
+            userSignUpPresenter.userSignUp(openid, unionid, headImageUrl, nickName);
+        }
+        if (o instanceof String) {
+            ToastHelper.getInstance()._toast((o).toString());
+            if (userSignInPresenter != null)
+                userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT, openid, unionid);
+        }
+        if (o instanceof SignInBackBean.UserInfoBean) {
+            ToastHelper.getInstance()._toast("登录成功");
+            isSignIn = true;
+            SignInBackBean.UserInfoBean _data = (SignInBackBean.UserInfoBean) o;
+            AccountUtil.getInstance().setUserID(_data.getID());
+            AccountUtil.getInstance().setHeadImageUrl(_data.getPic());
+            AccountUtil.getInstance().setPhoneNumber(_data.getPhonenumber());
+            AccountUtil.getInstance().setNickName(nickName);
+            AccountUtil.getInstance().setUserName(_data.getCName());
+            AccountUtil.getInstance().setPwd(_data.getPwd());
+            userName.setText(nickName);
+            ImageLoader.getInstance().displayImage(_data.getPic(), userHeader);
+        }
     }
 
     @Override
     public void onClick(View v) {
-
         Intent intent = new Intent();
         switch ((int) v.getTag()) {
             case R.id.profileInfo://TODO 我的订单右箭头
-                startActivity(new Intent(getContext(), OrderListActivity.class));
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
+                intent.setClass(getContext(), OrderListActivity.class);
+                intent.putExtra(AppConstants.KEY_ORDER_TAG, 0);
+                startActivity(intent);
                 break;
             case R.id.profileWorker://TODO 我是跑腿员右箭头
 //                if (isSignIn)
-                startActivity(new Intent(getContext(), /*DeliverInfoActivity*/DeliverOrderActivity.class));
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
+                intent.setClass(getContext(), /*DeliverInfoActivity*/DeliverOrderActivity.class);
+                startActivity(intent);
                 /*else
                     ToastHelper.getInstance()._toast("请登录");*/
                 break;
@@ -191,13 +250,33 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 doLogin();
                 break;
             case 0://TODO 待付款
-                Toast.makeText(getContext(), R.string.orderUnPaid, Toast.LENGTH_SHORT).show();
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
+                intent.setClass(getContext(), OrderListActivity.class);
+                intent.putExtra(AppConstants.KEY_ORDER_TAG, 0);
+                startActivity(intent);
                 break;
             case 1://TODO  取消
-                Toast.makeText(getContext(), R.string.cancel, Toast.LENGTH_SHORT).show();
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
+                intent.setClass(getContext(), OrderListActivity.class);
+                intent.putExtra(AppConstants.KEY_ORDER_TAG, 1);
+                startActivity(intent);
+
                 break;
-            case 2://TODO
-                Toast.makeText(getContext(), R.string.orderComplete, Toast.LENGTH_SHORT).show();
+            case 2://TODO 已完成
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
+                intent.setClass(getContext(), OrderListActivity.class);
+                intent.putExtra(AppConstants.KEY_ORDER_TAG, 2);
+                startActivity(intent);
+
                 break;
             case 3://TODO 登录
 //                doLogin();
@@ -206,20 +285,31 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                startActivity(new Intent(getContext(), DeliverRegisterActivity.class));
                 break;
             case 5://TODO 修改
-                startActivity(new Intent(getContext(), DeliverInfoActivity.class));
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
+                intent.setClass(getContext(), DeliverInfoActivity.class);
+                startActivity(intent);
                 break;
             case R.id.profileAddress://TODO 我的地址右箭头
+            case 6://TODO 常用
+            case 8://TODO 修改
                 /*获取所有地址*/
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
                 intent.setClass(getActivity(), AddressActivity.class);
                 startActivity(intent);
                 break;
-            case 6://TODO 常用
-                break;
             case 7://TODO 添加
+                if (!isSignIn) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
                 intent.setClass(getActivity(), AddOrNewAddressActivity.class);
                 startActivity(intent);
-                break;
-            case 8://TODO 修改
                 break;
         }
     }
@@ -237,8 +327,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         signUtil.SignIn(SHARE_MEDIA.WEIXIN, new SignInListener() {
             @Override
             public void signSuccess(Map<String, String> infoMap) {
-                userName.setText(infoMap.get(AppConstants.USERNAME_WX));
-                ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_WX), userHeader);
+                openid = infoMap.get(AppConstants.OPENID_WX);
+                unionid = infoMap.get(AppConstants.UNIONID_WX);
+                nickName = infoMap.get(AppConstants.USERNAME_WX);
+                headImageUrl = infoMap.get(AppConstants.PROFILE_IMAGE_WX);
+                if (userSignInPresenter == null)
+                    userSignInPresenter = new UserSignInPresenter(MyFragment.this);
+                userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT,
+                        openid, unionid);
                 /*userName.setText(infoMap.get(AppConstants.USERNAME_QQ));
                 ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_QQ),
                         userHeader);

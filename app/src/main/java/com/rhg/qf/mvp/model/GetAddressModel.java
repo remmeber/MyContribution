@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
+import com.rhg.qf.utils.AccountUtil;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ import rx.functions.Func1;
  */
 public class GetAddressModel {
 
-    public Observable<List<AddressUrlBean.AddressBean>> getAddress(String Table, String userId) {
+    public Observable<List<AddressUrlBean.AddressBean>> getAddress(String Table) {
+        String userId = AccountUtil.getInstance().getUserID();
         return QFoodApiMamager.getInstant().getQFoodApiService().getAddress(Table, userId)
                 .flatMap(new Func1<AddressUrlBean, Observable<List<AddressUrlBean.AddressBean>>>() {
                     @Override
@@ -27,6 +29,7 @@ public class GetAddressModel {
                         return Observable.create(new Observable.OnSubscribe<List<AddressUrlBean.AddressBean>>() {
                             @Override
                             public void call(Subscriber<? super List<AddressUrlBean.AddressBean>> subscriber) {
+                                Log.i("RHG", "RESULT IS :" + addressUrlBean.getMsg());
                                 subscriber.onNext(addressUrlBean.getRows());
                             }
                         });

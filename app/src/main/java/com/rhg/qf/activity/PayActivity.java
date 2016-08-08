@@ -19,6 +19,7 @@ import com.rhg.qf.mvp.presenter.NewOrderPresenter;
 import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
+import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -94,7 +95,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                 AddressUtil.getDefaultAddress().getDetail()*/"江苏省南京市江宁区秣周东路无线谷"
         );
         _orderBean.setFood(getCheckedFood(payList));
-        _orderBean.setClient("19216801");
+        _orderBean.setClient(AccountUtil.getInstance().getUserID());
         _orderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
         return _orderBean;
     }
@@ -164,7 +165,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     ToastHelper.getInstance()._toast("当前未选择商品！");
                     return;
                 }
-
                 Pay(v);
                 /*payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {

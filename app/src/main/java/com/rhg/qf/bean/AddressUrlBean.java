@@ -77,6 +77,13 @@ public class AddressUrlBean {
         public AddressBean() {
         }
 
+        public AddressBean(String name, String phone, String address, String detail) {
+            Name = name;
+            Phone = phone;
+            Address = address;
+            Detail = detail;
+        }
+
         public AddressBean(Parcel source) {
             ID = source.readString();
             Client = source.readString();

@@ -11,7 +11,7 @@ import com.rhg.qf.R;
  * email：1013773046@qq.com
  */
 public class AppConstants {
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final String f_Path = Environment.getExternalStorageDirectory() + "/QFood";
 
     public static final String[] images = {
@@ -42,6 +42,7 @@ public class AppConstants {
     public static final String SP_USER_ID = "user_id";
     public static final String SP_USER_NAME = "user_name";
     public static final String SP_PASSWORD = "password";
+    public static final String SP_NICKNAME = "nickname";
     /*SP KEY*/
     /**
      * 页面调起/销毁标志
@@ -55,6 +56,8 @@ public class AppConstants {
 
     /*signin*/
     public static final String USERNAME_WX = "nickname";
+    public static final String UNIONID_WX = "unionid";
+    public static final String OPENID_WX = "openid";
     public static final String PROFILE_IMAGE_WX = "headimgurl";
     /*signin*/
 
@@ -83,7 +86,6 @@ public class AppConstants {
     public static final String KEY_PARCELABLE = "parcelable";
     public static final int KEY_RESTAURANT_SEARCH = 30;// TODO: 首页和商家页面搜索餐厅的KEY
     public static final int KEY_HOTFOOD_SEARCH = 31;// TODO: 热销商品搜索的KEY
-    public static final int KEY_BACK_2_SHOPPING_CART = 3;// TODO: 跳转到购物车的KEY
 
 
     /*for headImage*/
@@ -128,6 +130,7 @@ public class AppConstants {
     /*后台交互信息*/
     public static final String TABLE_CLIENT = "client";
     public static final String TABLE_FOODMESSAGE = "foodmessage";
+    public static final String TABLE_DEFAULT_ADDRESS = "defaultaddress";
     public static final String TABLE_FOOD = "food";
     public static final String RESTAURANTS = "restaurants";
     public static final String HOME_RESTAURANTS = "headrestaurants";

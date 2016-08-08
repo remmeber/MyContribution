@@ -1,8 +1,11 @@
 package com.rhg.qf.mvp.model;
 
+import android.util.Log;
+
 import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
+import com.rhg.qf.utils.AccountUtil;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -16,15 +19,15 @@ import rx.functions.Func1;
  */
 public class AddressModel {
     public Observable<String> addOrUpdateAddress(String addressId, String user,
-                                                 String phone, String address,
+                                                 String phone, final String address,
                                                  String detail, String opt) {
-        String userName = "19216801";
-        String pwd = "123";
+        String userName = AccountUtil.getInstance().getUserName();
+        String pwd = AccountUtil.getInstance().getPwd();
         Observable<BaseBean> _address;
-        if (addressId == null)/*添加地址*/
+        if (addressId == null)/*添加地址*/ {
             _address = QFoodApiMamager.getInstant().getQFoodApiService().addAddress(userName, pwd,
                     user, phone, address, detail);
-        else if (user == null) {/*删除地址*/
+        } else if (user == null) {/*删除地址*/
             if ("0".equals(opt))
                 _address = QFoodApiMamager.getInstant().getQFoodApiService().changeAddress(AppConstants.DELETE_ADDRESS,
                         addressId);
@@ -33,13 +36,14 @@ public class AddressModel {
                         addressId);
         } else/*修改地址*/
             _address = QFoodApiMamager.getInstant().getQFoodApiService().updateAddress(userName, addressId,
-                    user, phone, address, pwd);
+                    user, phone, address.concat(detail), pwd);
         return _address.flatMap(new Func1<BaseBean, Observable<String>>() {
             @Override
             public Observable<String> call(final BaseBean baseBean) {
                 return Observable.create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
+                        Log.i("RHG", "result = " + baseBean.getResult());
                         if (baseBean.getResult() == 0)
                             subscriber.onNext("success");
                     }

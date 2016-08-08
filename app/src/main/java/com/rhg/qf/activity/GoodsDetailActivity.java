@@ -13,24 +13,33 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BannerImageHolder;
 import com.rhg.qf.application.InitApplication;
+import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.GoodsDetailUrlBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.bean.ShareModel;
+import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.datebase.AccountDao;
 import com.rhg.qf.impl.ShareListener;
+import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
+import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.mvp.presenter.GoodsDetailPresenter;
+import com.rhg.qf.mvp.presenter.UserSignInPresenter;
+import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.ShoppingCartWithNumber;
+import com.rhg.qf.widget.UIAlertView;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -77,18 +86,26 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     private MyLocationListener myLocationListener;
     private String price;
     String image;
+    UserSignInPresenter userSignInPresenter;
+    UserSignUpPresenter userSignUpPresenter;
+    GetAddressPresenter getAddressPresenter;
+    private UmengUtil signUtil;
+    String nickName;
+    String openid;
+    String unionid;
+    String headImageUrl;
+    AddressUrlBean.AddressBean addressBean;
 
 
     public GoodsDetailActivity() {
         goodsDetailPresenter = new GoodsDetailPresenter(this);
         myLocationListener = new MyLocationListener(this);
-        /*TODO 页面销毁需要置空，否则会出现内存泄漏*/
         location = AccountUtil.getInstance().getLocation();
         if (TextUtils.isEmpty(location)) {
             isNeedLoc = true;
         }
 
-        /*//TODO 测试数据
+        /*
         LikeDao likeDao = LikeDao.getInstance();
         likeDao.saveGoodsLikeInfo("20160518", 1).saveGoodsLikeInfo("20160519", 1)
                 .saveGoodsLikeInfo("20160520", 1);
@@ -121,7 +138,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
 
     @Override
     public void loadingData() {
-        goodsDetailPresenter.getGoodsInfo("foodmessage", foodId);
+        goodsDetailPresenter.getGoodsInfo(AppConstants.TABLE_FOODMESSAGE, foodId);
     }
 
     @Override
@@ -132,11 +149,10 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     }
 
 
-    //todo Intent 传递接收的数据
     @Override
     public void dataReceive(Intent intent) {
         if (intent != null) {
-            foodId = intent.getStringExtra(AppConstants.KEY_PRODUCT_ID);
+            foodId = "1"/*intent.getStringExtra(AppConstants.KEY_PRODUCT_ID)*/;
 //            merchantName = bundle.getString(AppConstants.KEY_PRODUCT_NAME, null);
 //            merchantSrc = bundle.getString(AppConstants.KEY_PRODUCT_PRICE, null);
         }
@@ -154,7 +170,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     }
 
 
-    //todo 对本地数据进行绑定
     @Override
     protected void initData() {
 //        goodsDetailPresenter.getGoodsInfo();
@@ -190,13 +205,87 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
 
     }
 
-    //todo 从服务器获得的数据
     @Override
-    protected void showSuccess(Object s) {
-        GoodsDetailUrlBean.GoodsDetailBean _bean = (GoodsDetailUrlBean.GoodsDetailBean) s;
-        bindData(_bean);
-        if (commonRefresh.getVisibility() == View.VISIBLE)
-            commonRefresh.setVisibility(View.GONE);
+    protected void showSuccess(Object o) {
+        if (o instanceof GoodsDetailUrlBean.GoodsDetailBean) {
+            GoodsDetailUrlBean.GoodsDetailBean _bean = (GoodsDetailUrlBean.GoodsDetailBean) o;
+            bindData(_bean);
+            if (commonRefresh.getVisibility() == View.VISIBLE)
+                commonRefresh.setVisibility(View.GONE);
+            return;
+        }
+        if (o == null) {/*没有登录成功*/
+            ToastHelper.getInstance()._toast("注册");
+            if (userSignUpPresenter == null)
+                userSignUpPresenter = new UserSignUpPresenter(this);
+            userSignUpPresenter.userSignUp(openid, unionid, headImageUrl, nickName);
+            return;
+        }
+        if (o instanceof String) {
+            ToastHelper.getInstance()._toast((o).toString());
+            if (userSignInPresenter != null)
+                userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT, openid, unionid);
+            return;
+        }
+        if (o instanceof SignInBackBean.UserInfoBean) {
+            ToastHelper.getInstance()._toast("登录成功");
+            SignInBackBean.UserInfoBean _data = (SignInBackBean.UserInfoBean) o;
+            AccountUtil.getInstance().setUserID(_data.getID());
+            AccountUtil.getInstance().setHeadImageUrl(_data.getPic());
+            AccountUtil.getInstance().setPhoneNumber(_data.getPhonenumber());
+            AccountUtil.getInstance().setUserName(_data.getCName());
+            AccountUtil.getInstance().setNickName(nickName);
+            AccountUtil.getInstance().setPwd(_data.getPwd());
+            if (getAddressPresenter == null)
+                getAddressPresenter = new GetAddressPresenter(this);
+            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
+            return;
+        }
+        if (o instanceof AddressUrlBean.AddressBean) {
+            addressBean = (AddressUrlBean.AddressBean) o;
+            createOrderAndToPay(addressBean);
+        }
+        if (addressBean == null)
+            startActivityForResult(new Intent(this, AddOrNewAddressActivity.class), 0);
+
+    }
+
+    private void createOrderAndToPay(AddressUrlBean.AddressBean addressBean) {
+        Intent intent = new Intent(GoodsDetailActivity.this,
+                PayActivity.class);
+        PayModel payModel = new PayModel();
+        payModel.setReceiver(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
+                addressBean.getName()));
+        payModel.setPhone(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
+                addressBean.getPhone()));
+        payModel.setAddress(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
+                addressBean.getAddress().concat(addressBean.getDetail())));
+        ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
+        PayModel.PayBean _pay = new PayModel.PayBean();
+        _pay.setProductName(tvGoodsName.getText().toString());
+        _pay.setChecked(true);
+        _pay.setProductId(foodId);
+        _pay.setProductNumber(tvNum.getText().toString());
+        _pay.setProductPic(image);
+        _pay.setProductPrice(price);
+        payBeen.add(_pay);
+        payModel.setPayBeanList(payBeen);
+        intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) {
+            if (data == null) {
+                ToastHelper.getInstance().displayToastWithQuickClose("未能生成订单");
+            } else {
+                addressBean = data.getParcelableExtra("return");
+                createOrderAndToPay(addressBean);
+            }
+        }
+
     }
 
     @Override
@@ -290,58 +379,70 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                     ToastHelper.getInstance().displayToastWithQuickClose("未选择商品数量");
                     return;
                 }
-                Intent intent = new Intent(GoodsDetailActivity.this,
-                        PayActivity.class);
-                PayModel payModel = new PayModel();
-                payModel.setReceiver("阮湖岗");
-                payModel.setPhone("111111111");
-                payModel.setAddress("江苏省南京市江宁区东南大学");
-                ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
-                PayModel.PayBean _pay = new PayModel.PayBean();
-                _pay.setProductName(tvGoodsName.getText().toString());
-                _pay.setChecked(true);
-                _pay.setProductId("1");
-                _pay.setProductNumber(tvNum.getText().toString());
-                _pay.setProductPic(image);
-                _pay.setProductPrice(price);
-                payBeen.add(_pay);
-                payModel.setPayBeanList(payBeen);
-                intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
-                startActivity(intent);
+                if (!AccountUtil.getInstance().hasAccount()) {
+                    signInDialogShow("当前用户未登录，请登录！");
+                } else {
+                    /*todo 调用获取默认地址接口*/
+                    if (getAddressPresenter == null)
+                        getAddressPresenter = new GetAddressPresenter(this);
+                    getAddressPresenter.getAddress(AppConstants.TABLE_DEFAULT_ADDRESS);
+                }
                 break;
         }
     }
 
-    /*private void dialogShow() {
-        final UIAlertView delDialog = new UIAlertView(this, "温馨提示", "加入购物车成功!",
-                "继续购买", "前往购物车");
+    private void signInDialogShow(String content) {
+        final UIAlertView delDialog = new UIAlertView(this, "温馨提示", content,
+                "加入购物车", "登录并购买");
         delDialog.show();
         delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
                                        @Override
                                        public void doLeft() {
-                                           tvNum.setText(String.valueOf(Integer.parseInt(tvNum.getText().toString()) + 1));
-
                                            delDialog.dismiss();
                                        }
 
                                        @Override
                                        public void doRight() {
-                                           setResult(AppConstants.BACK_WITH_DELETE, new Intent().putExtra(
-                                                   AppConstants.KEY_DELETE,
-                                                   AppConstants.KEY_BACK_2_SHOPPING_CART
-                                           ));
-                                           finish();
+                                           doLogin();
                                            delDialog.dismiss();
                                        }
                                    }
         );
-    }*/
+    }
 
     @Override
     public void onBackPressed() {
         bundle = null;
         setResult(AppConstants.BACK_WITHOUT_DATA);
         super.onBackPressed();
+    }
+
+    /*TODO 登录*/
+    private void doLogin() {
+        if (signUtil == null)
+            signUtil = new UmengUtil(this);
+        signUtil.SignIn(SHARE_MEDIA.WEIXIN, new SignInListener() {
+            @Override
+            public void signSuccess(Map<String, String> infoMap) {
+                openid = infoMap.get(AppConstants.OPENID_WX);
+                unionid = infoMap.get(AppConstants.UNIONID_WX);
+                nickName = infoMap.get(AppConstants.USERNAME_WX);
+                headImageUrl = infoMap.get(AppConstants.PROFILE_IMAGE_WX);
+                if (userSignInPresenter == null)
+                    userSignInPresenter = new UserSignInPresenter(GoodsDetailActivity.this);
+                userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT,
+                        openid, unionid);
+                /*userName.setText(infoMap.get(AppConstants.USERNAME_QQ));
+                ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_QQ),
+                        userHeader);
+                signUtil.setActivity(null);*/
+            }
+
+            @Override
+            public void signFail(String errorMessage) {
+//                ToastHelper.getInstance()._toast(errorMessage);
+            }
+        });
     }
 
     @Override

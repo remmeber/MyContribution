@@ -15,6 +15,7 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.DeliverOrderPresenter;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
+import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -59,7 +60,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     public void loadingData() {
         commonRefresh.setVisibility(View.VISIBLE);
         getDeliverOrder = new DeliverOrderPresenter(this);
-        getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, "1");
+        getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, AccountUtil.getInstance().getUserID());
     }
 
     @Override
@@ -80,8 +81,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, "19216801");
+                getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, AccountUtil.getInstance().getUserID());
             }
         });
     }

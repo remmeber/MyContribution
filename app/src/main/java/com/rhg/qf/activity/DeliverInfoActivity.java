@@ -83,7 +83,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
         tb_common.setBackgroundResource(R.color.colorGreenNormal);
         tbRightTv.setText(getResources().getString(R.string.tvEdit));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        etNameWrap.setHint("真实姓名");
+        etNameWrap.setHint(AccountUtil.getInstance().getUserName());
         etNameWrap.setError("");
         etIdWrap.setHint("身份证号");
         etPhoneWrap.setHint("手机号");
