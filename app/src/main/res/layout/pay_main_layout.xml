@@ -5,11 +5,5 @@
 
 
     <include layout="@layout/pay_dialog_layout" />
-    <!--
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.rhg.outsourcing.fragment.PayFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />-->
 
 </LinearLayout>

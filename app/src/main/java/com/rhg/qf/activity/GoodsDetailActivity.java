@@ -3,6 +3,7 @@ package com.rhg.qf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -215,14 +216,13 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             return;
         }
         if (o == null) {/*没有登录成功*/
-            ToastHelper.getInstance()._toast("注册");
+            Log.i("RHG", "注册");
             if (userSignUpPresenter == null)
                 userSignUpPresenter = new UserSignUpPresenter(this);
             userSignUpPresenter.userSignUp(openid, unionid, headImageUrl, nickName);
             return;
         }
-        if (o instanceof String) {
-            ToastHelper.getInstance()._toast((o).toString());
+        if (o instanceof String && "success".equals(o)) {
             if (userSignInPresenter != null)
                 userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT, openid, unionid);
             return;
@@ -250,29 +250,11 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
 
     }
 
-    private void createOrderAndToPay(AddressUrlBean.AddressBean addressBean) {
-        Intent intent = new Intent(GoodsDetailActivity.this,
-                PayActivity.class);
-        PayModel payModel = new PayModel();
-        payModel.setReceiver(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
-                addressBean.getName()));
-        payModel.setPhone(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
-                addressBean.getPhone()));
-        payModel.setAddress(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
-                addressBean.getAddress().concat(addressBean.getDetail())));
-        ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
-        PayModel.PayBean _pay = new PayModel.PayBean();
-        _pay.setProductName(tvGoodsName.getText().toString());
-        _pay.setChecked(true);
-        _pay.setProductId(foodId);
-        _pay.setProductNumber(tvNum.getText().toString());
-        _pay.setProductPic(image);
-        _pay.setProductPrice(price);
-        payBeen.add(_pay);
-        payModel.setPayBeanList(payBeen);
-        intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
-        startActivity(intent);
+    @Override
+    protected void showError(Object s) {
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -288,10 +270,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
 
     }
 
-    @Override
-    protected void showError(Object s) {
-
-    }
 
     private void bindData(GoodsDetailUrlBean.GoodsDetailBean _bean) {
         image = _bean.getPicsrc().get(0);
@@ -410,12 +388,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         );
     }
 
-    @Override
-    public void onBackPressed() {
-        bundle = null;
-        setResult(AppConstants.BACK_WITHOUT_DATA);
-        super.onBackPressed();
-    }
 
     /*TODO 登录*/
     private void doLogin() {
@@ -432,10 +404,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                     userSignInPresenter = new UserSignInPresenter(GoodsDetailActivity.this);
                 userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT,
                         openid, unionid);
-                /*userName.setText(infoMap.get(AppConstants.USERNAME_QQ));
-                ImageLoader.getInstance().displayImage(infoMap.get(AppConstants.PROFILE_IMAGE_QQ),
-                        userHeader);
-                signUtil.setActivity(null);*/
             }
 
             @Override
@@ -445,9 +413,35 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         });
     }
 
+    private void createOrderAndToPay(AddressUrlBean.AddressBean addressBean) {
+        Intent intent = new Intent(GoodsDetailActivity.this,
+                PayActivity.class);
+        PayModel payModel = new PayModel();
+        payModel.setReceiver(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
+                addressBean.getName()));
+        payModel.setPhone(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
+                addressBean.getPhone()));
+        payModel.setAddress(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
+                addressBean.getAddress().concat(addressBean.getDetail())));
+        ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
+        PayModel.PayBean _pay = new PayModel.PayBean();
+        _pay.setProductName(tvGoodsName.getText().toString());
+        _pay.setChecked(true);
+        _pay.setProductId(foodId);
+        _pay.setProductNumber(tvNum.getText().toString());
+        _pay.setProductPic(image);
+        _pay.setProductPrice(price);
+        payBeen.add(_pay);
+        payModel.setPayBeanList(payBeen);
+        intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
+        startActivity(intent);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onBackPressed() {
+        bundle = null;
+        setResult(AppConstants.BACK_WITHOUT_DATA);
+        super.onBackPressed();
     }
 
     @Override

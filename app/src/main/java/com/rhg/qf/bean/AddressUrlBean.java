@@ -150,6 +150,19 @@ public class AddressUrlBean {
             Detail = detail;
         }
 
+        @Override
+        public String toString() {
+            return "AddressBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Client='" + Client + '\'' +
+                    ", Name='" + Name + '\'' +
+                    ", Phone='" + Phone + '\'' +
+                    ", Address='" + Address + '\'' +
+                    ", Default='" + Default + '\'' +
+                    ", Detail='" + Detail + '\'' +
+                    '}';
+        }
+
         public static final Parcelable.Creator<AddressBean> CREATOR = new Creator<AddressBean>() {
             @Override
             public AddressBean createFromParcel(Parcel source) {

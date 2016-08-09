@@ -2,7 +2,6 @@ package com.rhg.qf.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 
 import com.rhg.qf.R;
@@ -44,6 +43,10 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
         shopDetailPresenter = new ShopDetailPresenter(this);
     }
 
+    @Override
+    public void receiveData(Bundle arguments) {
+        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
+    }
 
     @Override
     public void loadData() {
@@ -81,11 +84,6 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
 
 
     @Override
-    public void receiveData(Bundle arguments) {
-        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
-    }
-
-    @Override
     protected void showFailed() {
     }
 
@@ -120,6 +118,7 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
 
     }
 
+    /*页面刷新调用*/
     @Override
     public void load() {
         shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);

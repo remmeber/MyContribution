@@ -3,6 +3,14 @@ package com.rhg.qf.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+
+import com.rhg.qf.constants.AppConstants;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 
 /**
  * desc:网络请求工具
@@ -11,6 +19,7 @@ import android.net.NetworkInfo;
  * email：1013773046@qq.com
  */
 public class NetUtil {
+
     public static boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE
@@ -23,5 +32,28 @@ public class NetUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * 用来获取手机拨号上网（包括CTWAP和CTNET）时由PDSN分配给手机终端的源IP地址。
+     *
+     * @return ipv4 address
+     */
+    public static String getPsdnIp() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                        //if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet6Address) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (Exception e) {
+                Log.i("RHG", e.getMessage());
+        }
+        return "";
     }
 }

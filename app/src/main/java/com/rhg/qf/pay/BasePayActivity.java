@@ -20,7 +20,7 @@ import com.rhg.qf.pay.pays.wx.WxPay;
 
 import java.lang.ref.WeakReference;
 
-public abstract class BasePayActivity extends Activity implements BaseView {
+public abstract class BasePayActivity extends Activity{
 
     private static final int PAY_FLAG = 1;
     private static final int PAY_ALI = 2;
@@ -141,13 +141,13 @@ public abstract class BasePayActivity extends Activity implements BaseView {
     }
 
     private void PayAli() {
-
         // 构造支付对象，调用支付接口，获取支付结果
         if (payManager == null || payManager instanceof WxPay) {
             if (payManager != null)
                 payManager.unRegisterApp();
             payManager = PaysFactory.GetInstance(payType);
         }
+        Log.i("RHG", "AliPay is done");
 
         // 1.开发者统一传入订单相关参数，生成规范化的订单（支付宝支付第一步；微信支付第二步）
         // ------调用重写方法
@@ -218,11 +218,8 @@ public abstract class BasePayActivity extends Activity implements BaseView {
     /**
      * 初始化支付信息。支付前必须被调用
      *
-     * @param aliPartner       签约的支付宝账号对应的支付宝唯一用户号。以2088开头的16位纯数字组成。
-     * @param aliSellerId      卖家支付宝账号（邮箱或手机号码格式）或其对应的支付宝唯一用户号（以2088开头的纯16位数字）。
      * @param weixinAppId      微信平台申请到的AppID
      * @param weixinMchId      微信平台申请到的商户号
-     * @param aliPrivateKey    支付宝支付秘钥
      * @param weixinPrivateKey 微信支付秘钥
      */
     public void RegisterBasePay(/*String aliPartner, String aliSellerId,

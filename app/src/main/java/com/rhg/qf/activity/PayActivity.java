@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,20 +17,18 @@ import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.NewOrderPresenter;
+import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,7 +41,8 @@ import butterknife.OnClick;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class PayActivity extends BasePayActivity implements PayItemAdapter.PayItemClickListener {
+public class PayActivity extends BasePayActivity implements PayItemAdapter.PayItemClickListener,
+        BaseView {
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -68,32 +68,35 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     NewOrderBean newOrderBean;
     private PayItemAdapter payItemAdapter;
     NewOrderPresenter createOrderPresenter;
+    String ipv4;
+    String tradeNumber;
 
 
     @Override
     protected OrderInfo OnOrderCreate() {
-        newOrderBean = generateOrder();
-        if (createOrderPresenter == null)
-            createOrderPresenter = new NewOrderPresenter(this);
-        createOrderPresenter.createNewOrder(newOrderBean);
+        ipv4 = NetUtil.getPsdnIp();
         if (PayType.WeixinPay.equals(payType)) {
-            return BuildOrderInfo("微信支付", "90m", "www.baidu.com", "19919919191", "黄焖鸡米饭支付", "100",
-                    "10.129.216.53");
+            return BuildOrderInfo("微信支付", "30m", "www.baidu.com",
+                    getOutTradeNo(),
+                    getItemsName(payList),
+                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    ipv4);
         }
         if (PayType.AliPay.equals(payType)) {
-            return BuildOrderInfo("支付宝支付", "30m", "http://notify.msp.hk/notify.htm", getOutTradeNo(), "黄焖鸡米饭支付", "0.01",
-                    "10.129.216.53");
+            return BuildOrderInfo("支付宝支付", "30m", "http://notify.msp.hk/notify.htm",
+                    getOutTradeNo(),
+                    getItemsName(payList),
+                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    ipv4);
         }
         return null;
     }
 
     private NewOrderBean generateOrder() {
         NewOrderBean _orderBean = new NewOrderBean();
-        _orderBean.setReceiver(/*AddressUtil.getDefaultAddress().getName()*/"阮湖岗");
-        _orderBean.setPhone(/*AddressUtil.getDefaultAddress().getPhone()*/"15261898929");
-        _orderBean.setAddress(/*AddressUtil.getDefaultAddress().getAddress().concat(
-                AddressUtil.getDefaultAddress().getDetail()*/"江苏省南京市江宁区秣周东路无线谷"
-        );
+        _orderBean.setReceiver(tvReceiver.getText().toString());
+        _orderBean.setPhone(tvReceiverPhone.getText().toString());
+        _orderBean.setAddress(tvReceiverAddress.getText().toString());
         _orderBean.setFood(getCheckedFood(payList));
         _orderBean.setClient(AccountUtil.getInstance().getUserID());
         _orderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
@@ -128,13 +131,15 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
 
-        RegisterBasePay(/*KeyLibs.ali_partner, KeyLibs.ali_sellerId, KeyLibs.ali_privateKey,*/ InitApplication.WXID, "10000100", null);
+        RegisterBasePay(/*KeyLibs.ali_partner, KeyLibs.ali_sellerId, KeyLibs.ali_privateKey,*/
+                InitApplication.WXID, "10000100", null);
 //        BuildOrderInfo()
     }
 
+    /*支付成功的回调*/
     @Override
     protected void showSuccess(String s) {
-        ToastHelper.getInstance()._toast((String) s);
+        ToastHelper.getInstance()._toast(s);
     }
 
     @Override
@@ -165,7 +170,10 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     ToastHelper.getInstance()._toast("当前未选择商品！");
                     return;
                 }
-                Pay(v);
+                newOrderBean = generateOrder();
+                if (createOrderPresenter == null)
+                    createOrderPresenter = new NewOrderPresenter(this);
+                createOrderPresenter.createNewOrder(newOrderBean);
                 /*payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {
                     PayContentBean payContentBean = new PayContentBean();
@@ -226,11 +234,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
 
     @Override
     public void onPayItemClick(int position) {
@@ -272,24 +275,44 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         return count;
     }
 
+    private String getItemsName(List<PayModel.PayBean> payList) {
+        String concatName = "";
+        for (PayModel.PayBean _payBean : payList) {
+            concatName = concatName.concat(_payBean.getProductName());
+        }
+        return concatName;
+    }
+
     @Override
     public void showData(Object o) {
-        if (o instanceof String) {
-            ToastHelper.getInstance()._toast((String) o);
-        }
+        if (o instanceof String)
+            if (!"error".equals(o)) {
+                tradeNumber = (String) o;
+                Log.i("RHG", "tradeNumber is :" + tradeNumber);
+                Pay(null);
+            } else
+                ToastHelper.getInstance()._toast((String) o);
+
     }
 
     /**
      * get the out_trade_no for an order. 生成商户订单号，该值在商户端应保持唯一（可自定义格式规范）
      */
     private String getOutTradeNo() {
-        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+        /*SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
         Date date = new Date();
         String key = format.format(date);
 
         Random r = new Random();
         key = key + r.nextInt();
         key = key.substring(0, 15);
-        return key;
+        return key;*/
+        return tradeNumber;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

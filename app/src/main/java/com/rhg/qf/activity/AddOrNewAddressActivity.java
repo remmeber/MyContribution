@@ -101,11 +101,12 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     protected void showSuccess(Object s) {
 //        setResult(resultCode, new Intent().putExtra(AppConstants.KEY_ADDRESS, addressBean));
         Intent intent = new Intent();
-        intent.putExtra("return", new AddressUrlBean.AddressBean(addNewAddressContactPersonContent.getText().toString(),
+        intent.putExtra("return", new AddressUrlBean.AddressBean(
+                addNewAddressContactPersonContent.getText().toString(),
                 addNewAddressContactsContent.getText().toString(),
                 addNewAddressContactAddressContent.getText().toString(),
                 addNewAddressContentDetail.getText().toString()));
-        setResult(resultCode, intent);/*不需要做任何事情*/
+        setResult(0, intent);/*不需要做任何事情*/
         finish();
     }
 
