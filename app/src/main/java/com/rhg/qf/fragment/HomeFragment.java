@@ -146,7 +146,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
             }
         });
-
     }
 
     @Override
