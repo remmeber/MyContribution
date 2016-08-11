@@ -1,6 +1,6 @@
 package com.rhg.qf.mvp.presenter;
 
-import com.rhg.qf.mvp.model.DIYOrderModel;
+import com.rhg.qf.mvp.model.UserSignUpModel;
 import com.rhg.qf.mvp.view.BaseView;
 
 import rx.Observer;
@@ -8,22 +8,22 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * desc:
+ * desc:用户注册Presenter
  * author：remember
- * time：2016/7/11 2:11
+ * time：2016/8/8 0:55
  * email：1013773046@qq.com
  */
-public class DIYOrderPresenter {
-    BaseView diyOrderView;
-    DIYOrderModel commitDIYOrderModel;
+public class UserSignUpPresenter {
+    BaseView userSignUpView;
+    UserSignUpModel userSignUpModel;
 
-    public DIYOrderPresenter(BaseView diyOrderView) {
-        this.diyOrderView = diyOrderView;
-        commitDIYOrderModel = new DIYOrderModel();
+    public UserSignUpPresenter(BaseView userSignUpView) {
+        this.userSignUpView = userSignUpView;
+        userSignUpModel = new UserSignUpModel();
     }
 
-    public void commitDIYOrder(String content) {
-        commitDIYOrderModel.commitDIYOrder( content).observeOn(AndroidSchedulers.mainThread())
+    public void userSignUp(String openid, String unionid, String headimageurl, String nickName) {
+        userSignUpModel.userSignUp(openid, unionid, headimageurl,nickName).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override
@@ -38,7 +38,7 @@ public class DIYOrderPresenter {
 
                     @Override
                     public void onNext(String s) {
-                        diyOrderView.showData(s);
+                        userSignUpView.showData(s);
                     }
                 });
     }

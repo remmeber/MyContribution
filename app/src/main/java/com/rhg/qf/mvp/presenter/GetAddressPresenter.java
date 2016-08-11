@@ -25,8 +25,8 @@ public class GetAddressPresenter {
         getAddressModel = new GetAddressModel();
     }
 
-    public void getAddress(String Table, String userId) {
-        getAddressModel.getAddress(Table, userId).observeOn(AndroidSchedulers.mainThread())
+    public void getAddress(String Table) {
+        getAddressModel.getAddress(Table).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<AddressUrlBean.AddressBean>>() {
                     @Override
@@ -41,7 +41,10 @@ public class GetAddressPresenter {
 
                     @Override
                     public void onNext(List<AddressUrlBean.AddressBean> addressBeen) {
-                        baseView.showData(addressBeen);
+                        if (addressBeen.size() == 1)
+                            baseView.showData(addressBeen.get(0));
+                        else
+                            baseView.showData(addressBeen);
                     }
                 });
     }

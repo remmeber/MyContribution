@@ -6,7 +6,7 @@ import java.util.List;
  * 作者：rememberon 2016/6/4
  * 邮箱：1013773046@qq.com
  */
-public class SignInBean {
+public class SignInBackBean {
 
     /**
      * total : 1
@@ -24,6 +24,13 @@ public class SignInBean {
      */
 
     private List<UserInfoBean> rows;
+    /**
+     * result : 0
+     * msg : 请求成功
+     */
+
+    private int result;
+    private String msg;
 
     public int getTotal() {
         return total;
@@ -39,6 +46,22 @@ public class SignInBean {
 
     public void setRows(List<UserInfoBean> rows) {
         this.rows = rows;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public static class UserInfoBean {

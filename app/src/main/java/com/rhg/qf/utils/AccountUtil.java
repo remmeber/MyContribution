@@ -92,6 +92,14 @@ public class AccountUtil {
         putStringByKey(AppConstants.SP_USER_NAME, userName);
     }
 
+    public void setPwd(String pwd) {
+        putStringByKey(AppConstants.SP_PASSWORD, pwd);
+    }
+
+    public String getPwd() {
+        return getStringByKey(AppConstants.SP_PASSWORD);
+    }
+
     public String getPhoneNumber() {
         return getStringByKey(AppConstants.KEY_OR_SP_PHONE);
     }
@@ -130,5 +138,13 @@ public class AccountUtil {
 
     public void setLongitude(String s) {
         putStringByKey(AppConstants.SP_LONGITUDE, s);
+    }
+
+    public void setNickName(String nickName) {
+        putStringByKey(AppConstants.SP_NICKNAME, nickName);
+    }
+
+    public String getNickName() {
+        return getStringByKey(AppConstants.SP_NICKNAME);
     }
 }

@@ -78,43 +78,6 @@ public class SellerFragment extends BaseFragment {
         sellerViewPager.setAdapter(qFoodVpAdapter);
         sellerViewPager.setOffscreenPageLimit(2);
         allSellerTl.setViewPager(sellerViewPager);
-        /*qFoodVpAdapter.setOnExtraPageChangeListener(new QFoodVpAdapter.OnExtraPageChangeListener() {
-            @Override
-            public void onExtraPageScrolled(int i, float v, int i2) {
-            }
-
-            @Override
-            public void onExtraPageSelected(int currentPage, int lastPage) {
-                switch (currentPage) {
-                    case 0:
-                        ((BySellNumberFm) fragments.get(currentPage)).setContext(getContext());
-                        ((ByDistanceFm) fragments.get(1)).setContext(null);
-                        ((ByRateFm) fragments.get(2)).setContext(null);
-                        break;
-                    case 1:
-                        ((BySellNumberFm) fragments.get(0)).setContext(null);
-                        ((ByDistanceFm) fragments.get(currentPage)).setContext(getContext());
-                        ((ByRateFm) fragments.get(2)).setContext(null);
-                        break;
-                    case 2:
-                        ((BySellNumberFm) fragments.get(0)).setContext(null);
-                        ((ByDistanceFm) fragments.get(1)).setContext(null);
-                        ((ByRateFm) fragments.get(currentPage)).setContext(getContext());
-                        break;
-                }
-            }
-
-            @Override
-            public void onExtraPageScrollStateChanged(int i) {
-
-            }
-        });
-*/
-        sellerViewPager.setAdapter(qFoodVpAdapter);
-        sellerViewPager.setOffscreenPageLimit(3);
-        allSellerTl.setViewPager(sellerViewPager);
-        /*viewPager.setAdapter(qFoodVpAdapter);
-        tabLayout.setViewPager(viewPager);*/
     }
 
     @Override

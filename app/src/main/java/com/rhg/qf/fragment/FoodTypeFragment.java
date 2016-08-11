@@ -68,7 +68,6 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
 
     @Override
     protected void initData() {
-        Log.i("RHG", "INIT");
         if (shopDetailBeanList == null)
             shopDetailBeanList = new ArrayList<>();
         /*for (int i = 0; i < 4; i++) {

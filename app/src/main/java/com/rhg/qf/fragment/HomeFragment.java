@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -147,7 +146,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
             }
         });
-
     }
 
     @Override
@@ -238,6 +236,10 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 doSearch();
                 break;
             case R.id.home_tl_right_ll:
+                if (!AccountUtil.getInstance().hasAccount()) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }
                 startActivity(new Intent(getContext(), DIYOrderActivity.class));
                 break;
         }

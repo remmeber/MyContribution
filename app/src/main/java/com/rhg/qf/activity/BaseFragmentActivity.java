@@ -175,8 +175,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);
-        RefWatcher refWatcher = InitApplication.getRefWatcher(this);
-        refWatcher.watch(this);
+        if (AppConstants.DEBUG) {
+            RefWatcher refWatcher = InitApplication.getRefWatcher(this);
+            refWatcher.watch(this);
+        }
     }
 
     /*BroadcastReceiver receiver = new BroadcastReceiver() {

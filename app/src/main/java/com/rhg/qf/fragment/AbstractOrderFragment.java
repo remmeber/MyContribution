@@ -14,6 +14,7 @@ import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.OrdersPresenter;
+import com.rhg.qf.utils.AccountUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
 
     public AbstractOrderFragment() {
         getOrdersPresenter = new OrdersPresenter(this);
-        userId = "19216801";/*从数据库中获取*/
+        userId = AccountUtil.getInstance().getUserID();/*从数据库中获取*/
         style = getFmTag();
     }
 

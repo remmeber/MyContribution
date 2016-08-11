@@ -77,6 +77,13 @@ public class AddressUrlBean {
         public AddressBean() {
         }
 
+        public AddressBean(String name, String phone, String address, String detail) {
+            Name = name;
+            Phone = phone;
+            Address = address;
+            Detail = detail;
+        }
+
         public AddressBean(Parcel source) {
             ID = source.readString();
             Client = source.readString();
@@ -141,6 +148,19 @@ public class AddressUrlBean {
 
         public void setDetail(String detail) {
             Detail = detail;
+        }
+
+        @Override
+        public String toString() {
+            return "AddressBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Client='" + Client + '\'' +
+                    ", Name='" + Name + '\'' +
+                    ", Phone='" + Phone + '\'' +
+                    ", Address='" + Address + '\'' +
+                    ", Default='" + Default + '\'' +
+                    ", Detail='" + Detail + '\'' +
+                    '}';
         }
 
         public static final Parcelable.Creator<AddressBean> CREATOR = new Creator<AddressBean>() {

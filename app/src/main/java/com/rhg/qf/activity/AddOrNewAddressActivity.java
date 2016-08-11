@@ -2,7 +2,6 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -44,9 +43,10 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     @Bind(R.id.add_new_address_content_detail)
     EditText addNewAddressContentDetail;
 
-    private int resultCode;
+    private int resultCode = 0;
     AddOrUpdateAddressPresenter addOrUpdateAddress;
-    private String orderId;
+    private String addressId = null;
+    boolean isBackWithoutOption = true;
 
 
     @Override
@@ -56,7 +56,7 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
         } else {
             resultCode = AppConstants.BACK_WITH_UPDATE;
             AddressUrlBean.AddressBean _address = intent.getParcelableExtra(AppConstants.KEY_ADDRESS);
-            orderId = _address.getID();
+            addressId = _address.getID();
             addNewAddressContactPersonContent.setText(_address.getName());
             addNewAddressContactsContent.setText(_address.getPhone());
             addNewAddressContactAddressContent.setText(_address.getAddress());
@@ -100,6 +100,13 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     @Override
     protected void showSuccess(Object s) {
 //        setResult(resultCode, new Intent().putExtra(AppConstants.KEY_ADDRESS, addressBean));
+        Intent intent = new Intent();
+        intent.putExtra("return", new AddressUrlBean.AddressBean(
+                addNewAddressContactPersonContent.getText().toString(),
+                addNewAddressContactsContent.getText().toString(),
+                addNewAddressContactAddressContent.getText().toString(),
+                addNewAddressContentDetail.getText().toString()));
+        setResult(0, intent);/*不需要做任何事情*/
         finish();
     }
 
@@ -123,6 +130,7 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tb_left_iv:
+                isBackWithoutOption = true;
                 finish();
                 break;
             case R.id.add_new_address_bt:
@@ -134,7 +142,11 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                     ToastHelper.getInstance()._toast(getResources().getString(R.string.contacts_Null));
                     break;
                 }
-                if (TextUtils.isEmpty(addNewAddressContactAddressContent.getHint())) {
+                if (TextUtils.isEmpty(addNewAddressContactAddressContent.getText())) {
+                    ToastHelper.getInstance()._toast(getResources().getString(R.string.contactAddress_Null));
+                    break;
+                }
+                if (TextUtils.isEmpty(addNewAddressContentDetail.getText())) {
                     ToastHelper.getInstance()._toast(getResources().getString(R.string.contactAddress_Null));
                     break;
                 }
@@ -147,10 +159,9 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                /* _address.append(addNewAddressContactAddressContent.getText().toString())
                         .append(addNewAddressContentDetail.getText().toString());*/
 //                addressBean.setAddress(_address);
-                /*TODO 以下代码需要在提交地址保存至数据库成功后执行*/
                 if (addOrUpdateAddress == null)
                     addOrUpdateAddress = new AddOrUpdateAddressPresenter(this);
-                addOrUpdateAddress.addOrUpdateAddress(orderId, addNewAddressContactPersonContent.getText().toString(),
+                addOrUpdateAddress.addOrUpdateAddress(addressId, addNewAddressContactPersonContent.getText().toString(),
                         addNewAddressContactsContent.getText().toString(),
                         addNewAddressContactAddressContent.getText().toString(),
                         addNewAddressContentDetail.getText().toString(),
@@ -167,7 +178,8 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
 
     @Override
     public void onBackPressed() {
-//        setResult(resultCode, null);/*不需要做任何事情*/
+        setResult(resultCode, null);
         super.onBackPressed();
     }
+
 }

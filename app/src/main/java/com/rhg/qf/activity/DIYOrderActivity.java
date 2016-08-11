@@ -73,7 +73,7 @@ public class DIYOrderActivity extends BaseAppcompactActivity {
                 }
                 if (commitDIYOrderPresenter == null)
                     commitDIYOrderPresenter = new DIYOrderPresenter(this);
-                commitDIYOrderPresenter.commitDIYOrder("1", etUserInput.getText().toString());
+                commitDIYOrderPresenter.commitDIYOrder( etUserInput.getText().toString());
         }
     }
 

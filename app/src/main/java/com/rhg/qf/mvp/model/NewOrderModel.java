@@ -1,7 +1,5 @@
 package com.rhg.qf.mvp.model;
 
-import android.util.Log;
-
 import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
@@ -28,7 +26,8 @@ public class NewOrderModel {
                             @Override
                             public void call(Subscriber<? super String> subscriber) {
                                 if (baseBean.getResult() == 0)
-                                    subscriber.onNext("订单生成成功");
+                                    subscriber.onNext(baseBean.getMsg());
+                                else subscriber.onNext("error");
                             }
                         });
                     }

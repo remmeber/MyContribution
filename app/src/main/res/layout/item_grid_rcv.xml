@@ -10,10 +10,10 @@
         android:id="@+id/grid_imageView"
         android:layout_width="@dimen/header_image_size"
         android:layout_height="@dimen/header_image_size"
-        android:layout_marginTop="@dimen/margin_little"
-        android:layout_marginBottom="@dimen/margin_little"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/margin_little"
+        android:layout_marginTop="@dimen/margin_little"
         tools:src="@drawable/ic_pic_failed" />
 
     <ImageView
@@ -31,8 +31,10 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/header_image_size"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
         android:layout_toEndOf="@id/grid_imageView"
         android:layout_toRightOf="@id/grid_imageView"
         android:background="@drawable/bg_green"
@@ -43,8 +45,8 @@
             android:id="@+id/grid_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:ems="1"
-            android:gravity="center"
             android:textSize="@dimen/text_little_small"
             tools:text="黄焖鸡米饭" />
     </RelativeLayout>

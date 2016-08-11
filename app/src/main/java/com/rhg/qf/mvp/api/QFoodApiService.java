@@ -15,7 +15,7 @@ import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.bean.ShopDetailUrlBean;
-import com.rhg.qf.bean.SignInBean;
+import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
 
@@ -122,15 +122,27 @@ public interface QFoodApiService {
     /*user sign in*/
     @FormUrlEncoded
     @POST("Table/Json.php")
-    Observable<SignInBean> userSignIn(@Field("Table") String client,
-                                      @Field("Client") String userName,
-                                      @Field("Pwd") String pwd);
+    Observable<SignInBackBean> userSignIn(@Field("Table") String client,
+                                          @Field("Client") String userName,
+                                          @Field("Pwd") String pwd);
+
+    @FormUrlEncoded
+    @POST("Table/JsonSQL/AddClient.php")
+    Observable<BaseBean> userSignUp(@Field("Name") String openid,
+                                    @Field("Pwd") String unionid,
+                                    @Field("Pic") String headimageurl,
+                                    @Field("Nickname") String nickName);
 
     /*获取地址*/
     @FormUrlEncoded
     @POST("Table/Json.php")
     Observable<AddressUrlBean> getAddress(@Field("Table") String address,
                                           @Field("ID") String userId);
+
+/*    @FormUrlEncoded
+    @POST("/Table/Json.php")
+    Observable<AddressUrlBean> getDefaultAddress(@Field("Table") String defaultaddress,
+                                                 @Field("ID") String userId);*/
 
     /*添加地址*/
     @FormUrlEncoded
@@ -157,6 +169,7 @@ public interface QFoodApiService {
     @POST("Table/JsonSQL/{AddressChange}.php")/*DeleteAddress*/
     Observable<BaseBean> changeAddress(@Path("AddressChange") String opt,
                                        @Field("ID") String addressId);
+
 
     /*
      *desc 厅搜索接口，入口位于主页和所有店铺页

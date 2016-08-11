@@ -4,11 +4,11 @@ package com.rhg.qf.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
@@ -42,7 +42,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
-        ButterKnife.bind(this, view);
+            ButterKnife.bind(this, view);
         initView(view);
         return view;
     }
@@ -76,7 +76,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
     }
 
-    @Override
+    /*@Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint())
@@ -91,7 +91,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public void visible() {
         Log.i("RHG", "visible");
 
-    }
+    }*/
 
 
     public void reStartLocation() {
@@ -180,15 +180,11 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+            ButterKnife.unbind(this);
     }
 
     protected abstract void showFailed();

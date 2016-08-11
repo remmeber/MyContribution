@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -40,9 +41,17 @@ public class OrderListActivity extends BaseFragmentActivity {
     @Bind(R.id.vp_myorder)
     ViewPager vpMyorder;
 
+    int vpFlag = -1;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.myorder_layout;
+    }
+
+    @Override
+    public void dataReceive(Intent intent) {
+        if (intent != null)
+            vpFlag = intent.getIntExtra(AppConstants.KEY_ORDER_TAG, -1);
     }
 
     @Override
@@ -59,6 +68,7 @@ public class OrderListActivity extends BaseFragmentActivity {
                 AppConstants.ORDER_TITLES);
         vpMyorder.setAdapter(qFoodVpAdapter);
         vpMyorder.setOffscreenPageLimit(3);
+        vpMyorder.setCurrentItem(vpFlag, false);
         stlMyorder.setViewPager(vpMyorder);
 
     }
