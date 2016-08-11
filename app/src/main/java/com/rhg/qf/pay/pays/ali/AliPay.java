@@ -26,7 +26,6 @@ public class AliPay implements IPayable {
 
     @Override
     public String Pay(Activity activity, OrderInfo orderInfo, String prepayId) {
-        Log.i("RHG", orderInfo.GetContent());
         PayTask payTask = new PayTask(activity);
         return payTask.pay(orderInfo.GetContent(), true);
     }
