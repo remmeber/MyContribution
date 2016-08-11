@@ -4,6 +4,9 @@ import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -16,9 +19,13 @@ import rx.functions.Func1;
  */
 public class NewOrderModel {
     public Observable<String> createNewOrder(NewOrderBean newOrderBean) {
+        Map<String ,String > foodMap = new HashMap<>();
+        for (NewOrderBean.FoodBean foodBean:newOrderBean.getFood()) {
+            foodMap.put(foodBean.getID(),foodBean.getNum());
+        }
         return QFoodApiMamager.getInstant().getQFoodApiService().createOrder(newOrderBean.getAddress(),
                 newOrderBean.getClient(), newOrderBean.getReceiver(), newOrderBean.getPhone(),
-                newOrderBean.getPrice(), newOrderBean.getFood())
+                newOrderBean.getPrice(), foodMap)
                 .flatMap(new Func1<BaseBean, Observable<String>>() {
                     @Override
                     public Observable<String> call(final BaseBean baseBean) {

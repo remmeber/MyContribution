@@ -11,7 +11,6 @@ import com.rhg.qf.bean.HeadMerchantUrlBean;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.bean.MerchantInfoDetailUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
-import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.bean.ShopDetailUrlBean;
@@ -19,7 +18,7 @@ import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
 
-import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -233,7 +232,7 @@ public interface QFoodApiService {
                                      @Field("Receiver") String receiver,
                                      @Field("Phone") String phone,
                                      @Field("Price") String price,
-                                     @Field("Food") List<NewOrderBean.FoodBean> foodBeen);
+                                     @Field("Food") Map<String, String> foodBeen);
 
 
     /*TODO 修改跑腿员订单的状态 API15*/
