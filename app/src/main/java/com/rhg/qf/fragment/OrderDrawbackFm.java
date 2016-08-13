@@ -11,6 +11,6 @@ import com.rhg.qf.constants.AppConstants;
 public class OrderDrawbackFm extends AbstractOrderFragment {
     @Override
     protected int getFmTag() {
-        return AppConstants.ORDER_DRAWBACK;
+        return AppConstants.USER_ORDER_DRAWBACK;
     }
 }

@@ -130,7 +130,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
             return;
         }
         if (AppConstants.USER_ORDER_COMPLETE == orderTag
-                || AppConstants.ORDER_DRAWBACK == orderTag) {
+                || AppConstants.USER_ORDER_DRAWBACK == orderTag) {
             btPayOrRateOrConform.setText(getResources().getString(R.string.goEvaluate));
         }
     }
@@ -172,7 +172,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
             case R.id.btDrawback:
                 if (modifyOrderPresenter == null)
                     modifyOrderPresenter = new ModifyOrderPresenter(this);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState("1"/*订单号*/, "0"/*0:退单，1,：完成*/);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderId/*订单号*/,
+                        /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
                 break;
             case R.id.btPayOrRateOrConform:
                 if (orderTag == AppConstants.USER_ORDER_DELIVERING) {
@@ -192,14 +193,15 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                     PayModel.PayBean _pay = new PayModel.PayBean();
                     _pay.setProductName("");
                     _pay.setChecked(true);
-                    _pay.setProductId("1");
-                    int count = 0;
+                    _pay.setProductId(orderId);
+                    int count = 1;
                     _pay.setProductNumber(String.valueOf(count));
                     _pay.setProductPic("");
                     _pay.setProductPrice(String.valueOf(orderPrice) == null ? "0" : String.valueOf(orderPrice));
                     payBeen.add(_pay);
                     payModel.setPayBeanList(payBeen);
                     intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
+                    intent.putExtra(AppConstants.ORDER_STYLE,AppConstants.USER_ORDER_UNPAID);
                     startActivity(intent);
                 }
                 break;

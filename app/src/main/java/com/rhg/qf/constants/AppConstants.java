@@ -112,14 +112,17 @@ public class AppConstants {
     public static final int USER_ORDER_UNPAID = 1;
     public static final int USER_ORDER_DELIVERING = 2;
     public static final int USER_ORDER_COMPLETE = 3;
-    public static final int ORDER_DRAWBACK = 4;
+    public static final int USER_ORDER_DRAWBACK = 4;
 
     public static final String DELIVER_ORDER_UNPAID = "20"/*"待付款"*/;
     public static final String DELIVER_ORDER_UNACCEPT = "40"/*"待接单"*/;
     public static final String DELIVER_ORDER_ACCEPT = "60"/*"已接单"*/;
     public static final String DELIVER_ORDER_DELIVERING = "80"/*"配送中"*/;
     public static final String DELIVER_ORDER_COMPLETE = "100"/*"已完成"*/;
-    public static final String DELIVER_ORDER_OTHER = "0";/*其他*/
+
+    public static final String ORDER_WITHDRAW = "0";/*用户订单退款*/
+    public static final String ORDER_FINISH = "1";/*用户订单完成*/
+    public static final String ORDER_DELIVERING = "2";/*用户订单修改为配送中*/
 
     /*HotFood*/
     public static final int OVERALL = 0;

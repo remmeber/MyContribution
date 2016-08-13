@@ -133,24 +133,28 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     public void onStyleChange(String style, int position) {
         if (modifyOrderPresenter == null)
             modifyOrderPresenter = new ModifyOrderPresenter(this);
+        List<String> str = new ArrayList<>();
         switch (style) {
             case AppConstants.DELIVER_ORDER_UNACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_ACCEPT);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
+                str.add(deliverOrderBeanList.get(position).getID());
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
                         AppConstants.UPDATE_ORDER_WAIT);
                 break;
             case AppConstants.DELIVER_ORDER_ACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_DELIVERING);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
+                str.add(deliverOrderBeanList.get(position).getID());
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
                         AppConstants.UPDATE_ORDER_DELIVER);
                 break;
             case AppConstants.DELIVER_ORDER_DELIVERING:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_COMPLETE);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
-                        "1");/*1表示已完成*/
+                str.add(deliverOrderBeanList.get(position).getID());
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
+                        AppConstants.ORDER_FINISH);/*1表示已完成*/
                 break;
             default:
                 break;

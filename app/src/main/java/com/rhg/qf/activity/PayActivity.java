@@ -16,6 +16,7 @@ import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.mvp.presenter.NewOrderPresenter;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.pay.BasePayActivity;
@@ -68,9 +69,11 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     NewOrderBean newOrderBean;
     private PayItemAdapter payItemAdapter;
     NewOrderPresenter createOrderPresenter;
+    ModifyOrderPresenter modifyOrderDeliveringPresenter;/*修改用户订单状态*/
     String ipv4;
     String tradeNumber;
     String style;//用来表示是否需要生成订单
+    String orderId;
 
 
     @Override
@@ -142,6 +145,11 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     @Override
     protected void showSuccess(String s) {
         ToastHelper.getInstance()._toast(s);
+        if (modifyOrderDeliveringPresenter == null) {
+            modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
+        }
+        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(getProductIdList(payList),
+                AppConstants.ORDER_DELIVERING);//修改为配送中的状态
     }
 
     @Override
@@ -267,6 +275,14 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                 foodBean.setNum(_payBean.getProductNumber());
                 _bean.add(foodBean);
             }
+        }
+        return _bean;
+    }
+
+    private List<String> getProductIdList(List<PayModel.PayBean> payList) {
+        List<String> _bean = new ArrayList<>();
+        for (PayModel.PayBean _payBean : payList) {
+            _bean.add(_payBean.getProductId());
         }
         return _bean;
     }
