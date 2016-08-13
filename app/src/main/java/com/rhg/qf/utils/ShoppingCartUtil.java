@@ -8,6 +8,7 @@ import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.datebase.AccountDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -135,9 +136,20 @@ public class ShoppingCartUtil {
         }
         infos[0] = selectedCount;
         infos[1] = selectedMoney;
-
-
         return infos;
+    }
+
+    public static List<ShoppingCartBean.Goods> getSelectGoods(List<ShoppingCartBean> listGoods) {
+        List<ShoppingCartBean.Goods> goodsList = new ArrayList<>();
+        for (int i = 0; i < listGoods.size(); i++) {
+            for (int j = 0; j < listGoods.get(i).getGoods().size(); j++) {
+                boolean isSelectd = listGoods.get(i).getGoods().get(j).isChildSelected();
+                if (isSelectd) {
+                    goodsList.add(listGoods.get(i).getGoods().get(j));
+                }
+            }
+        }
+        return goodsList;
     }
 
 
@@ -195,7 +207,7 @@ public class ShoppingCartUtil {
         String productID = goods.getProductID();
         tvNum.setText(num);
         goods.setNumber(num);
-//        updateGoodsNumber(productID, num);//TODO 还未加上数据库
+        updateGoodsNumber(productID, num);
     }
 
     /**

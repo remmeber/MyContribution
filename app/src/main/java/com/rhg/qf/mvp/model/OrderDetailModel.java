@@ -1,6 +1,8 @@
 package com.rhg.qf.mvp.model;
 
 
+import android.util.Log;
+
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
@@ -23,6 +25,7 @@ public class OrderDetailModel {
                         return Observable.create(new Observable.OnSubscribe<OrderDetailUrlBean.OrderDetailBean>() {
                             @Override
                             public void call(Subscriber<? super OrderDetailUrlBean.OrderDetailBean> subscriber) {
+                                Log.i("RHG",orderDetailUrlBean.getRows().toString());
                                 subscriber.onNext(orderDetailUrlBean.getRows().get(0));
                             }
                         });

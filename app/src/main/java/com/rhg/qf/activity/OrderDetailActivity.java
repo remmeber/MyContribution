@@ -1,7 +1,6 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -72,12 +71,14 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     String orderId;
     int orderTag;
     String orderPrice;
+    String merchantName;
     private FoodsDetailAdapter foodsDetailAdapter;
     OrderDetailUrlBean.OrderDetailBean foodBean = new OrderDetailUrlBean.OrderDetailBean();
 
     @Override
     public void dataReceive(Intent intent) {
         orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
+        merchantName = intent.getStringExtra(AppConstants.KEY_MERCHANT_NAME);
         orderPrice = intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE);
         orderTag = intent.getIntExtra(AppConstants.KEY_ORDER_TAG, -1);
         /*
@@ -89,7 +90,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     @Override
     public void loadingData() {
         getOrderDetailPresenter = new OrderDetailPresenter(this);
-        getOrderDetailPresenter.getOrderDetail(AppConstants.ORDER_DETAIL, /*orderId*/"1");
+        getOrderDetailPresenter.getOrderDetail(AppConstants.ORDER_DETAIL, orderId);
     }
 
     @Override
@@ -112,7 +113,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         foodsDetailAdapter = new FoodsDetailAdapter(this, foodBean);
         rcyPayItem.setAdapter(foodsDetailAdapter);
         /*recycleview*/
-
+        tvMerchantName.setText(merchantName);
         lyTotalCount.setVisibility(View.VISIBLE);
         tvTotalMoney.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
                 orderPrice));
@@ -148,7 +149,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         tvReceiver.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
                 orderDetail.getReceiver()));
         tvReceiverPhone.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
-                "123456789"));
+                orderDetail.getPhone()));
         tvReceiverAddress.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
                 orderDetail.getAddress()));
         tvOrderNote.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvNote),

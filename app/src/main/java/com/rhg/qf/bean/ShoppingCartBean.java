@@ -109,7 +109,7 @@ public class ShoppingCartBean {
         /**
          * 商品宣传图片
          */
-        private int goodsLogoUrl;
+        private String goodsLogoUrl;
         /** 商品规格 */
         /*private String pdtDesc;*/
         /**
@@ -223,11 +223,11 @@ public class ShoppingCartBean {
             this.goodsName = goodsName;
         }
 
-        public int getGoodsLogoUrl() {
+        public String getGoodsLogoUrl() {
             return goodsLogoUrl;
         }
 
-        public void setGoodsLogoUrl(int goodsLogoUrl) {
+        public void setGoodsLogoUrl(String goodsLogoUrl) {
             this.goodsLogoUrl = goodsLogoUrl;
         }
 

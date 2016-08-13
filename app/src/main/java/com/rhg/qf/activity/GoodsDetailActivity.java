@@ -96,6 +96,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     String unionid;
     String headImageUrl;
     AddressUrlBean.AddressBean addressBean;
+    String merchantName;
 
 
     public GoodsDetailActivity() {
@@ -153,8 +154,8 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     @Override
     public void dataReceive(Intent intent) {
         if (intent != null) {
-            foodId = "1"/*intent.getStringExtra(AppConstants.KEY_PRODUCT_ID)*/;
-//            merchantName = bundle.getString(AppConstants.KEY_PRODUCT_NAME, null);
+            foodId = intent.getStringExtra(AppConstants.KEY_PRODUCT_ID);
+            merchantName = intent.getStringExtra(AppConstants.KEY_MERCHANT_NAME);
 //            merchantSrc = bundle.getString(AppConstants.KEY_PRODUCT_PRICE, null);
         }
     }
@@ -173,7 +174,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
 
     @Override
     protected void initData() {
-//        goodsDetailPresenter.getGoodsInfo();
         tbRightIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         tbRightTv.setText(location);//TODO 根据定位来决定
@@ -189,7 +189,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             tvNum.setText("0");
             ivAddToShoppingCart.setNum("0");
         }
-//        ivAddToShoppingCart.setDrawable(R.drawable.ic_shopping_cart_green);
         ivBanner.startTurning(2000);
         ivBanner.setPageIndicator(AppConstants.IMAGE_INDICTORS);
     }
@@ -216,7 +215,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             return;
         }
         if (o == null) {/*没有登录成功*/
-            Log.i("RHG", "注册");
             if (userSignUpPresenter == null)
                 userSignUpPresenter = new UserSignUpPresenter(this);
             userSignUpPresenter.userSignUp(openid, unionid, headImageUrl, nickName);
@@ -238,7 +236,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             AccountUtil.getInstance().setPwd(_data.getPwd());
             if (getAddressPresenter == null)
                 getAddressPresenter = new GetAddressPresenter(this);
-            getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
+            getAddressPresenter.getAddress(AppConstants.ADDRESS_DEFAULT);
             return;
         }
         if (o instanceof AddressUrlBean.AddressBean) {
@@ -267,7 +265,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 createOrderAndToPay(addressBean);
             }
         }
-
     }
 
 
@@ -417,14 +414,14 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         Intent intent = new Intent(GoodsDetailActivity.this,
                 PayActivity.class);
         PayModel payModel = new PayModel();
-        payModel.setReceiver(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
-                addressBean.getName()));
+        payModel.setReceiver(addressBean.getName());
         payModel.setPhone(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
                 addressBean.getPhone()));
         payModel.setAddress(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
                 addressBean.getAddress().concat(addressBean.getDetail())));
         ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
         PayModel.PayBean _pay = new PayModel.PayBean();
+        _pay.setMerchantName(merchantName);
         _pay.setProductName(tvGoodsName.getText().toString());
         _pay.setChecked(true);
         _pay.setProductId(foodId);

@@ -47,7 +47,7 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
 
     @Override
     public void onBindViewHolder(final PayItemAdapter.PayItemViewHolder holder, int position) {
-        holder.tvPayTitle.setText("");
+        holder.tvPayTitle.setText(payList.get(position).getMerchantName());
         if (payList.get(position).isChecked())
             holder.ivItemPay.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_check_green));
         else

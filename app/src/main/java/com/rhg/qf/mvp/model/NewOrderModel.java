@@ -1,10 +1,15 @@
 package com.rhg.qf.mvp.model;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -19,13 +24,18 @@ import rx.functions.Func1;
  */
 public class NewOrderModel {
     public Observable<String> createNewOrder(NewOrderBean newOrderBean) {
-        Map<String ,String > foodMap = new HashMap<>();
+        List<Map<String,String>> mapList = new ArrayList<>();
         for (NewOrderBean.FoodBean foodBean:newOrderBean.getFood()) {
-            foodMap.put(foodBean.getID(),foodBean.getNum());
+            Map<String ,String > foodMap = new HashMap<>();
+            foodMap.put("ID",foodBean.getID());
+            foodMap.put("Num",foodBean.getNum());
+            mapList.add(foodMap);
         }
+        String food = new Gson().toJson(mapList);
+        Log.i("RHG", food);
         return QFoodApiMamager.getInstant().getQFoodApiService().createOrder(newOrderBean.getAddress(),
                 newOrderBean.getClient(), newOrderBean.getReceiver(), newOrderBean.getPhone(),
-                newOrderBean.getPrice(), foodMap)
+                newOrderBean.getPrice(), mapList)
                 .flatMap(new Func1<BaseBean, Observable<String>>() {
                     @Override
                     public Observable<String> call(final BaseBean baseBean) {

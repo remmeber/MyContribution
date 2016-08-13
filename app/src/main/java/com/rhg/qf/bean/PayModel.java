@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * desc:
@@ -85,7 +84,8 @@ public class PayModel implements Parcelable {
         this.payBeanList = payBeanList;
     }
 
-    public static class PayBean implements Parcelable{
+    public static class PayBean implements Parcelable {
+        String merchantName;
         String productId;
         String productName;
         String productPrice;
@@ -94,6 +94,7 @@ public class PayModel implements Parcelable {
         boolean isChecked;
 
         protected PayBean(Parcel in) {
+            merchantName = in.readString();
             productId = in.readString();
             productName = in.readString();
             productPrice = in.readString();
@@ -116,6 +117,14 @@ public class PayModel implements Parcelable {
                 return new PayBean[size];
             }
         };
+
+        public String getMerchantName() {
+            return merchantName;
+        }
+
+        public void setMerchantName(String merchantName) {
+            this.merchantName = merchantName;
+        }
 
         public String getProductId() {
             return productId;
@@ -172,6 +181,7 @@ public class PayModel implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(merchantName);
             parcel.writeString(productId);
             parcel.writeString(productName);
             parcel.writeString(productPrice);

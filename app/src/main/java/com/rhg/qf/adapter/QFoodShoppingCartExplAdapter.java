@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.utils.ShoppingCartUtil;
@@ -62,7 +63,6 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
                     break;
                 case R.id.imaShopForwardGroup:
                     clickPosition = (int) v.getTag();
-                    Toast.makeText(context, "group " + clickPosition, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.ivAdd:
                     ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) v.getTag(),
@@ -188,9 +188,9 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
                 goods.getPrice());//TODO 获得商品的价格
         String goodsNum = goods.getNumber();//TODO 获得商品的数量
         String goodsName = goods.getGoodsName();//TODO 获得商品的名字
-        int goodsLogoUrl = goods.getGoodsLogoUrl();//TODO 获得商品图片的链接
+        String goodsLogoUrl = goods.getGoodsLogoUrl();//TODO 获得商品图片的链接
 
-        childViewHolder.goodsLogo.setImageDrawable(context.getResources().getDrawable(goodsLogoUrl));
+        ImageLoader.getInstance().displayImage(goodsLogoUrl,childViewHolder.goodsLogo);
         childViewHolder.goodsLogo.setDrawingCacheEnabled(true);
         childViewHolder.tvGoodsName.setText(goodsName);
         childViewHolder.tvGoodsPrice.setText(goodsprice);

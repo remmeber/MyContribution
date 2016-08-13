@@ -1,8 +1,8 @@
 package com.rhg.qf.fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -11,8 +11,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.activity.PayActivity;
 import com.rhg.qf.adapter.QFoodShoppingCartExplAdapter;
+import com.rhg.qf.bean.AddressUrlBean;
+import com.rhg.qf.bean.OrderUrlBean;
+import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.bean.ShoppingCartBean;
+import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.presenter.GetAddressPresenter;
+import com.rhg.qf.mvp.presenter.OrdersPresenter;
+import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.SwipeDeleteExpandListView;
@@ -30,10 +38,10 @@ import butterknife.OnClick;
  * email：1013773046@qq.com
  */
 public class ShoppingCartFragment extends BaseFragment {
-    private static final String TAG = "ShoppingCartFragment";
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
     QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
+    OrdersPresenter getOrdersPresenter;
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTV;
@@ -53,10 +61,12 @@ public class ShoppingCartFragment extends BaseFragment {
     LinearLayout llShoppingCart;
     @Bind(R.id.rl_shopping_cart_pay)
     RelativeLayout rlShoppingCartPay;
+    private String userId;
+    private GetAddressPresenter getAddressPresenter;
+    private AddressUrlBean.AddressBean addressBean;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
     public ShoppingCartFragment() {
-        Log.i(TAG, "ShoppingCartFragment ");
         shoppingCartBeanList = new ArrayList<>();
         /*for (int i = 0; i < 6; i++) {
             ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
@@ -84,6 +94,15 @@ public class ShoppingCartFragment extends BaseFragment {
         return R.layout.shopping_cart_layout;
     }
 
+
+    @Override
+    public void loadData() {
+        getOrdersPresenter = new OrdersPresenter(this);
+        if (AccountUtil.getInstance().hasAccount()) {
+            userId = AccountUtil.getInstance().getUserID();
+            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+        }
+    }
 
     @Override
     protected void initView(View view) {
@@ -164,19 +183,72 @@ public class ShoppingCartFragment extends BaseFragment {
 
     @Override
     public void showSuccess(Object o) {
-
+        if (o instanceof AddressUrlBean.AddressBean) {
+            addressBean = (AddressUrlBean.AddressBean) o;
+            createOrderAndToPay(addressBean);
+            return;
+        }
+        if (o instanceof String && "error".equals(o)) {
+            ToastHelper.getInstance()._toast(o.toString());
+            return;
+        }
+        ShoppingCartUtil.delAllGoods();
+        shoppingCartBeanList.clear();
+        for (OrderUrlBean.OrderBean orderBean : (List<OrderUrlBean.OrderBean>) o) {
+            ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
+            List<ShoppingCartBean.Goods> goodsList = new ArrayList<>();
+            ShoppingCartBean.Goods goods = new ShoppingCartBean.Goods();
+            goods.setGoodsName(orderBean.getRName());
+            goods.setGoodsLogoUrl(orderBean.getPic());
+            goods.setPrice(orderBean.getPrice());
+            goods.setGoodsID(orderBean.getID());
+            goods.setNumber("1");
+            goodsList.add(goods);
+            shoppingCartBean.setGoods(goodsList);
+            shoppingCartBeanList.add(shoppingCartBean);
+            ShoppingCartUtil.addGoodToCart(orderBean.getID(), orderBean.getRName());
+        }
+        updateListView();
     }
 
-    @OnClick({R.id.iv_shopping_cart_empty, R.id.tv_count_money})
+    private void createOrderAndToPay(AddressUrlBean.AddressBean addressBean) {
+        Intent intent = new Intent(getActivity(),
+                PayActivity.class);
+        PayModel payModel = new PayModel();
+        payModel.setReceiver(addressBean.getName());
+        payModel.setPhone(addressBean.getPhone());
+        payModel.setAddress(addressBean.getAddress().concat(addressBean.getDetail()));
+        ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
+        List<ShoppingCartBean.Goods> goodsList = ShoppingCartUtil.getSelectGoods(shoppingCartBeanList);
+        for (ShoppingCartBean.Goods _goods : goodsList) {
+            PayModel.PayBean _pay = new PayModel.PayBean();
+            _pay.setMerchantName("");
+            _pay.setProductName(_goods.getGoodsName());
+            _pay.setChecked(true);
+            _pay.setProductId(_goods.getGoodsID());
+            _pay.setProductNumber(_goods.getNumber());
+            _pay.setProductPic(_goods.getGoodsLogoUrl());
+            _pay.setProductPrice(_goods.getPrice());
+            payBeen.add(_pay);
+        }
+        payModel.setPayBeanList(payBeen);
+        intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
+        intent.putExtra(AppConstants.ORDER_STYLE, AppConstants.USER_ORDER_UNPAID);
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.iv_shopping_cart_empty, R.id.tv_count})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_shopping_cart_empty:
                 break;
-            case R.id.tv_count_money:
-                if (ShoppingCartUtil.hasSelectedGoods(shoppingCartBeanList))
-                    ToastHelper.getInstance()._toast("去付款");
-                else
-                    ToastHelper.getInstance()._toast("亲，请选择商品！");
+            case R.id.tv_count:
+                if (ShoppingCartUtil.hasSelectedGoods(shoppingCartBeanList)) {
+                    if (getAddressPresenter == null)
+                        getAddressPresenter = new GetAddressPresenter(this);
+                    getAddressPresenter.getAddress(AppConstants.TABLE_DEFAULT_ADDRESS);
+                } else
+                    ToastHelper.getInstance().displayToastWithQuickClose("亲，请选择商品！");
                 break;
         }
     }

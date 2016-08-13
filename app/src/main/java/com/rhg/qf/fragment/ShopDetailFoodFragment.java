@@ -2,6 +2,7 @@ package com.rhg.qf.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
 import com.rhg.qf.R;
@@ -14,7 +15,6 @@ import com.rhg.qf.ui.FragmentController;
 import com.rhg.qf.widget.VerticalTabLayout;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -36,8 +36,7 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
     ShopDetailPresenter shopDetailPresenter;
 
     String merchantId;
-    private List<String> titles;
-    private Date endDate;
+    String merchantName;
 
     public ShopDetailFoodFragment() {
         shopDetailPresenter = new ShopDetailPresenter(this);
@@ -46,6 +45,7 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
     @Override
     public void receiveData(Bundle arguments) {
         merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
+        merchantName = arguments.getString(AppConstants.KEY_MERCHANT_NAME);
     }
 
     @Override
@@ -96,8 +96,15 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
             int end = -1;
             FoodTypeFragment fragment;
             for (int i = 0; i < shopDetailLocalModel.getVarietys().size(); i++) {
-                fragment = i >= fragments.size() ? new FoodTypeFragment() : ((FoodTypeFragment) fragments.get(i));
-                fragment.setRefreshListener(this);
+                if (i >= fragments.size()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(AppConstants.KEY_MERCHANT_NAME, merchantName);
+                    fragment = new FoodTypeFragment();
+                    fragment.setArguments(bundle);
+                } else
+                    fragment = ((FoodTypeFragment) fragments.get(i));
+                if (!fragment.hasListener())
+                    fragment.setRefreshListener(this);
                 List<ShopDetailUrlBean.ShopDetailBean> _shopDetailBeanList = new ArrayList<>();
                 for (int j = start + 1; j < shopDetailLocalModel.getShopDetailBean().size(); j++) {
                     if (shopDetailLocalModel.getShopDetailBean().get(j).getVariety()

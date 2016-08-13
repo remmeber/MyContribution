@@ -102,6 +102,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
         _intent.putExtra(AppConstants.KEY_ORDER_ID, item.getID());
         _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
+        _intent.putExtra(AppConstants.KEY_MERCHANT_NAME,item.getRName());
         _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
         /*_intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());
         _intent.putExtra(AppConstants.KEY_ADDRESS, item.getAddress());

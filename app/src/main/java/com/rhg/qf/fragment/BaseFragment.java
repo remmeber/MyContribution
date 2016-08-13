@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
@@ -42,7 +41,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
-            ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         initView(view);
         return view;
     }
@@ -54,13 +53,13 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initData();
         if (!NetUtil.isConnected(getContext())) {
             ToastHelper.getInstance()._toast("网络未连接");
         } else {
             startLoc();
             loadData();
         }
-        initData();
         fillData();
     }
 
@@ -184,7 +183,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-            ButterKnife.unbind(this);
+        ButterKnife.unbind(this);
     }
 
     protected abstract void showFailed();

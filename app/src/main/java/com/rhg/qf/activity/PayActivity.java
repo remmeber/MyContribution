@@ -70,6 +70,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     NewOrderPresenter createOrderPresenter;
     String ipv4;
     String tradeNumber;
+    String style;//用来表示是否需要生成订单
 
 
     @Override
@@ -116,6 +117,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
         PayModel payModel = intent.getParcelableExtra(AppConstants.KEY_PARCELABLE);
+        style = intent.getStringExtra(AppConstants.ORDER_STYLE);
         if (payModel != null) {
             tvReceiver.setText(payModel.getReceiver());
             tvReceiverPhone.setText(payModel.getPhone());
@@ -171,9 +173,12 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     return;
                 }
                 newOrderBean = generateOrder();
-                if (createOrderPresenter == null)
-                    createOrderPresenter = new NewOrderPresenter(this);
-                createOrderPresenter.createNewOrder(newOrderBean);
+                if (style == null) {
+                    if (createOrderPresenter == null)
+                        createOrderPresenter = new NewOrderPresenter(this);
+                    createOrderPresenter.createNewOrder(newOrderBean);
+                } else
+                    Pay(v);
                 /*payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {
                     PayContentBean payContentBean = new PayContentBean();

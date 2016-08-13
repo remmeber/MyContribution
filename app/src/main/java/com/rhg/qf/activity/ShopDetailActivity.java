@@ -92,6 +92,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragment = new ShopDetailFoodFragment();
         bundle.putString(AppConstants.KEY_MERCHANT_ID, merchantId);
+        bundle.putString(AppConstants.KEY_MERCHANT_NAME,merchantName);
         fragment.setArguments(bundle);
         fragments.add(fragment);
         fragment = new ShopDetailFragment();

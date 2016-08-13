@@ -44,15 +44,11 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     @Bind(R.id.common_swipe)
     SwipeRefreshLayout commonSwipe;
 
-
-    public FoodTypeFragment() {
-//        shopDetailPresenter = new ShopDetailPresenter(this);
-    }
+    String merchantName;
 
     @Override
     public void receiveData(Bundle arguments) {
-        // TODO: 获取数据
-//        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
+        merchantName = arguments.getString(AppConstants.KEY_MERCHANT_NAME);
     }
 
     @Override
@@ -103,6 +99,10 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         this.refreshListener = refreshListener;
     }
 
+    public boolean hasListener() {
+        return refreshListener != null;
+    }
+
 
     @Override
     protected void initView(View view) {
@@ -134,6 +134,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
         intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, merchantName);
 //        intent.putExtra() //todo 传递参数
         startActivityForResult(intent, 1);
     }
