@@ -141,6 +141,26 @@ public class OrderDetailUrlBean {
             public void setNum(String Num) {
                 this.Num = Num;
             }
+
+            @Override
+            public String toString() {
+                return "FoodsBean{" +
+                        "FName='" + FName + '\'' +
+                        ", Price='" + Price + '\'' +
+                        ", Num='" + Num + '\'' +
+                        '}';
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "OrderDetailBean{" +
+                    "Receiver='" + Receiver + '\'' +
+                    ", Phone='" + Phone + '\'' +
+                    ", Address='" + Address + '\'' +
+                    ", Fee='" + Fee + '\'' +
+                    ", Foods=" + Foods +
+                    '}';
         }
     }
 
