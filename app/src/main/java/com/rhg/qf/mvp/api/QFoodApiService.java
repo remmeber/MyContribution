@@ -242,7 +242,7 @@ public interface QFoodApiService {
                                      @Field("Receiver") String receiver,
                                      @Field("Phone") String phone,
                                      @Field("Price") String price,
-                                     @Field("Food") List<Map<String, String>> foodBeen
+                                     @Field("Food") String foodBeen
                                      /*@Body NewOrderBean newOrderBean*/);
 
 

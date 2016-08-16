@@ -27,6 +27,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    boolean isPrepare;
 //    private Unbinder bind;
 
     public BaseFragment() {
@@ -42,6 +43,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
+        isPrepare = true;
         initView(view);
         return view;
     }
@@ -56,11 +58,20 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         initData();
         if (!NetUtil.isConnected(getContext())) {
             ToastHelper.getInstance()._toast("网络未连接");
-        } else {
+        } else if (getUserVisibleHint()) {
             startLoc();
             loadData();
+            isPrepare = false;
         }
         fillData();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isPrepare && isVisibleToUser) {
+            loadData();
+        }
     }
 
     private void startLoc() {

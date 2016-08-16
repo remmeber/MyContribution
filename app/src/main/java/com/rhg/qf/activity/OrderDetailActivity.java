@@ -20,6 +20,7 @@ import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -116,7 +117,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         tvMerchantName.setText(merchantName);
         lyTotalCount.setVisibility(View.VISIBLE);
         tvTotalMoney.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
-                orderPrice));
+                String.valueOf((Integer.valueOf(orderPrice) + AppConstants.DELIVER_FEE))));
         setText(btPayOrRateOrConform);
     }
 
@@ -172,7 +173,9 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
             case R.id.btDrawback:
                 if (modifyOrderPresenter == null)
                     modifyOrderPresenter = new ModifyOrderPresenter(this);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderId/*订单号*/,
+                List<String> orderList = new ArrayList<>();
+                orderList.add(orderId);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderList/*订单号*/,
                         /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
                 break;
             case R.id.btPayOrRateOrConform:
@@ -197,11 +200,11 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                     int count = 1;
                     _pay.setProductNumber(String.valueOf(count));
                     _pay.setProductPic("");
-                    _pay.setProductPrice(String.valueOf(orderPrice) == null ? "0" : String.valueOf(orderPrice));
+                    _pay.setProductPrice(orderPrice == null ? "0" : String.valueOf(Integer.valueOf(orderPrice)));
                     payBeen.add(_pay);
                     payModel.setPayBeanList(payBeen);
                     intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
-                    intent.putExtra(AppConstants.ORDER_STYLE,AppConstants.USER_ORDER_UNPAID);
+                    intent.putExtra(AppConstants.ORDER_STYLE, AppConstants.USER_ORDER_UNPAID);
                     startActivity(intent);
                 }
                 break;

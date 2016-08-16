@@ -32,10 +32,9 @@ public class NewOrderModel {
             mapList.add(foodMap);
         }
         String food = new Gson().toJson(mapList);
-        Log.i("RHG", food);
         return QFoodApiMamager.getInstant().getQFoodApiService().createOrder(newOrderBean.getAddress(),
                 newOrderBean.getClient(), newOrderBean.getReceiver(), newOrderBean.getPhone(),
-                newOrderBean.getPrice(), mapList)
+                newOrderBean.getPrice(), food)
                 .flatMap(new Func1<BaseBean, Observable<String>>() {
                     @Override
                     public Observable<String> call(final BaseBean baseBean) {

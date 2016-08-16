@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.PayModel;
+import com.rhg.qf.constants.AppConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -68,7 +69,7 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
             _totalPrice = Integer.valueOf(payList.get(position).getProductPrice()) *
                     Integer.valueOf(payList.get(position).getProductNumber());
         holder.tvTotalMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                String.valueOf(_totalPrice)));
+                String.valueOf(_totalPrice + AppConstants.DELIVER_FEE)));
         ImageLoader.getInstance().displayImage(payList.get(position).getProductPic(), holder.ivPayImage);
     }
 

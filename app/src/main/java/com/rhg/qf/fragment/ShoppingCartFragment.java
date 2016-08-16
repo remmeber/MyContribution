@@ -61,9 +61,7 @@ public class ShoppingCartFragment extends BaseFragment {
     LinearLayout llShoppingCart;
     @Bind(R.id.rl_shopping_cart_pay)
     RelativeLayout rlShoppingCartPay;
-    private String userId;
     private GetAddressPresenter getAddressPresenter;
-    private AddressUrlBean.AddressBean addressBean;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
     public ShoppingCartFragment() {
@@ -99,7 +97,7 @@ public class ShoppingCartFragment extends BaseFragment {
     public void loadData() {
         getOrdersPresenter = new OrdersPresenter(this);
         if (AccountUtil.getInstance().hasAccount()) {
-            userId = AccountUtil.getInstance().getUserID();
+            String userId = AccountUtil.getInstance().getUserID();
             getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
         }
     }
@@ -145,9 +143,6 @@ public class ShoppingCartFragment extends BaseFragment {
                 tvCountMoney.setText(countMoney);
             }
         });
-        /*View.OnClickListener listener = QFoodShoppingCartExplAdapter.getShortCartListener();
-        if (listener != null)
-            tvCountGoods.setOnClickListener(listener);*/
         updateListView();
     }
 
@@ -184,7 +179,7 @@ public class ShoppingCartFragment extends BaseFragment {
     @Override
     public void showSuccess(Object o) {
         if (o instanceof AddressUrlBean.AddressBean) {
-            addressBean = (AddressUrlBean.AddressBean) o;
+            AddressUrlBean.AddressBean addressBean = (AddressUrlBean.AddressBean) o;
             createOrderAndToPay(addressBean);
             return;
         }

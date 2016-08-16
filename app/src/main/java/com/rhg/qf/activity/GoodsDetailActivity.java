@@ -3,7 +3,6 @@ package com.rhg.qf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -415,10 +414,8 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 PayActivity.class);
         PayModel payModel = new PayModel();
         payModel.setReceiver(addressBean.getName());
-        payModel.setPhone(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
-                addressBean.getPhone()));
-        payModel.setAddress(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
-                addressBean.getAddress().concat(addressBean.getDetail())));
+        payModel.setPhone(addressBean.getPhone());
+        payModel.setAddress(addressBean.getAddress().concat(addressBean.getDetail()));
         ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
         PayModel.PayBean _pay = new PayModel.PayBean();
         _pay.setMerchantName(merchantName);

@@ -44,13 +44,13 @@ public class FoodsDetailAdapter extends RecyclerView.Adapter<FoodsDetailAdapter.
 
     @Override
     public void onBindViewHolder(FoodsDetailAdapter.FoodListViewHolder holder, int position) {
-        OrderDetailUrlBean.OrderDetailBean.FoodsBean _data = foodsBeanList.getFoods().get(position);
-        if (position == getItemCount() - 1) {
+        if (position == getItemCount()-1) {
             holder.tvFoodName.setText("配送费");
             holder.tvFoodPrice.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
                     /*foodsBeanList.get(0).getFee()*/"12.00"));
             return;
         }
+        OrderDetailUrlBean.OrderDetailBean.FoodsBean _data = foodsBeanList.getFoods().get(position);
         holder.tvFoodName.setText(_data.getFName());
         holder.tvFoodPrice.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
                 _data.getPrice()));
@@ -61,7 +61,7 @@ public class FoodsDetailAdapter extends RecyclerView.Adapter<FoodsDetailAdapter.
     @Override
     public int getItemCount() {
         return foodsBeanList == null ? 0 :
-                foodsBeanList.getFoods() == null ? 0 : foodsBeanList.getFoods().size();
+                foodsBeanList.getFoods() == null ? 0 : foodsBeanList.getFoods().size()+1;
     }
 
     public class FoodListViewHolder extends RecyclerView.ViewHolder {

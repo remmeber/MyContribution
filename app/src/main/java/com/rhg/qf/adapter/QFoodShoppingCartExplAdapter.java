@@ -36,13 +36,6 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         public void onClick(View v) {
             int clickPosition;
             switch (v.getId()) {
-                //TODO fragment中结算结算按钮
-                /*case R.id.tv_count:
-                    if (ShoppingCartUtil.hasSelectedGoods(mData))
-                        Toast.makeText(context, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(context, "亲，请选择商品！", Toast.LENGTH_SHORT).show();
-                    break;*/
                 case R.id.ivCheckGroup:
                     clickPosition = Integer.parseInt(String.valueOf(v.getTag()));
 //                    isSelectAll = ShoppingCartUtil.selectGroup(mData,position);//TODO 如果有全选，则需要加上返回
@@ -98,11 +91,6 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     public void setmData(List<ShoppingCartBean> mData) {
         this.mData = mData;
         setDataChange();
-    }
-
-    //TODO-------------------------------开放监听口-------------------------------------------------
-    public View.OnClickListener getShortCartListener() {
-        return ShortCartListener;
     }
 
     @Override
@@ -185,10 +173,10 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
         boolean isChildSelected = goods.isChildSelected();
         String goodsprice = String.format(context.getResources().getString(R.string.countMoney),
-                goods.getPrice());//TODO 获得商品的价格
-        String goodsNum = goods.getNumber();//TODO 获得商品的数量
-        String goodsName = goods.getGoodsName();//TODO 获得商品的名字
-        String goodsLogoUrl = goods.getGoodsLogoUrl();//TODO 获得商品图片的链接
+                goods.getPrice());
+        String goodsNum = goods.getNumber();
+        String goodsName = goods.getGoodsName();
+        String goodsLogoUrl = goods.getGoodsLogoUrl();
 
         ImageLoader.getInstance().displayImage(goodsLogoUrl,childViewHolder.goodsLogo);
         childViewHolder.goodsLogo.setDrawingCacheEnabled(true);

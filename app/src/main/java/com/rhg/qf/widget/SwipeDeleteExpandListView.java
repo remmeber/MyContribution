@@ -142,7 +142,6 @@ public class SwipeDeleteExpandListView extends ExpandableListView implements Ges
             return false;
         if (slideView != null) {
             slideView.getmOnSlideListener().onSlide(slideView, slideView.getState());
-            ToastHelper.getInstance()._toast("单击");
         }
         mLastPosition = pointPosition;
         return false;

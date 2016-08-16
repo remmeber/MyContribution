@@ -154,6 +154,8 @@ public class AppConstants {
     public static final String UPDATE_ORDER_UNPAID = "UPdateorderPaid";
     public static final String UPDATE_ORDER_WAIT = "UPdateorderwait";
 
+    public static final int DELIVER_FEE = 12;
+
     /**
      * 响应结果，正确
      */
