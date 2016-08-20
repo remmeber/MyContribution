@@ -79,30 +79,11 @@ public abstract class BaseFragment extends Fragment implements BaseView {
             if ((mLocationListener = getLocationListener()) != null) {
                 locationService.registerListener(mLocationListener);
                 locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-//                getLocation(locationService, mLocationListener);
                 mLocationListener.getLocation(locationService);
             }
 
         }
     }
-
-    /*@Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint())
-            unVisible();
-        else visible();
-    }
-
-    public void unVisible() {
-        Log.i("RHG", "unVisible");
-    }
-
-    public void visible() {
-        Log.i("RHG", "visible");
-
-    }*/
-
 
     public void reStartLocation() {
         if (locationService == null) {

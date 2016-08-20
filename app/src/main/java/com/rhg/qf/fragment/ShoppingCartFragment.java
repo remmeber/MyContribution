@@ -1,7 +1,6 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -62,6 +61,7 @@ public class ShoppingCartFragment extends BaseFragment {
     @Bind(R.id.rl_shopping_cart_pay)
     RelativeLayout rlShoppingCartPay;
     private GetAddressPresenter getAddressPresenter;
+    private String userId;
     //-----------------根据需求创建相应的presenter----------------------------------------------------
 
     public ShoppingCartFragment() {
@@ -97,9 +97,10 @@ public class ShoppingCartFragment extends BaseFragment {
     public void loadData() {
         getOrdersPresenter = new OrdersPresenter(this);
         if (AccountUtil.getInstance().hasAccount()) {
-            String userId = AccountUtil.getInstance().getUserID();
+            userId = AccountUtil.getInstance().getUserID();
             getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
-        }
+        } else
+            ToastHelper.getInstance()._toast("当前用户未登录");
     }
 
     @Override
@@ -115,12 +116,10 @@ public class ShoppingCartFragment extends BaseFragment {
         srlShoppingCart.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        srlShoppingCart.setRefreshing(false);
-                    }
-                }, 2000);
+                if (AccountUtil.getInstance().hasAccount()) {
+                    getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+                } else
+                    ToastHelper.getInstance()._toast("当前用户未登录");
             }
         });
         QFoodShoppingCartExplAdapter = new QFoodShoppingCartExplAdapter(getContext());
@@ -150,6 +149,7 @@ public class ShoppingCartFragment extends BaseFragment {
         QFoodShoppingCartExplAdapter.setmData(shoppingCartBeanList);
         QFoodShoppingCartExplAdapter.notifyDataSetChanged();
         expandAll(shoppingCartBeanList.size());
+        srlShoppingCart.setRefreshing(false);
     }
 
     private void showEmpty(boolean isEmpty) {
@@ -217,7 +217,7 @@ public class ShoppingCartFragment extends BaseFragment {
         List<ShoppingCartBean.Goods> goodsList = ShoppingCartUtil.getSelectGoods(shoppingCartBeanList);
         for (ShoppingCartBean.Goods _goods : goodsList) {
             PayModel.PayBean _pay = new PayModel.PayBean();
-            _pay.setMerchantName("");
+            _pay.setMerchantName(_goods.getGoodsName());
             _pay.setProductName(_goods.getGoodsName());
             _pay.setChecked(true);
             _pay.setProductId(_goods.getGoodsID());
