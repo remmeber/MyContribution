@@ -31,7 +31,6 @@ public class FragmentController {
         return fm;
     }
 
-    //TODO ---------------------初始化fragment------------------------------------------------------
     private void initFragment(int resId, int showMark) {
         if (fragments != null) {
             FragmentTransaction ft = fm.beginTransaction();
@@ -39,9 +38,13 @@ public class FragmentController {
                 if (fragments.get(i) == null)
                     break;
                 ft.add(resId, fragments.get(i), fragments.get(i).getClass().getName());
-                if (i == showMark)
+                if (i == showMark) {
                     ft.show(fragments.get(i));
-                else ft.hide(fragments.get(i));
+                    fragments.get(i).setUserVisibleHint(true);
+                } else {
+                    ft.hide(fragments.get(i));
+                    fragments.get(i).setUserVisibleHint(false);
+                }
             }
             ft.commitAllowingStateLoss();
         }
@@ -51,7 +54,9 @@ public class FragmentController {
         if (fragments != null) {
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.show(fragments.get(position));
+            fragments.get(position).setUserVisibleHint(true);
             transaction.hide(fragments.get(showMark));
+            fragments.get(showMark).setUserVisibleHint(false);
             showMark = position;
             transaction.commitAllowingStateLoss();
         }

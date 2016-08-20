@@ -312,8 +312,8 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 ivAddToShoppingCart.setNum(String.valueOf(num + 1));
                 //TODO 需要更新购物车数据库的数据
                 break;
-         /*   case R.id.ivAddToShoppingCart:
-                *//*LikeDao likeDao = LikeDao.getInstance();
+            case R.id.ivAddToShoppingCart:
+               /* LikeDao likeDao = LikeDao.getInstance();
                 if (goodsDetailBean.isLike()) {
                     ivLike.setImageDrawable(drawable_not_like);
                     goodsDetailBean.setLike(false);
@@ -322,8 +322,8 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                     ivLike.setImageDrawable(drawable_like);
                     goodsDetailBean.setLike(true);
                     likeDao.updateLike(goodsDetailBean.getProductId(), 1);
-                }*//*
-                break;*/
+                }*/
+                break;
             case R.id.ivShare:
                 UmengUtil umengUtil = new UmengUtil(this);
                 UMImage imageMedia = new UMImage(this, image);

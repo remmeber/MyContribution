@@ -4,6 +4,7 @@ package com.rhg.qf.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         ButterKnife.bind(this, view);
         isPrepare = true;
         initView(view);
+        Log.i("RHG","ONCREATEVIEW");
         return view;
     }
 
@@ -69,6 +71,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        Log.i("RHG","setUserVisibleHint");
         if (isPrepare && isVisibleToUser) {
             loadData();
         }
