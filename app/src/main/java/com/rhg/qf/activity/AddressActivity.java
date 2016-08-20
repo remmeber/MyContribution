@@ -14,7 +14,6 @@ import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
-import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
@@ -46,10 +45,10 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     @Bind(R.id.srl_address)
     SwipeRefreshLayout srlAddress;
 
-
     AddressAdapter addressAdapter;
     int lastPosition = -1;
     int longClickPosition = -1;
+    int resultCode;
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenter(this);
 
@@ -77,6 +76,12 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
         }*/
     }
 
+    @Override
+    public void dataReceive(Intent intent) {
+        if (AppConstants.ADDRESS_DEFAULT.equals(intent.getAction())) {
+            resultCode = 100;
+        }
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -153,6 +158,13 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     }
 
     @Override
+    public void onBackPressed() {
+        AddressUrlBean.AddressBean _addressBean = getDefaultAddress(addressBeanList);
+        setResult(resultCode, new Intent().putExtra(AppConstants.ADDRESS_DEFAULT, _addressBean));
+        super.onBackPressed();
+    }
+
+    @Override
     protected void showSuccess(Object s) {
         if (s instanceof String) {
             getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
@@ -196,12 +208,24 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             case R.id.bt_add_new_address:
                 Intent _intent = new Intent(this, AddOrNewAddressActivity.class);
                 startActivityForResult(_intent, AppConstants.BACK_WITH_ADD);
-//                _intent.setComponent(null);/*TODO 对于intent内存泄漏可能有用*/
                 break;
             case R.id.tb_left_iv:
+                AddressUrlBean.AddressBean _addressBean = getDefaultAddress(addressBeanList);
+                setResult(resultCode, new Intent().putExtra(AppConstants.ADDRESS_DEFAULT, _addressBean));
                 finish();
                 break;
         }
+    }
+
+    private AddressUrlBean.AddressBean getDefaultAddress(List<AddressUrlBean.AddressBean> addressBeanList) {
+        AddressUrlBean.AddressBean _addressBean = new AddressUrlBean.AddressBean();
+        for (AddressUrlBean.AddressBean _address : addressBeanList) {
+            if ("1".equals(_address.getDefault())) {
+                _addressBean = _address;
+                break;
+            }
+        }
+        return _addressBean;
     }
 
     /**
@@ -250,4 +274,6 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
         deleteListener = null;
         super.onDestroy();
     }
+
+
 }

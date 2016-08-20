@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.PayItemAdapter;
 import com.rhg.qf.application.InitApplication;
+import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
@@ -30,6 +31,7 @@ import com.rhg.qf.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,6 +76,9 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     String tradeNumber;
     String style;//用来表示是否需要生成订单
     String orderId;
+    String receiver;
+    String phone;
+    String address;
 
 
     @Override
@@ -98,9 +103,9 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     private NewOrderBean generateOrder() {
         NewOrderBean _orderBean = new NewOrderBean();
-        _orderBean.setReceiver(tvReceiver.getText().toString());
-        _orderBean.setPhone(tvReceiverPhone.getText().toString());
-        _orderBean.setAddress(tvReceiverAddress.getText().toString());
+        _orderBean.setReceiver(receiver);
+        _orderBean.setPhone(phone);
+        _orderBean.setAddress(address);
         _orderBean.setFood(getCheckedFood(payList));
         _orderBean.setClient(AccountUtil.getInstance().getUserID());
         _orderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
@@ -122,9 +127,10 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         PayModel payModel = intent.getParcelableExtra(AppConstants.KEY_PARCELABLE);
         style = intent.getStringExtra(AppConstants.ORDER_STYLE);
         if (payModel != null) {
-            tvReceiver.setText(payModel.getReceiver());
-            tvReceiverPhone.setText(payModel.getPhone());
-            tvReceiverAddress.setText(payModel.getAddress());
+            receiver = payModel.getReceiver();
+            phone = payModel.getPhone();
+            address = payModel.getAddress();
+            setAddress(receiver, phone, address);
             payList.addAll(payModel.getPayBeanList());
         }
 
@@ -139,6 +145,15 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         RegisterBasePay(/*KeyLibs.ali_partner, KeyLibs.ali_sellerId, KeyLibs.ali_privateKey,*/
                 InitApplication.WXID, "10000100", null);
 //        BuildOrderInfo()
+    }
+
+    private void setAddress(String receiver, String phone, String address) {
+        tvReceiver.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiver),
+                receiver));
+        tvReceiverPhone.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvContactPhone),
+                phone));
+        tvReceiverAddress.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvReceiveAddress),
+                address));
     }
 
     /*支付成功的回调*/
@@ -173,7 +188,9 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                 finish();
                 break;
             case R.id.iv_edit_right:
-                ToastHelper.getInstance()._toast("编辑");
+                Intent _intent = new Intent(this, AddressActivity.class);
+                _intent.setAction(AppConstants.ADDRESS_DEFAULT);
+                startActivityForResult(_intent, 100);
                 break;
             case R.id.bt_pay_affirmance:
                 if (getCheckCount(payList) == 0) {
@@ -244,6 +261,16 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     payType = PayType.Cash;
                 }
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (100 == resultCode && data != null) {
+            AddressUrlBean.AddressBean _addressBean = data.getParcelableExtra(AppConstants.ADDRESS_DEFAULT);
+            setAddress(_addressBean.getName(), _addressBean.getPhone(),
+                    _addressBean.getAddress().concat(_addressBean.getDetail()));
         }
     }
 
