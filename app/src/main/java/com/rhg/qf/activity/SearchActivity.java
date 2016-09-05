@@ -118,7 +118,7 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
     @Override
     protected void initData() {
         flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.chevron_left_black));
         RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
                 DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive));
 

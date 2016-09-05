@@ -20,13 +20,6 @@
             android:scaleType="fitXY"
             tools:src="@drawable/ic_pic_failed" />
 
-        <ImageView
-            android:id="@+id/iv_shop_detail_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipToPadding="true"
-            android:fitsSystemWindows="true"
-            android:src="@drawable/ic_chevron_left_black" />
 
         <TextView
             android:id="@+id/tv_shop_detail_name"
@@ -47,11 +40,11 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@+id/iv_shop_detail_logo"
-            app:tl_indicator_color="@color/colorToolbarGreen"
+            app:tl_indicator_color="@color/colorGreenNormal"
             app:tl_indicator_height="6dp"
             app:tl_indicator_width="80dp"
             app:tl_tab_space_equal="true"
-            app:tl_textSelectColor="@color/colorToolbarGreen"
+            app:tl_textSelectColor="@color/colorGreenNormal"
             app:tl_textUnselectColor="@color/black"
             app:tl_textsize="@dimen/text_medium"
             tools:background="@color/black" />

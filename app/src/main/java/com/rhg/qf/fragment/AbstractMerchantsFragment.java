@@ -2,6 +2,7 @@ package com.rhg.qf.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +36,7 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
     ProgressBar commonRefresh;
     @Bind(R.id.common_swipe)
     SwipeRefreshLayout commonSwipe;
-    //TODO-------------------------------按销量排序的数据--------------------------------------------
+
     List<MerchantUrlBean.MerchantBean> dataBySellNumberModels = new ArrayList<>();
     MerchantsPresenter getMerchantsOrderBySellNumberPresenter;
     QFoodMerchantAdapter qFoodMerchantAdapter;
@@ -66,7 +67,7 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
         qFoodMerchantAdapter.setOnRcvItemClickListener(this);
         commonRecycle.setAdapter(qFoodMerchantAdapter);
-        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
+        commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -84,7 +85,6 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         commonRefresh.setVisibility(View.VISIBLE);
         getMerchantsOrderBySellNumberPresenter.getMerchants(AppConstants.RESTAURANTS, merchantsType);
     }
-
 
 
     @Override

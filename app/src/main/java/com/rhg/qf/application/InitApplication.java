@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.easemob.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -107,11 +108,16 @@ public class InitApplication extends Application {
         if (AppConstants.DEBUG)
             refWatcher = LeakCanary.install(this);
         initApplication = this;
+        initEase();
         initAccountUtil();
         initDBHelper();
         initToast();
         initImageLoader();
         thirdConfig();
+    }
+
+    private void initEase() {
+        EaseUI.getInstance().init(this);
     }
 
     /**

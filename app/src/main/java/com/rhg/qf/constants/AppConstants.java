@@ -156,6 +156,8 @@ public class AppConstants {
 
     public static final int DELIVER_FEE = 12;
 
+    public static final String CUSTOMER_SERVER = "DeliciousCS";
+
     /**
      * 响应结果，正确
      */

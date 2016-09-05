@@ -33,8 +33,8 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Bind(R.id.common_refresh)
     ProgressBar commonRefresh;
     @Bind(R.id.common_swipe)
-
     SwipeRefreshLayout commonSwipe;
+
     QFoodOrderAdapter qFoodOrderAdapter;
     List<OrderUrlBean.OrderBean> orderBeanList = new ArrayList<>();
     OrdersPresenter getOrdersPresenter;

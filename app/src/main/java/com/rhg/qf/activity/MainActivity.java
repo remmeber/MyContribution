@@ -1,4 +1,4 @@
-package com.rhg.qf;
+package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.rhg.qf.R;
 import com.rhg.qf.activity.BaseFragmentActivity;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.fragment.HomeFragment;
@@ -120,7 +121,6 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("RHG", "resultCode: " + resultCode + "data");
         if (resultCode == AppConstants.BACK_WITH_DELETE) {//// TODO: 商品详情返回购物车
             bottomNavigation.selectTab(data.getExtras().getInt(AppConstants.KEY_DELETE, 0), true);
             return;

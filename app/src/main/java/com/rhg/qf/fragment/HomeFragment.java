@@ -11,8 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.easemob.easeui.EaseConstant;
 import com.rhg.qf.R;
-import com.rhg.qf.activity.DIYOrderActivity;
+import com.rhg.qf.activity.ChatActivity;
 import com.rhg.qf.activity.HotFoodActivity;
 import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
@@ -240,7 +241,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                     ToastHelper.getInstance().displayToastWithQuickClose("请登录");
                     break;
                 }
-                startActivity(new Intent(getContext(), DIYOrderActivity.class));
+                startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, AppConstants.CUSTOMER_SERVER));
                 break;
         }
     }

@@ -35,8 +35,6 @@ public class ShopDetailActivity extends BaseFragmentActivity {
 
     @Bind(R.id.iv_shop_detail_logo)
     ImageView ivShopLogo;
-    @Bind(R.id.iv_shop_detail_back)
-    ImageView ivBack;
     @Bind(R.id.tv_shop_detail_name)
     TextView tvShopName;
     @Bind(R.id.stl_shop_detail)
@@ -90,7 +88,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
     @Override
     protected void initData() {
         tbCenterTv.setText("店铺详情");
-        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
         flTab.setBackgroundColor(ContextCompat.getColor(this,R.color.colorGreenNormal));
         tvShopName.setText(merchantName);
         ImageLoader.getInstance().displayImage(shopLogoUrl, ivShopLogo);
@@ -121,15 +119,12 @@ public class ShopDetailActivity extends BaseFragmentActivity {
 
     }
 
-    @OnClick({R.id.iv_shop_detail_back, R.id.tb_left_iv})
+    @OnClick( R.id.tb_left_iv)
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_shop_detail_back:
+            case R.id.tb_left_iv:
                 bundle = null;
                 setResult(AppConstants.BACK_WITHOUT_DATA);
-                finish();
-                break;
-            case R.id.tb_left_iv:
                 finish();
                 break;
         }

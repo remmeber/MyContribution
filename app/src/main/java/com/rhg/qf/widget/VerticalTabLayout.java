@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class VerticalTabLayout extends FrameLayout implements View.OnClickListener {
     private final static int DEFAULT_SELECT_TEXT_COLOR = Color.WHITE;
-    private final static int DEFAULT_SELECT_BG_COLOR = Color.GREEN;
+    private final static int DEFAULT_SELECT_BG_COLOR = Color.BLUE;
     private final static int DEFAULT_UNSELECT_TEXT_COLOR = Color.BLACK;
     private final static int DEFAULT_UNSELECT_BG_COLOR = Color.GRAY;
     Context mContext;
