@@ -24,12 +24,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-xhdpi\\ease_chatting_biaoqing_btn_enable.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\delete_expression.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-xhdpi\\delete_expression.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\ease_chat_face_normal.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-xhdpi\\ease_chat_face_normal.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\delete_expression.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-xhdpi\\delete_expression.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\ease_close_icon.png",

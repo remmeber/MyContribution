@@ -76,12 +76,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_type_select_btn_pressed.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_show_head_toast_bg.9.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_show_head_toast_bg.9.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_ic_launcher.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_show_head_toast_bg.9.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_show_head_toast_bg.9.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_record_animate_07.png",
@@ -136,12 +136,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_dx_checkbox_off.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_app_panel_video_icon.9.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_app_panel_video_icon.9.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ee_18.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ee_18.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_app_panel_video_icon.9.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_app_panel_video_icon.9.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_record_animate_05.png",
@@ -264,12 +264,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_groups_icon.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_video_play_btn_small_nor.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_video_play_btn_small_nor.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_record_animate_02.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_record_animate_02.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_video_play_btn_small_nor.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_video_play_btn_small_nor.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_chatfrom_voice_playing_f1.png",

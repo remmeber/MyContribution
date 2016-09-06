@@ -17,7 +17,15 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        //testCompile 'junit:junit:4.12'
+        multiDexEnabled = true
+
     }
+    dexOptions {
+        jumboMode = true
+        javaMaxHeapSize "2g"
+    }
+
     buildTypes {
         release {
             signingConfig signingConfigs.rhg
@@ -37,8 +45,9 @@ android {
 dependencies {
     compile project(':easeui')
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.0'
+    //compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:cardview-v7:24.2.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.0.0'
@@ -56,10 +65,10 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.0.4@aar'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.3.4@aar'
-    compile 'me.yokeyword:fragmentation:0.7.5'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    //compile 'me.yokeyword:fragmentation:0.7.5'
+    //debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    //releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     //    compile project(':searchview')
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile files('libs/umeng_social_sdk.jar')

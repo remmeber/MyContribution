@@ -44,12 +44,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_msg_state_failed_resend.xml"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_btn_cancel_normal_shape.xml",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_btn_cancel_normal_shape.xml"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_chat_send_btn_selector.xml",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_chat_send_btn_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_btn_cancel_normal_shape.xml",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_btn_cancel_normal_shape.xml"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_chatto_bg.xml",

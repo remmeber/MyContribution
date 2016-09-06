@@ -196,12 +196,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_video_play_btn_small_nor.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_voice_unread.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_voice_unread.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_22.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_22.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_voice_unread.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_voice_unread.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_dx_checkbox_off.png",
@@ -316,12 +316,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_34.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_04.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_04.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_8.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_8.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_04.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_04.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_new_friends_icon.png",
@@ -404,12 +404,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chatfrom_voice_playing.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_type_select_btn_pressed.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_type_select_btn_pressed.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_chat_face_normal.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chat_face_normal.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_type_select_btn_pressed.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_type_select_btn_pressed.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_05.png",

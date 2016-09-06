@@ -52,12 +52,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_widget_contact_list.xml"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_sent_video.xml",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_sent_video.xml"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_activity_show_big_image.xml",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_activity_show_big_image.xml"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_sent_video.xml",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_sent_video.xml"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_sent_file.xml",

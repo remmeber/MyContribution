@@ -14,7 +14,6 @@ import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.KeyBoardUtil;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
@@ -138,10 +137,7 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
             locationService.stop();
             locationService.unregisterListener(mLocationListener);
         }
-        if (AppConstants.DEBUG) {
-            RefWatcher refWatcher = InitApplication.getRefWatcher(this);
-            refWatcher.watch(this);
-        }
+
     }
 
 

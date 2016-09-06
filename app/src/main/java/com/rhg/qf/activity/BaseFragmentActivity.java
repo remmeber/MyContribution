@@ -18,7 +18,6 @@ import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.KeyBoardUtil;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
@@ -175,10 +174,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);
-        if (AppConstants.DEBUG) {
-            RefWatcher refWatcher = InitApplication.getRefWatcher(this);
-            refWatcher.watch(this);
-        }
+
     }
 
     /*BroadcastReceiver receiver = new BroadcastReceiver() {

@@ -105,13 +105,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     protected void initView(View view) {
-        /*tlLeftRL = (RelativeLayout) view.findViewById(R.id.home_tl_left_rl);
-        tlLeftIV = (ImageView) view.findViewById(R.id.home_tl_left_bt);
-        tlLeftTV = (TextView) view.findViewById(R.id.home_tl_left_tv);
-        tlCenterTV = (TextView) view.findViewById(R.id.home_tl_center_tv);
-        tlRightLL = (ImageView) view.findViewById(R.id.home_tl_right_ll);*/
-
-//        progressBar = (ProgressBar) view.findViewById(R.id.progress);
     }
 
     @Override
