@@ -13,6 +13,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -80,10 +81,12 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
 
     protected void initData() {
         uploadAndSaveImagePresenter = new UploadAndSaveImagePresenter(this);
-        tb_common.setBackgroundResource(R.color.colorGreenNormal);
+        tb_common.setBackgroundResource(R.color.colorBlueNormal);
         tbRightTv.setText(getResources().getString(R.string.tvEdit));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        etNameWrap.setHint(AccountUtil.getInstance().getNickName());
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
+        etNameWrap.setHint("姓名");
+        if (etNameWrap.getEditText() != null)
+            etNameWrap.getEditText().setText(AccountUtil.getInstance().getNickName());
         etNameWrap.setError("");
         etIdWrap.setHint("身份证号");
         etPhoneWrap.setHint("手机号");

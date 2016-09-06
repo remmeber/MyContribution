@@ -46,7 +46,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         ButterKnife.bind(this, view);
         isPrepare = true;
         initView(view);
-        Log.i("RHG","ONCREATEVIEW");
         return view;
     }
 
@@ -71,7 +70,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.i("RHG","setUserVisibleHint");
         if (isPrepare && isVisibleToUser) {
             loadData();
         }

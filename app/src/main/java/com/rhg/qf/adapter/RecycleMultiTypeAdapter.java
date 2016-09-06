@@ -2,14 +2,12 @@ package com.rhg.qf.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -47,7 +45,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     //--------------------------------Define Item Type----------------------------------------------
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_BANNER = 1;
-    public static final int TYPE_TEXT = 2;
+    public static final int TYPE_SEARCH = 2;
     public static final int TYPE_FAVORABLE = 3;
     public static final int TYPE_RECOMMEND_TEXT = 4;
     public static final int TYPE_RECOMMEND_LIST = 5;
@@ -63,6 +61,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     private OnBannerClickListener onBannerClickListener;
     private OnGridItemClickListener onGridItemClickListener;
     private RcvItemClickListener<MerchantUrlBean.MerchantBean> onItemClickListener;
+    private OnSearch onSearch;
 
     public RecycleMultiTypeAdapter(Context context, List<Object> mData) {
         this.context = context;
@@ -79,7 +78,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     public int getItemViewType(int position) {
         if (position == 0) return TYPE_HEADER;
         if (position == 1) return TYPE_BANNER;
-        if (position == 2) return TYPE_TEXT;
+        if (position == 2) return TYPE_SEARCH;
         if (position == 3) return TYPE_FAVORABLE;
         if (position == 4) return TYPE_RECOMMEND_TEXT;
         if (position == 5 + (((RecommendListTypeModel) mData.get(5)).getRecommendShopBeanEntity() == null ? 0 :
@@ -96,8 +95,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
                 return new HeaderTypeViewHolder(layoutInflater.inflate(R.layout.recycleheader, parent, false));
             case TYPE_BANNER:
                 return new BannerTypeViewHolder(layoutInflater.inflate(R.layout.item_banner, parent, false));
-            case TYPE_TEXT:
-                return new TextTypeViewHolder(layoutInflater.inflate(R.layout.text_rcv, parent, false));
+            case TYPE_SEARCH:
+                return new SearchTypeViewHolder(layoutInflater.inflate(R.layout.search_rcv, parent, false));
             case TYPE_FAVORABLE:
                 return new FavorableTypeViewHolder(layoutInflater.inflate(R.layout.grid_type_layout, parent, false), viewType);
             case TYPE_RECOMMEND_TEXT:
@@ -121,8 +120,8 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_BANNER:
                 bindViewHolderBanner((BannerTypeViewHolder) holder, (BannerTypeBean) mData.get(position));
                 break;
-            case TYPE_TEXT:
-                bindViewHolderText((TextTypeViewHolder) holder, (TextTypeBean) mData.get(position));
+            case TYPE_SEARCH:
+                bindViewHolderText((SearchTypeViewHolder) holder, (TextTypeBean) mData.get(position));
                 break;
             case TYPE_FAVORABLE:
                 bindViewHolderFavorable((FavorableTypeViewHolder) holder, (FavorableTypeModel) mData.get(position));
@@ -166,8 +165,15 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         });
     }
 
-    private void bindViewHolderText(TextTypeViewHolder holder, TextTypeBean data) {
-        holder.textView.setText(data.getTitle());
+    private void bindViewHolderText(SearchTypeViewHolder holder, TextTypeBean data) {
+        holder.VipText.setText(data.getTitle());
+        holder.searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onSearch!=null)
+                    onSearch.search();
+            }
+        });
     }
 
     @SuppressWarnings("NewApi")
@@ -240,12 +246,20 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.onItemClickListener = onItemClickListener;
     }
 
+    public void setOnSearch(OnSearch onSearch) {
+        this.onSearch = onSearch;
+    }
+
     public interface OnBannerClickListener {
-        public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
+         void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
     }
 
     public interface OnGridItemClickListener {
-        public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity);
+         void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity);
+    }
+
+    public interface OnSearch{
+        void search();
     }
 
     private class HeaderTypeViewHolder extends RecyclerView.ViewHolder {
@@ -273,12 +287,14 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    private class TextTypeViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+    private class SearchTypeViewHolder extends RecyclerView.ViewHolder {
+        private TextView VipText;
+        private TextView searchView;
 
-        public TextTypeViewHolder(View itemView) {
+        public SearchTypeViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.VipText);
+            VipText = (TextView) itemView.findViewById(R.id.VipText);
+            searchView = (TextView) itemView.findViewById(R.id.home_search);
         }
     }
 

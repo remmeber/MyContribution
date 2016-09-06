@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <include
-        layout="@layout/toolbar_home_layout"
-        android:clipToPadding="true"
-        android:fitsSystemWindows="true" />
+    android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/home_swipe"
@@ -21,4 +16,45 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/deliver"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:id="@+id/tv_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/iv_left"
+            android:layout_toLeftOf="@+id/iv_right"
+            android:layout_toRightOf="@id/iv_left"
+            android:layout_toStartOf="@id/iv_right"
+            android:background="@drawable/btn_gray_normal"
+            android:gravity="center"
+            android:hint="自主点单"
+            android:padding="5dp"
+            android:textSize="@dimen/text_medium" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/deliver"
+            tools:ignore="contentDescription" />
+    </RelativeLayout>
+
+</FrameLayout>
