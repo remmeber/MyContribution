@@ -41,7 +41,7 @@ public class InitApplication extends MultiDexApplication {
     public LocationService locationService;
     public Vibrator mVibrator;
     private HashMap<String, WeakReference<BaseFragmentActivity>> activityList = new HashMap<String, WeakReference<BaseFragmentActivity>>();
-    private HashMap<String, WeakReference<Object>> objectList = new HashMap<>();
+//    private HashMap<String, WeakReference<Object>> objectList = new HashMap<>();
 
 
     public static InitApplication getInstance() {

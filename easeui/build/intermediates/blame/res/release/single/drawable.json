@@ -4,12 +4,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_search_clear.xml"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_type_select_btn.xml",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_type_select_btn.xml"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_recording_text_hint_bg.xml",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_recording_text_hint_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_type_select_btn.xml",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\src\\main\\res\\drawable\\ease_type_select_btn.xml"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable\\ease_mm_listitem.xml",
