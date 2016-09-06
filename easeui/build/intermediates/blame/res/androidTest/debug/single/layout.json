@@ -1,11 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_search_bar.xml",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_search_bar.xml"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_received_bigexpression.xml",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_received_bigexpression.xml"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_search_bar.xml",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_search_bar.xml"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_widget_switch_button.xml",

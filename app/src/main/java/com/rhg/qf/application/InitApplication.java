@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 /**
- * desc:APP的入口，定义全局变量
+ * desc:APP的入口，定义全局变量,继承MultiDexApplication，解决方法数超过65536
  * author：remember
  * time：2016/5/28 16:22
  * email：1013773046@qq.com
