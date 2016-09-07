@@ -114,7 +114,8 @@ public class ChatActivity extends EaseBaseActivity {
         String reg = "[\u4e00-\u9fa5]";
         Pattern pat = Pattern.compile(reg);
         Matcher mat = pat.matcher(uname);
-        return mat.replaceAll("");
+        String s = mat.replaceAll("");
+        return s.replace(" ","");
     }
 
     private void createAccountToServer(final String uname, final String pwd, final EMCallBack callBack) {

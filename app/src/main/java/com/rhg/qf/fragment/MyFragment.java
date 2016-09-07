@@ -1,6 +1,7 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import com.rhg.qf.mvp.presenter.UserSignInPresenter;
 import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -34,7 +36,6 @@ import java.util.Map;
 public class MyFragment extends BaseFragment implements View.OnClickListener {
     boolean hasAccount = true;
 
-    //    FrameLayout flTAB;
     ImageView userHeader;
     TextView userName;
     //TODO-------------------------------我的订单栏---------------------------------------------
@@ -121,7 +122,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         } else {
             userName.setText("请登录");
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示
-            userName.setOnClickListener(this);//TODO 如果本地有账户则直接登录，否则需要点击登录
+            userName.setOnClickListener(this);
             userName.setTag(R.id.userName);
         }
 
@@ -144,6 +145,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         myComplete.setTag(2);
 
         workerInfo.setText(R.string.workerInfo);
+        workerInfo.setTextSize(DpUtil.dip2px(5));
 
         workerForward.setOnClickListener(this);
         workerForward.setTag(R.id.profileWorker);
