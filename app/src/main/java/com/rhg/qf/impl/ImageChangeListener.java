@@ -9,5 +9,5 @@ package com.rhg.qf.impl;
 
 public interface ImageChangeListener {
     //    public void updateImage(int id, int position);
-    public void updateImage(String imageUrl, int position);
+    void updateImage(String imageUrl, int position);
 }

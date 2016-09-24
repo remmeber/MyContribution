@@ -8,7 +8,7 @@ import java.util.Map;
  *email：1013773046@qq.com
  */
 public interface SignInListener {
-    public void signSuccess(Map<String, String> infoMap);
+    void signSuccess(Map<String, String> infoMap);
 
-    public void signFail(String errorMessage);
+    void signFail(String errorMessage);
 }

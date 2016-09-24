@@ -45,13 +45,6 @@
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
-        <service
-            android:name="com.squareup.leakcanary.internal.HeapAnalyzerService"
-            android:enabled="false"
-            android:process=":leakcanary" />
-        <service
-            android:name="com.squareup.leakcanary.DisplayLeakService"
-            android:enabled="false" />
 
         <activity
             android:name=".activity.MainActivity"
