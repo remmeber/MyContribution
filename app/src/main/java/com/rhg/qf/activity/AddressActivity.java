@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -34,6 +35,8 @@ import butterknife.OnClick;
  */
 public class AddressActivity extends BaseAppcompactActivity implements RecycleViewWithDelete.ItemClickListener {
 
+    private static final int DELETE = 0;
+    private static final int MODIFY = 1;
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -44,17 +47,13 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     RecycleViewWithDelete rcyAddress;
     @Bind(R.id.srl_address)
     SwipeRefreshLayout srlAddress;
-
     AddressAdapter addressAdapter;
     int lastPosition = -1;
     int longClickPosition = -1;
     int resultCode;
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenter(this);
-
     AddOrUpdateAddressPresenter addOrUpdateAddressPresenter = new AddOrUpdateAddressPresenter(this);
-    private static final int DELETE = 0;
-    private static final int MODIFY = 1;
     private AddressAdapter.deleteListener deleteListener = new AddressAdapter.deleteListener() {
         @Override
         public void onDelete(int position) {
@@ -100,15 +99,15 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbCenterTv.setText(getResources().getString(R.string.address));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcyAddress.setLayoutManager(linearLayoutManager);
         rcyAddress.setHasFixedSize(true);
         RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DpUtil.dip2px(8), getResources().getColor(R.color.colorBackground));
+                DpUtil.dip2px(8), ContextCompat.getColor(this, R.color.colorBackground));
         rcyAddress.addItemDecoration(divider);
         addressAdapter = new AddressAdapter(this, addressBeanList);
         addressAdapter.setmDeleteListener(deleteListener);
@@ -127,7 +126,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
                 ToastHelper.getInstance()._toast("删除：" + position);
             }
         });*/
-        srlAddress.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorGreenNormal));
+        srlAddress.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         srlAddress.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -1,18 +1,15 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.easemob.easeui.EaseConstant;
 import com.rhg.qf.R;
-import com.rhg.qf.activity.ChatActivity;
 import com.rhg.qf.activity.HotFoodActivity;
+import com.rhg.qf.activity.PersonalOrderActivity;
 import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
 import com.rhg.qf.adapter.QFoodGridViewAdapter;
@@ -42,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -110,6 +106,9 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     @Override
     public void loadData() {
         homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
+        if (!AccountUtil.getInstance().hasAccount()) {
+            reStartLocation();
+        }
     }
 
 
@@ -131,7 +130,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         home_rcv.setLayoutManager(linearLayoutManager);
         home_rcv.setHasFixedSize(false);
         home_rcv.setAdapter(recycleMultiTypeAdapter);
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -227,11 +226,11 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 else ToastHelper.getInstance()._toast("请检查网络");*/
                 break;
             case R.id.tv_center:
-                if (!AccountUtil.getInstance().hasAccount()) {
+               /* if (!AccountUtil.getInstance().hasAccount()) {
                     ToastHelper.getInstance().displayToastWithQuickClose("请登录");
                     break;
-                }
-                startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, AppConstants.CUSTOMER_SERVER));
+                }*/
+                startActivity(new Intent(getContext(), PersonalOrderActivity.class));
 //                doSearch();
                 break;
             case R.id.iv_right:

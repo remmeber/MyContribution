@@ -8,7 +8,6 @@ import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.pays.IPayable;
 import com.rhg.qf.pay.security.wx.MD5;
-import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.utils.XmlUtil;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -83,6 +82,7 @@ public class WxPay implements IPayable {
             String sign = Sign(packageParams);
             packageParams.put("sign", sign);/*签名*/
             String xmlstring = XmlUtil.MapToXml(packageParams);
+            Log.i("RHG", "Build Order Info:" + xmlstring);
 
             return new OrderInfo(xmlstring);
 
@@ -108,6 +108,7 @@ public class WxPay implements IPayable {
         String content = new String(response);
         content = content.replace("<![CDATA[", "");
         content = content.replace("]]>", "");
+        Log.i("RHG", "response: " + content);
         Map<String, String> map = XmlUtil.DecodeXmlToMap(content);
         if (map == null) {
             return "";

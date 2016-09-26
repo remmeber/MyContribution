@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -73,8 +74,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     int orderTag;
     String orderPrice;
     String merchantName;
-    private FoodsDetailAdapter foodsDetailAdapter;
     OrderDetailUrlBean.OrderDetailBean foodBean = new OrderDetailUrlBean.OrderDetailBean();
+    private FoodsDetailAdapter foodsDetailAdapter;
 
     @Override
     public void dataReceive(Intent intent) {
@@ -101,9 +102,9 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         ivEditRight.setVisibility(View.GONE);
         tvEdit.setVisibility(View.GONE);
         if (orderTag != AppConstants.USER_ORDER_DELIVERING)

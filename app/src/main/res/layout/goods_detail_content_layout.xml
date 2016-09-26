@@ -35,7 +35,7 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_shopping_cart_green"
-                app:tint_color="@color/colorGreenNormal" />
+                app:tint_color="@color/colorBlueNormal" />
 
             <ImageView
                 android:id="@+id/ivShare"
@@ -139,7 +139,7 @@
 
             <include
                 layout="@layout/add_or_reduce_layout"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"

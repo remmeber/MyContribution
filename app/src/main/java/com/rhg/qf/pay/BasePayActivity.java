@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
@@ -20,7 +19,7 @@ import com.rhg.qf.pay.pays.wx.WxPay;
 
 import java.lang.ref.WeakReference;
 
-public abstract class BasePayActivity extends Activity{
+public abstract class BasePayActivity extends Activity {
 
     private static final int PAY_FLAG = 1;
     private static final int PAY_ALI = 2;
@@ -29,87 +28,14 @@ public abstract class BasePayActivity extends Activity{
      * 默认方式微信支付（微信支付被选中）
      */
     public PayType payType = PayType.WeixinPay;
-    /**
-     * 支付实体对象。通过该对象调用接口生成规范的订单信息并进行支付
-     */
-    private IPayable payManager;
-
     WeakReference<BasePayActivity> activityWeakReference =
             new WeakReference<BasePayActivity>(BasePayActivity.this);
     // 支付宝支付完成后，多线程回调主线程handler
     private final MyHandler mHandler = new MyHandler(activityWeakReference);
-
-    private static class MyHandler extends Handler {
-        WeakReference<BasePayActivity> mActivityReference;
-
-        MyHandler(WeakReference<BasePayActivity> activity) {
-            mActivityReference = activity;
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            final BasePayActivity activity = mActivityReference.get();
-            if (activity == null)
-                return;
-            switch (msg.what) {
-                case PAY_FLAG:
-                    PayResult payResult = new PayResult((String) msg.obj);
-                    // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
-                    String resultInfo = payResult.getResult();
-                    String resultStatus = payResult.getResultStatus();
-
-                    if (TextUtils.equals(resultStatus, "9000")) {
-                        // ----------调用重写方法
-                        activity.showSuccess("支付成功");
-                    } else {
-                        // 判断resultStatus 为非“9000”则代表可能支付失败
-                        // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认。
-                        if (TextUtils.equals(resultStatus, "8000")) {
-                            // ---------调用重写方法
-                            activity.Warning("支付结果确认中");
-                        } else {
-                            // -------调用重写方法
-                            Log.i("RHG", resultStatus);
-                            activity.showError("支付失败");
-                        }
-                    }
-                    break;
-                case PAY_ALI:
-                    break;
-                case PAY_WX:
-                    break;
-                default:
-                    break;
-            }
-
-        }
-    }
-
-    MyThread thread = null;
-
-    private static class MyThread extends Thread {
-        private boolean mRunning = false;
-        WeakReference<BasePayActivity> weakReference;
-        OrderInfo orderInfo;
-
-        public MyThread(WeakReference<BasePayActivity> activity, OrderInfo orderInfo) {
-            weakReference = activity;
-            this.orderInfo = orderInfo;
-        }
-
-        @Override
-        public void run() {
-            super.run();
-            BasePayActivity activity = weakReference.get();
-            if (activity == null)
-                return;
-        }
-
-        public void close() {
-            mRunning = false;
-        }
-    }
-
+    /**
+     * 支付实体对象。通过该对象调用接口生成规范的订单信息并进行支付
+     */
+    private IPayable payManager;
 
     /**
      * 警告（比如：还没有确定支付结果，在等待支付结果确认）回调方法。开发者可根据各自业务override该方法
@@ -147,7 +73,6 @@ public abstract class BasePayActivity extends Activity{
                 payManager.unRegisterApp();
             payManager = PaysFactory.GetInstance(payType);
         }
-        Log.i("RHG", "AliPay is done");
 
         // 1.开发者统一传入订单相关参数，生成规范化的订单（支付宝支付第一步；微信支付第二步）
         // ------调用重写方法
@@ -248,5 +173,51 @@ public abstract class BasePayActivity extends Activity{
         mHandler.removeCallbacksAndMessages(null);
 //        thread.close();
         super.onDestroy();
+    }
+
+    private static class MyHandler extends Handler {
+        WeakReference<BasePayActivity> mActivityReference;
+
+        MyHandler(WeakReference<BasePayActivity> activity) {
+            mActivityReference = activity;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            final BasePayActivity activity = mActivityReference.get();
+            if (activity == null)
+                return;
+            switch (msg.what) {
+                case PAY_FLAG:
+                    PayResult payResult = new PayResult((String) msg.obj);
+                    // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
+                    String resultInfo = payResult.getResult();
+                    String resultStatus = payResult.getResultStatus();
+
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // ----------调用重写方法
+                        activity.showSuccess("支付成功");
+                    } else {
+                        // 判断resultStatus 为非“9000”则代表可能支付失败
+                        // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认。
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            // ---------调用重写方法
+                            activity.Warning("支付结果确认中");
+                        } else {
+                            // -------调用重写方法
+                            Log.i("RHG", resultStatus);
+                            activity.showError("支付失败");
+                        }
+                    }
+                    break;
+                case PAY_ALI:
+                    break;
+                case PAY_WX:
+                    break;
+                default:
+                    break;
+            }
+
+        }
     }
 }

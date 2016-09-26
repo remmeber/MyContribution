@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:indeterminateDrawable="@drawable/round_progress" />
 
-    <include layout="@layout/goods_detail_content_layout" />
+    <include layout="@layout/goods_detail_content_layout"/>
 
 
 </LinearLayout>

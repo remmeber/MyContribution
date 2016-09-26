@@ -35,8 +35,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            tools:ignore="contentDescription"
-            android:src="@drawable/ic_shop_green" />
+            android:src="@drawable/ic_shop_green"
+            tools:ignore="contentDescription" />
 
         <TextView
             android:id="@+id/headerstorename"
@@ -60,8 +60,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            tools:ignore="contentDescription"
-            android:src="@drawable/ic_chevron_right_green" />
+            android:src="@drawable/ic_chevron_right_blue"
+            tools:ignore="contentDescription" />
 
         <View
             android:id="@+id/headerline"

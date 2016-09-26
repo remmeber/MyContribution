@@ -24,9 +24,9 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/margin_small"
         app:lineProgressBackground="@color/colorInActive"
-        app:lineProgressColor="@color/colorGreenNormal"
+        app:lineProgressColor="@color/colorBlueNormal"
         app:lineProgressHeight="10dp"
-        app:lineProgressTextColor="@color/colorGreenNormal"
+        app:lineProgressTextColor="@color/colorBlueNormal"
         app:lineProgressTextDefaultColor="@color/colorInActive"
         app:lineProgressTextSize="@dimen/text_medium"
         app:marginBetweenTextAndBar="@dimen/margin_little" />
@@ -102,10 +102,10 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             app:space_width="2dp"
             app:star_height="@dimen/material_size_standard"
-            app:star_hollow="@drawable/ic_star_gray"
+            app:star_hollow="@drawable/star_gray"
             app:star_max="5"
             app:star_rating="0"
-            app:star_solid="@drawable/ic_star_green"
+            app:star_solid="@drawable/star_blue"
             app:star_width="@dimen/material_size_standard" />
 
         <TextView
@@ -131,17 +131,17 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             app:space_width="2dp"
             app:star_height="@dimen/material_size_standard"
-            app:star_hollow="@drawable/ic_star_gray"
+            app:star_hollow="@drawable/star_gray"
             app:star_max="5"
             app:star_rating="0"
-            app:star_solid="@drawable/ic_star_green"
+            app:star_solid="@drawable/star_blue"
             app:star_width="@dimen/material_size_standard" />
 
         <TextView
-            android:layout_below="@id/rb_deliver_service"
             android:id="@+id/bt_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/rb_deliver_service"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:background="@drawable/btn_green_bg_normal"
             android:gravity="center"

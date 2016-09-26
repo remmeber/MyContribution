@@ -8,12 +8,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_default_expression.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_send_btn_normal.9.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_send_btn_normal.9.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_location_pressed.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_location_pressed.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_send_btn_normal.9.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_send_btn_normal.9.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_voice_call_self.png",
@@ -24,12 +24,12 @@
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_takepic_pressed.png"
     },
     {
-        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chatting_biaoqing_btn_enable.png",
-        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chatting_biaoqing_btn_enable.png"
-    },
-    {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_default_avatar.png",
         "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_default_avatar.png"
+    },
+    {
+        "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chatting_biaoqing_btn_enable.png",
+        "source": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chatting_biaoqing_btn_enable.png"
     },
     {
         "merged": "C:\\Users\\rhg\\Desktop\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_press_speak_btn_pressed.9.png",

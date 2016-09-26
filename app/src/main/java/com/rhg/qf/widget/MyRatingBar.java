@@ -59,7 +59,7 @@ public class MyRatingBar extends View {
         starRating = a.getFloat(R.styleable.MyRatingBar_star_rating, 0);
         isIndicator = a.getBoolean(R.styleable.MyRatingBar_star_isIndicator, true);
         mSolidBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.star_green));
+                R.drawable.star_blue));
         mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.star_gray));
         mOrientation = a.getInt(R.styleable.MyRatingBar_star_orientation, HORIZONTAL);
@@ -220,8 +220,8 @@ public class MyRatingBar extends View {
             result = specSize;
         } else {
             //Calculate the width according the views count
-            result = (int) (getPaddingLeft() + getPaddingRight()
-                    + mSpaceWidth * (starMaxNumber - 1) + mStarWidth * (starMaxNumber));
+            result = getPaddingLeft() + getPaddingRight()
+                    + mSpaceWidth * (starMaxNumber - 1) + mStarWidth * (starMaxNumber);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
@@ -246,7 +246,7 @@ public class MyRatingBar extends View {
             result = specSize;
         } else {
             //Measure the height
-            result = (int) (mStarHeight + getPaddingTop() + getPaddingBottom());
+            result = mStarHeight + getPaddingTop() + getPaddingBottom();
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);

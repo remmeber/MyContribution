@@ -2,13 +2,11 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseFragmentActivity;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.fragment.HomeFragment;
 import com.rhg.qf.fragment.MyFragment;
@@ -81,7 +79,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigation
-                .setActiveColor(R.color.colorGreenNormal)
+                .setActiveColor(R.color.colorBlueNormal)
                 .setInActiveColor(R.color.colorInActive)
                 .setBarBackgroundColor(R.color.colorBackground);
         bottomNavigation.addItem(new BottomNavigationItem(R.drawable.ic_home, R.string.Home))

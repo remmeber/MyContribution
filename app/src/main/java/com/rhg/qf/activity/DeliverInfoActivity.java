@@ -44,6 +44,13 @@ import butterknife.OnClick;
  * email：1013773046@qq.com
  */
 public class DeliverInfoActivity extends BaseAppcompactActivity implements ModifyHeadImageDialog.ChoosePicListener {
+    /**
+     * desc:裁剪图片
+     * author：remember
+     * time：2016/5/31 22:28
+     * email：1013773046@qq.com
+     */
+    private static final String CROP = "com.android.camera.action.CROP";
     @Bind(R.id.tb_right_tv)
     TextView tbRightTv;
     @Bind(R.id.tb_left_iv)
@@ -60,13 +67,6 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
     CircleImageView headView;
     @Bind(R.id.fl_tab)
     FrameLayout tb_common;
-    /**
-     * desc:裁剪图片
-     * author：remember
-     * time：2016/5/31 22:28
-     * email：1013773046@qq.com
-     */
-    private static final String CROP = "com.android.camera.action.CROP";
     ModifyHeadImageDialog modifyHeadImageDialog;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
     PerfectDeliverInfoPresenter perfectDeliverInfoPresenter;
@@ -310,6 +310,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
                         etPlaceWrap.getEditText().getText().toString());
                 break;
             case R.id.bt_exit:
+                AccountUtil.getInstance().deleteAccount();
                 finish();
                 break;
             case R.id.ci_head:

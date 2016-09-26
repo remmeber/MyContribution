@@ -3,7 +3,6 @@ package com.rhg.qf.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -170,7 +169,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onSearch!=null)
+                if (onSearch != null)
                     onSearch.search();
             }
         });
@@ -205,6 +204,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         holder.sellerDistance.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvDistance),
                 data.getDistance()));
         holder.foodType.setText(data.getStyle());
+        holder.recommendText.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.recommendation), "好吃"));
         if (onItemClickListener != null)
             holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -251,14 +251,14 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public interface OnBannerClickListener {
-         void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
+        void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
     }
 
     public interface OnGridItemClickListener {
-         void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity);
+        void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity);
     }
 
-    public interface OnSearch{
+    public interface OnSearch {
         void search();
     }
 

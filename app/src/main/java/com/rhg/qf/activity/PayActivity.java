@@ -2,6 +2,7 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -67,7 +68,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     ArrayList<PayModel.PayBean> payList = new ArrayList<>();
     NewOrderBean newOrderBean;
-    private PayItemAdapter payItemAdapter;
     NewOrderPresenter createOrderPresenter;
     ModifyOrderPresenter modifyOrderDeliveringPresenter;/*修改用户订单状态*/
     String ipv4;
@@ -77,12 +77,13 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     String receiver;
     String phone;
     String address;
-
+    private PayItemAdapter payItemAdapter;
 
     @Override
     protected OrderInfo OnOrderCreate() {
         ipv4 = NetUtil.getPsdnIp();
         if (PayType.WeixinPay.equals(payType)) {
+            Log.i("RHG", "WXPay OrderCreate");
             return BuildOrderInfo("微信支付", "30m", "www.baidu.com",
                     getOutTradeNo(),
                     getItemsName(payList),
@@ -120,8 +121,8 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     protected void initData(Intent intent) {
         tbCenterTv.setText(getResources().getString(R.string.tvPayTitle));
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         PayModel payModel = intent.getParcelableExtra(AppConstants.KEY_PARCELABLE);
         style = intent.getStringExtra(AppConstants.ORDER_STYLE);
         if (payModel != null) {
@@ -173,7 +174,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     @Override
     protected void showError(String s) {
-        ToastHelper.getInstance()._toast((String) s);
+        ToastHelper.getInstance()._toast(s);
 
     }
 
@@ -216,9 +217,9 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
             case R.id.iv_wepay:
                 if (PayType.WeixinPay.equals(payType))
                     return;
-                ivWxpayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_green));
+                ivWxpayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_green));
                 if (PayType.AliPay.equals(payType)) {
-                    ivAlipayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
+                    ivAlipayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_uncheck_green));
                     payType = PayType.WeixinPay;
                     break;
                 }
@@ -231,10 +232,10 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
             case R.id.iv_alipay:
                 if (PayType.AliPay.equals(payType))
                     return;
-                ivAlipayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_green));
+                ivAlipayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_green));
 
                 if (PayType.WeixinPay.equals(payType)) {
-                    ivWxpayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
+                    ivWxpayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_uncheck_green));
                     payType = PayType.AliPay;
                     break;
                 }

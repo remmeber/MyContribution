@@ -86,7 +86,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/margin_little"
                 android:layout_marginRight="@dimen/margin_little"
-                android:background="@color/colorGreenNormal"
+                android:background="@drawable/btn_green_bg_normal"
                 android:minHeight="0dp"
                 android:text="@string/tvDrawback"
                 android:textSize="@dimen/text_big" />

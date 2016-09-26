@@ -2,6 +2,7 @@ package com.rhg.qf.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -72,15 +73,15 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         commonRecycle.addItemDecoration(new RecycleViewDivider(getContext(),
                 LinearLayoutManager.HORIZONTAL, DpUtil.dip2px(2),
-                getResources().getColor(R.color.colorInActive)));
+                ContextCompat.getColor(getContext(), R.color.colorInActive)));
         hotFoodAdapter = new HotFoodAdapter(getContext(), hotFoodBeanList);
         hotFoodAdapter.setOnRcvItemClickListener(this);
         commonRecycle.setAdapter(hotFoodAdapter);
-        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
+        commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                hotFoodPresenter.getHotFoods(AppConstants.SEARCHHOTFOOD, hotFoodType, foodName);
+                hotFoodPresenter.getHotFoods(AppConstants.HOTFOOD, hotFoodType, foodName);
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -89,7 +88,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
     protected void initData() {
         tbCenterTv.setText("店铺详情");
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
-        flTab.setBackgroundColor(ContextCompat.getColor(this,R.color.colorGreenNormal));
+        flTab.setBackgroundColor(ContextCompat.getColor(this,R.color.colorBlueNormal));
         tvShopName.setText(merchantName);
         ImageLoader.getInstance().displayImage(shopLogoUrl, ivShopLogo);
         Fragment fragment;

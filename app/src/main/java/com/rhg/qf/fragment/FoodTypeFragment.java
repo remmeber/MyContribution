@@ -2,10 +2,10 @@ package com.rhg.qf.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -45,6 +45,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     SwipeRefreshLayout commonSwipe;
 
     String merchantName;
+    RefreshListener refreshListener;
 
     @Override
     public void receiveData(Bundle arguments) {
@@ -79,7 +80,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         goodsListAdapter = new GoodsListAdapter(getContext(), shopDetailBeanList);
         goodsListAdapter.setOnGoodsItemClickListener(this);
         commonRecycle.setAdapter(goodsListAdapter);
-        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
+        commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(),R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -92,8 +93,6 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
 
         });
     }
-
-    RefreshListener refreshListener;
 
     public void setRefreshListener(RefreshListener refreshListener) {
         this.refreshListener = refreshListener;

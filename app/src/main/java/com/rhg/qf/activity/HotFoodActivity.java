@@ -3,6 +3,7 @@ package com.rhg.qf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -85,11 +86,11 @@ public class HotFoodActivity extends BaseFragmentActivity {
         fragments.add(hotFoodDistanceFm);
         fragments.add(hotFoodSellNumberFm);
         fragments.add(hotFoodRateFm);
-        tbBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+        tbBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbTitle.setText("热销单品");
         tbRightTv.setVisibility(View.GONE);
-        tbSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_black));
+        tbSearch.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_search_black));
         QFoodVpAdapter mAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
                 AppConstants.HOT_SELL_TITLES);
         vpHotSell.setAdapter(mAdapter);

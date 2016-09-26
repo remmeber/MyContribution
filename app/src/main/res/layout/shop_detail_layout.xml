@@ -40,11 +40,11 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@+id/iv_shop_detail_logo"
-            app:tl_indicator_color="@color/colorGreenNormal"
+            app:tl_indicator_color="@color/colorBlueNormal"
             app:tl_indicator_height="6dp"
             app:tl_indicator_width="80dp"
             app:tl_tab_space_equal="true"
-            app:tl_textSelectColor="@color/colorGreenNormal"
+            app:tl_textSelectColor="@color/colorBlueNormal"
             app:tl_textUnselectColor="@color/black"
             app:tl_textsize="@dimen/text_medium"
             tools:background="@color/black" />

@@ -21,6 +21,7 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
     public ImageView sellerImage;//指店铺的图片
     public TextView sellerName;
     public TextView foodType;
+    public TextView recommendText;
     public TextView sellerDistance;
     public LinearLayout frameLayout_item;
     public TextView tv_totalMoney;//合计总数
@@ -47,6 +48,7 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
         sellerIcon = (ImageView) itemView.findViewById(R.id.sellerIcon);
         sellerName = (TextView) itemView.findViewById(R.id.merchantName);
         foodType = (TextView) itemView.findViewById(R.id.foodType);
+        recommendText = (TextView)itemView.findViewById(R.id.tv_recommend);
         sellerDistance = (TextView) itemView.findViewById(R.id.tv_distance);
         sellerImage = (ImageView) itemView.findViewById(R.id.sellerImage);
         frameLayout_item = (LinearLayout) itemView.findViewById(R.id.item_layout);
@@ -60,6 +62,7 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
             case AppConstants.TypeHome:
                 sellerIcon.setVisibility(View.VISIBLE);
                 foodType.setVisibility(View.VISIBLE);
+                recommendText.setVisibility(View.VISIBLE);
                 homeFoward.setVisibility(View.VISIBLE);
                 sellerDistance.setVisibility(View.VISIBLE);
                 tv_state.setVisibility(View.GONE);
@@ -78,6 +81,7 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
                 demandMoney.setVisibility(View.VISIBLE);
                 deliverMoney.setVisibility(View.VISIBLE);
                 sellerDistance.setVisibility(View.VISIBLE);
+                recommendText.setVisibility(View.GONE);
                 homeFoward.setVisibility(View.GONE);
                 sellerIcon.setVisibility(View.GONE);
                 ly_totalCount.setVisibility(View.GONE);
@@ -94,6 +98,7 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
                 tv_orderTag.setVisibility(View.VISIBLE);
                 ly_totalCount.setVisibility(View.VISIBLE);
                 foodType.setVisibility(View.GONE);
+                recommendText.setVisibility(View.GONE);
                 homeFoward.setVisibility(View.GONE);
                 demandMoney.setVisibility(View.GONE);
                 deliverMoney.setVisibility(View.GONE);

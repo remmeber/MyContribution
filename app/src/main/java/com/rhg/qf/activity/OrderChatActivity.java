@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -20,7 +21,7 @@ import butterknife.OnClick;
  * time：2016/6/22 14:41
  * email：1013773046@qq.com
  */
-public class DIYOrderActivity extends BaseAppcompactActivity {
+public class OrderChatActivity extends BaseAppcompactActivity {
 
     @Bind(R.id.tb_left_iv)
     ImageView tbLeftIv;
@@ -41,8 +42,8 @@ public class DIYOrderActivity extends BaseAppcompactActivity {
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         tbCenterTv.setText("自主点餐");
     }
 
@@ -73,7 +74,7 @@ public class DIYOrderActivity extends BaseAppcompactActivity {
                 }
                 if (commitDIYOrderPresenter == null)
                     commitDIYOrderPresenter = new DIYOrderPresenter(this);
-                commitDIYOrderPresenter.commitDIYOrder( etUserInput.getText().toString());
+                commitDIYOrderPresenter.commitDIYOrder(etUserInput.getText().toString());
         }
     }
 

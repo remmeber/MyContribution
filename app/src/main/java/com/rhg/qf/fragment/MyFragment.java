@@ -2,7 +2,7 @@ package com.rhg.qf.fragment;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -104,6 +104,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (!isSignIn && AccountUtil.getInstance().hasAccount()) {
             isSignIn = true;
             userName.setText(AccountUtil.getInstance().getNickName());
+            userName.setClickable(true);
             ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
         }
     }
@@ -145,7 +146,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         myComplete.setTag(2);
 
         workerInfo.setText(R.string.workerInfo);
-        workerInfo.setTextSize(DpUtil.dip2px(5));
+        workerInfo.setTextSize(DpUtil.dip2px(7));
 
         workerForward.setOnClickListener(this);
         workerForward.setTag(R.id.profileWorker);
@@ -182,6 +183,34 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     private View getViewById(View parent, int centerId, int targetId) {
         return parent.findViewById(centerId).findViewById(targetId);
+    }
+
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (AccountUtil.getInstance().hasAccount()) {
+                isSignIn = true;
+                if (TextUtils.isEmpty(userName.getText())) {
+                    userName.setText(AccountUtil.getInstance().getNickName());
+                    ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
+                }
+            } else {
+                isSignIn = false;
+                userName.setClickable(true);
+                userName.setText("请登录");
+                userHeader.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_camera_with_circle));
+            }
+        }
+    }
+
+    /*Fragment被activity覆盖后，重新显示出来时调用的方法*/
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.setUserVisibleHint(true);
     }
 
     @Override
@@ -236,6 +265,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     ToastHelper.getInstance().displayToastWithQuickClose("请登录");
                     break;
                 }
+
                 intent.setClass(getContext(), /*DeliverInfoActivity*/DeliverOrderActivity.class);
                 startActivity(intent);
                 /*else

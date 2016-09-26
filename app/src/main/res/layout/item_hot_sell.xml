@@ -51,7 +51,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_chevron_right_black" />
+            android:src="@drawable/ic_chevron_right_blue" />
 
         <View
             android:layout_width="match_parent"
@@ -129,10 +129,10 @@
             android:layout_alignRight="@+id/hot_sell_deliver_distance"
             app:space_width="2dp"
             app:star_height="@dimen/material_size_medium"
-            app:star_solid="@drawable/star_green"
-            app:star_hollow="@drawable/star_gray"
+            app:star_hollow="@drawable/ic_star_gray"
             app:star_max="5"
             app:star_rating="0"
+            app:star_solid="@drawable/ic_star_green"
             app:star_width="@dimen/material_size_medium" />
 
         <TextView
@@ -154,8 +154,8 @@
             android:id="@+id/hot_sell_total_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/hot_sell_deliver_distance"
             android:layout_alignEnd="@+id/hot_sell_deliver_distance"
+            android:layout_alignRight="@+id/hot_sell_deliver_distance"
             android:layout_alignTop="@+id/hot_sell_deliver_money"
             android:gravity="center"
             android:text="@string/countMoney"

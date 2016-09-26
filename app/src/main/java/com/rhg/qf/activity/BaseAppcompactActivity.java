@@ -8,8 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.rhg.qf.application.InitApplication;
-import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
@@ -103,9 +101,15 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
             if (isShouldHideKeyBoard(focusView, ev)) {
                 KeyBoardUtil.closeKeybord((EditText) focusView, this);
                 focusView.clearFocus();
+                keyBoardHide();
             }
+
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void keyBoardHide() {
+
     }
 
     private boolean isShouldHideKeyBoard(View focusView, MotionEvent ev) {

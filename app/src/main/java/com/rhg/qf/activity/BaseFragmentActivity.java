@@ -1,6 +1,5 @@
 package com.rhg.qf.activity;
 
-import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -94,9 +93,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             if (isShouldHideKeyBoard(focusView, ev)) {
                 KeyBoardUtil.closeKeybord((EditText) focusView, this);
                 focusView.clearFocus();
+                keyBoardHide();
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void keyBoardHide() {
     }
 
     private boolean isShouldHideKeyBoard(View focusView, MotionEvent ev) {
