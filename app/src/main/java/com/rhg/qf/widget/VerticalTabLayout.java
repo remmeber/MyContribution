@@ -12,14 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.utils.SizeUtil;
 
 import java.util.List;
 
 /**
- *desc:
- *author：remember 
- *time：2016/7/29 22:44
- *email：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/7/29 22:44
+ * email：1013773046@qq.com
  */
 public class VerticalTabLayout extends FrameLayout implements View.OnClickListener {
     private final static int DEFAULT_SELECT_TEXT_COLOR = Color.WHITE;
@@ -88,7 +89,7 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
             itemWidth = a.getDimensionPixelSize(R.styleable.VerticalTabLayout_item_width, 0);
         }
         if (a.hasValue(R.styleable.VerticalTabLayout_item_text_size)) {
-            textSize = a.getDimension(R.styleable.VerticalTabLayout_item_text_size, sp2px(14));
+            textSize = a.getDimension(R.styleable.VerticalTabLayout_item_text_size, SizeUtil.sp2px(14));
         }
         if (a.hasValue(R.styleable.VerticalTabLayout_item_click_text_color)) {
             selectTextColor = a.getColor(R.styleable.VerticalTabLayout_item_click_text_color, DEFAULT_SELECT_TEXT_COLOR);
@@ -112,10 +113,10 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
             final int position = i;
             TextView textview = new TextView(mContext);
             LinearLayout.LayoutParams _lp = new LinearLayout.LayoutParams(
-                    itemWidth == 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : /*dip2px(itemWidth)*/(int) itemWidth,
-                    itemHeight == 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : /*dip2px(itemHeight)*/(int) itemHeight
+                    itemWidth == 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : /*dip2px(itemWidth)*/ itemWidth,
+                    itemHeight == 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : /*dip2px(itemHeight)*/itemHeight
             );
-            _lp.setMargins(dip2px(5), dip2px(15), dip2px(5), dip2px(5));
+            _lp.setMargins(SizeUtil.dip2px(5), SizeUtil.dip2px(15), SizeUtil.dip2px(5), SizeUtil.dip2px(5));
             textview.setLayoutParams(_lp);
             textview.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             CharSequence pageTitle = titles.get(i);
@@ -160,19 +161,9 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
         }
     }
 
-    public int getCurrentPosition() {
+    /*public int getCurrentPosition() {
         return lastPosition;
-    }
-
-    private int dip2px(float dpValue) {
-        final float scale = mContext.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
-
-    protected int sp2px(float sp) {
-        final float scale = mContext.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (sp * scale + 0.5f);
-    }
+    }*/
 
     @Override
     public void onClick(View v) {

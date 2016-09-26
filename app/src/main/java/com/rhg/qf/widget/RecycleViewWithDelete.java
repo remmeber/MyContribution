@@ -28,6 +28,7 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
     int downX;
     int downY;
     private ItemClickListener onItemClickListener;
+    private LongClickListener onLongClickListener;
 
     public RecycleViewWithDelete(Context context) {
         super(context);
@@ -135,6 +136,7 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
         }
         return true;
     }
+    /*for gesture*/
 
     @Override
     public void onLongPress(MotionEvent e) {
@@ -144,20 +146,11 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
                 onLongClickListener.onLongClick(viewHolder.getAdapterPosition());
         }
     }
-    /*for gesture*/
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
-
-
-
-    public interface LongClickListener {
-        void onLongClick(int position);
-    }
-
-    private LongClickListener onLongClickListener;
 
     public void setOnLongClickListener(LongClickListener onLongClickListener) {
         this.onLongClickListener = onLongClickListener;
@@ -165,6 +158,10 @@ public class RecycleViewWithDelete extends RecyclerView implements GestureDetect
 
     public void setOnItemClickListener(ItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface LongClickListener {
+        void onLongClick(int position);
     }
 
     public interface ItemClickListener {

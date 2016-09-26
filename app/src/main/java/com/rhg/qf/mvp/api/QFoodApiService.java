@@ -17,10 +17,6 @@ import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
-import com.rhg.qf.mvp.view.BaseView;
-
-import java.util.List;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

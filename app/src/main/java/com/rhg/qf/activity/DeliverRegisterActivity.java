@@ -58,8 +58,8 @@ public class DeliverRegisterActivity extends BaseFragmentActivity {
     @Override
     protected void initData() {
         countTimer = new MyCountDownTimer(60000, 1000, btCheckNumber);
-        flTab.setBackgroundColor(ContextCompat.getColor(this,R.color.colorBlueNormal));
-        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         tbCenterTv.setText(getResources().getString(R.string.register));
         tvAgreement.setMovementMethod(ScrollingMovementMethod.getInstance());
         /*tvAfterReadAgreement.setOnTouchListener(new View.OnTouchListener() {
@@ -119,11 +119,11 @@ public class DeliverRegisterActivity extends BaseFragmentActivity {
             case R.id.tv_after_read_agreement:
                 if (!isChecked) {
                     isChecked = true;
-                    tvAfterReadAgreement.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this,R.drawable.ic_check_green),
+                    tvAfterReadAgreement.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.ic_check_green),
                             null, null, null);
                 } else {
                     isChecked = false;
-                    tvAfterReadAgreement.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this,R.drawable.ic_uncheck_green),
+                    tvAfterReadAgreement.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.ic_uncheck_green),
                             null, null, null);
                 }
                 break;

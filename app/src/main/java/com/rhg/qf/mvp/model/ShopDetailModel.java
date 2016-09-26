@@ -1,7 +1,5 @@
 package com.rhg.qf.mvp.model;
 
-import android.os.PowerManager;
-
 import com.rhg.qf.bean.ShopDetailLocalModel;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
@@ -19,7 +17,7 @@ import rx.functions.Func1;
  * time：2016/5/28 17:00
  * email：1013773046@qq.com
  */
-public class ShopDetailModel{
+public class ShopDetailModel {
     public Observable<ShopDetailLocalModel> getShopDetail(String table, String merchantId) {
         return QFoodApiMamager.getInstant().getQFoodApiService().
                 getMerchantFoods(table, Integer.valueOf(merchantId))
@@ -27,7 +25,7 @@ public class ShopDetailModel{
 
                     @Override
                     public Observable<ShopDetailLocalModel> call(final ShopDetailUrlBean
-                                                                        shopDetailUrlBean) {
+                                                                         shopDetailUrlBean) {
                         return Observable.create(new Observable.OnSubscribe<ShopDetailLocalModel>() {
                             @Override
                             public void call(Subscriber<? super ShopDetailLocalModel> subscriber) {

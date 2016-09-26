@@ -4,7 +4,6 @@ package com.rhg.qf.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +24,10 @@ import butterknife.ButterKnife;
  * email：1013773046@qq.com
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
+    boolean isPrepare;
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
-    boolean isPrepare;
 //    private Unbinder bind;
 
     public BaseFragment() {

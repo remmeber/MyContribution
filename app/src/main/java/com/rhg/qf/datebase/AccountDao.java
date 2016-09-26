@@ -3,7 +3,6 @@ package com.rhg.qf.datebase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.ShoppingCartBean;

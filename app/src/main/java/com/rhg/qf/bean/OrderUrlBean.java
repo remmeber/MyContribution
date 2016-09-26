@@ -17,7 +17,6 @@ public class OrderUrlBean {
      */
 
 
-
     private int result;
     private String msg;
     private int total;

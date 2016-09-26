@@ -23,7 +23,7 @@ public class UserSignUpPresenter {
     }
 
     public void userSignUp(String openid, String unionid, String headimageurl, String nickName) {
-        userSignUpModel.userSignUp(openid, unionid, headimageurl,nickName).observeOn(AndroidSchedulers.mainThread())
+        userSignUpModel.userSignUp(openid, unionid, headimageurl, nickName).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override

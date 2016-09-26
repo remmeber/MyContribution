@@ -3,6 +3,7 @@ package com.rhg.qf.fragment;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import com.rhg.qf.mvp.presenter.UserSignInPresenter;
 import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -146,7 +147,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         myComplete.setTag(2);
 
         workerInfo.setText(R.string.workerInfo);
-        workerInfo.setTextSize(DpUtil.dip2px(7));
+        //setTextSize()有两种方法，没有unit参数的方法，默认使用sp为单位的数值进行设置字体大小。
+        workerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX, SizeUtil.sp2px(15));
 
         workerForward.setOnClickListener(this);
         workerForward.setTag(R.id.profileWorker);
@@ -184,7 +186,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private View getViewById(View parent, int centerId, int targetId) {
         return parent.findViewById(centerId).findViewById(targetId);
     }
-
 
 
     @Override

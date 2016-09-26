@@ -1,8 +1,6 @@
 package com.rhg.qf.application;
 
-import android.app.Application;
 import android.app.Service;
-import android.content.Context;
 import android.os.Vibrator;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -16,7 +14,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.BaseFragmentActivity;
-import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.utils.AccountUtil;

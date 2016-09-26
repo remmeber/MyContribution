@@ -16,7 +16,7 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.utils.AddressUtil;
-import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
 import com.rhg.qf.widget.RecycleViewWithDelete;
 import com.rhg.qf.widget.UIAlertView;
@@ -107,7 +107,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
         rcyAddress.setLayoutManager(linearLayoutManager);
         rcyAddress.setHasFixedSize(true);
         RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DpUtil.dip2px(8), ContextCompat.getColor(this, R.color.colorBackground));
+                SizeUtil.dip2px(8), ContextCompat.getColor(this, R.color.colorBackground));
         rcyAddress.addItemDecoration(divider);
         addressAdapter = new AddressAdapter(this, addressBeanList);
         addressAdapter.setmDeleteListener(deleteListener);

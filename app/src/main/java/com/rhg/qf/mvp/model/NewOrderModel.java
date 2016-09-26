@@ -1,7 +1,5 @@
 package com.rhg.qf.mvp.model;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.bean.NewOrderBean;
@@ -24,11 +22,11 @@ import rx.functions.Func1;
  */
 public class NewOrderModel {
     public Observable<String> createNewOrder(NewOrderBean newOrderBean) {
-        List<Map<String,String>> mapList = new ArrayList<>();
-        for (NewOrderBean.FoodBean foodBean:newOrderBean.getFood()) {
-            Map<String ,String > foodMap = new HashMap<>();
-            foodMap.put("ID",foodBean.getID());
-            foodMap.put("Num",foodBean.getNum());
+        List<Map<String, String>> mapList = new ArrayList<>();
+        for (NewOrderBean.FoodBean foodBean : newOrderBean.getFood()) {
+            Map<String, String> foodMap = new HashMap<>();
+            foodMap.put("ID", foodBean.getID());
+            foodMap.put("Num", foodBean.getNum());
             mapList.add(foodMap);
         }
         String food = new Gson().toJson(mapList);

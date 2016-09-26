@@ -16,7 +16,7 @@ import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.HotFoodPresenter;
-import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         commonRecycle.addItemDecoration(new RecycleViewDivider(getContext(),
-                LinearLayoutManager.HORIZONTAL, DpUtil.dip2px(2),
+                LinearLayoutManager.HORIZONTAL, SizeUtil.dip2px(2),
                 ContextCompat.getColor(getContext(), R.color.colorInActive)));
         hotFoodAdapter = new HotFoodAdapter(getContext(), hotFoodBeanList);
         hotFoodAdapter.setOnRcvItemClickListener(this);

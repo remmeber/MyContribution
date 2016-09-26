@@ -34,7 +34,7 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
-            ButterKnife.bind(this);
+        ButterKnife.bind(this);
         dataReceive(getIntent());
         loadingData();
         initData();

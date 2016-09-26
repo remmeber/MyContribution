@@ -3,10 +3,10 @@ package com.rhg.qf.bean;
 import java.util.List;
 
 /**
- *desc:
- *author：remember
- *time：2016/7/7 23:50
- *email：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/7/7 23:50
+ * email：1013773046@qq.com
  */
 public class GoodsDetailUrlBean {
     /**

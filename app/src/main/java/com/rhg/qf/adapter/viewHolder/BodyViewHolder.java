@@ -48,7 +48,7 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
         sellerIcon = (ImageView) itemView.findViewById(R.id.sellerIcon);
         sellerName = (TextView) itemView.findViewById(R.id.merchantName);
         foodType = (TextView) itemView.findViewById(R.id.foodType);
-        recommendText = (TextView)itemView.findViewById(R.id.tv_recommend);
+        recommendText = (TextView) itemView.findViewById(R.id.tv_recommend);
         sellerDistance = (TextView) itemView.findViewById(R.id.tv_distance);
         sellerImage = (ImageView) itemView.findViewById(R.id.sellerImage);
         frameLayout_item = (LinearLayout) itemView.findViewById(R.id.item_layout);

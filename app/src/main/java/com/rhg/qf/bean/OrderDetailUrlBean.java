@@ -113,6 +113,17 @@ public class OrderDetailUrlBean {
             this.Foods = Foods;
         }
 
+        @Override
+        public String toString() {
+            return "OrderDetailBean{" +
+                    "Receiver='" + Receiver + '\'' +
+                    ", Phone='" + Phone + '\'' +
+                    ", Address='" + Address + '\'' +
+                    ", Fee='" + Fee + '\'' +
+                    ", Foods=" + Foods +
+                    '}';
+        }
+
         public static class FoodsBean {
             private String FName;
             private String Price;
@@ -150,17 +161,6 @@ public class OrderDetailUrlBean {
                         ", Num='" + Num + '\'' +
                         '}';
             }
-        }
-
-        @Override
-        public String toString() {
-            return "OrderDetailBean{" +
-                    "Receiver='" + Receiver + '\'' +
-                    ", Phone='" + Phone + '\'' +
-                    ", Address='" + Address + '\'' +
-                    ", Fee='" + Fee + '\'' +
-                    ", Foods=" + Foods +
-                    '}';
         }
     }
 

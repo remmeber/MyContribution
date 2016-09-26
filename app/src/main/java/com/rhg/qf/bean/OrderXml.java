@@ -4,10 +4,10 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 /**
- *desc:
- *author：remember
- *time：2016/7/7 23:50
- *email：1013773046@qq.com
+ * desc:
+ * author：remember
+ * time：2016/7/7 23:50
+ * email：1013773046@qq.com
  */
 @Root(name = "xml", strict = false)
 public class OrderXml {

@@ -116,7 +116,7 @@ public class ShoppingCartFragment extends BaseFragment {
         fl_tab.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         tbCenterTV.setText(getResources().getString(R.string.shoppingCart));
         tbRightTV.setText(getResources().getString(R.string.tvEdit));
-        srlShoppingCart.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(),R.color.colorBlueNormal));
+        srlShoppingCart.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         srlShoppingCart.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

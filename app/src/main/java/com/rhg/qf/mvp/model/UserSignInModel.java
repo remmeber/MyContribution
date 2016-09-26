@@ -1,10 +1,7 @@
 package com.rhg.qf.mvp.model;
 
-import android.util.Log;
-
 import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
-import com.rhg.qf.utils.ToastHelper;
 
 import rx.Observable;
 import rx.Subscriber;

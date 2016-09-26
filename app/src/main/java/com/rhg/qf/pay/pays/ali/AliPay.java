@@ -2,7 +2,6 @@ package com.rhg.qf.pay.pays.ali;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
 import com.rhg.qf.pay.model.KeyLibs;
@@ -88,7 +87,7 @@ public class AliPay implements IPayable {
         orderInfo += "&return_url=" + KeyLibs.mark + "m.alipay.com" + KeyLibs.mark;
         String sign = null;
         try {
-            sign = URLEncoder.encode(SignUtils.sign(orderInfo, KeyLibs.ali_privateKey),"UTF-8");
+            sign = URLEncoder.encode(SignUtils.sign(orderInfo, KeyLibs.ali_privateKey), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

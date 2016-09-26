@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.rhg.qf.R;
-import com.rhg.qf.mvp.presenter.UploadAndSaveImagePresenter;
 
 /**
  * desc:修改头像 dialog
@@ -38,7 +37,7 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
         dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics d = mContext.getResources().getDisplayMetrics();
-        lp.width = (int) (d.widthPixels);
+        lp.width = d.widthPixels;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.BOTTOM;
         dialogWindow.setAttributes(lp);
@@ -89,8 +88,8 @@ public class ModifyHeadImageDialog extends Dialog implements View.OnClickListene
     }
 
     public interface ChoosePicListener {
-        public void chooseFromGallery();
+        void chooseFromGallery();
 
-        public void chooseFromCamera();
+        void chooseFromCamera();
     }
 }

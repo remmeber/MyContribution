@@ -88,7 +88,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
     protected void initData() {
         tbCenterTv.setText("店铺详情");
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
-        flTab.setBackgroundColor(ContextCompat.getColor(this,R.color.colorBlueNormal));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tvShopName.setText(merchantName);
         ImageLoader.getInstance().displayImage(shopLogoUrl, ivShopLogo);
         Fragment fragment;
@@ -118,7 +118,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
 
     }
 
-    @OnClick( R.id.tb_left_iv)
+    @OnClick(R.id.tb_left_iv)
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tb_left_iv:

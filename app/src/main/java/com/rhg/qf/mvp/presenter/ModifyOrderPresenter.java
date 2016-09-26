@@ -25,7 +25,7 @@ public class ModifyOrderPresenter {
     }
 
     public void modifyUserOrDeliverOrderState(List<String> orderId, String style) {
-         modifyOrderModel.modifyOrder(orderId, style).observeOn(AndroidSchedulers.mainThread())
+        modifyOrderModel.modifyOrder(orderId, style).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override

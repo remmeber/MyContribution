@@ -5,8 +5,6 @@ import android.content.Context;
 
 import com.rhg.qf.pay.model.OrderInfo;
 
-import java.lang.ref.WeakReference;
-
 
 public interface IPayable {
 

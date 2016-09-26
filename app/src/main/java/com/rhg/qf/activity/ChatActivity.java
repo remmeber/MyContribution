@@ -2,7 +2,6 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
@@ -21,9 +20,9 @@ import java.util.regex.Pattern;
 
 public class ChatActivity extends EaseBaseActivity {
     public static ChatActivity activityInstance;
-    private EaseChatFragment chatFragment;
     String toChatUsername;
     String uname;
+    private EaseChatFragment chatFragment;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -115,7 +114,7 @@ public class ChatActivity extends EaseBaseActivity {
         Pattern pat = Pattern.compile(reg);
         Matcher mat = pat.matcher(uname);
         String s = mat.replaceAll("");
-        return s.replace(" ","");
+        return s.replace(" ", "");
     }
 
     private void createAccountToServer(final String uname, final String pwd, final EMCallBack callBack) {

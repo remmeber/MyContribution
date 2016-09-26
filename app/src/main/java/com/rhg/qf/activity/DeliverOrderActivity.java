@@ -17,7 +17,7 @@ import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.DeliverOrderPresenter;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 import com.rhg.qf.widget.UIAlertView;
@@ -71,7 +71,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
         commonRecycle.setLayoutManager(new LinearLayoutManager(this));
         commonRecycle.setHasFixedSize(false);
         RecycleViewDivider _divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DpUtil.dip2px(16), getResources().getColor(R.color.white));
+                SizeUtil.dip2px(16), getResources().getColor(R.color.white));
         commonRecycle.addItemDecoration(_divider);
         deliverOrderItemAdapter = new DeliverOrderItemAdapter(this, deliverOrderBeanList);
         deliverOrderItemAdapter.setOnRcvItemClick(this);

@@ -31,6 +31,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     int currentPosition = 0;
     SlideView lastSlideView;
     GestureDetectorCompat gestureDetector;
+    private deleteListener mDeleteListener;
 
     public AddressAdapter(Context content, List<AddressUrlBean.AddressBean> addressBeanList) {
         this.context = content;
@@ -61,14 +62,12 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return new AddressViewHolder(slideView);
     }
 
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AddressViewHolder _holder = (AddressViewHolder) holder;
         AddressUrlBean.AddressBean addressBean = addressBeanList.get(position);
         bindData(_holder, addressBean, position);
     }
-
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     private void bindData(final AddressViewHolder holder, AddressUrlBean.AddressBean addressBean,
@@ -110,7 +109,6 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-
     @Override
     public int getItemCount() {
         return addressBeanList == null ? 0 : addressBeanList.size();
@@ -134,6 +132,14 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
+    public void setmDeleteListener(deleteListener mDeleteListener) {
+        this.mDeleteListener = mDeleteListener;
+    }
+
+    public interface deleteListener {
+        void onDelete(int position);
+    }
+
     public class AddressViewHolder extends RecyclerView.ViewHolder {
         public SlideView slideView;
         public RelativeLayout rlAddress;
@@ -154,15 +160,5 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             delete = (RelativeLayout) inflateView.findViewById(R.id.holder);
         }
 
-    }
-
-    public interface deleteListener {
-        void onDelete(int position);
-    }
-
-    private deleteListener mDeleteListener;
-
-    public void setmDeleteListener(deleteListener mDeleteListener) {
-        this.mDeleteListener = mDeleteListener;
     }
 }

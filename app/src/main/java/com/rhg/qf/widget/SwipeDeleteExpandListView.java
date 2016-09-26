@@ -9,7 +9,6 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.rhg.qf.bean.ShoppingCartBean;
-import com.rhg.qf.utils.ToastHelper;
 
 /**
  * desc:

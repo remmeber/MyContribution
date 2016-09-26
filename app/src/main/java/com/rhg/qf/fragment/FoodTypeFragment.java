@@ -80,7 +80,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         goodsListAdapter = new GoodsListAdapter(getContext(), shopDetailBeanList);
         goodsListAdapter.setOnGoodsItemClickListener(this);
         commonRecycle.setAdapter(goodsListAdapter);
-        commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(),R.color.colorBlueNormal));
+        commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

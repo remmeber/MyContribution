@@ -25,8 +25,8 @@ import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.NetUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
@@ -136,7 +136,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
         rcvItemPay.setHasFixedSize(true);
         rcvItemPay.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
+                SizeUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
         payItemAdapter = new PayItemAdapter(this, payList);
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);

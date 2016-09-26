@@ -1,12 +1,8 @@
 package com.rhg.qf.mvp.presenter;
 
-import android.util.Log;
-
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.mvp.model.RestaurantSearchModel;
 import com.rhg.qf.mvp.view.BaseView;
-
-import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;

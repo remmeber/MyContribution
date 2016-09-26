@@ -7,7 +7,7 @@
         android:id="@+id/view_content"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal" />
 
     <RelativeLayout
         android:id="@+id/holder"

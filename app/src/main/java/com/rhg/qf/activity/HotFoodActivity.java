@@ -90,7 +90,7 @@ public class HotFoodActivity extends BaseFragmentActivity {
         flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbTitle.setText("热销单品");
         tbRightTv.setVisibility(View.GONE);
-        tbSearch.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_search_black));
+        tbSearch.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_search_black));
         QFoodVpAdapter mAdapter = new QFoodVpAdapter(getSupportFragmentManager(), fragments,
                 AppConstants.HOT_SELL_TITLES);
         vpHotSell.setAdapter(mAdapter);

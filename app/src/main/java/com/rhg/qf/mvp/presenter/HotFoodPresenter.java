@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
  * time：2016/5/28 17:01
  * email：1013773046@qq.com
  */
-public class HotFoodPresenter{
+public class HotFoodPresenter {
     BaseView baseView;
     HotFoodModel hotFoodModel;
 
@@ -26,7 +26,7 @@ public class HotFoodPresenter{
     }
 
     public void getHotFoods(final String hotFood, int orderType, String key) {
-        hotFoodModel.getHotFood(hotFood, orderType,key).observeOn(AndroidSchedulers.mainThread())
+        hotFoodModel.getHotFood(hotFood, orderType, key).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<HotFoodUrlBean.HotFoodBean>>() {
                     @Override

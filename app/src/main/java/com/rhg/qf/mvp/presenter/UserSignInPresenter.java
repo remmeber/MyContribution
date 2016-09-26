@@ -5,7 +5,6 @@ import android.util.Log;
 import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.mvp.model.UserSignInModel;
 import com.rhg.qf.mvp.view.BaseView;
-import com.rhg.qf.utils.ToastHelper;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
