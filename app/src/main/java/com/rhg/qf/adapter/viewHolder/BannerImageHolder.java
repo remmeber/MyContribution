@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.rhg.qf.R;
 
 /**
  * desc:图片轮播页面

@@ -1,7 +1,6 @@
 package com.rhg.qf.widget;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,7 +37,7 @@ public class MyCountDownTimer extends CountDownTimer {
         cancel();
     }
 
-    public void removeView(){
+    public void removeView() {
         countDownText = null;
     }
 

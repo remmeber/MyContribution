@@ -20,7 +20,7 @@
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:background="@color/colorGreenNormal"
+            android:background="@color/colorBlueNormal"
             android:gravity="center"
             android:minHeight="0dp"
             android:textColor="@color/white"
@@ -35,7 +35,7 @@
             android:layout_alignRight="@+id/headerline"
             android:layout_centerVertical="true"
             android:padding="@dimen/margin_little"
-            android:src="@drawable/ic_chevron_right_green" />
+            android:src="@drawable/ic_chevron_right_blue" />
 
         <View
             android:id="@+id/headerline"

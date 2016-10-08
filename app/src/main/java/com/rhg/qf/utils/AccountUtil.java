@@ -76,6 +76,12 @@ public class AccountUtil {
         editor.apply();
     }
 
+    public void deleteAccount() {
+        SharedPreferences.Editor editor = getEditor();
+        editor.clear();
+        editor.apply();
+    }
+
     public String getUserID() {
         return getStringByKey(AppConstants.SP_USER_ID);
     }
@@ -92,12 +98,12 @@ public class AccountUtil {
         putStringByKey(AppConstants.SP_USER_NAME, userName);
     }
 
-    public void setPwd(String pwd) {
-        putStringByKey(AppConstants.SP_PASSWORD, pwd);
-    }
-
     public String getPwd() {
         return getStringByKey(AppConstants.SP_PASSWORD);
+    }
+
+    public void setPwd(String pwd) {
+        putStringByKey(AppConstants.SP_PASSWORD, pwd);
     }
 
     public String getPhoneNumber() {
@@ -140,11 +146,11 @@ public class AccountUtil {
         putStringByKey(AppConstants.SP_LONGITUDE, s);
     }
 
-    public void setNickName(String nickName) {
-        putStringByKey(AppConstants.SP_NICKNAME, nickName);
-    }
-
     public String getNickName() {
         return getStringByKey(AppConstants.SP_NICKNAME);
+    }
+
+    public void setNickName(String nickName) {
+        putStringByKey(AppConstants.SP_NICKNAME, nickName);
     }
 }

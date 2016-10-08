@@ -13,8 +13,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorGreenNormal">
+        android:background="@color/colorBlueNormal"
+        android:orientation="vertical">
 
         <com.rhg.qf.widget.CircleImageView
             android:id="@+id/userHeader"
@@ -28,8 +28,8 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/margin_small"
             android:layout_marginTop="@dimen/margin_small"
             android:textColor="@color/white"
             android:textSize="@dimen/text_big"

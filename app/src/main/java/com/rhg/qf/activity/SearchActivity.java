@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,8 +24,8 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.HotFoodSearchPresenter;
 import com.rhg.qf.mvp.presenter.RestaurantSearchPresenter;
-import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.SearchHistoryUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
@@ -60,17 +61,14 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
     SearchHistoryAdapter searchHistoryAdapter;
     HotFoodAdapter hotFoodAdapter;
     SearchMerchantAdapter searchMerchantAdapter;
-
-    private List<String> searchHistoryData;
     List<MerchantUrlBean.MerchantBean> merchantBeanList;
     List<HotFoodUrlBean.HotFoodBean> hotFoodBeanList;
-
     RestaurantSearchPresenter restaurantSearchPresenter;
     HotFoodSearchPresenter hotFoodSearchPresenter;
-
+    boolean isShow;
+    private List<String> searchHistoryData;
     private int searchTag;
     private int searchIndex;
-    boolean isShow;
     private RcvItemClickListener itemClick = new RcvItemClickListener() {
         @Override
         public void onItemClickListener(int position, Object item) {
@@ -117,10 +115,10 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
         RecycleViewDivider divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive));
+                SizeUtil.dip2px(1), ContextCompat.getColor(this, R.color.colorInActive));
 
         itemResultsRcv.setHasFixedSize(false);
         itemResultsRcv.setLayoutManager(new LinearLayoutManager(this));
@@ -128,7 +126,7 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
 
         historyResultsRcv.setLayoutManager(new LinearLayoutManager(this));
         historyResultsRcv.setHasFixedSize(false);
-        divider.setLeftAndRightPadding(DpUtil.dip2px(16), 0);
+        divider.setLeftAndRightPadding(SizeUtil.dip2px(16), 0);
         historyResultsRcv.addItemDecoration(divider);
 
         if (searchTag == AppConstants.KEY_RESTAURANT_SEARCH) {
@@ -244,12 +242,12 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
             case AppConstants.KEY_RESTAURANT_SEARCH:
                 if (restaurantSearchPresenter == null)
                     restaurantSearchPresenter = new RestaurantSearchPresenter(this);
-                restaurantSearchPresenter.getSearchRestaurant(AppConstants.SEARCHRESTAURANTS, s, searchIndex);
+                restaurantSearchPresenter.getSearchRestaurant(AppConstants.SEARCH_RESTAURANTS, s, searchIndex);
                 break;
             case AppConstants.KEY_HOTFOOD_SEARCH:
                 if (hotFoodSearchPresenter == null)
                     hotFoodSearchPresenter = new HotFoodSearchPresenter(this);
-                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCHHOTFOOD, s, searchIndex);
+                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCH_HOTFOOD, s, searchIndex);
                 break;
         }
     }

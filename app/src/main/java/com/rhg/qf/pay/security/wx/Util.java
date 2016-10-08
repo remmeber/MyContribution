@@ -74,7 +74,7 @@ public class Util {
 	}*/
 
 	/*private static class SSLSocketFactoryEx extends SSLSocketFactory {
-	      
+
 	    SSLContext sslContext = SSLContext.getInstance("TLS");      
 	      
 	    public SSLSocketFactoryEx(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {      

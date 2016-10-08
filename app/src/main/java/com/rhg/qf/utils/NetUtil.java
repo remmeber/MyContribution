@@ -5,8 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import com.rhg.qf.constants.AppConstants;
-
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -52,7 +50,7 @@ public class NetUtil {
                 }
             }
         } catch (Exception e) {
-                Log.i("RHG", e.getMessage());
+            Log.i("RHG", e.getMessage());
         }
         return "";
     }

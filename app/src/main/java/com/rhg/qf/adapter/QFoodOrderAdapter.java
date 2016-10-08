@@ -39,7 +39,6 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
     @Override
     protected void bindBodyData(final BodyViewHolder holder, final OrderUrlBean.OrderBean data, int type) {
         holder.sellerName.setText(data.getRName());
-        ImageLoader.getInstance().displayImage(AppConstants.images[0], holder.sellerImage);
         holder.tv_state.setText(data.getStyle());
         holder.tv_orderTime.setText(data.getOtime());
         holder.tv_orderTag.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvOrderNumber),

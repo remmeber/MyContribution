@@ -18,7 +18,6 @@ import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.KeyBoardUtil;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
@@ -56,7 +55,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         return false;
     }
 
-    /*TODO 获取根布局*/
+    /*获取根布局*/
     View getRootView(Activity context) {
         return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);
     }
@@ -94,9 +93,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             if (isShouldHideKeyBoard(focusView, ev)) {
                 KeyBoardUtil.closeKeybord((EditText) focusView, this);
                 focusView.clearFocus();
+                keyBoardHide();
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void keyBoardHide() {
     }
 
     private boolean isShouldHideKeyBoard(View focusView, MotionEvent ev) {
@@ -155,7 +158,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     public void dataReceive(Intent intent) {
     }
 
-
     @Override
     protected void onStop() {
         if (locationService != null) {
@@ -165,6 +167,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         super.onStop();
     }
 
+    //onPause中不做复杂操作
     @Override
     protected void onPause() {
         super.onPause();
@@ -175,10 +178,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);
-        if (AppConstants.DEBUG) {
-            RefWatcher refWatcher = InitApplication.getRefWatcher(this);
-            refWatcher.watch(this);
-        }
+
     }
 
     /*BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -206,10 +206,18 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     protected abstract void initData();
 
-    //todo 横竖屏切换，键盘等
+    //横竖屏切换，键盘等
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    /*当Activity启动模式(LaunchMode)为SingleTop或者SingleTask的时候，多次调用此Activity可能会调用此方法，而不
+    * 调用Activity的onCreate、onStart方法
+    */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
     }
 
     @Override

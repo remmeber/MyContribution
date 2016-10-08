@@ -1,6 +1,7 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -99,8 +100,11 @@ public class ShoppingCartFragment extends BaseFragment {
         if (AccountUtil.getInstance().hasAccount()) {
             userId = AccountUtil.getInstance().getUserID();
             getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
-        } else
+        } else {
             ToastHelper.getInstance()._toast("当前用户未登录");
+            shoppingCartBeanList.clear();
+            updateListView();
+        }
     }
 
     @Override
@@ -109,17 +113,18 @@ public class ShoppingCartFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        fl_tab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+        fl_tab.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         tbCenterTV.setText(getResources().getString(R.string.shoppingCart));
         tbRightTV.setText(getResources().getString(R.string.tvEdit));
-        srlShoppingCart.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
+        srlShoppingCart.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         srlShoppingCart.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (AccountUtil.getInstance().hasAccount()) {
                     getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
-                } else
+                } else {
                     ToastHelper.getInstance()._toast("当前用户未登录");
+                }
             }
         });
         QFoodShoppingCartExplAdapter = new QFoodShoppingCartExplAdapter(getContext());

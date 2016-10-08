@@ -33,7 +33,7 @@
             android:id="@+id/bt_order_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorGreenNormal"
+            android:background="@color/colorBlueNormal"
             android:gravity="center"
             android:paddingBottom="@dimen/margin_little"
             android:paddingEnd="@dimen/margin_huge"

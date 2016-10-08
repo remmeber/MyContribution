@@ -6,7 +6,11 @@
     <color name="colorPageBackground">#F2F2F2</color>
     <color name="dark">#FF222222</color>
     <color name="colorGreenFocus">#64A600</color>
-    <color name="colorGreenNormal">#8FC842</color>
+    <color name="colorBlueLight">#5542B4D9</color>
+    <color name="colorBlueMedium">#AA42B4D9</color>
+    <color name="colorBlueNormal">#FF42B4D9</color>
+    <color name="colorYellowNormal">#FFC602</color>
+    <color name="colorYellowLight">#55FFC602</color>
     <color name="colorToolbarGreen">#8DC73F</color>
     <color name="colorState">#BACC64</color>
     <color name="colorShop">#A0BAE967</color>

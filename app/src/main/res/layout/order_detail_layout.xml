@@ -86,7 +86,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/margin_little"
                 android:layout_marginRight="@dimen/margin_little"
-                android:background="@color/colorGreenNormal"
+                android:background="@drawable/ease_btn_blue_selector"
                 android:minHeight="0dp"
                 android:text="@string/tvDrawback"
                 android:textSize="@dimen/text_big" />
@@ -147,7 +147,7 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/margin_little"
-        android:background="@drawable/btn_green_style"
+        android:background="@drawable/ease_btn_blue_selector"
         android:gravity="center"
         android:padding="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"

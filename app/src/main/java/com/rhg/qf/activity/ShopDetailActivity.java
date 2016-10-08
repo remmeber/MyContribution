@@ -3,8 +3,10 @@ package com.rhg.qf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,14 +34,18 @@ public class ShopDetailActivity extends BaseFragmentActivity {
 
     @Bind(R.id.iv_shop_detail_logo)
     ImageView ivShopLogo;
-    @Bind(R.id.iv_shop_detail_back)
-    ImageView ivBack;
     @Bind(R.id.tv_shop_detail_name)
     TextView tvShopName;
     @Bind(R.id.stl_shop_detail)
     SlidingTabLayout slidingTabLayout;
     @Bind(R.id.vp_shop_detail)
     ViewPager viewPager;
+    @Bind(R.id.tb_center_tv)
+    TextView tbCenterTv;
+    @Bind(R.id.tb_left_iv)
+    ImageView tbLeftIv;
+    @Bind(R.id.fl_tab)
+    FrameLayout flTab;
 
     String shopLogoUrl;
     String merchantName;
@@ -76,15 +82,13 @@ public class ShopDetailActivity extends BaseFragmentActivity {
 
     @Override
     protected void initView(View view) {
-        ivBack = (ImageView) findViewById(R.id.iv_shop_detail_back);
-        ivShopLogo = (ImageView) findViewById(R.id.iv_shop_detail_logo);
-        tvShopName = (TextView) findViewById(R.id.tv_shop_detail_name);
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.stl_shop_detail);
-        viewPager = (ViewPager) findViewById(R.id.vp_shop_detail);
     }
 
     @Override
     protected void initData() {
+        tbCenterTv.setText("店铺详情");
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tvShopName.setText(merchantName);
         ImageLoader.getInstance().displayImage(shopLogoUrl, ivShopLogo);
         Fragment fragment;
@@ -92,7 +96,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragment = new ShopDetailFoodFragment();
         bundle.putString(AppConstants.KEY_MERCHANT_ID, merchantId);
-        bundle.putString(AppConstants.KEY_MERCHANT_NAME,merchantName);
+        bundle.putString(AppConstants.KEY_MERCHANT_NAME, merchantName);
         fragment.setArguments(bundle);
         fragments.add(fragment);
         fragment = new ShopDetailFragment();
@@ -114,10 +118,10 @@ public class ShopDetailActivity extends BaseFragmentActivity {
 
     }
 
-    @OnClick(R.id.iv_shop_detail_back)
+    @OnClick(R.id.tb_left_iv)
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_shop_detail_back:
+            case R.id.tb_left_iv:
                 bundle = null;
                 setResult(AppConstants.BACK_WITHOUT_DATA);
                 finish();

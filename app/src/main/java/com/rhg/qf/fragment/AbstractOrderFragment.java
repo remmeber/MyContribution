@@ -1,6 +1,7 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +34,8 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     @Bind(R.id.common_refresh)
     ProgressBar commonRefresh;
     @Bind(R.id.common_swipe)
-
     SwipeRefreshLayout commonSwipe;
+
     QFoodOrderAdapter qFoodOrderAdapter;
     List<OrderUrlBean.OrderBean> orderBeanList = new ArrayList<>();
     OrdersPresenter getOrdersPresenter;
@@ -72,7 +73,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         commonRecycle.setLayoutManager(linearLayoutManager);
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setAdapter(qFoodOrderAdapter);
-        commonSwipe.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
+        commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -102,7 +103,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
         _intent.putExtra(AppConstants.KEY_ORDER_ID, item.getID());
         _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
-        _intent.putExtra(AppConstants.KEY_MERCHANT_NAME,item.getRName());
+        _intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getRName());
         _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
         /*_intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());
         _intent.putExtra(AppConstants.KEY_ADDRESS, item.getAddress());

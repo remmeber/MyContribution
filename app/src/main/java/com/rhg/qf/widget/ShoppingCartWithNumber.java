@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.SizeUtil;
 
 /*
  *desc 带有数字显示的购物车
@@ -26,13 +26,13 @@ public class ShoppingCartWithNumber extends FrameLayout {
     ImageView iv_goodsCart;
     boolean isVisible;
     String number = "2";
-    float r = DpUtil.dip2px(15);
+    float r = SizeUtil.dip2px(15);
     float text_size = 10;
     int width;
     int height;
-    private int backColor;
     Paint circlePaint;
     Paint textPaint;
+    private int backColor;
 
     public ShoppingCartWithNumber(Context context) {
         this(context, null);
@@ -50,7 +50,7 @@ public class ShoppingCartWithNumber extends FrameLayout {
             backColor = a.getColor(R.styleable.ShoppingCartWithNumber_tint_color, DEFAULT_BACK_COLOR);
         }
         if (a.hasValue(R.styleable.ShoppingCartWithNumber_text_size)) {
-            text_size = a.getDimensionPixelSize(R.styleable.ShoppingCartWithNumber_text_size, sp2px(text_size));
+            text_size = a.getDimensionPixelSize(R.styleable.ShoppingCartWithNumber_text_size, SizeUtil.sp2px(text_size));
         }
         a.recycle();
         initView(context);
@@ -63,14 +63,10 @@ public class ShoppingCartWithNumber extends FrameLayout {
         Paint _paint = new Paint();
         _paint.setColor(Color.BLACK);
         _paint.setAntiAlias(true);
-        _paint.setTextSize(sp2px(10));
+        _paint.setTextSize(SizeUtil.sp2px(10));
         return _paint;
     }
 
-    protected int sp2px(float sp) {
-        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (sp * scale + 0.5f);
-    }
 
     private Paint getCirclePaint() {
         Paint _paint = new Paint();
@@ -93,7 +89,7 @@ public class ShoppingCartWithNumber extends FrameLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(DpUtil.dip2px(36), DpUtil.dip2px(36));
+        setMeasuredDimension(SizeUtil.dip2px(36), SizeUtil.dip2px(36));
     }
 
 

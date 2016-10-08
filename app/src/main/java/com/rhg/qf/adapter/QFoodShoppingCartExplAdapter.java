@@ -8,7 +8,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
@@ -59,12 +58,12 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
                     break;
                 case R.id.ivAdd:
                     ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.tvNum));
+                            (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
                     setDataChange();
                     break;
                 case R.id.ivReduce:
                     ShoppingCartUtil.addOrReduceGoodsNum(false, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.tvNum));
+                            (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
                     setDataChange();
                     break;
                 case R.id.holder:
@@ -178,7 +177,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         String goodsName = goods.getGoodsName();
         String goodsLogoUrl = goods.getGoodsLogoUrl();
 
-        ImageLoader.getInstance().displayImage(goodsLogoUrl,childViewHolder.goodsLogo);
+        ImageLoader.getInstance().displayImage(goodsLogoUrl, childViewHolder.goodsLogo);
         childViewHolder.goodsLogo.setDrawingCacheEnabled(true);
         childViewHolder.tvGoodsName.setText(goodsName);
         childViewHolder.tvGoodsPrice.setText(goodsprice);
@@ -270,7 +269,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     }
 
     public interface DataChangeListener {
-        public void onDataChange(String CountMoney);
+        void onDataChange(String CountMoney);
     }
 
     class GroupViewHolder {
@@ -304,8 +303,9 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
             tvGoodsPrice = (TextView) view.findViewById(R.id.tvPriceNew);
             btReduceNum = (ImageView) view.findViewById(R.id.ivReduce);
             btAddNum = (ImageView) view.findViewById(R.id.ivAdd);
-            goodsCount = (TextView) view.findViewById(R.id.tvNum);
+            goodsCount = (TextView) view.findViewById(R.id.etNum);
             delete = (RelativeLayout) view.findViewById(R.id.holder);
+            goodsCount.setFocusable(false);
         }
     }
 }

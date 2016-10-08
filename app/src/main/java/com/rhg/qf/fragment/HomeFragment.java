@@ -1,19 +1,15 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.activity.DIYOrderActivity;
 import com.rhg.qf.activity.HotFoodActivity;
+import com.rhg.qf.activity.PersonalOrderActivity;
 import com.rhg.qf.activity.SearchActivity;
 import com.rhg.qf.activity.ShopDetailActivity;
 import com.rhg.qf.adapter.QFoodGridViewAdapter;
@@ -37,11 +33,13 @@ import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.HomePresenter;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * desc:主页
@@ -51,6 +49,7 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapter.OnBannerClickListener,
         RecycleMultiTypeAdapter.OnGridItemClickListener,
+        RecycleMultiTypeAdapter.OnSearch,
         RcvItemClickListener<MerchantUrlBean.MerchantBean>,
         View.OnClickListener {
     FavorableTypeModel favorableTypeModel;
@@ -62,17 +61,16 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     RecommendListTypeModel recommendListTypeModel;
     List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntityList = new ArrayList<>();
 
-    SwipeRefreshLayout swipeRefreshLayout;
     RecycleMultiTypeAdapter recycleMultiTypeAdapter;
+//    ProgressBar progressBar;
 
-    View view;
-    RecyclerView home_rcv;
+//    View view;
     /*toolbar 相关*/
-    RelativeLayout tlLeftRL;
+    /*RelativeLayout tlLeftRL;
     ImageView tlLeftIV;
     TextView tlLeftTV;
     TextView tlCenterTV;
-    ImageView tlRightLL;
+    ImageView tlRightLL;*/
     /*toolbar 相关*/
 
     HomePresenter homePresenter;
@@ -80,8 +78,11 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     List<Object> mData;
 
     MyLocationListener myLocationListener;
-    ProgressBar progressBar;
     boolean isLocated;
+    @Bind(R.id.home_recycle)
+    RecyclerView home_rcv;
+    @Bind(R.id.home_swipe)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
         homePresenter = new HomePresenter(this);
@@ -100,49 +101,42 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     protected void initView(View view) {
-        tlLeftRL = (RelativeLayout) view.findViewById(R.id.home_tl_left_rl);
-        tlLeftIV = (ImageView) view.findViewById(R.id.home_tl_left_bt);
-        tlLeftTV = (TextView) view.findViewById(R.id.home_tl_left_tv);
-
-        tlCenterTV = (TextView) view.findViewById(R.id.home_tl_center_tv);
-
-        tlRightLL = (ImageView) view.findViewById(R.id.home_tl_right_ll);
-
-        home_rcv = (RecyclerView) view.findViewById(R.id.home_recycle);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_swipe);
-        progressBar = (ProgressBar) view.findViewById(R.id.progress);
     }
 
     @Override
     public void loadData() {
         homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
+        if (!AccountUtil.getInstance().hasAccount()) {
+            reStartLocation();
+        }
     }
 
 
     @Override
     protected void initData() {
-        tlLeftIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
+        /*tlLeftIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
         tlLeftRL.setOnClickListener(this);
         tlCenterTV.setOnClickListener(this);
-        tlRightLL.setOnClickListener(this);
+        tlRightLL.setOnClickListener(this);*/
 
         mData = new ArrayList<>();
         recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getContext(), mData);
         recycleMultiTypeAdapter.setBannerClickListener(this);
         recycleMultiTypeAdapter.setOnGridItemClickListener(this);
         recycleMultiTypeAdapter.setOnItemClickListener(this);
+        recycleMultiTypeAdapter.setOnSearch(this);
         initList();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         home_rcv.setLayoutManager(linearLayoutManager);
         home_rcv.setHasFixedSize(false);
         home_rcv.setAdapter(recycleMultiTypeAdapter);
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getContext().getResources().getColor(R.color.colorGreenNormal));
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (TextUtils.isEmpty(tlLeftTV.getText()) || "null".equals(tlLeftTV.getText())) {
+                /*if (TextUtils.isEmpty(tlLeftTV.getText()) || "null".equals(tlLeftTV.getText())) {
                     reStartLocation();
-                }
+                }*/
                 homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
             }
         });
@@ -150,7 +144,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public LocationService GetMapService() {
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setVisibility(View.VISIBLE);
         return InitApplication.getInstance().locationService;
     }
 
@@ -197,15 +191,15 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     @Override
     public void showLocSuccess(String s) {
         isLocated = true;
-        tlLeftTV.setText(s);
+//        tlLeftTV.setText(s);
         AccountUtil.getInstance().setLocation(s);
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showLocFailed(String s) {
         ToastHelper.getInstance()._toast(s);
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
     }
 
     private void initList() {
@@ -223,24 +217,28 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         recycleMultiTypeAdapter.notifyDataSetChanged();
     }
 
-
-    @Override
+    @OnClick({R.id.iv_left, R.id.iv_right, R.id.tv_center})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.home_tl_left_rl:
-                if (NetUtil.isConnected(getContext()))
+            case R.id.iv_left:
+                /*if (NetUtil.isConnected(getContext()))
                     reStartLocation();
-                else ToastHelper.getInstance()._toast("请检查网络");
+                else ToastHelper.getInstance()._toast("请检查网络");*/
                 break;
-            case R.id.home_tl_center_tv:
-                doSearch();
+            case R.id.tv_center:
+               /* if (!AccountUtil.getInstance().hasAccount()) {
+                    ToastHelper.getInstance().displayToastWithQuickClose("请登录");
+                    break;
+                }*/
+                startActivity(new Intent(getContext(), PersonalOrderActivity.class));
+//                doSearch();
                 break;
-            case R.id.home_tl_right_ll:
-                if (!AccountUtil.getInstance().hasAccount()) {
+            case R.id.iv_right:
+             /*   if (!AccountUtil.getInstance().hasAccount()) {
                     ToastHelper.getInstance().displayToastWithQuickClose("请登录");
                     break;
                 }
-                startActivity(new Intent(getContext(), DIYOrderActivity.class));
+                startActivity(new Intent(getContext(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, AppConstants.CUSTOMER_SERVER));*/
                 break;
         }
     }
@@ -286,5 +284,11 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getName());
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, item.getPic());
         startActivity(intent);
+    }
+
+
+    @Override
+    public void search() {
+        doSearch();
     }
 }

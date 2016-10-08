@@ -1,7 +1,9 @@
 package com.rhg.qf.fragment;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.rhg.qf.mvp.presenter.UserSignInPresenter;
 import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -34,7 +37,6 @@ import java.util.Map;
 public class MyFragment extends BaseFragment implements View.OnClickListener {
     boolean hasAccount = true;
 
-    //    FrameLayout flTAB;
     ImageView userHeader;
     TextView userName;
     //TODO-------------------------------我的订单栏---------------------------------------------
@@ -103,6 +105,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (!isSignIn && AccountUtil.getInstance().hasAccount()) {
             isSignIn = true;
             userName.setText(AccountUtil.getInstance().getNickName());
+            userName.setClickable(true);
             ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
         }
     }
@@ -121,7 +124,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         } else {
             userName.setText("请登录");
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示
-            userName.setOnClickListener(this);//TODO 如果本地有账户则直接登录，否则需要点击登录
+            userName.setOnClickListener(this);
             userName.setTag(R.id.userName);
         }
 
@@ -144,6 +147,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         myComplete.setTag(2);
 
         workerInfo.setText(R.string.workerInfo);
+        //setTextSize()有两种方法，没有unit参数的方法，默认使用sp为单位的数值进行设置字体大小。
+        workerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX, SizeUtil.sp2px(15));
 
         workerForward.setOnClickListener(this);
         workerForward.setTag(R.id.profileWorker);
@@ -180,6 +185,34 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     private View getViewById(View parent, int centerId, int targetId) {
         return parent.findViewById(centerId).findViewById(targetId);
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (AccountUtil.getInstance().hasAccount()) {
+                isSignIn = true;
+                if ("请登录".equals(userName.getText())) {
+                    userName.setText(AccountUtil.getInstance().getNickName());
+                    ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
+                }
+            } else {
+                isSignIn = false;
+                userName.setClickable(true);
+                userName.setText("请登录");
+                userHeader.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_camera_with_circle));
+            }
+        }
+    }
+
+    /*Fragment被activity覆盖后，重新显示出来时调用的方法*/
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("RHG", "start DONE:" + isSignIn);
+        this.setUserVisibleHint(true);
     }
 
     @Override
@@ -234,6 +267,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     ToastHelper.getInstance().displayToastWithQuickClose("请登录");
                     break;
                 }
+
                 intent.setClass(getContext(), /*DeliverInfoActivity*/DeliverOrderActivity.class);
                 startActivity(intent);
                 /*else

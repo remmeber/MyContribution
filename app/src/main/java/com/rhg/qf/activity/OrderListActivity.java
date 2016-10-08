@@ -2,6 +2,7 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -56,8 +57,8 @@ public class OrderListActivity extends BaseFragmentActivity {
 
     @Override
     protected void initData() {
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        flTab.setBackgroundResource(R.color.colorGreenNormal);
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundResource(R.color.colorBlueNormal);
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new OrderUnPaidFM());

@@ -5,5 +5,5 @@ package com.rhg.qf.impl;
  * 邮箱：1013773046@qq.com
  */
 public interface SwipeRefreshListener {
-    public void startRefresh();
+    void startRefresh();
 }

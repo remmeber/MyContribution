@@ -8,13 +8,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.rhg.qf.application.InitApplication;
-import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.KeyBoardUtil;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
@@ -37,7 +34,7 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
-            ButterKnife.bind(this);
+        ButterKnife.bind(this);
         dataReceive(getIntent());
         loadingData();
         initData();
@@ -104,9 +101,15 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
             if (isShouldHideKeyBoard(focusView, ev)) {
                 KeyBoardUtil.closeKeybord((EditText) focusView, this);
                 focusView.clearFocus();
+                keyBoardHide();
             }
+
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void keyBoardHide() {
+
     }
 
     private boolean isShouldHideKeyBoard(View focusView, MotionEvent ev) {
@@ -138,10 +141,7 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
             locationService.stop();
             locationService.unregisterListener(mLocationListener);
         }
-        if (AppConstants.DEBUG) {
-            RefWatcher refWatcher = InitApplication.getRefWatcher(this);
-            refWatcher.watch(this);
-        }
+
     }
 
 

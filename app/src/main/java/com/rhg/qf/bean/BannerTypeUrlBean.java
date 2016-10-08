@@ -11,18 +11,15 @@ import java.util.List;
 public class BannerTypeUrlBean {
 
 
+    String total;
+    List<BannerEntity> rows;
     /**
      * result : 0
      * msg : 请求成功
      */
 
     private int result;
-
     private String msg;
-
-    String total;
-
-    List<BannerEntity> rows;
 
     public String getTotal() {
         return total;

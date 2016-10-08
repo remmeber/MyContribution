@@ -1,11 +1,8 @@
 package com.rhg.qf.mvp.presenter;
 
 import com.rhg.qf.bean.ShopDetailLocalModel;
-import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.mvp.model.ShopDetailModel;
 import com.rhg.qf.mvp.view.BaseView;
-
-import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,6 +22,7 @@ public class ShopDetailPresenter {
         testView = baseView;
         shopDetailModel = new ShopDetailModel();
     }
+
     public void getShopDetail(String table, String merchantId) {
         shopDetailModel.getShopDetail(table, merchantId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

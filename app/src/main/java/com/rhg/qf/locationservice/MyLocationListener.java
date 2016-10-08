@@ -1,7 +1,5 @@
 package com.rhg.qf.locationservice;
 
-import android.util.Log;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.rhg.qf.mvp.model.LocModel;

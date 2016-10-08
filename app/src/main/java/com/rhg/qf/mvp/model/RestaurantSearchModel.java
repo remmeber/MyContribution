@@ -1,16 +1,10 @@
 package com.rhg.qf.mvp.model;
 
 
-import android.util.Log;
-
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
-import java.util.List;
-
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
 
 /*
  *desc
@@ -20,8 +14,8 @@ import rx.functions.Func1;
  */
 public class RestaurantSearchModel {
     public Observable<MerchantUrlBean> getSearchRestaurants(String searchRestaurants,
-                                                                               String searchContent,/*utf-8*/
-                                                                               int style) {
+                                                            String searchContent,/*utf-8*/
+                                                            int style) {
         return QFoodApiMamager.getInstant().getQFoodApiService().getRestaurantSearchResult(searchRestaurants, searchContent, String.valueOf(style))
 
                 /*.flatMap(new Func1<MerchantUrlBean, Observable<List<MerchantUrlBean.MerchantBean>>>() {

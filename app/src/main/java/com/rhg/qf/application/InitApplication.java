@@ -1,12 +1,12 @@
 package com.rhg.qf.application;
 
-import android.app.Application;
 import android.app.Service;
-import android.content.Context;
 import android.os.Vibrator;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.easemob.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -14,25 +14,22 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
 import com.rhg.qf.activity.BaseFragmentActivity;
-import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 import com.umeng.socialize.PlatformConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 /**
- * desc:APP的入口，定义全局变量
+ * desc:APP的入口，定义全局变量,继承MultiDexApplication，解决方法数超过65536
  * author：remember
  * time：2016/5/28 16:22
  * email：1013773046@qq.com
  */
-public class InitApplication extends Application {
+public class InitApplication extends MultiDexApplication {
     public final static String QQID = "1105497604";
     public final static String QQKEY = "MdCq3ttlP0xlAPIg";
     public final static String WXID = "wxb066167618e700e6";/*已签名*/
@@ -41,13 +38,8 @@ public class InitApplication extends Application {
     public LocationService locationService;
     public Vibrator mVibrator;
     private HashMap<String, WeakReference<BaseFragmentActivity>> activityList = new HashMap<String, WeakReference<BaseFragmentActivity>>();
-    private HashMap<String, WeakReference<Object>> objectList = new HashMap<>();
-    private RefWatcher refWatcher;
+//    private HashMap<String, WeakReference<Object>> objectList = new HashMap<>();
 
-    public static RefWatcher getRefWatcher(Context context) {
-        InitApplication application = (InitApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
 
     public static InitApplication getInstance() {
         if (initApplication == null)
@@ -55,7 +47,7 @@ public class InitApplication extends Application {
         return initApplication;
     }
 
-    public void addObject(Object object) {
+    /*public void addObject(Object object) {
         if (null != object) {
             Log.i("RHG", "********* add Object " + object.getClass().getName());
             objectList.put(object.getClass().getName(), new WeakReference<>(object));
@@ -75,7 +67,7 @@ public class InitApplication extends Application {
             Log.i("RHG", "********* add Activity " + activity.getClass().getName());
             activityList.put(activity.getClass().getName(), new WeakReference<>(activity));
         }
-    }
+    }*/
 
     public void removeActivity(BaseFragmentActivity activity) {
         if (null != activity) {
@@ -104,11 +96,10 @@ public class InitApplication extends Application {
     public void onCreate() {
         initBDMap();
         super.onCreate();
-        if (AppConstants.DEBUG)
-            refWatcher = LeakCanary.install(this);
         initApplication = this;
+        EaseUI.getInstance().init(this);
         initAccountUtil();
-        initDBHelper();
+        AccountDBHelper.init(getApplicationContext());
         initToast();
         initImageLoader();
         thirdConfig();
@@ -140,11 +131,6 @@ public class InitApplication extends Application {
 
     private void initToast() {
         ToastHelper.getInstance().init(getApplicationContext());
-    }
-
-    private void initDBHelper() {
-        AccountDBHelper.init(getApplicationContext());
-//        LikeDBHelper.init(getApplicationContext());
     }
 
     //------网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库

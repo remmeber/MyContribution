@@ -10,10 +10,10 @@ import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
- *desc:跑腿员订单model
- *author：remember
- *time：2016/7/10 11:14
- *email：1013773046@qq.com
+ * desc:跑腿员订单model
+ * author：remember
+ * time：2016/7/10 11:14
+ * email：1013773046@qq.com
  */
 public class DeliverOrderModel {
 

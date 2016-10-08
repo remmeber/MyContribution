@@ -4,6 +4,7 @@ import com.rhg.qf.mvp.model.DeliverStateModel;
 import com.rhg.qf.mvp.view.BaseView;
 
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -25,7 +26,22 @@ public class DeliverStatePresenter {
     public void getDeliverState(String orderStyle, String orderId) {
         deliverStateModel.getDeliverState(orderStyle, orderId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<String>() {
+                .subscribe(/*new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        deliverStateView.showData(s);
+                    }
+                }*/new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
 

@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -70,8 +70,8 @@ public class SellerFragment extends BaseFragment {
     @Override
     protected void initData() {
         tbCenterTv.setText(getResources().getString(R.string.allStore));
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-        tbRightIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
+        tbRightIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_search_black));
         QFoodVpAdapter qFoodVpAdapter = new QFoodVpAdapter(getChildFragmentManager(), fragments,
                 AppConstants.SELL_TITLES);
 

@@ -15,7 +15,7 @@ import rx.functions.Func1;
  */
 public class UserSignUpModel {
     public Observable<String> userSignUp(String openid, String unionid, String headimageurl, String nickName) {
-        return QFoodApiMamager.getInstant().getQFoodApiService().userSignUp(openid, unionid, headimageurl,nickName)
+        return QFoodApiMamager.getInstant().getQFoodApiService().userSignUp(openid, unionid, headimageurl, nickName)
                 .flatMap(new Func1<BaseBean, Observable<String>>() {
                     @Override
                     public Observable<String> call(final BaseBean baseBean) {

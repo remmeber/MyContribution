@@ -5,9 +5,9 @@ package com.rhg.qf.impl;
  * 邮箱：1013773046@qq.com
  */
 public interface ShareListener {
-    public void shareSuccess(String message);
+    void shareSuccess(String message);
 
-    public void shareFailed(String message, String content);
+    void shareFailed(String message, String content);
 
-    public void shareCancel(String message);
+    void shareCancel(String message);
 }

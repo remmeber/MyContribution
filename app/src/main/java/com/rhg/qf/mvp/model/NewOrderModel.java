@@ -8,7 +8,7 @@ import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +24,15 @@ import rx.functions.Func1;
  */
 public class NewOrderModel {
     public Observable<String> createNewOrder(NewOrderBean newOrderBean) {
-        List<Map<String,String>> mapList = new ArrayList<>();
-        for (NewOrderBean.FoodBean foodBean:newOrderBean.getFood()) {
-            Map<String ,String > foodMap = new HashMap<>();
-            foodMap.put("ID",foodBean.getID());
-            foodMap.put("Num",foodBean.getNum());
+        List<Map<String, String>> mapList = new ArrayList<>();
+        for (NewOrderBean.FoodBean foodBean : newOrderBean.getFood()) {
+            Map<String, String> foodMap = new LinkedHashMap<>();
+            foodMap.put("ID", foodBean.getID());
+            foodMap.put("Num", foodBean.getNum());
             mapList.add(foodMap);
         }
         String food = new Gson().toJson(mapList);
+        Log.i("RHG", "orderbean: " + newOrderBean);
         return QFoodApiMamager.getInstant().getQFoodApiService().createOrder(newOrderBean.getAddress(),
                 newOrderBean.getClient(), newOrderBean.getReceiver(), newOrderBean.getPhone(),
                 newOrderBean.getPrice(), food)
@@ -41,6 +42,7 @@ public class NewOrderModel {
                         return Observable.create(new Observable.OnSubscribe<String>() {
                             @Override
                             public void call(Subscriber<? super String> subscriber) {
+                                //Log.i("RHG", baseBean.getMsg());
                                 if (baseBean.getResult() == 0)
                                     subscriber.onNext(baseBean.getMsg());
                                 else subscriber.onNext("error");

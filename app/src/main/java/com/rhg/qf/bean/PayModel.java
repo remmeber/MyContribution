@@ -12,6 +12,17 @@ import java.util.ArrayList;
  * email：1013773046@qq.com
  */
 public class PayModel implements Parcelable {
+    public static final Creator<PayModel> CREATOR = new Creator<PayModel>() {
+        @Override
+        public PayModel createFromParcel(Parcel in) {
+            return new PayModel(in);
+        }
+
+        @Override
+        public PayModel[] newArray(int size) {
+            return new PayModel[size];
+        }
+    };
     public String receiver;
     public String phone;
     public String address;
@@ -39,18 +50,6 @@ public class PayModel implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<PayModel> CREATOR = new Creator<PayModel>() {
-        @Override
-        public PayModel createFromParcel(Parcel in) {
-            return new PayModel(in);
-        }
-
-        @Override
-        public PayModel[] newArray(int size) {
-            return new PayModel[size];
-        }
-    };
 
     public String getReceiver() {
         return receiver;
@@ -85,6 +84,17 @@ public class PayModel implements Parcelable {
     }
 
     public static class PayBean implements Parcelable {
+        public static final Creator<PayBean> CREATOR = new Creator<PayBean>() {
+            @Override
+            public PayBean createFromParcel(Parcel in) {
+                return new PayBean(in);
+            }
+
+            @Override
+            public PayBean[] newArray(int size) {
+                return new PayBean[size];
+            }
+        };
         String merchantName;
         String productId;
         String productName;
@@ -105,18 +115,6 @@ public class PayModel implements Parcelable {
 
         public PayBean() {
         }
-
-        public static final Creator<PayBean> CREATOR = new Creator<PayBean>() {
-            @Override
-            public PayBean createFromParcel(Parcel in) {
-                return new PayBean(in);
-            }
-
-            @Override
-            public PayBean[] newArray(int size) {
-                return new PayBean[size];
-            }
-        };
 
         public String getMerchantName() {
             return merchantName;

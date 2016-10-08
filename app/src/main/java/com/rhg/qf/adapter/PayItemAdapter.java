@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemViewHolder> {
     Context context;
     List<PayModel.PayBean> payList;
+    PayItemClickListener onPayItemClick;
 
     public PayItemAdapter(Context context, List<PayModel.PayBean> payList) {
         this.context = context;
@@ -48,7 +49,9 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
 
     @Override
     public void onBindViewHolder(final PayItemAdapter.PayItemViewHolder holder, int position) {
-        holder.tvPayTitle.setText(payList.get(position).getMerchantName());
+        if (payList.get(position).getMerchantName() != null)
+            holder.tvPayTitle.setText(payList.get(position).getMerchantName());
+        else holder.tvPayTitle.setText(payList.get(position).getProductName());
         if (payList.get(position).isChecked())
             holder.ivItemPay.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_check_green));
         else
@@ -78,6 +81,13 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         return payList == null ? 0 : payList.size();
     }
 
+    public void setOnPayItemClick(PayItemClickListener onPayItemClick) {
+        this.onPayItemClick = onPayItemClick;
+    }
+
+    public interface PayItemClickListener {
+        void onPayItemClick(int position);
+    }
 
     public class PayItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_pay_title)
@@ -95,15 +105,5 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
             super(view);
             ButterKnife.bind(this, view);
         }
-    }
-
-    public interface PayItemClickListener {
-        void onPayItemClick(int position);
-    }
-
-    PayItemClickListener onPayItemClick;
-
-    public void setOnPayItemClick(PayItemClickListener onPayItemClick) {
-        this.onPayItemClick = onPayItemClick;
     }
 }

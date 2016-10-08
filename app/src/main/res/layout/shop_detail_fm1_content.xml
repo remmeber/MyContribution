@@ -10,11 +10,11 @@
         android:id="@+id/vt_selector"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:item_click_bg_color="@color/colorToolbarGreen"
+        app:item_click_bg_color="@color/colorBlueNormal"
         app:item_click_text_color="@color/white"
         app:item_height="40dp"
         app:item_text_size="18sp"
-        app:item_unclick_bg_color="@color/colorSign"
+        app:item_unclick_bg_color="@color/colorBlueLight"
         app:item_unclick_text_color="@color/black"
         app:item_width="100dp"
         tools:background="@color/colorRecommend_Red" />

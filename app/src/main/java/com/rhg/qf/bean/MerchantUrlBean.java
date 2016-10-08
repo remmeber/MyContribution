@@ -53,6 +53,7 @@ public class MerchantUrlBean {
         private String Fee;
         private String Distance;
         private String Style;
+        private String Reason;
 
         public String getID() {
             return ID;
@@ -109,5 +110,35 @@ public class MerchantUrlBean {
         public void setStyle(String Style) {
             this.Style = Style;
         }
+
+        public String getReason() {
+            return Reason;
+        }
+
+        public void setReason(String reason) {
+            this.Reason = reason;
+        }
+
+        @Override
+        public String toString() {
+            return "MerchantBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Name='" + Name + '\'' +
+                    ", Pic='" + Pic + '\'' +
+                    ", Delivery='" + Delivery + '\'' +
+                    ", Fee='" + Fee + '\'' +
+                    ", Distance='" + Distance + '\'' +
+                    ", Style='" + Style + '\'' +
+                    ", reason='" + Reason + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "MerchantUrlBean{" +
+                "total='" + total + '\'' +
+                ", rows=" + rows +
+                '}';
     }
 }

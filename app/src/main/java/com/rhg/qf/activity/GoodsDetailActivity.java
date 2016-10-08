@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ import butterknife.OnClick;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class GoodsDetailActivity extends BaseFragmentActivity {
+public class GoodsDetailActivity extends BaseAppcompactActivity {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
@@ -72,8 +73,8 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     TextView tvDescriptionContent;
     @Bind(R.id.tv_price_number)
     TextView tvPriceNumber;
-    @Bind(R.id.tvNum)
-    TextView tvNum;
+    @Bind(R.id.etNum)
+    EditText etNum;
     @Bind(R.id.ivAddToShoppingCart)
     ShoppingCartWithNumber ivAddToShoppingCart;
     //    private boolean isLike;
@@ -81,21 +82,21 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     Bundle bundle;
     GoodsDetailPresenter goodsDetailPresenter;
     String foodId;
-    private boolean isNeedLoc;
-    private String location;
-    private MyLocationListener myLocationListener;
-    private String price;
     String image;
     UserSignInPresenter userSignInPresenter;
     UserSignUpPresenter userSignUpPresenter;
     GetAddressPresenter getAddressPresenter;
-    private UmengUtil signUtil;
     String nickName;
     String openid;
     String unionid;
     String headImageUrl;
     AddressUrlBean.AddressBean addressBean;
     String merchantName;
+    private boolean isNeedLoc;
+    private String location;
+    private MyLocationListener myLocationListener;
+    private String price;
+    private UmengUtil signUtil;
 
 
     public GoodsDetailActivity() {
@@ -166,8 +167,10 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void initView(View view) {
-
+    public void keyBoardHide() {
+        if (TextUtils.isEmpty(etNum.getText())) {
+            etNum.setText("0");
+        }
     }
 
 
@@ -182,10 +185,10 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         String _productId = String.valueOf(foodId);
         if (accountDao.isExistGood(_productId)) {
             String _num = accountDao.getNumByProductID(_productId);
-            tvNum.setText(_num);
+            etNum.setText(_num);
             ivAddToShoppingCart.setNum(_num);
         } else {
-            tvNum.setText("0");
+            etNum.setText("0");
             ivAddToShoppingCart.setNum("0");
         }
         ivBanner.startTurning(2000);
@@ -235,7 +238,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
             AccountUtil.getInstance().setPwd(_data.getPwd());
             if (getAddressPresenter == null)
                 getAddressPresenter = new GetAddressPresenter(this);
-            getAddressPresenter.getAddress(AppConstants.ADDRESS_DEFAULT);
+            getAddressPresenter.getAddress(AppConstants.TABLE_DEFAULT_ADDRESS);
             return;
         }
         if (o instanceof AddressUrlBean.AddressBean) {
@@ -298,17 +301,17 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 reStartLocation();
                 break;
             case R.id.ivReduce:
-                int t = Integer.valueOf(tvNum.getText().toString());
+                int t = Integer.valueOf(etNum.getText().toString());
                 if (t != 0) {
-                    tvNum.setText(String.valueOf(t - 1));
+                    etNum.setText(String.valueOf(t - 1));
                     ivAddToShoppingCart.setNum(String.valueOf(t - 1));
                     //TODO 需要更新购物车数据库的数据
                 }
                 break;
             case R.id.ivAdd:
-                String text = tvNum.getText().toString();
+                String text = etNum.getText().toString();
                 int num = Integer.valueOf(text);
-                tvNum.setText(String.valueOf(num + 1));
+                etNum.setText(String.valueOf(num + 1));
                 ivAddToShoppingCart.setNum(String.valueOf(num + 1));
                 //TODO 需要更新购物车数据库的数据
                 break;
@@ -349,7 +352,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
                 dialogShow();
                 break;*/
             case R.id.bt_buy:
-                if (Integer.valueOf(tvNum.getText().toString()) == 0) {
+                if (Integer.valueOf(etNum.getText().toString()) == 0) {
                     ToastHelper.getInstance().displayToastWithQuickClose("未选择商品数量");
                     return;
                 }
@@ -422,7 +425,7 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         _pay.setProductName(tvGoodsName.getText().toString());
         _pay.setChecked(true);
         _pay.setProductId(foodId);
-        _pay.setProductNumber(tvNum.getText().toString());
+        _pay.setProductNumber(etNum.getText().toString());
         _pay.setProductPic(image);
         _pay.setProductPrice(price);
         payBeen.add(_pay);

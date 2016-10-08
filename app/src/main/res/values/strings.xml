@@ -117,8 +117,12 @@
 
     <!--自主点餐-->
     <string name="information">请写下所有您想吃的\n\n 给我们单身狗跑腿员一个体会恋爱的机会\n\n 我们会找遍全城，只为你</string>
+    <string name="recommendation">推荐理由:\n%s</string>
     <string name="iWantEat">我想吃&#8230;</string>
     <string name="submit">提交</string>
+    <string name="personalOrder">自主点餐</string>
+    <string name="startOrder">开始点餐</string>
+    <string name="goOrder">GO!</string>
     <!--自主点餐-->
 
     <!--register-->
@@ -130,6 +134,7 @@
     <string name="completeRegister">完成注册</string>
     <string name="agreement">协议</string>
     <!--register-->
+
     <!--test-->
 
     <!--test-->

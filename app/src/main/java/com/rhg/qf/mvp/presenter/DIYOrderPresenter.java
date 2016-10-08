@@ -23,7 +23,7 @@ public class DIYOrderPresenter {
     }
 
     public void commitDIYOrder(String content) {
-        commitDIYOrderModel.commitDIYOrder( content).observeOn(AndroidSchedulers.mainThread())
+        commitDIYOrderModel.commitDIYOrder(content).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override

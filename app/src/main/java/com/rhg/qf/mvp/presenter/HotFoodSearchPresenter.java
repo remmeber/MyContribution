@@ -1,8 +1,5 @@
 package com.rhg.qf.mvp.presenter;
 
-import android.util.Log;
-
-import com.rhg.qf.bean.HotFoodSearchUrlBean;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.mvp.model.HotFoodSearchModel;
 import com.rhg.qf.mvp.view.BaseView;

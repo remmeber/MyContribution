@@ -20,13 +20,15 @@
     <item name="ic_back_black" type="drawable">@drawable/ic_back</item>
     <item name="ic_chevron_left_black" type="drawable">@drawable/chevron_left_black</item>
     <item name="ic_chevron_right_black" type="drawable">@drawable/chevron_right_black</item>
-    <item name="ic_chevron_right_green" type="drawable">@drawable/chevron_right_green</item>
+    <item name="ic_chevron_right_blue" type="drawable">@drawable/chevron_right_green</item>
     <item name="ic_speaker" type="drawable">@drawable/speaker_white</item>
     <item name="ic_star_gray" type="drawable">@drawable/star_gray</item>
-    <item name="ic_star_green" type="drawable">@drawable/star_green</item>
+    <item name="ic_star_green" type="drawable">@drawable/star_blue</item>
     <item name="ic_wechat_pay_green_128dp" type="drawable">@drawable/wechat_pay</item>
     <item name="ic_alipay_green_128dp" type="drawable">@drawable/alipay</item>
     <item name="ic_cash_green_200dp" type="drawable">@drawable/cash_green_200dp</item>
     <item name="ic_check_green" type="drawable">@drawable/check</item>
     <item name="ic_uncheck_green" type="drawable">@drawable/uncheck</item>
+    <item name="ic_right_blue" type="drawable">@drawable/ic_right</item>
+    <item name="ic_wrong_blue" type="drawable">@drawable/ic_wrong</item>
 </resources>

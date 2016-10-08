@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/colorGreenNormal</item>
+        <item name="colorPrimaryDark">@color/colorBlueNormal</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorSign</item>
+        <item name="colorAccent">@color/colorBlueNormal</item>
     </style>
 
     <!--<style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -37,8 +37,8 @@
     </style>
 
     <style name="MyTabStyle" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/colorGreenNormal</item>
-        <item name="tabSelectedTextColor">@color/colorGreenNormal</item>
+        <item name="tabIndicatorColor">@color/colorBlueNormal</item>
+        <item name="tabSelectedTextColor">@color/colorBlueNormal</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
     </style>
 

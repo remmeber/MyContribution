@@ -2,7 +2,6 @@ package com.rhg.qf.pay.pays.ali;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
 import com.rhg.qf.pay.model.KeyLibs;
@@ -69,7 +68,7 @@ public class AliPay implements IPayable {
         //商品详情。对一笔交易的具体描述信息。如果是多种商品，请将商品描述字符串累加传给body
         orderInfo += "&body=" + KeyLibs.mark + body + KeyLibs.mark;
         //该笔订单的资金总额，单位为RMB-Yuan。取值范围为[0.01，100000000.00]，精确到小数点后两位。
-        orderInfo += "&total_fee=" + KeyLibs.mark + totalFee + KeyLibs.mark;
+        orderInfo += "&total_fee=" + KeyLibs.mark + "0.01" + KeyLibs.mark;
         //服务器异步通知页面路径
         orderInfo += "&notify_url=" + KeyLibs.mark + notifyUrl + KeyLibs.mark;
         //接口名称，固定值。
@@ -88,7 +87,7 @@ public class AliPay implements IPayable {
         orderInfo += "&return_url=" + KeyLibs.mark + "m.alipay.com" + KeyLibs.mark;
         String sign = null;
         try {
-            sign = URLEncoder.encode(SignUtils.sign(orderInfo, KeyLibs.ali_privateKey),"UTF-8");
+            sign = URLEncoder.encode(SignUtils.sign(orderInfo, KeyLibs.ali_privateKey), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

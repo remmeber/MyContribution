@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -42,12 +43,10 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
     TextView addNewAddressContactAddressContent;
     @Bind(R.id.add_new_address_content_detail)
     EditText addNewAddressContentDetail;
-
-    private int resultCode = 0;
     AddOrUpdateAddressPresenter addOrUpdateAddress;
-    private String addressId = null;
     boolean isBackWithoutOption = true;
-
+    private int resultCode = 0;
+    private String addressId = null;
 
     @Override
     public void dataReceive(Intent intent) {
@@ -88,8 +87,8 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         if (resultCode == AppConstants.BACK_WITH_ADD)
             tbCenterTv.setText(getResources().getString(R.string.newAddress));
         else {

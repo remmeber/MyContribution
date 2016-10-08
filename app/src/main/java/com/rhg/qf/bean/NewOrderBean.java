@@ -1,9 +1,6 @@
 package com.rhg.qf.bean;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * desc:用于新建订单
@@ -96,5 +93,25 @@ public class NewOrderBean {
         public void setNum(String Num) {
             this.Num = Num;
         }
+
+        @Override
+        public String toString() {
+            return "FoodBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Num='" + Num + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "NewOrderBean{" +
+                "Client='" + Client + '\'' +
+                ", Receiver='" + Receiver + '\'' +
+                ", Address='" + Address + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", Price='" + Price + '\'' +
+                ", Food=" + Food +
+                '}';
     }
 }

@@ -13,6 +13,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -43,6 +44,13 @@ import butterknife.OnClick;
  * email：1013773046@qq.com
  */
 public class DeliverInfoActivity extends BaseAppcompactActivity implements ModifyHeadImageDialog.ChoosePicListener {
+    /**
+     * desc:裁剪图片
+     * author：remember
+     * time：2016/5/31 22:28
+     * email：1013773046@qq.com
+     */
+    private static final String CROP = "com.android.camera.action.CROP";
     @Bind(R.id.tb_right_tv)
     TextView tbRightTv;
     @Bind(R.id.tb_left_iv)
@@ -59,13 +67,6 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
     CircleImageView headView;
     @Bind(R.id.fl_tab)
     FrameLayout tb_common;
-    /**
-     * desc:裁剪图片
-     * author：remember
-     * time：2016/5/31 22:28
-     * email：1013773046@qq.com
-     */
-    private static final String CROP = "com.android.camera.action.CROP";
     ModifyHeadImageDialog modifyHeadImageDialog;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
     PerfectDeliverInfoPresenter perfectDeliverInfoPresenter;
@@ -80,10 +81,12 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
 
     protected void initData() {
         uploadAndSaveImagePresenter = new UploadAndSaveImagePresenter(this);
-        tb_common.setBackgroundResource(R.color.colorGreenNormal);
+        tb_common.setBackgroundResource(R.color.colorBlueNormal);
         tbRightTv.setText(getResources().getString(R.string.tvEdit));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
-        etNameWrap.setHint(AccountUtil.getInstance().getNickName());
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
+        etNameWrap.setHint("姓名");
+        if (etNameWrap.getEditText() != null)
+            etNameWrap.getEditText().setText(AccountUtil.getInstance().getNickName());
         etNameWrap.setError("");
         etIdWrap.setHint("身份证号");
         etPhoneWrap.setHint("手机号");
@@ -307,6 +310,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
                         etPlaceWrap.getEditText().getText().toString());
                 break;
             case R.id.bt_exit:
+                AccountUtil.getInstance().deleteAccount();
                 finish();
                 break;
             case R.id.ci_head:

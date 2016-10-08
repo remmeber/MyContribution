@@ -1,6 +1,7 @@
 package com.rhg.qf.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,8 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
 
     Context context;
     List<DeliverOrderUrlBean.DeliverOrderBean> deliverOrderBeanList;
+    private RcvItemClickListener<DeliverOrderUrlBean.DeliverOrderBean> onRcvItemClick;
+    private OrderStyleListener onStyleChange;
 
     public DeliverOrderItemAdapter(Context context, List<DeliverOrderUrlBean.DeliverOrderBean> deliverOrderBeanList) {
         this.context = context;
@@ -93,27 +96,27 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
                 break;*/
             case AppConstants.DELIVER_ORDER_UNACCEPT:
                 holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderUnAccept));
-                holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorGreenNormal));
-                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorRecommend_Red));
-                holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_green));
+                holder.tvOrderInd.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBlueNormal));
+                holder.viewOrderLine.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRecommend_Red));
+                holder.rlOrderInfo.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.virtual_green));
                 break;
             case AppConstants.DELIVER_ORDER_ACCEPT:
                 holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderAccept));
-                holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorRecommend_Red));
-                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorRecommend_Red));
-                holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_red));
+                holder.tvOrderInd.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRecommend_Red));
+                holder.viewOrderLine.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRecommend_Red));
+                holder.rlOrderInfo.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.virtual_red));
                 break;
             case AppConstants.DELIVER_ORDER_DELIVERING:
                 holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderDelivering));
-                holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorGreenNormal));
-                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorGreenNormal));
-                holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_green));
+                holder.tvOrderInd.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBlueNormal));
+                holder.viewOrderLine.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBlueNormal));
+                holder.rlOrderInfo.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.virtual_green));
                 break;
             case AppConstants.DELIVER_ORDER_COMPLETE:
                 holder.tvOrderInd.setText(context.getResources().getString(R.string.deliverOrderFinish));
-                holder.tvOrderInd.setBackgroundColor(context.getResources().getColor(R.color.colorInActive));
-                holder.viewOrderLine.setBackgroundColor(context.getResources().getColor(R.color.colorInActive));
-                holder.rlOrderInfo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.virtual_gray));
+                holder.tvOrderInd.setBackgroundColor(ContextCompat.getColor(context, R.color.colorInActive));
+                holder.viewOrderLine.setBackgroundColor(ContextCompat.getColor(context, R.color.colorInActive));
+                holder.rlOrderInfo.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.virtual_gray));
                 holder.rlOrderInfo.setClickable(false);
                 break;
         }
@@ -124,20 +127,16 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
         return deliverOrderBeanList == null ? 0 : deliverOrderBeanList.size();
     }
 
-    private RcvItemClickListener<DeliverOrderUrlBean.DeliverOrderBean> onRcvItemClick;
-
     public void setOnRcvItemClick(RcvItemClickListener<DeliverOrderUrlBean.DeliverOrderBean> onRcvItemClick) {
         this.onRcvItemClick = onRcvItemClick;
     }
 
-    public interface OrderStyleListener {
-        void onStyleChange(String style, int position);
-    }
-
-    private OrderStyleListener onStyleChange;
-
     public void setOnStyleChange(OrderStyleListener onStyleChange) {
         this.onStyleChange = onStyleChange;
+    }
+
+    public interface OrderStyleListener {
+        void onStyleChange(String style, int position);
     }
 
     public class DeliverOrderViewHolder extends RecyclerView.ViewHolder {

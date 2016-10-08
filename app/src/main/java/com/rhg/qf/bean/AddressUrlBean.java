@@ -66,6 +66,17 @@ public class AddressUrlBean {
     }
 
     public static class AddressBean implements Parcelable {
+        public static final Parcelable.Creator<AddressBean> CREATOR = new Creator<AddressBean>() {
+            @Override
+            public AddressBean createFromParcel(Parcel source) {
+                return new AddressBean(source);
+            }
+
+            @Override
+            public AddressBean[] newArray(int size) {
+                return new AddressBean[size];
+            }
+        };
         private String ID;
         private String Client;
         private String Name;
@@ -162,18 +173,6 @@ public class AddressUrlBean {
                     ", Detail='" + Detail + '\'' +
                     '}';
         }
-
-        public static final Parcelable.Creator<AddressBean> CREATOR = new Creator<AddressBean>() {
-            @Override
-            public AddressBean createFromParcel(Parcel source) {
-                return new AddressBean(source);
-            }
-
-            @Override
-            public AddressBean[] newArray(int size) {
-                return new AddressBean[size];
-            }
-        };
 
         @Override
         public int describeContents() {

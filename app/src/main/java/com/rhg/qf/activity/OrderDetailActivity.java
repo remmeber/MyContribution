@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -73,13 +74,15 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     int orderTag;
     String orderPrice;
     String merchantName;
-    private FoodsDetailAdapter foodsDetailAdapter;
+    String productName;
     OrderDetailUrlBean.OrderDetailBean foodBean = new OrderDetailUrlBean.OrderDetailBean();
+    private FoodsDetailAdapter foodsDetailAdapter;
 
     @Override
     public void dataReceive(Intent intent) {
         orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
         merchantName = intent.getStringExtra(AppConstants.KEY_MERCHANT_NAME);
+        productName = merchantName;
         orderPrice = intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE);
         orderTag = intent.getIntExtra(AppConstants.KEY_ORDER_TAG, -1);
         /*
@@ -101,9 +104,9 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
 
     @Override
     protected void initData() {
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         ivEditRight.setVisibility(View.GONE);
         tvEdit.setVisibility(View.GONE);
         if (orderTag != AppConstants.USER_ORDER_DELIVERING)
@@ -173,9 +176,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
             case R.id.btDrawback:
                 if (modifyOrderPresenter == null)
                     modifyOrderPresenter = new ModifyOrderPresenter(this);
-                List<String> orderList = new ArrayList<>();
-                orderList.add(orderId);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderList/*订单号*/,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderId/*订单号*/,
                         /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
                 break;
             case R.id.btPayOrRateOrConform:
@@ -189,12 +190,12 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                         return;
                     Intent intent = new Intent(this, PayActivity.class);
                     PayModel payModel = new PayModel();
-                    payModel.setReceiver(tvReceiver.getText().toString());
-                    payModel.setPhone(tvReceiverPhone.getText().toString());
-                    payModel.setAddress(tvReceiverAddress.getText().toString());
+                    payModel.setReceiver(tvReceiver.getText().toString().split(":")[1]);
+                    payModel.setPhone(tvReceiverPhone.getText().toString().split(":")[1]);
+                    payModel.setAddress(tvReceiverAddress.getText().toString().split(":")[1]);
                     ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
                     PayModel.PayBean _pay = new PayModel.PayBean();
-                    _pay.setProductName("");
+                    _pay.setProductName(merchantName);
                     _pay.setChecked(true);
                     _pay.setProductId(orderId);
                     int count = 1;

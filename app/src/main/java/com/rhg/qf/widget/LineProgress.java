@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.rhg.qf.R;
-import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.SizeUtil;
 
 /**
  * desc:水平进度条
@@ -32,7 +32,7 @@ public class LineProgress extends View {
     float centerX;
     float rightX;
     private int state = -1;
-    private float strokeWidth = DpUtil.dip2px(18);
+    private float strokeWidth = SizeUtil.dip2px(18);
     private float mTextSize = DEFAULT_TEXT_SIZE;
     private int mTextDefaultColor;/*默认字体颜色*/
     private int mTextCoveredColor;/*渲染字体颜色*/
@@ -63,8 +63,8 @@ public class LineProgress extends View {
         mProgressBackground = typedArray.getColor(R.styleable.LineProgress_lineProgressBackground, DEFAULT_COLOR);
         mProgressColor = typedArray.getColor(R.styleable.LineProgress_lineProgressColor, COVERED_COLOR);
 
-        strokeWidth = DpUtil.dip2px(typedArray.getDimension(R.styleable.LineProgress_lineProgressHeight, 18));
-        marginBetweenTextAndBar = DpUtil.dip2px(typedArray.getDimension(
+        strokeWidth = SizeUtil.dip2px(typedArray.getDimension(R.styleable.LineProgress_lineProgressHeight, 18));
+        marginBetweenTextAndBar = SizeUtil.dip2px(typedArray.getDimension(
                 R.styleable.LineProgress_marginBetweenTextAndBar, 6));
         typedArray.recycle();
         mTextPaint = getTextPaint();

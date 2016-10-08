@@ -47,6 +47,17 @@ public class UserBean {
     }
 
     public static class User implements Parcelable {
+        public static final Creator<User> CREATOR = new Creator<User>() {
+            @Override
+            public User createFromParcel(Parcel in) {
+                return new User(in);
+            }
+
+            @Override
+            public User[] newArray(int size) {
+                return new User[size];
+            }
+        };
         private String ID;
         private String CName;
         private String PersonId;
@@ -65,18 +76,6 @@ public class UserBean {
             Pwd = in.readString();
             Pic = in.readString();
         }
-
-        public static final Creator<User> CREATOR = new Creator<User>() {
-            @Override
-            public User createFromParcel(Parcel in) {
-                return new User(in);
-            }
-
-            @Override
-            public User[] newArray(int size) {
-                return new User[size];
-            }
-        };
 
         public String getID() {
             return ID;

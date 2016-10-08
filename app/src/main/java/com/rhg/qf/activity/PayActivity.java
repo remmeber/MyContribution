@@ -2,6 +2,7 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,14 +25,17 @@ import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.DpUtil;
 import com.rhg.qf.utils.NetUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,28 +68,33 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     ImageView ivWxpayCheck;
     @Bind(R.id.iv_alipay_check)
     ImageView ivAlipayCheck;
-    @Bind(R.id.iv_cash_check)
-    ImageView ivCashCheck;
+
+    private final static String WX_MERCHANT_ID = "1374528702";
+    private final static String WX_PRIVATE_KEY = "shengzhoujiaze123456jiajiameishi";
+    private final static String ALI_PARTNER = "2088422291942751";
+    private final static String ALI_SELLER_ID = "18858558505";
+    private final static String ALI_PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMIwLMEyitvEEctRirBarCnmtDqcIYxl2slRz6cTAFh0a4MqpUDTl505iiasFmLHJtNdMJohCkz+KjjKG7fTU4ZHy5Sy2andeULbyD+31cT+ZQOgNR2F5aAHU3CYvfx0qFw9ph5PA1AWqz+FoClPolsOOZKwrkObanbQplJebavhAgMBAAECgYAreHtcWIMrRU4ydLOWXQXzb1jjUfZUpqx+qtjQbvmB07YJq+9IftWO9cWOeLGeNTTk1hS+PC1BJRiwk9X2pdEpdqlCbri8mKPlu+Z37ZB+sNRiyl+2p4sDx9WTvw8dJHIsWFlDNnbHzS0oDexlOxX68fL4NcsZu5VLQLZV0W5YAQJBAPyIvCj9gw0OT1LPcj4Yks5V+5pjr4g7NqFxKEfxtPJErE8Zjz6Zm8x0/k2E8XCd63lVk8Dh13TJSqfYwh/+ZkECQQDE2nHL/X3qN4EEqsWfbB8piAO7/5Ux956fCrhUYKXiIPJsHyiojePAw4nXlf1Nd+Fnu6rjG35xgSNmUbu7Wh2hAkBEKzj3q69jp9g712nUX1fJwSYhAAXTNYDCxcQE37djqqwE0jZ7xIVtBKvdCyUNrGNzJmmzKIO7r9aqRnXoowjBAkBi3Rqdyne8c5e2UlXiFRkpcIf/mQLDD4t4cJfWuJtXEBjwOE3hKTGjFBFcVpXanER2JohSevJr6uFud8oC8+VBAkEAgNXtGYF9xdffvrpsjmq5H54W2TWq1GPDm7oF0Ct9jduElxZx11cdtcWYAzdU+bYjr+jrbut4X3IqDFhUMCOYfw==";
 
     ArrayList<PayModel.PayBean> payList = new ArrayList<>();
     NewOrderBean newOrderBean;
-    private PayItemAdapter payItemAdapter;
     NewOrderPresenter createOrderPresenter;
     ModifyOrderPresenter modifyOrderDeliveringPresenter;/*修改用户订单状态*/
     String ipv4;
     String tradeNumber;
-    String style;//用来表示是否需要生成订单
+    int style = 0;//用来表示是否需要生成订单
     String orderId;
     String receiver;
     String phone;
     String address;
+    private PayItemAdapter payItemAdapter;
 
 
     @Override
     protected OrderInfo OnOrderCreate() {
         ipv4 = NetUtil.getPsdnIp();
         if (PayType.WeixinPay.equals(payType)) {
-            return BuildOrderInfo("微信支付", "30m", "www.baidu.com",
+            Log.i("RHG", "WXPay OrderCreate");
+            return BuildOrderInfo("微信支付", "30m", "http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php",
                     getOutTradeNo(),
                     getItemsName(payList),
                     String.valueOf(getCheckItemTotalMoney(payList)),
@@ -122,10 +131,10 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     protected void initData(Intent intent) {
         tbCenterTv.setText(getResources().getString(R.string.tvPayTitle));
-        flTab.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         PayModel payModel = intent.getParcelableExtra(AppConstants.KEY_PARCELABLE);
-        style = intent.getStringExtra(AppConstants.ORDER_STYLE);
+        style = intent.getIntExtra(AppConstants.ORDER_STYLE, 0);
         if (payModel != null) {
             receiver = payModel.getReceiver();
             phone = payModel.getPhone();
@@ -137,13 +146,13 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
         rcvItemPay.setHasFixedSize(true);
         rcvItemPay.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DpUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
+                SizeUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
         payItemAdapter = new PayItemAdapter(this, payList);
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
 
-        RegisterBasePay(/*KeyLibs.ali_partner, KeyLibs.ali_sellerId, KeyLibs.ali_privateKey,*/
-                InitApplication.WXID, "10000100", null);
+        RegisterBasePay(ALI_PARTNER, ALI_SELLER_ID, ALI_PRIVATE_KEY,
+                InitApplication.WXID, WX_MERCHANT_ID, WX_PRIVATE_KEY);
 //        BuildOrderInfo()
     }
 
@@ -163,8 +172,8 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         if (modifyOrderDeliveringPresenter == null) {
             modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
         }
-        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(getProductIdList(payList),
-                AppConstants.ORDER_DELIVERING);//修改为配送中的状态
+        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(tradeNumber,
+                AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态
     }
 
     @Override
@@ -175,13 +184,12 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     @Override
     protected void showError(String s) {
-        ToastHelper.getInstance()._toast((String) s);
+        ToastHelper.getInstance()._toast(s);
 
     }
 
     @OnClick({R.id.tb_left_iv, R.id.iv_edit_right, R.id.bt_pay_affirmance,
-            R.id.iv_wepay_check, R.id.iv_wepay, R.id.iv_alipay_check, R.id.iv_alipay,
-            R.id.iv_cash_check, R.id.iv_cash})
+            R.id.iv_wepay_check, R.id.iv_wepay, R.id.iv_alipay_check, R.id.iv_alipay})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tb_left_iv:
@@ -198,12 +206,19 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     return;
                 }
                 newOrderBean = generateOrder();
-                if (style == null) {
+/*
+                if (modifyOrderDeliveringPresenter == null) {
+                    modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
+                }
+                modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState("315",
+                        AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态*/
+                if (style == 0) {
                     if (createOrderPresenter == null)
                         createOrderPresenter = new NewOrderPresenter(this);
                     createOrderPresenter.createNewOrder(newOrderBean);
-                } else
+                } else {
                     Pay(v);
+                }
                 /*payContentBeanList.clear();
                 for (int i = 0; i < 3; i++) {
                     PayContentBean payContentBean = new PayContentBean();
@@ -219,34 +234,34 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
             case R.id.iv_wepay:
                 if (PayType.WeixinPay.equals(payType))
                     return;
-                ivWxpayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_green));
+                ivWxpayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_green));
                 if (PayType.AliPay.equals(payType)) {
-                    ivAlipayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
+                    ivAlipayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_uncheck_green));
                     payType = PayType.WeixinPay;
                     break;
                 }
-                if (PayType.Cash.equals(payType)) {
+                /*if (PayType.Cash.equals(payType)) {
                     ivCashCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
                     payType = PayType.WeixinPay;
-                }
+                }*/
                 break;
             case R.id.iv_alipay_check:
             case R.id.iv_alipay:
                 if (PayType.AliPay.equals(payType))
                     return;
-                ivAlipayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_green));
+                ivAlipayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_green));
 
                 if (PayType.WeixinPay.equals(payType)) {
-                    ivWxpayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
+                    ivWxpayCheck.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_uncheck_green));
                     payType = PayType.AliPay;
                     break;
                 }
-                if (PayType.Cash.equals(payType)) {
+             /*   if (PayType.Cash.equals(payType)) {
                     ivCashCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
                     payType = PayType.AliPay;
-                }
+                }*/
                 break;
-            case R.id.iv_cash_check:
+          /*  case R.id.iv_cash_check:
             case R.id.iv_cash:
                 if (PayType.Cash.equals(payType))
                     return;
@@ -260,7 +275,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     ivAlipayCheck.setImageDrawable(getResources().getDrawable(R.drawable.ic_uncheck_green));
                     payType = PayType.Cash;
                 }
-                break;
+                break;*/
         }
     }
 
@@ -309,7 +324,8 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     private List<String> getProductIdList(List<PayModel.PayBean> payList) {
         List<String> _bean = new ArrayList<>();
         for (PayModel.PayBean _payBean : payList) {
-            _bean.add(_payBean.getProductId());
+            if (_payBean.isChecked())
+                _bean.add(_payBean.getProductId());
         }
         return _bean;
     }
@@ -333,13 +349,16 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     @Override
     public void showData(Object o) {
-        if (o instanceof String)
-            if (!"error".equals(o)) {
+        if (o instanceof String) {
+            if ("status_success".equals(o)) {
+                Log.i("RHG", "修改成功");
+            } else if (!"error".equals(o)) {
                 tradeNumber = (String) o;
-                Log.i("RHG", "tradeNumber is :" + tradeNumber);
                 Pay(null);
-            } else
-                ToastHelper.getInstance()._toast((String) o);
+                Log.i("RHG", "订单号:" + tradeNumber);
+            }
+        } else
+            ToastHelper.getInstance()._toast((String) o);
 
     }
 
@@ -347,15 +366,15 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
      * get the out_trade_no for an order. 生成商户订单号，该值在商户端应保持唯一（可自定义格式规范）
      */
     private String getOutTradeNo() {
-        /*SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
         Date date = new Date();
         String key = format.format(date);
 
         Random r = new Random();
         key = key + r.nextInt();
         key = key.substring(0, 15);
-        return key;*/
-        return tradeNumber;
+        return key;
+//        return tradeNumber;
     }
 
     @Override

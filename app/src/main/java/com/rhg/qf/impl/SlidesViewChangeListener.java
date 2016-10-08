@@ -9,5 +9,5 @@ package com.rhg.qf.impl;
 
 public interface SlidesViewChangeListener {
     //    public void update(int id, String title, int position);
-    public void update(String imageUrl, String title, int position);
+    void update(String imageUrl, String title, int position);
 }

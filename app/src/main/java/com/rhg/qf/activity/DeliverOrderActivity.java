@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,7 @@ import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.DeliverOrderPresenter;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.DpUtil;
+import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
 import com.rhg.qf.widget.UIAlertView;
@@ -50,11 +51,11 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     ProgressBar commonRefresh;
     @Bind(R.id.common_swipe)
     SwipeRefreshLayout commonSwipe;
-    private List<DeliverOrderUrlBean.DeliverOrderBean> deliverOrderBeanList = new ArrayList<>();
-    private DeliverOrderItemAdapter deliverOrderItemAdapter;
     DeliverOrderPresenter getDeliverOrder;/*获取跑腿员订单接口*/
     ModifyOrderPresenter modifyOrderPresenter;/*修改跑腿员订单接口*/
     UIAlertView delDialog;
+    private List<DeliverOrderUrlBean.DeliverOrderBean> deliverOrderBeanList = new ArrayList<>();
+    private DeliverOrderItemAdapter deliverOrderItemAdapter;
 
     @Override
     public void loadingData() {
@@ -70,14 +71,14 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
         commonRecycle.setLayoutManager(new LinearLayoutManager(this));
         commonRecycle.setHasFixedSize(false);
         RecycleViewDivider _divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DpUtil.dip2px(16), getResources().getColor(R.color.white));
+                SizeUtil.dip2px(16), getResources().getColor(R.color.white));
         commonRecycle.addItemDecoration(_divider);
         deliverOrderItemAdapter = new DeliverOrderItemAdapter(this, deliverOrderBeanList);
         deliverOrderItemAdapter.setOnRcvItemClick(this);
         deliverOrderItemAdapter.setOnStyleChange(this);
         commonRecycle.setAdapter(deliverOrderItemAdapter);
 
-        commonSwipe.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorGreenNormal));
+        commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -118,13 +119,13 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
                 finish();
                 break;
             case R.id.bt_order_snatch:
-                btOrderSnatch.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
+                btOrderSnatch.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
                 btOrderProgress.setBackgroundColor(getResources().getColor(R.color.white));
                 showDelDialog("正在改造，敬请期待");
                 break;
             case R.id.bt_order_progress:
-                btOrderProgress.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-                btOrderSnatch.setBackgroundColor(getResources().getColor(R.color.white));
+                btOrderProgress.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
+                btOrderSnatch.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 break;
         }
     }
@@ -133,27 +134,23 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     public void onStyleChange(String style, int position) {
         if (modifyOrderPresenter == null)
             modifyOrderPresenter = new ModifyOrderPresenter(this);
-        List<String> str = new ArrayList<>();
         switch (style) {
             case AppConstants.DELIVER_ORDER_UNACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_ACCEPT);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                str.add(deliverOrderBeanList.get(position).getID());
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
                         AppConstants.UPDATE_ORDER_WAIT);
                 break;
             case AppConstants.DELIVER_ORDER_ACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_DELIVERING);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                str.add(deliverOrderBeanList.get(position).getID());
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
                         AppConstants.UPDATE_ORDER_DELIVER);
                 break;
             case AppConstants.DELIVER_ORDER_DELIVERING:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_COMPLETE);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                str.add(deliverOrderBeanList.get(position).getID());
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
                         AppConstants.ORDER_FINISH);/*1表示已完成*/
                 break;
             default:
@@ -178,8 +175,8 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
                                            @Override
                                            public void doRight() {
                                                delDialog.dismiss();
-                                               btOrderProgress.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
-                                               btOrderSnatch.setBackgroundColor(getResources().getColor(R.color.white));
+                                               btOrderProgress.setBackgroundColor(ContextCompat.getColor(DeliverOrderActivity.this, R.color.colorBlueNormal));
+                                               btOrderSnatch.setBackgroundColor(ContextCompat.getColor(DeliverOrderActivity.this, R.color.white));
 
                                            }
                                        }

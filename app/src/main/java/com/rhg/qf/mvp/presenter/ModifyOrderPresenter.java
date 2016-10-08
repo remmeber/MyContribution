@@ -1,5 +1,7 @@
 package com.rhg.qf.mvp.presenter;
 
+import android.util.Log;
+
 import com.rhg.qf.mvp.model.ModifyOrderModel;
 import com.rhg.qf.mvp.view.BaseView;
 
@@ -16,16 +18,16 @@ import rx.schedulers.Schedulers;
  * email：1013773046@qq.com
  */
 public class ModifyOrderPresenter {
-    BaseView modifyUserOrderView;
-    ModifyOrderModel modifyOrderModel;
+    private BaseView modifyUserOrderView;
+    private ModifyOrderModel modifyOrderModel;
 
     public ModifyOrderPresenter(BaseView modifyUserOrderView) {
         this.modifyUserOrderView = modifyUserOrderView;
         modifyOrderModel = new ModifyOrderModel();
     }
 
-    public void modifyUserOrDeliverOrderState(List<String> orderId, String style) {
-         modifyOrderModel.modifyOrder(orderId, style).observeOn(AndroidSchedulers.mainThread())
+    public void modifyUserOrDeliverOrderState(String orderId, String style) {
+        modifyOrderModel.modifyOrder(orderId, style).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override
@@ -35,6 +37,7 @@ public class ModifyOrderPresenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.i("RHG", "onError:" + e.getMessage());
 
                     }
 

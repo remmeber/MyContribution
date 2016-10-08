@@ -4,7 +4,7 @@
     android:id="@+id/fl_tab"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    tools:background="@color/colorGreenNormal"
+    tools:background="@color/colorBlueNormal"
     tools:ignore="contentDescription">
 
     <TextView
