@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        rhg {
+            keyAlias 'rhg'
+            keyPassword 'ruanhugang0215'
+            storeFile file('D:/AndroidWorkSpace/MyContribution/app/src/main/java/qf.jks')
+            storePassword '331004'
+        }
+    }
+    compileSdkVersion 24
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId 'com.rhg.qf'
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        //testCompile 'junit:junit:4.12'
+        multiDexEnabled = true//用来解决方法超过65536
+
+    }
+    dexOptions {//用来解决方法超过65536
+        jumboMode = true
+        javaMaxHeapSize "2g"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.rhg
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+        debug {
+            signingConfig signingConfigs.rhg
+        }
+    }
+    productFlavors {
+    }
+}
+
+
+dependencies {
+    compile project(':easeui')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.1'
+    //用来解决方法超过65536
+    testCompile 'junit:junit:4.12'
+    //compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:cardview-v7:24.2.0'
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.0.0'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile('com.squareup.retrofit2:converter-simplexml:2.0.2') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+    }
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.flyco.roundview:FlycoRoundView_Lib:1.0.4@aar'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.3.4@aar'
+    //compile 'me.yokeyword:fragmentation:0.7.5'
+    //debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    //releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    //    compile project(':searchview')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile files('libs/umeng_social_sdk.jar')
+    compile files('libs/SocialSDK_WeiXin_1.jar')
+    compile files('libs/SocialSDK_WeiXin_2.jar')
+    compile files('libs/SocialSDK_QQZone_3.jar')
+    compile files('libs/open_sdk_r5509.jar')
+}
