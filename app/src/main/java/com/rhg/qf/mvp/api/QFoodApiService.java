@@ -15,7 +15,6 @@ import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.bean.SignInBackBean;
-import com.rhg.qf.bean.TestBean;
 import com.rhg.qf.bean.TextTypeBean;
 
 import okhttp3.MultipartBody;
@@ -109,7 +108,7 @@ public interface QFoodApiService {
     @Multipart
     @POST("Clientpic2.php")
     //return: success error
-    Observable<TestBean> UploadHeadImage(@Part MultipartBody.Part file,
+    Observable<BaseBean> UploadHeadImage(@Part MultipartBody.Part file,
                                          @Part("Client") RequestBody userName,
                                          @Part("Pwd") RequestBody pwd);
 
@@ -225,10 +224,14 @@ public interface QFoodApiService {
      TODO API15 修改用户、跑腿员订单状态 */
     Observable<BaseBean> modifyOrderState(@Field("ID") String orderId,
                                           @Field("Style") String style);
-
-    /*API16 修改未支付订单为配送订单*/
+/*
+    *//*API16 修改未支付订单为配送订单*//*
     @POST("Table/JsonSQL/UPdateorderdeliver.php")
     Observable<BaseBean> orderDelivering(@Field("ID") String orderId);
+
+    *//*API16 修改未支付订单为配送订单*//*
+    @POST("Table/JsonSQL/UPdateorderPaid.php")
+    Observable<BaseBean> orderPaid(@Field("ID") String orderId);*/
 
     /*API 18 生成订单标记为待付款状态*/
     @FormUrlEncoded
@@ -244,7 +247,7 @@ public interface QFoodApiService {
 
     /*TODO API15 修改跑腿员订单的状态 */
     @FormUrlEncoded
-    @POST("Table/JsonSQL/{deliverState}.php")/*UPDATE_ORDER_DELIVER、UPDATE_ORDER_DELIVER、UPdateorderwait*/
+    @POST("Table/JsonSQL/{deliverState}.php")/*UPDATE_ORDER_DELIVER、UPDATE_ORDER_PAID、UPdateorderwait*/
     Observable<BaseBean> modifyDeliverOrderState(@Path("deliverState") String deliverState,
                                                  @Field("ID") String orderId);
 

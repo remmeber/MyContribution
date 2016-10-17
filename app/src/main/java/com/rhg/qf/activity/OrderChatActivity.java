@@ -44,7 +44,7 @@ public class OrderChatActivity extends BaseAppcompactActivity {
     protected void initData() {
         flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
-        tbCenterTv.setText("自主点餐");
+        tbCenterTv.setText(R.string.personalOrder);
     }
 
     @Override

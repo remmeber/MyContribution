@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.subscriptions.CompositeSubscription;
 
 /*
  *desc 地址页面
@@ -37,6 +38,8 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
 
     private static final int DELETE = 0;
     private static final int MODIFY = 1;
+    private static final String CHOOSE = "1";
+    private static final String UNCHOOSE = "0";
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -63,16 +66,6 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
 
     public AddressActivity() {
         addressBeanList = new ArrayList<>();
-        /*for (int i = 0; i < 6; i++) {
-            AddressUrlBean addressBean = new AddressUrlBean();
-            if (i == 0)
-                addressBean.setChecked(true);
-            else addressBean.setChecked(false);
-            addressBean.setName("哈哈");
-            addressBean.setAddress("东南大学");
-            addressBean.setPhone("1" + i);
-            addressBeanList.add(addressBean);
-        }*/
     }
 
     @Override
@@ -92,7 +85,6 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     public void loadingData() {
         addressBeanList = AddressUtil.getAddressList();
         if (addressBeanList.size() == 0) {
-            /*TODO 加一个进度*/
             getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
         }
     }
@@ -188,15 +180,15 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             addressAdapter.notifyDataSetChanged();
             lastPosition = position;
             addOrUpdateAddressPresenter.addOrUpdateAddress(addressBeanList.get(position).getID(),
-                    null, null, null, null, "1");
+                    null, null, null, null, AppConstants.CHOOSE_DEFAULT);
         }
     }
 
     private void selectOne(int position) {
         for (int i = 0; i < addressBeanList.size(); i++) {
             if (position == i)
-                addressBeanList.get(i).setDefault("1");
-            else addressBeanList.get(i).setDefault("0");
+                addressBeanList.get(i).setDefault(CHOOSE);
+            else addressBeanList.get(i).setDefault(UNCHOOSE);
         }
     }
 
@@ -219,7 +211,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     private AddressUrlBean.AddressBean getDefaultAddress(List<AddressUrlBean.AddressBean> addressBeanList) {
         AddressUrlBean.AddressBean _addressBean = new AddressUrlBean.AddressBean();
         for (AddressUrlBean.AddressBean _address : addressBeanList) {
-            if ("1".equals(_address.getDefault())) {
+            if (CHOOSE.equals(_address.getDefault())) {
                 _addressBean = _address;
                 break;
             }
@@ -250,7 +242,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
                                            if (tag == DELETE) {
                                                addOrUpdateAddressPresenter
                                                        .addOrUpdateAddress(addressBeanList.get(position).getID(),
-                                                               null, null, null, null, "0");
+                                                               null, null, null, null, AppConstants.DELETE_ADDRESS);
                                            } else {
                                                AddressUrlBean.AddressBean _addressBean = addressBeanList.get(position);
                                                Intent _intent = new Intent(AddressActivity.this, AddOrNewAddressActivity.class);

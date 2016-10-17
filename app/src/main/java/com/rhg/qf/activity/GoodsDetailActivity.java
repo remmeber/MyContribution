@@ -3,6 +3,7 @@ package com.rhg.qf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -243,6 +244,7 @@ public class GoodsDetailActivity extends BaseAppcompactActivity {
         }
         if (o instanceof AddressUrlBean.AddressBean) {
             addressBean = (AddressUrlBean.AddressBean) o;
+            Log.i("RHG","AddressUrlBean return");
             createOrderAndToPay(addressBean);
         }
         if (addressBean == null)

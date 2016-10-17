@@ -28,11 +28,11 @@ public class AddressModel {
             _address = QFoodApiMamager.getInstant().getQFoodApiService().addAddress(userName, pwd,
                     user, phone, address, detail);
         } else if (user == null) {/*删除地址*/
-            if ("0".equals(opt))
+            if (AppConstants.DELETE_ADDRESS.equals(opt))
                 _address = QFoodApiMamager.getInstant().getQFoodApiService().changeAddress(AppConstants.DELETE_ADDRESS,
                         addressId);
             else
-                _address = QFoodApiMamager.getInstant().getQFoodApiService().changeAddress(AppConstants.DEFAULT_ADDRESS,
+                _address = QFoodApiMamager.getInstant().getQFoodApiService().changeAddress(AppConstants.CHOOSE_DEFAULT,
                         addressId);
         } else/*修改地址*/
             _address = QFoodApiMamager.getInstant().getQFoodApiService().updateAddress(userName, addressId,

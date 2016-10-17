@@ -242,12 +242,12 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
             case AppConstants.KEY_RESTAURANT_SEARCH:
                 if (restaurantSearchPresenter == null)
                     restaurantSearchPresenter = new RestaurantSearchPresenter(this);
-                restaurantSearchPresenter.getSearchRestaurant(AppConstants.SEARCHRESTAURANTS, s, searchIndex);
+                restaurantSearchPresenter.getSearchRestaurant(AppConstants.SEARCH_RESTAURANTS, s, searchIndex);
                 break;
             case AppConstants.KEY_HOTFOOD_SEARCH:
                 if (hotFoodSearchPresenter == null)
                     hotFoodSearchPresenter = new HotFoodSearchPresenter(this);
-                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCHHOTFOOD, s, searchIndex);
+                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCH_HOTFOOD, s, searchIndex);
                 break;
         }
     }

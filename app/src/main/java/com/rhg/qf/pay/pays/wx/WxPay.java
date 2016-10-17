@@ -15,6 +15,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -63,30 +64,30 @@ public class WxPay implements IPayable {
             packageParams.add(new BasicNameValuePair("mch_id", KeyLibs.weixin_mchId));
             packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
             packageParams.add(new BasicNameValuePair("notify_url", notifyUrl));
-            packageParams.add(new BasicNameValuePair("out_trade_no", tradeNo));
+            packageParams.add(new BasicNameValuePair("out_trade_no", genOutTradNo(tradeNo)));
             packageParams.add(new BasicNameValuePair("spbill_create_ip", spbillCreateIp));
-            packageParams.add(new BasicNameValuePair("total_fee", totalFee));
-            packageParams.add(new BasicNameValuePair("trade_type", "APP"));
-*/
-            Map<String, String> packageParams = new HashMap<>();
+            packageParams.add(new BasicNameValuePair("total_fee", Integer.valueOf()));
+            packageParams.add(new BasicNameValuePair("trade_type", "APP"));*/
+            Map<String, String> packageParams = new LinkedHashMap<>();//不能用HashMap();因为HashMap无序
             packageParams.put("appid", KeyLibs.weixin_appId);/*微信开放平台审核通过的应用APPID*/
             packageParams.put("body", subject);/*商品或支付单简要描述，可以多个商品一起打包*/
             packageParams.put("mch_id", KeyLibs.weixin_mchId);/*微信支付分配的商户号*/
             packageParams.put("nonce_str", nonceStr);/*随机字符串*/
             packageParams.put("notify_url", notifyUrl);/*接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。*/
-            packageParams.put("out_trade_no", tradeNo);/*商户系统内部的订单号,32个字符内、可包含字母, */
+            packageParams.put("out_trade_no", genOutTradNo(tradeNo));/*商户系统内部的订单号,32个字符内、可包含字母, */
             packageParams.put("spbill_create_ip", spbillCreateIp);/*用户端实际ip*/
-            packageParams.put("total_fee", totalFee);/*总金额*/
+            packageParams.put("total_fee", "1");/*总金额*/
             packageParams.put("trade_type", "APP");/*支付类型*/
             paramsForPrepay = packageParams;//将参数保存一份，待调用支付时使用
             String sign = Sign(packageParams);
             packageParams.put("sign", sign);/*签名*/
-            String xmlstring = XmlUtil.MapToXml(packageParams);
-            Log.i("RHG", "Build Order Info:" + xmlstring);
+            String xmlString = XmlUtil.MapToXml(packageParams);
+            Log.i("RHG", "Build Order Info:" + xmlString);
 
-            return new OrderInfo(xmlstring);
+            return new OrderInfo(xmlString);
 
         } catch (Exception e) {
+            Log.i("RHG", e.getMessage());
             return null;
         }
     }
@@ -139,7 +140,7 @@ public class WxPay implements IPayable {
         req.partnerId = KeyLibs.weixin_mchId;
         req.prepayId = prepayId;
         req.packageValue = "Sign=WXPay";
-        req.nonceStr = GetNonceStr();
+        req.nonceStr = paramsForPrepay.get("nonce_str");
         req.timeStamp = String.valueOf(GetTimeStamp());
 
         /*List<NameValuePair> signParams = new LinkedList<NameValuePair>();
@@ -149,7 +150,7 @@ public class WxPay implements IPayable {
         signParams.add(new BasicNameValuePair("partnerid", req.partnerId));
         signParams.add(new BasicNameValuePair("prepayid", req.prepayId));
         signParams.add(new BasicNameValuePair("timestamp", req.timeStamp));*/
-        Map<String, String> signParams = new HashMap<>();
+        Map<String, String> signParams = new LinkedHashMap<>();
         signParams.put("appid", req.appId);
         signParams.put("noncestr", req.nonceStr);
         signParams.put("package", req.packageValue);
@@ -185,6 +186,12 @@ public class WxPay implements IPayable {
         Random random = new Random();
         return MD5.getMessageDigest(String.valueOf(random.nextInt(10000)).getBytes());
     }
+
+    private String genOutTradNo(String orderNos) {
+        // Random random = new Random();
+        return MD5.getMessageDigest(String.valueOf(orderNos).getBytes());
+    }
+
 
     private String Sign(Map<String, String> params) {
         StringBuilder sb = new StringBuilder();

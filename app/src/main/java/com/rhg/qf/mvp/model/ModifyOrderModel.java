@@ -26,7 +26,7 @@ public class ModifyOrderModel {
      * time：2016/7/15 22:29
      * email：1013773046@qq.com
      */
-    public Observable<String> modifyOrder(List<String> orderId, String styleOrTable) {
+    public Observable<String> modifyOrder(List<String> orderId, final String styleOrTable) {
         final QFoodApiService _service = QFoodApiMamager.getInstant().getQFoodApiService();
         if (AppConstants.ORDER_WITHDRAW.equals(styleOrTable) || AppConstants.ORDER_FINISH.equals(styleOrTable))
             return _service.modifyOrderState(orderId.get(0), styleOrTable)
@@ -36,7 +36,7 @@ public class ModifyOrderModel {
                             return Observable.create(new Observable.OnSubscribe<String>() {
                                 @Override
                                 public void call(Subscriber<? super String> subscriber) {
-                                    Log.i("RHG", "MODIFY:" + baseBean.getResult());
+                                    //Log.i("RHG", "MODIFY:" + baseBean.getResult());
                                     if (baseBean.getResult() == 0)
                                         subscriber.onNext(baseBean.getMsg());
                                 }
@@ -47,7 +47,7 @@ public class ModifyOrderModel {
             return Observable.from(orderId).flatMap(new Func1<String, Observable<BaseBean>>() {
                 @Override
                 public Observable<BaseBean> call(String s) {
-                    return _service.orderDelivering(s);
+                    return _service.modifyDeliverOrderState(styleOrTable, s);
                 }
             }).flatMap(new Func1<BaseBean, Observable<String>>() {
                 @Override
@@ -73,19 +73,46 @@ public class ModifyOrderModel {
                             });
                         }
                     });*/
-        else return _service.modifyDeliverOrderState(styleOrTable, orderId.get(0))
-                .flatMap(new Func1<BaseBean, Observable<String>>() {
-                    @Override
-                    public Observable<String> call(final BaseBean baseBean) {
-                        return Observable.create(new Observable.OnSubscribe<String>() {
-                            @Override
-                            public void call(Subscriber<? super String> subscriber) {
-                                Log.i("RHG", "MODIFY:" + baseBean.getResult());
-                                if (baseBean.getResult() == 0)
-                                    subscriber.onNext(baseBean.getMsg());
-                            }
-                        });
+        else if (AppConstants.UPDATE_ORDER_PAID.equals(styleOrTable)) {
+            Log.i("RHG", "修改为待接单");
+            return Observable.from(orderId).flatMap(new Func1<String, Observable<BaseBean>>() {
+                @Override
+                public Observable<BaseBean> call(String s) {
+                    Log.i("RHG", "订单号:" + s);
+                    return _service.modifyDeliverOrderState(styleOrTable, s);
+                }
+            }).flatMap(
+                    new Func1<BaseBean, Observable<String>>() {
+                        @Override
+                        public Observable<String> call(final BaseBean baseBean) {
+                            return Observable.create(new Observable.OnSubscribe<String>() {
+                                @Override
+                                public void call(Subscriber<? super String> subscriber) {
+                                    if (baseBean.getResult() == 0)
+                                        subscriber.onNext("status");
+                                    else subscriber.onNext("error");
+//                                    subscriber.onCompleted();
+                                }
+                            });
+                        }
                     }
-                });
+            );
+        } else
+            return Observable.from(orderId).flatMap(new Func1<String, Observable<BaseBean>>() {
+                @Override
+                public Observable<BaseBean> call(String s) {
+                    return _service.modifyDeliverOrderState(styleOrTable, s);
+                }
+            }).flatMap(new Func1<BaseBean, Observable<String>>() {
+                @Override
+                public Observable<String> call(final BaseBean baseBean) {
+                    return Observable.create(new Observable.OnSubscribe<String>() {
+                        @Override
+                        public void call(Subscriber<? super String> subscriber) {
+                            subscriber.onNext(baseBean.getMsg());
+                        }
+                    });
+                }
+            });
     }
 }

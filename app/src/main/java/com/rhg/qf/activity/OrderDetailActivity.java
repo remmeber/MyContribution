@@ -74,6 +74,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     int orderTag;
     String orderPrice;
     String merchantName;
+    String productName;
     OrderDetailUrlBean.OrderDetailBean foodBean = new OrderDetailUrlBean.OrderDetailBean();
     private FoodsDetailAdapter foodsDetailAdapter;
 
@@ -81,6 +82,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     public void dataReceive(Intent intent) {
         orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
         merchantName = intent.getStringExtra(AppConstants.KEY_MERCHANT_NAME);
+        productName = merchantName;
         orderPrice = intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE);
         orderTag = intent.getIntExtra(AppConstants.KEY_ORDER_TAG, -1);
         /*
@@ -190,12 +192,12 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                         return;
                     Intent intent = new Intent(this, PayActivity.class);
                     PayModel payModel = new PayModel();
-                    payModel.setReceiver(tvReceiver.getText().toString());
-                    payModel.setPhone(tvReceiverPhone.getText().toString());
-                    payModel.setAddress(tvReceiverAddress.getText().toString());
+                    payModel.setReceiver(tvReceiver.getText().toString().split(":")[1]);
+                    payModel.setPhone(tvReceiverPhone.getText().toString().split(":")[1]);
+                    payModel.setAddress(tvReceiverAddress.getText().toString().split(":")[1]);
                     ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
                     PayModel.PayBean _pay = new PayModel.PayBean();
-                    _pay.setProductName("");
+                    _pay.setProductName(merchantName);
                     _pay.setChecked(true);
                     _pay.setProductId(orderId);
                     int count = 1;

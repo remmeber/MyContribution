@@ -29,4 +29,6 @@
     <item name="ic_cash_green_200dp" type="drawable">@drawable/cash_green_200dp</item>
     <item name="ic_check_green" type="drawable">@drawable/check</item>
     <item name="ic_uncheck_green" type="drawable">@drawable/uncheck</item>
+    <item name="ic_right_blue" type="drawable">@drawable/ic_right</item>
+    <item name="ic_wrong_blue" type="drawable">@drawable/ic_wrong</item>
 </resources>

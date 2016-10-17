@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import com.rhg.qf.R;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.DeliverStatePresenter;
+import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.LineProgress;
 import com.rhg.qf.widget.MyRatingBar;
@@ -36,6 +38,7 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
 
     String orderId;
     DeliverStatePresenter getDeliverStatePresenter;
+    ModifyOrderPresenter modifyOrderPresenter;
 
     @Override
     public void dataReceive(Intent intent) {
@@ -44,8 +47,9 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
 
     @Override
     public void loadingData() {
-        getDeliverStatePresenter = new DeliverStatePresenter(this);
-        getDeliverStatePresenter.getDeliverState(AppConstants.ORDER_STYLE,/*orderId*/"1");
+        if (getDeliverStatePresenter == null)
+            getDeliverStatePresenter = new DeliverStatePresenter(this);
+        getDeliverStatePresenter.getDeliverState(AppConstants.ORDER_STYLE, orderId);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
     @Override
     protected void showSuccess(Object s) {
         if (s instanceof String) {
-            foodDeliverProgress.setState(2);
+            foodDeliverProgress.setState(1);
         }
     }
 
@@ -123,7 +127,6 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
                                        @Override
                                        public void doRight() {
                                            delDialog.dismiss();
-                                           finish();
                                        }
                                    }
         );

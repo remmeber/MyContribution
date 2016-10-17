@@ -39,6 +39,7 @@ public class NewOrderModel {
                         return Observable.create(new Observable.OnSubscribe<String>() {
                             @Override
                             public void call(Subscriber<? super String> subscriber) {
+//                                Log.i("RHG", baseBean.getMsg());
                                 if (baseBean.getResult() == 0)
                                     subscriber.onNext(baseBean.getMsg());
                                 else subscriber.onNext("error");
