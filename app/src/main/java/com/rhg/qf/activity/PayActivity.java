@@ -96,14 +96,14 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
             return BuildOrderInfo("微信支付", "30m", "http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php",
                     getOutTradeNo(),
                     getItemsName(payList),
-                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    getCheckItemTotalMoney(payList),
                     ipv4);
         }
         if (PayType.AliPay.equals(payType)) {
-            return BuildOrderInfo("支付宝支付", "30m", "http://notify.msp.hk/notify.htm",
+            return BuildOrderInfo("支付宝支付", "30m", "http://jiaze917.com/Table/JsonSQL/alipay/notify_url.php",
                     getOutTradeNo(),
                     getItemsName(payList),
-                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    getCheckItemTotalMoney(payList),
                     ipv4);
         }
         return null;
@@ -116,7 +116,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         _orderBean.setAddress(address);
         _orderBean.setFood(getCheckedFood(payList));
         _orderBean.setClient(AccountUtil.getInstance().getUserID());
-        _orderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
+        _orderBean.setPrice(getCheckItemTotalMoney(payList));
         return _orderBean;
     }
 
@@ -329,13 +329,13 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         return _bean;
     }
 
-    private int getCheckItemTotalMoney(List<PayModel.PayBean> payList) {
-        int count = 0;
+    private String getCheckItemTotalMoney(List<PayModel.PayBean> payList) {
+        float count = 0;
         for (PayModel.PayBean _payBean : payList) {
             if (_payBean.isChecked())
-                count += Integer.valueOf(DecimalUtil.multiply(_payBean.getProductPrice(), _payBean.getProductNumber()));
+                count += Float.valueOf(DecimalUtil.multiply(_payBean.getProductPrice(), _payBean.getProductNumber()));
         }
-        return count;
+        return String.valueOf(count);
     }
 
     private String getItemsName(List<PayModel.PayBean> payList) {

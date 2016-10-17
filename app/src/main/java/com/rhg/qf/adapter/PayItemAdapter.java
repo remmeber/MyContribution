@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.utils.DecimalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -65,12 +66,16 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         });
 //        holder.rlPayCheck.setOnClickListener(this);
         holder.lyTotalCount.setVisibility(View.VISIBLE);
-        int _totalPrice;
+        float _totalPrice;
         if ("0".equals(payList.get(position).getProductNumber()))
-            _totalPrice = Integer.valueOf(payList.get(position).getProductPrice());
+            _totalPrice = Float.valueOf(payList.get(position).getProductPrice());
         else
-            _totalPrice = Integer.valueOf(payList.get(position).getProductPrice()) *
-                    Integer.valueOf(payList.get(position).getProductNumber());
+            _totalPrice = /*Integer.valueOf(payList.get(position).getProductPrice()) *
+                    Integer.valueOf(payList.get(position).getProductNumber())*/Float.valueOf(
+                    DecimalUtil.multiplyWithScale(payList.get(position).getProductPrice(),
+                            payList.get(position).getProductNumber(),
+                            4)
+            );
         holder.tvTotalMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
                 String.valueOf(_totalPrice + AppConstants.DELIVER_FEE)));
         ImageLoader.getInstance().displayImage(payList.get(position).getProductPic(), holder.ivPayImage);
