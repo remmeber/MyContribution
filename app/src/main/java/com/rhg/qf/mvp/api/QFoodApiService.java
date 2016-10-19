@@ -36,8 +36,9 @@ import rx.Observable;
  */
 public interface QFoodApiService {
     /*首页API*/
-    @GET("json/head.html")
-    Observable<BannerTypeUrlBean> getBannerUrl();
+    @FormUrlEncoded
+    @POST("/Table/Json.php")
+    Observable<BannerTypeUrlBean> getBannerUrl(@Field("Table") String headRowPic);
 
     @GET("json/message.html")
     Observable<TextTypeBean> getMessage();
@@ -56,7 +57,9 @@ public interface QFoodApiService {
     /*API11 所有店铺head*/
     @FormUrlEncoded
     @POST("Table/Json.php")
-    Observable<HeadMerchantUrlBean> getHeadMerchant(@Field("Table") String toprestaurants);
+    Observable<HeadMerchantUrlBean> getHeadMerchant(@Field("Table") String toprestaurant,
+                                                    @Field("X") String x,
+                                                    @Field("Y") String y);
 
     /*所有店铺body*/
     @FormUrlEncoded

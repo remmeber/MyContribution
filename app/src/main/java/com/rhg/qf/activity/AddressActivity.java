@@ -26,8 +26,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import rx.subscriptions.CompositeSubscription;
-
 /*
  *desc 地址页面
  *author rhg

@@ -11,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.QFoodVpAdapter;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.fragment.ShopDetailFoodFragment;
 import com.rhg.qf.fragment.ShopDetailFragment;
-
+import com.rhg.qf.utils.ImageUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +89,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
         flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tvShopName.setText(merchantName);
-        ImageLoader.getInstance().displayImage(shopLogoUrl, ivShopLogo);
+        ImageUtils.showImage(shopLogoUrl, ivShopLogo);
         Fragment fragment;
         Bundle bundle = new Bundle();
         List<Fragment> fragments = new ArrayList<>();

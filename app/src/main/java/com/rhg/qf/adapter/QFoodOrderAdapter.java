@@ -3,11 +3,11 @@ package com.rhg.qf.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BodyViewHolder;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.utils.ImageUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -45,7 +45,7 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
                 data.getID()));
         holder.tv_totalMoney.setText(String.format(context.getResources().getString(R.string.countMoney),
                 data.getPrice()));
-        ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
+        ImageUtils.showImage(data.getPic(), holder.sellerImage);
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

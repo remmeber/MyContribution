@@ -1,5 +1,7 @@
 package com.rhg.qf.mvp.model;
 
+import android.util.Log;
+
 import com.rhg.qf.bean.BannerTypeUrlBean;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
 import com.rhg.qf.bean.HomeBean;
@@ -26,7 +28,7 @@ public class HomeModel {
         String x = AccountUtil.getInstance().getLongitude();
         String y = AccountUtil.getInstance().getLatitude();
         return Observable.zip(
-                qFoodApiService.getBannerUrl(),
+                qFoodApiService.getBannerUrl(AppConstants.HEAD_ROW),
                 qFoodApiService.getFavorableFood(AppConstants.HEAD_HOT),
                 qFoodApiService.getHomeMerchants(headrestaurants, x, y),
                 qFoodApiService.getMessage(),
@@ -39,7 +41,9 @@ public class HomeModel {
                                          TextTypeBean textTypeBean
                     ) {
                         HomeBean _homeBean = new HomeBean();
-                        _homeBean.setBannerEntityList(bannerTypeUrlBean.getRows());
+                        if (bannerTypeUrlBean.getResult() == 0)
+                            _homeBean.setBannerEntityList(bannerTypeUrlBean.getRows());
+                        else Log.i("RHG","getBannerUrl WRONG ");
                         _homeBean.setFavorableFoodEntityList(favorableFoodUrlBean.getRows());
                         _homeBean.setRecommendShopBeanEntityList(recommendListUrlBean.getRows());
                         _homeBean.setTextTypeBean(textTypeBean);

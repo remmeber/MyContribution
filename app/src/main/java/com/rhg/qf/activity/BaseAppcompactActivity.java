@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
+import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.KeyBoardUtil;
 
 import butterknife.ButterKnife;
@@ -135,6 +136,7 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
 
     @Override
     protected void onDestroy() {
+        ImageUtils.clearCache();
         super.onDestroy();
         ButterKnife.bind(this);
         if (locationService != null) {

@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.impl.RcvItemClickListener;
-
+import com.rhg.qf.utils.ImageUtils;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,7 +55,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void bindData(final GoodsDetailViewHolder goodsDetailViewHolder,
                           final ShopDetailUrlBean.ShopDetailBean shopDetailBean) {
-        ImageLoader.getInstance().displayImage(shopDetailBean.getPic(),
+        ImageUtils.showImage(shopDetailBean.getPic(),
                 goodsDetailViewHolder.ivGoodsDetail);
         goodsDetailViewHolder.tvGoodsDetailName.setText(shopDetailBean.getName());
         goodsDetailViewHolder.tvGoodsDetailPrice.setText(String.format(context.getResources().getString(R.string.countMoney),

@@ -1,10 +1,7 @@
 package com.rhg.qf.wxapi;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +16,6 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * desc:
@@ -71,11 +67,11 @@ public class WXPayEntryActivity extends BaseAppcompactActivity implements IWXAPI
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
-                ivPayResult.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_right_blue));
+
+                ivPayResult.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_right_blue));
                 tvPayResult.setText("支付成功");
-            }
-            else {
-                ivPayResult.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_wrong_blue));
+            } else {
+                ivPayResult.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_wrong_blue));
                 tvPayResult.setText("支付失败");
             }
         }

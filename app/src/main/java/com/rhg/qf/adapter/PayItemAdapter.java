@@ -72,9 +72,9 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         else
             _totalPrice = /*Integer.valueOf(payList.get(position).getProductPrice()) *
                     Integer.valueOf(payList.get(position).getProductNumber())*/Float.valueOf(
-                    DecimalUtil.multiplyWithScale(
-                            payList.get(position).getProductPrice(), payList.get(position).getProductNumber(), 2
-                    )
+                    DecimalUtil.multiplyWithScale(payList.get(position).getProductPrice(),
+                            payList.get(position).getProductNumber(),
+                            4)
             );
         holder.tvTotalMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
                 String.valueOf(_totalPrice + AppConstants.DELIVER_FEE)));

@@ -3,7 +3,6 @@ package com.rhg.qf.mvp.presenter;
 import com.rhg.qf.mvp.model.DeliverStateModel;
 import com.rhg.qf.mvp.view.BaseView;
 
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

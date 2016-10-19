@@ -51,6 +51,11 @@ import butterknife.OnClick;
  */
 public class PayActivity extends BasePayActivity implements PayItemAdapter.PayItemClickListener,
         BaseView {
+    private final static String WX_MERCHANT_ID = "1374528702";
+    private final static String WX_PRIVATE_KEY = "shengzhoujiaze123456jiajiameishi";
+    private final static String ALI_PARTNER = "2088422291942751";
+    private final static String ALI_SELLER_ID = "18858558505";
+    private final static String ALI_PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMIwLMEyitvEEctRirBarCnmtDqcIYxl2slRz6cTAFh0a4MqpUDTl505iiasFmLHJtNdMJohCkz+KjjKG7fTU4ZHy5Sy2andeULbyD+31cT+ZQOgNR2F5aAHU3CYvfx0qFw9ph5PA1AWqz+FoClPolsOOZKwrkObanbQplJebavhAgMBAAECgYAreHtcWIMrRU4ydLOWXQXzb1jjUfZUpqx+qtjQbvmB07YJq+9IftWO9cWOeLGeNTTk1hS+PC1BJRiwk9X2pdEpdqlCbri8mKPlu+Z37ZB+sNRiyl+2p4sDx9WTvw8dJHIsWFlDNnbHzS0oDexlOxX68fL4NcsZu5VLQLZV0W5YAQJBAPyIvCj9gw0OT1LPcj4Yks5V+5pjr4g7NqFxKEfxtPJErE8Zjz6Zm8x0/k2E8XCd63lVk8Dh13TJSqfYwh/+ZkECQQDE2nHL/X3qN4EEqsWfbB8piAO7/5Ux956fCrhUYKXiIPJsHyiojePAw4nXlf1Nd+Fnu6rjG35xgSNmUbu7Wh2hAkBEKzj3q69jp9g712nUX1fJwSYhAAXTNYDCxcQE37djqqwE0jZ7xIVtBKvdCyUNrGNzJmmzKIO7r9aqRnXoowjBAkBi3Rqdyne8c5e2UlXiFRkpcIf/mQLDD4t4cJfWuJtXEBjwOE3hKTGjFBFcVpXanER2JohSevJr6uFud8oC8+VBAkEAgNXtGYF9xdffvrpsjmq5H54W2TWq1GPDm7oF0Ct9jduElxZx11cdtcWYAzdU+bYjr+jrbut4X3IqDFhUMCOYfw==";
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -69,13 +74,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     ImageView ivWxpayCheck;
     @Bind(R.id.iv_alipay_check)
     ImageView ivAlipayCheck;
-
-    private final static String WX_MERCHANT_ID = "1374528702";
-    private final static String WX_PRIVATE_KEY = "shengzhoujiaze123456jiajiameishi";
-    private static String ALI_PARTNER = "2088422291942751";
-    private static String ALI_SELLER_ID = "18858558505";
-    private static String ALI_PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMIwLMEyitvEEctRirBarCnmtDqcIYxl2slRz6cTAFh0a4MqpUDTl505iiasFmLHJtNdMJohCkz+KjjKG7fTU4ZHy5Sy2andeULbyD+31cT+ZQOgNR2F5aAHU3CYvfx0qFw9ph5PA1AWqz+FoClPolsOOZKwrkObanbQplJebavhAgMBAAECgYAreHtcWIMrRU4ydLOWXQXzb1jjUfZUpqx+qtjQbvmB07YJq+9IftWO9cWOeLGeNTTk1hS+PC1BJRiwk9X2pdEpdqlCbri8mKPlu+Z37ZB+sNRiyl+2p4sDx9WTvw8dJHIsWFlDNnbHzS0oDexlOxX68fL4NcsZu5VLQLZV0W5YAQJBAPyIvCj9gw0OT1LPcj4Yks5V+5pjr4g7NqFxKEfxtPJErE8Zjz6Zm8x0/k2E8XCd63lVk8Dh13TJSqfYwh/+ZkECQQDE2nHL/X3qN4EEqsWfbB8piAO7/5Ux956fCrhUYKXiIPJsHyiojePAw4nXlf1Nd+Fnu6rjG35xgSNmUbu7Wh2hAkBEKzj3q69jp9g712nUX1fJwSYhAAXTNYDCxcQE37djqqwE0jZ7xIVtBKvdCyUNrGNzJmmzKIO7r9aqRnXoowjBAkBi3Rqdyne8c5e2UlXiFRkpcIf/mQLDD4t4cJfWuJtXEBjwOE3hKTGjFBFcVpXanER2JohSevJr6uFud8oC8+VBAkEAgNXtGYF9xdffvrpsjmq5H54W2TWq1GPDm7oF0Ct9jduElxZx11cdtcWYAzdU+bYjr+jrbut4X3IqDFhUMCOYfw==";
-
     ArrayList<PayModel.PayBean> payList = new ArrayList<>();
     NewOrderBean newOrderBean;
     NewOrderPresenter createOrderPresenter;
@@ -98,14 +96,14 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
             return BuildOrderInfo("微信支付", "30m", "http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php",
                     getOutTradeNo(),
                     getItemsName(payList),
-                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    getCheckItemTotalMoney(payList),
                     ipv4);
         }
         if (PayType.AliPay.equals(payType)) {
-            return BuildOrderInfo("支付宝支付", "30m", "http://notify.msp.hk/notify.htm",
+            return BuildOrderInfo("支付宝支付", "30m", "http://jiaze917.com/Table/JsonSQL/alipay/notify_url.php",
                     getOutTradeNo(),
                     getItemsName(payList),
-                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    getCheckItemTotalMoney(payList),
                     ipv4);
         }
         return null;
@@ -118,7 +116,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         _orderBean.setAddress(address);
         _orderBean.setFood(getCheckedFood(payList));
         _orderBean.setClient(AccountUtil.getInstance().getUserID());
-        _orderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
+        _orderBean.setPrice(getCheckItemTotalMoney(payList));
         return _orderBean;
     }
 
@@ -152,7 +150,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
 
-        RegisterBasePay(/*KeyLibs.ali_partner, KeyLibs.ali_sellerId, KeyLibs.ali_privateKey,*/ALI_PARTNER, ALI_SELLER_ID, ALI_PRIVATE_KEY,
+        RegisterBasePay(ALI_PARTNER, ALI_SELLER_ID, ALI_PRIVATE_KEY,
                 InitApplication.WXID, WX_MERCHANT_ID, WX_PRIVATE_KEY);
 //        BuildOrderInfo()
     }
@@ -173,7 +171,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         if (modifyOrderDeliveringPresenter == null) {
             modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
         }
-        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(getProductIdList(payList),
+        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(tradeNumber,
                 AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态
     }
 
@@ -188,8 +186,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         ToastHelper.getInstance()._toast(s);
 
     }
-
-    List<String> test = new ArrayList<>();
 
     @OnClick({R.id.tb_left_iv, R.id.iv_edit_right, R.id.bt_pay_affirmance,
             R.id.iv_wepay_check, R.id.iv_wepay, R.id.iv_alipay_check, R.id.iv_alipay})
@@ -213,7 +209,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                     if (createOrderPresenter == null)
                         createOrderPresenter = new NewOrderPresenter(this);
                     createOrderPresenter.createNewOrder(newOrderBean);
-
                 } else {
                     Pay(v);
                 }
@@ -328,16 +323,13 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         return _bean;
     }
 
-    private float getCheckItemTotalMoney(List<PayModel.PayBean> payList) {
+    private String getCheckItemTotalMoney(List<PayModel.PayBean> payList) {
         float count = 0;
         for (PayModel.PayBean _payBean : payList) {
             if (_payBean.isChecked())
-                count += /*Integer.valueOf(_payBean.getProductPrice()) * Integer.valueOf(_payBean.getProductNumber())*/
-                       Float.valueOf( DecimalUtil.multiplyWithScale(_payBean.getProductPrice(),
-                               _payBean.getProductNumber(),
-                               2));
+                count += Float.valueOf(DecimalUtil.multiply(_payBean.getProductPrice(), _payBean.getProductNumber()));
         }
-        return count;
+        return String.valueOf(count);
     }
 
     private String getItemsName(List<PayModel.PayBean> payList) {
@@ -351,8 +343,8 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     @Override
     public void showData(Object o) {
         if (o instanceof String) {
-            if ("status".equals(o)) {
-                Log.i("RHG", "修改订单成功");
+            if ("status_success".equals(o)) {
+                Log.i("RHG", "修改成功");
             } else if (!"error".equals(o)) {
                 tradeNumber = (String) o;
                 Pay(null);

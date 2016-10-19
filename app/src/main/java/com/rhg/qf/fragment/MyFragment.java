@@ -2,7 +2,6 @@ package com.rhg.qf.fragment;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +21,7 @@ import com.rhg.qf.mvp.presenter.UserSignInPresenter;
 import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -106,7 +106,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             isSignIn = true;
             userName.setText(AccountUtil.getInstance().getNickName());
             userName.setClickable(true);
-            ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
+
+            ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
         }
     }
 
@@ -118,7 +119,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (AccountUtil.getInstance().hasAccount()) {
             userName.setText(AccountUtil.getInstance().getNickName());
             userName.setClickable(false);
-            ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(),
+            ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(),
                     userHeader);
             isSignIn = true;
         } else {
@@ -194,9 +195,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (isVisibleToUser) {
             if (AccountUtil.getInstance().hasAccount()) {
                 isSignIn = true;
-                if (TextUtils.isEmpty(userName.getText())) {
+                if ("请登录".equals(userName.getText())) {
                     userName.setText(AccountUtil.getInstance().getNickName());
-                    ImageLoader.getInstance().displayImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
+                    ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
                 }
             } else {
                 isSignIn = false;

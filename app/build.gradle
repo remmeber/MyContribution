@@ -5,7 +5,7 @@ android {
         rhg {
             keyAlias 'rhg'
             keyPassword 'ruanhugang0215'
-            storeFile file('D:/AndroidWorkSpace/qf.jks')
+            storeFile file('E:/MyContribution/app/src/main/java/qf.jks')
             storePassword '331004'
         }
     }
@@ -45,7 +45,8 @@ android {
 dependencies {
     compile project(':easeui')
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:multidex:1.0.1'//用来解决方法超过65536
+    compile 'com.android.support:multidex:1.0.1'
+    //用来解决方法超过65536
     testCompile 'junit:junit:4.12'
     //compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'

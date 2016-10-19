@@ -1,13 +1,9 @@
 package com.rhg.qf.mvp.model;
 
-import android.util.Log;
-
 import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 import com.rhg.qf.mvp.api.QFoodApiService;
-
-import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -26,30 +22,26 @@ public class ModifyOrderModel {
      * time：2016/7/15 22:29
      * email：1013773046@qq.com
      */
-    public Observable<String> modifyOrder(List<String> orderId, final String styleOrTable) {
+
+    public Observable<String> modifyOrder(String orderId, final String styleOrTable) {
         final QFoodApiService _service = QFoodApiMamager.getInstant().getQFoodApiService();
-        if (AppConstants.ORDER_WITHDRAW.equals(styleOrTable) || AppConstants.ORDER_FINISH.equals(styleOrTable))
-            return _service.modifyOrderState(orderId.get(0), styleOrTable)
+        if (AppConstants.ORDER_WITHDRAW.equals(styleOrTable) || AppConstants.ORDER_FINISH.equals(styleOrTable)) {
+            return _service.modifyOrderState(orderId, styleOrTable)
                     .flatMap(new Func1<BaseBean, Observable<String>>() {
                         @Override
                         public Observable<String> call(final BaseBean baseBean) {
                             return Observable.create(new Observable.OnSubscribe<String>() {
                                 @Override
                                 public void call(Subscriber<? super String> subscriber) {
-                                    //Log.i("RHG", "MODIFY:" + baseBean.getResult());
                                     if (baseBean.getResult() == 0)
                                         subscriber.onNext(baseBean.getMsg());
                                 }
                             });
                         }
                     });
-        if (AppConstants.ORDER_DELIVERING.equals(styleOrTable))
-            return Observable.from(orderId).flatMap(new Func1<String, Observable<BaseBean>>() {
-                @Override
-                public Observable<BaseBean> call(String s) {
-                    return _service.modifyDeliverOrderState(styleOrTable, s);
-                }
-            }).flatMap(new Func1<BaseBean, Observable<String>>() {
+        }
+        if (AppConstants.UPDATE_ORDER_DELIVER.equals(styleOrTable))
+            return _service.modifyDeliverOrderState(styleOrTable, orderId).flatMap(new Func1<BaseBean, Observable<String>>() {
                 @Override
                 public Observable<String> call(final BaseBean baseBean) {
                     return Observable.create(new Observable.OnSubscribe<String>() {
@@ -60,28 +52,8 @@ public class ModifyOrderModel {
                     });
                 }
             });
-                    /*.flatMap(new Func1<BaseBean, Observable<String>>() {
-                        @Override
-                        public Observable<String> call(final BaseBean baseBean) {
-                            return Observable.create(new Observable.OnSubscribe<String>() {
-                                @Override
-                                public void call(Subscriber<? super String> subscriber) {
-                                    if (baseBean.getResult() == 0)
-                                        subscriber.onNext(baseBean.getMsg());
-                                    else subscriber.onNext("error");
-                                }
-                            });
-                        }
-                    });*/
         else if (AppConstants.UPDATE_ORDER_PAID.equals(styleOrTable)) {
-            Log.i("RHG", "修改为待接单");
-            return Observable.from(orderId).flatMap(new Func1<String, Observable<BaseBean>>() {
-                @Override
-                public Observable<BaseBean> call(String s) {
-                    Log.i("RHG", "订单号:" + s);
-                    return _service.modifyDeliverOrderState(styleOrTable, s);
-                }
-            }).flatMap(
+            return _service.modifyDeliverOrderState(styleOrTable, orderId).flatMap(
                     new Func1<BaseBean, Observable<String>>() {
                         @Override
                         public Observable<String> call(final BaseBean baseBean) {
@@ -89,21 +61,16 @@ public class ModifyOrderModel {
                                 @Override
                                 public void call(Subscriber<? super String> subscriber) {
                                     if (baseBean.getResult() == 0)
-                                        subscriber.onNext("status");
-                                    else subscriber.onNext("error");
+                                        subscriber.onNext("status_success");
+                                    else subscriber.onNext("status_error");
 //                                    subscriber.onCompleted();
                                 }
                             });
                         }
                     }
             );
-        } else
-            return Observable.from(orderId).flatMap(new Func1<String, Observable<BaseBean>>() {
-                @Override
-                public Observable<BaseBean> call(String s) {
-                    return _service.modifyDeliverOrderState(styleOrTable, s);
-                }
-            }).flatMap(new Func1<BaseBean, Observable<String>>() {
+        } else if (AppConstants.UPDATE_ORDER_WAIT.equals(styleOrTable))
+            return _service.modifyDeliverOrderState(styleOrTable, orderId).flatMap(new Func1<BaseBean, Observable<String>>() {
                 @Override
                 public Observable<String> call(final BaseBean baseBean) {
                     return Observable.create(new Observable.OnSubscribe<String>() {
@@ -114,5 +81,6 @@ public class ModifyOrderModel {
                     });
                 }
             });
+        return null;
     }
 }

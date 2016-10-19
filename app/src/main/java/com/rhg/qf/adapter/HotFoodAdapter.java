@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.HotFoodViewHolder;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.impl.RcvItemClickListener;
+import com.rhg.qf.utils.ImageUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -63,7 +63,7 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void bindData(HotFoodViewHolder hotFoodViewHolder,
                           HotFoodUrlBean.HotFoodBean hotFoodBean) {
         hotFoodViewHolder.hotSellMerchantName.setText(hotFoodBean.getRName());
-        ImageLoader.getInstance().displayImage(hotFoodBean.getPic(),
+        ImageUtils.showImage(hotFoodBean.getPic(),
                 hotFoodViewHolder.hotSellFoodImage);
         /*hotFoodViewHolder.hotSellFoodImage.setImageDrawable(
                 context.getResources().getDrawable(R.drawable.recommend_default_icon_1));*/

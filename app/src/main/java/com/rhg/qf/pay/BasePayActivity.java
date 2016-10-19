@@ -192,6 +192,7 @@ public abstract class BasePayActivity extends Activity {
                     PayResult payResult = new PayResult((String) msg.obj);
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
                     String resultInfo = payResult.getResult();
+                    Log.i("RHG", "result is:" + resultInfo + "\nmemo is :" + payResult.getMemo());
                     String resultStatus = payResult.getResultStatus();
 
                     if (TextUtils.equals(resultStatus, "9000")) {

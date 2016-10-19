@@ -135,6 +135,7 @@ public class AppConstants {
     public static final String ORDER_DETAIL = "orderdetail";
     public static final String ORDER_STYLE = "orderstyle";
     public static final String HEAD_HOT = "headhot";
+    public static final String HEAD_ROW = "headRowPic";
     public static final String DELETE_ADDRESS = "DeleteAddress";
     public static final String CHOOSE_DEFAULT = "ChooseDefault";
 

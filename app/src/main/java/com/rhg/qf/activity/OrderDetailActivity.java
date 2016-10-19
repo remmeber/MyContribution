@@ -21,7 +21,6 @@ import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -176,9 +175,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
             case R.id.btDrawback:
                 if (modifyOrderPresenter == null)
                     modifyOrderPresenter = new ModifyOrderPresenter(this);
-                List<String> orderList = new ArrayList<>();
-                orderList.add(orderId);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderList/*订单号*/,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderId/*订单号*/,
                         /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
                 break;
             case R.id.btPayOrRateOrConform:

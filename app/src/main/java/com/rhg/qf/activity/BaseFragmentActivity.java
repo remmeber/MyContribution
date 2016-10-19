@@ -17,6 +17,7 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
+import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.KeyBoardUtil;
 
 import butterknife.ButterKnife;
@@ -175,6 +176,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     @Override
     protected void onDestroy() {
+        ImageUtils.clearCache();
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);

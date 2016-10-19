@@ -3,12 +3,12 @@ package com.rhg.qf.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BodyViewHolder;
 import com.rhg.qf.adapter.viewHolder.HeaderViewHolder;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.utils.ImageUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -48,7 +48,7 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
 
     @Override
     public void bindHeadData(final HeaderViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
-        ImageLoader.getInstance().displayImage(data.getPic(), holder.headerstoreimage);
+        ImageUtils.showImage(data.getPic(), holder.headerstoreimage);
         holder.headerstorename.setText(data.getName());
         holder.headerdemandmoney.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDeliverRequire), data.getDelivery()));
@@ -67,7 +67,7 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
     @Override
     protected void bindBodyData(final BodyViewHolder holder, MerchantUrlBean.MerchantBean data, int type) {
         holder.sellerName.setText(data.getName());
-        ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
+        ImageUtils.showImage(data.getPic(), holder.sellerImage);
         holder.demandMoney.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDeliverRequire), data.getDelivery()));
         holder.foodType.setText(data.getStyle());

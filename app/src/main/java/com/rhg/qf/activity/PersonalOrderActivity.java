@@ -3,6 +3,7 @@ package com.rhg.qf.activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -49,7 +50,6 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
     ImageView tbLeftIv;
     @Bind(R.id.fl_tab)
     FrameLayout flTab;
-    private UmengUtil signUtil;
     UserSignInPresenter userSignInPresenter;
     UserSignUpPresenter userSignUpPresenter;
     GetAddressPresenter getAddressPresenter;
@@ -57,6 +57,7 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
     String openid;
     String unionid;
     String headImageUrl;
+    private UmengUtil signUtil;
 
     @Override
     protected void initData() {
@@ -99,14 +100,15 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
             return;
         }
         if (o instanceof AddressUrlBean.AddressBean) {
+            Log.i("RHG", "BACK ADDRESS");
             createOrderAndToPay((AddressUrlBean.AddressBean) o);
         }
     }
 
     @Override
     protected void showError(Object s) {
-
     }
+
 
     @Override
     public void keyBoardHide() {
@@ -149,7 +151,9 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
                     ToastHelper.getInstance()._toast("请输入正确价格");
                     return;
                 }
-
+                if (getAddressPresenter == null)
+                    getAddressPresenter = new GetAddressPresenter(this);
+                getAddressPresenter.getAddress(AppConstants.TABLE_DEFAULT_ADDRESS);
                 break;
         }
     }
@@ -207,11 +211,11 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
         payModel.setAddress(addressBean.getAddress().concat(addressBean.getDetail()));
         ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
         PayModel.PayBean _pay = new PayModel.PayBean();
-        _pay.setMerchantName("自主点餐");
-        _pay.setProductName("1");
+        _pay.setMerchantName(getResources().getString(R.string.personalOrder));
+        _pay.setProductName(getResources().getString(R.string.personalOrder));
         _pay.setChecked(true);
         _pay.setProductId("0");
-        _pay.setProductNumber("自主点餐");
+        _pay.setProductNumber("1");
         _pay.setProductPic("");
         _pay.setProductPrice(etNum.getText().toString());
         payBeen.add(_pay);

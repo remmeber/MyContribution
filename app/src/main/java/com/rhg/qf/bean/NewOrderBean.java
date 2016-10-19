@@ -74,6 +74,18 @@ public class NewOrderBean {
         this.Food = Food;
     }
 
+    @Override
+    public String toString() {
+        return "NewOrderBean{" +
+                "Client='" + Client + '\'' +
+                ", Receiver='" + Receiver + '\'' +
+                ", Address='" + Address + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", Price='" + Price + '\'' +
+                ", Food=" + Food +
+                '}';
+    }
+
     public static class FoodBean {
         private String ID;
         private String Num;
@@ -92,6 +104,14 @@ public class NewOrderBean {
 
         public void setNum(String Num) {
             this.Num = Num;
+        }
+
+        @Override
+        public String toString() {
+            return "FoodBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Num='" + Num + '\'' +
+                    '}';
         }
     }
 }
