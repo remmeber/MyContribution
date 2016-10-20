@@ -269,4 +269,11 @@ public interface QFoodApiService {
                                             @Field("Pwd") String pwd,
                                             @Field("Area") String area,
                                             @Field("ClientID") String clientId);
+
+
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<BaseBean> getDeliverInfo(@Field("Table") String deliver,
+                                        @Field("Client") String userId);
+
 }

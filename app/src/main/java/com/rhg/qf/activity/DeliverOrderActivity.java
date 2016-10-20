@@ -140,7 +140,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_ACCEPT);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
                 modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
-                        AppConstants.UPDATE_ORDER_WAIT);
+                    AppConstants.UPDATE_ORDER_WAIT);
                 break;
             case AppConstants.DELIVER_ORDER_ACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_DELIVERING);

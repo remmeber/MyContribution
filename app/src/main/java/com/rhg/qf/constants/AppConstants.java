@@ -139,9 +139,9 @@ public class AppConstants {
     public static final String DELETE_ADDRESS = "DeleteAddress";
     public static final String CHOOSE_DEFAULT = "ChooseDefault";
 
-    public static final String UPDATE_ORDER_DELIVER = "Updateorderdeliver";//修改为配送中
-    public static final String UPDATE_ORDER_PAID = "UpdateorderPaid";//修改为等待接单
-    public static final String UPDATE_ORDER_WAIT = "Updateorderwait";//修改已经接单接口
+    public static final String UPDATE_ORDER_DELIVER = "UPdateorderdeliver";//修改为配送中
+    public static final String UPDATE_ORDER_PAID = "UPdateorderPaid";//修改为等待接单
+    public static final String UPDATE_ORDER_WAIT = "UPdateorderwait";//修改已经接单接口
 
     public static final int DELIVER_FEE = 0;
 
