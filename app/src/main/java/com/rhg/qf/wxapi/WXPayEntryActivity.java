@@ -38,7 +38,7 @@ public class WXPayEntryActivity extends BaseAppcompactActivity implements IWXAPI
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.pay_result_layout;
+        return R.layout.pay_result_success_layout;
     }
 
     @Override

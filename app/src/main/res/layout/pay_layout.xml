@@ -34,14 +34,6 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/pay_content_include" />
 
-        <include
-            android:id="@+id/pay_content_include"
-            layout="@layout/pay_way_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/bt_pay_affirmance"
-            android:layout_marginTop="@dimen/margin_little" />
-
 
         <Button
             android:id="@+id/bt_pay_affirmance"
@@ -58,5 +50,14 @@
             android:gravity="center"
             android:text="@string/tvPayAffirmance"
             android:textSize="@dimen/text_large" />
+
+        <include
+            android:id="@+id/pay_content_include"
+            layout="@layout/pay_way_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bt_pay_affirmance"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 </LinearLayout>

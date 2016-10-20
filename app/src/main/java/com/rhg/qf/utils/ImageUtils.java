@@ -22,7 +22,7 @@ import java.io.IOException;
 public class ImageUtils {
 
     public static void showImage(String uri, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(uri, imageView, new ImageSize(100, 100));
+        ImageLoader.getInstance().displayImage(uri, imageView, new ImageSize(400, 300));
     }
 
     public static void clearCache() {

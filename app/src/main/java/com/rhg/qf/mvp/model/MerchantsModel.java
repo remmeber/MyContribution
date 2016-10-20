@@ -2,6 +2,7 @@ package com.rhg.qf.mvp.model;
 
 import com.rhg.qf.bean.HeadMerchantUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 import com.rhg.qf.mvp.api.QFoodApiService;
 import com.rhg.qf.utils.AccountUtil;
@@ -21,10 +22,12 @@ import rx.functions.Func2;
 public class MerchantsModel {
     public Observable<List<MerchantUrlBean.MerchantBean>> getMerchants(String table, int page) {
         QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
-        return Observable.zip(qFoodApiService.getHeadMerchant("toprestaurants"),
+        String X = AccountUtil.getInstance().getLongitude();
+        String Y = AccountUtil.getInstance().getLatitude();
+        return Observable.zip(qFoodApiService.getHeadMerchant(AppConstants.TOP_RESTAURANTS,X,Y),
                 qFoodApiService.getBodyMerchants(table, page,
-                        AccountUtil.getInstance().getLongitude(),
-                        AccountUtil.getInstance().getLatitude()),
+                        X,
+                        Y),
                 new Func2<HeadMerchantUrlBean, MerchantUrlBean, List<MerchantUrlBean.MerchantBean>>() {
                     @Override
                     public List<MerchantUrlBean.MerchantBean> call(HeadMerchantUrlBean headMerchantUrlBean,

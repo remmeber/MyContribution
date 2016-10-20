@@ -124,6 +124,7 @@ public class AppConstants {
     public static final String TABLE_DEFAULT_ADDRESS = "defaultaddress";
     public static final String TABLE_FOOD = "food";
     public static final String RESTAURANTS = "restaurants";
+    public static final String TOP_RESTAURANTS = "toprestaurant";
     public static final String HOME_RESTAURANTS = "headrestaurants";
     public static final String SEARCH_RESTAURANTS = "searchrestaurants";
     public static final String SEARCH_HOTFOOD = "searchhotfood";

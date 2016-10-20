@@ -29,4 +29,12 @@ public class BaseBean {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
+    @Override
+    public String toString() {
+        return "BaseBean{" +
+                "result=" + result +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
 }

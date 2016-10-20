@@ -66,6 +66,7 @@ public class NewOrderBean {
         this.Price = Price;
     }
 
+
     public List<FoodBean> getFood() {
         return Food;
     }

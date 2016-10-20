@@ -11,6 +11,7 @@ import com.rhg.qf.bean.HeadMerchantUrlBean;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.bean.MerchantInfoDetailUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
+import com.rhg.qf.bean.NewOrderBackBean;
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.bean.ShopDetailUrlBean;
@@ -56,7 +57,9 @@ public interface QFoodApiService {
     /*API11 所有店铺head*/
     @FormUrlEncoded
     @POST("Table/Json.php")
-    Observable<HeadMerchantUrlBean> getHeadMerchant(@Field("Table") String toprestaurants);
+    Observable<HeadMerchantUrlBean> getHeadMerchant(@Field("Table") String toprestaurant,
+                                                    @Field("X") String x,
+                                                    @Field("Y") String y);
 
     /*所有店铺body*/
     @FormUrlEncoded
@@ -236,12 +239,14 @@ public interface QFoodApiService {
     /*API 18 生成订单标记为待付款状态*/
     @FormUrlEncoded
     @POST("Table/JsonSQL/AddNewOrder2.php")
-    Observable<BaseBean> createOrder(@Field("Address") String address,
-                                     @Field("Client") String client,
-                                     @Field("Receiver") String receiver,
-                                     @Field("Phone") String phone,
-                                     @Field("Price") String price,
-                                     @Field("Food") String foodBeen
+    Observable<NewOrderBackBean> createOrder(@Field("Address") String address,
+                                             @Field("Client") String client,
+                                             @Field("Receiver") String receiver,
+                                             @Field("Phone") String phone,
+                                             @Field("Price") String price,
+                                             @Field("X") String X,
+                                             @Field("Y") String Y,
+                                             @Field("Food") String foodBeen
                                      /*@Body NewOrderBean newOrderBean*/);
 
 

@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +16,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.PayItemAdapter;
 import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.AddressUrlBean;
+import com.rhg.qf.bean.NewOrderBackBean;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
@@ -30,13 +32,12 @@ import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
+import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.widget.UIPayView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -85,6 +86,8 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     String receiver;
     String phone;
     String address;
+    String fee;
+    String price;
     private PayItemAdapter payItemAdapter;
 
 
@@ -126,6 +129,16 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         setContentView(R.layout.pay_layout);
         ButterKnife.bind(this);
         initData(getIntent());
+        createOrder();
+    }
+
+    private void createOrder() {
+        if (style == 0) {
+            newOrderBean = generateOrder();
+            if (createOrderPresenter == null)
+                createOrderPresenter = new NewOrderPresenter(this);
+            createOrderPresenter.createNewOrder(newOrderBean);
+        }
     }
 
     protected void initData(Intent intent) {
@@ -145,7 +158,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
         rcvItemPay.setHasFixedSize(true);
         rcvItemPay.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                SizeUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
+                SizeUtil.dip2px(1), ContextCompat.getColor(this, R.color.colorInActive)));
         payItemAdapter = new PayItemAdapter(this, payList);
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
@@ -167,24 +180,56 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     /*支付成功的回调*/
     @Override
     protected void showSuccess(String s) {
-        ToastHelper.getInstance()._toast(s);
-        if (modifyOrderDeliveringPresenter == null) {
-            modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
-        }
-        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(tradeNumber,
-                AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态
+//        ToastHelper.getInstance()._toast(s);
+//        if (modifyOrderDeliveringPresenter == null) {
+//            modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
+//        }
+//        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(tradeNumber,
+//                AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态
+        showPayResult(true);
+    }
+
+    private void signInDialogShow(String content) {
+        final UIAlertView delDialog = new UIAlertView(this, "温馨提示", content,
+                "加入购物车", "登录并购买");
+        delDialog.show();
+        delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
+                                       @Override
+                                       public void doLeft() {
+                                           delDialog.dismiss();
+                                       }
+
+                                       @Override
+                                       public void doRight() {
+                                           delDialog.dismiss();
+                                       }
+                                   }
+        );
+    }
+
+    private void showPayResult(boolean isSuccess) {
+        final UIPayView resultDialog;
+        if (isSuccess)
+            resultDialog = new UIPayView(PayActivity.this, R.layout.pay_result_success_layout, true);
+        else
+            resultDialog = new UIPayView(PayActivity.this, R.layout.pay_result_error_layout, true);
+        resultDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+        resultDialog.show();
     }
 
     @Override
     protected void Warning(String s) {
         ToastHelper.getInstance()._toast(s);
-
     }
 
     @Override
     protected void showError(String s) {
         ToastHelper.getInstance()._toast(s);
-
     }
 
     @OnClick({R.id.tb_left_iv, R.id.iv_edit_right, R.id.bt_pay_affirmance,
@@ -201,33 +246,11 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                 break;
             case R.id.bt_pay_affirmance:
                 if (getCheckCount(payList) == 0) {
-                    ToastHelper.getInstance()._toast("当前未选择商品！");
+                    ToastHelper.getInstance().displayToastWithQuickClose("当前未选择商品！");
                     return;
                 }
-                newOrderBean = generateOrder();
-/*
-                if (modifyOrderDeliveringPresenter == null) {
-                    modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
-                }
-                modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState("315",
-                        AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态*/
-                if (style == 0) {
-                    if (createOrderPresenter == null)
-                        createOrderPresenter = new NewOrderPresenter(this);
-                    createOrderPresenter.createNewOrder(newOrderBean);
-                } else {
-                    Pay(v);
-                }
-                /*payContentBeanList.clear();
-                for (int i = 0; i < 3; i++) {
-                    PayContentBean payContentBean = new PayContentBean();
-                    payContentBean.setGoodsName("哈啊哈" + i);
-                    payContentBean.setGoodsDescription("好吃哦");
-                    payContentBean.setPayMoney("" + i * 2);
-                    payContentBeanList.add(payContentBean);
-                }
-                PayDialog payDialog = new PayDialog(this, payContentBeanList);
-                payDialog.show();*/
+                ToastHelper.getInstance().displayToastWithQuickClose("准备支付");
+                Pay(v);
                 break;
             case R.id.iv_wepay_check:
             case R.id.iv_wepay:
@@ -348,32 +371,35 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     @Override
     public void showData(Object o) {
-        if (o instanceof String) {
-            if ("status_success".equals(o)) {
-                Log.i("RHG", "修改成功");
-            } else if (!"error".equals(o)) {
-                tradeNumber = (String) o;
-                Pay(null);
-                Log.i("RHG", "订单号:" + tradeNumber);
-            }
-        } else
-            ToastHelper.getInstance()._toast((String) o);
+        if (o instanceof NewOrderBackBean) {
+            tradeNumber = ((NewOrderBackBean) o).getMsg();
+            ToastHelper.getInstance().displayToastWithQuickClose("订单生成成功");
+            fee = ((NewOrderBackBean) o).getFee();
+            price = ((NewOrderBackBean) o).getPrice();
+            Log.i("RHG", "fee: " + fee + " price: " + price);
+            showPayResult(true);
+//            signInDialogShow("测试");
 
+            //Pay(null);
+//            Log.i("RHG", "订单号:" + tradeNumber);
+        } else if (o instanceof String) {
+            ToastHelper.getInstance()._toast(o.toString());
+        }
     }
 
     /**
      * get the out_trade_no for an order. 生成商户订单号，该值在商户端应保持唯一（可自定义格式规范）
      */
     private String getOutTradeNo() {
-        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+        /*SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
         Date date = new Date();
         String key = format.format(date);
 
         Random r = new Random();
         key = key + r.nextInt();
         key = key.substring(0, 15);
-        return key;
-//        return tradeNumber;
+        return key;*/
+        return style == 0 ? tradeNumber : payList.get(0).getProductId();//style=0时，productId为商品的ID；style=1时，productId为订单的ID。
     }
 
     @Override
