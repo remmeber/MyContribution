@@ -1,5 +1,7 @@
 package com.rhg.qf.mvp.presenter;
 
+import android.util.Log;
+
 import com.rhg.qf.mvp.model.PerfectDeliverInfoModel;
 import com.rhg.qf.mvp.view.BaseView;
 
@@ -39,6 +41,7 @@ public class PerfectDeliverInfoPresenter {
 
                     @Override
                     public void onNext(String s) {
+                        Log.i("RHG", "修改结果" + s);
                         perfectDeliverInfoView.showData(s);
                     }
                 });

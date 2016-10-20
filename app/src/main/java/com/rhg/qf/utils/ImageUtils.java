@@ -20,7 +20,6 @@ import java.io.IOException;
  * email：1013773046@qq.com
  */
 public class ImageUtils {
-
     public static void showImage(String uri, ImageView imageView) {
         ImageLoader.getInstance().displayImage(uri, imageView, new ImageSize(400, 300));
     }

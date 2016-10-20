@@ -17,7 +17,6 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.fragment.ShopDetailFoodFragment;
 import com.rhg.qf.fragment.ShopDetailFragment;
 import com.rhg.qf.utils.ImageUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +84,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         tbCenterTv.setText("店铺详情");
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
         flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));

@@ -35,7 +35,7 @@ import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.ShoppingCartWithNumber;
-import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.ui.UIAlertView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 

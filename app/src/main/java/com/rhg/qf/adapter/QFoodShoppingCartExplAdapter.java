@@ -14,7 +14,7 @@ import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.widget.SlideView;
-import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.ui.UIAlertView;
 
 import java.util.List;
 

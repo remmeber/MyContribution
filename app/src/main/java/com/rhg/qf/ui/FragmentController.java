@@ -13,7 +13,6 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class FragmentController {
-    private static final String TAG = "FragmentController";
     FragmentManager fm;
     int size = 0;
     int resId = 0;
@@ -86,5 +85,9 @@ public class FragmentController {
 
     public Fragment getCurrentFM() {
         return fragments == null ? null : fragments.get(showMark);
+    }
+
+    public int getCurrentInt(){
+        return showMark;
     }
 }

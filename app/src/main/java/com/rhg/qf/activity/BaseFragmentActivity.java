@@ -46,9 +46,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         dataReceive(getIntent());
         /*isFirstLoc = isNeedFirstLoc();
         startLoc();*/
-        loadingData();
         initView(getRootView(this));
-        initData();
+        initData(savedInstanceState);
+        loadingData();
 //        bindData(loadData());
     }
 
@@ -206,7 +206,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     protected abstract void initView(View view);
 
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
     //横竖屏切换，键盘等
     @Override

@@ -11,7 +11,7 @@ import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.LineProgress;
 import com.rhg.qf.widget.MyRatingBar;
-import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.ui.UIAlertView;
 
 import java.util.Locale;
 
@@ -38,9 +38,7 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
     String orderId;
     DeliverStatePresenter getDeliverStatePresenter;
     ModifyOrderPresenter modifyOrderPresenter;
-
     UIAlertView delDialog;
-
     @Override
     public void dataReceive(Intent intent) {
         orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
@@ -90,6 +88,7 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
                 break;
             case R.id.bt_conform_receive:
                 if (foodDeliverProgress.getState() == -1) {
+                    ToastHelper.getInstance()._toast("当前商品还未下单！");
                     break;
                 }
                 if (foodDeliverProgress.getState() == LineProgress.STATE_LEFT) {

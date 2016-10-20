@@ -19,14 +19,13 @@ import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
 import com.rhg.qf.widget.RecycleViewWithDelete;
-import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.ui.UIAlertView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-
 /*
  *desc 地址页面
  *author rhg

@@ -34,6 +34,7 @@ public class AppConstants {
     public static final String SP_LONGITUDE = "longitude";
     public static final String SP_HEAD_IMAGE = "sp_head_image";
     public static final String SP_USER_ID = "user_id";
+    public static final String SP_DELIVER_ID = "deliver_id";
     public static final String SP_USER_NAME = "user_name";
     public static final String SP_PASSWORD = "password";
     public static final String SP_NICKNAME = "nickname";
@@ -58,6 +59,7 @@ public class AppConstants {
      * Intent/Bundle 传递Bean的KEY
      */
     public static final String KEY_INTENT_BEAN = "bean";
+    public static final String KEY_INTENT_FRAGMENT_ID = "fragment_id";
     public static final String KEY_MERCHANT_NAME = "merchant_name";
     public static final String KEY_PRODUCT_NAME = "product_name";
     public static final String KEY_MERCHANT_ID = "merchant_id";
@@ -132,16 +134,18 @@ public class AppConstants {
     public static final String TABLE_ORDER = "order";
     public static final String ADDRESS_TABLE = "address";
     public static final String DELIVER_ORDER = "deliverorder";
+    public static final String DELIVER = "deliver";
     public static final String MERCHANT_INFO = "restaurantdetail";
     public static final String ORDER_DETAIL = "orderdetail";
     public static final String ORDER_STYLE = "orderstyle";
     public static final String HEAD_HOT = "headhot";
+    public static final String HEAD_ROW = "headRowPic";
     public static final String DELETE_ADDRESS = "DeleteAddress";
     public static final String CHOOSE_DEFAULT = "ChooseDefault";
 
-    public static final String UPDATE_ORDER_DELIVER = "Updateorderdeliver";//修改为配送中
-    public static final String UPDATE_ORDER_PAID = "UpdateorderPaid";//修改为等待接单
-    public static final String UPDATE_ORDER_WAIT = "Updateorderwait";//修改已经接单接口
+    public static final String UPDATE_ORDER_DELIVER = "UPdateorderdeliver";//修改为配送中
+    public static final String UPDATE_ORDER_PAID = "UPdateorderPaid";//修改为等待接单
+    public static final String UPDATE_ORDER_WAIT = "UPdateorderwait";//修改已经接单接口
 
     public static final int DELIVER_FEE = 0;
 

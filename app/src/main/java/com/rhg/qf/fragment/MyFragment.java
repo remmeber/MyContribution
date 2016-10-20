@@ -105,7 +105,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (!isSignIn && AccountUtil.getInstance().hasAccount()) {
             isSignIn = true;
             userName.setText(AccountUtil.getInstance().getNickName());
-            userName.setClickable(true);
             ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
         }
     }
@@ -123,6 +122,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             isSignIn = true;
         } else {
             userName.setText("请登录");
+            userName.setClickable(true);
 //        userName.setText();//TODO 此处需要根据本地账户来判断显示
             userName.setOnClickListener(this);
             userName.setTag(R.id.userName);

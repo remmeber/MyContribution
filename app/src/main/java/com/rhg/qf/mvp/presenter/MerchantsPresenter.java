@@ -17,11 +17,11 @@ import rx.schedulers.Schedulers;
  * email：1013773046@qq.com
  */
 public class MerchantsPresenter {
-    BaseView testView;
+    BaseView getMerchantsPresenter;
     MerchantsModel merchantsModel;
 
     public MerchantsPresenter(BaseView baseView) {
-        testView = baseView;
+        getMerchantsPresenter = baseView;
         merchantsModel = new MerchantsModel();
     }
 
@@ -41,7 +41,7 @@ public class MerchantsPresenter {
 
                     @Override
                     public void onNext(List<MerchantUrlBean.MerchantBean> merchantBeanList) {
-                        testView.showData(merchantBeanList);
+                        getMerchantsPresenter.showData(merchantBeanList);
                     }
                 });
     }

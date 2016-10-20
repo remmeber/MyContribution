@@ -3,6 +3,7 @@ package com.rhg.qf.mvp.api;
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.BannerTypeUrlBean;
 import com.rhg.qf.bean.BaseBean;
+import com.rhg.qf.bean.DeliverInfoBean;
 import com.rhg.qf.bean.DeliverOrderUrlBean;
 import com.rhg.qf.bean.DeliverStateBean;
 import com.rhg.qf.bean.FavorableFoodUrlBean;
@@ -37,8 +38,9 @@ import rx.Observable;
  */
 public interface QFoodApiService {
     /*首页API*/
-    @GET("json/head.html")
-    Observable<BannerTypeUrlBean> getBannerUrl();
+    @FormUrlEncoded
+    @POST("/Table/Json.php")
+    Observable<BannerTypeUrlBean> getBannerUrl(@Field("Table") String headRowPic);
 
     @GET("json/message.html")
     Observable<TextTypeBean> getMessage();
@@ -271,4 +273,11 @@ public interface QFoodApiService {
                                             @Field("Pwd") String pwd,
                                             @Field("Area") String area,
                                             @Field("ClientID") String clientId);
+
+
+    @FormUrlEncoded
+    @POST("Table/Json.php")
+    Observable<DeliverInfoBean> getDeliverInfo(@Field("Table") String deliver,
+                                               @Field("Client") String userId);
+
 }

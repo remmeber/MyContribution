@@ -32,8 +32,8 @@ import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
-import com.rhg.qf.widget.UIAlertView;
-import com.rhg.qf.widget.UIPayView;
+import com.rhg.qf.ui.UIAlertView;
+import com.rhg.qf.ui.UIPayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +57,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     private final static String ALI_PARTNER = "2088422291942751";
     private final static String ALI_SELLER_ID = "18858558505";
     private final static String ALI_PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMIwLMEyitvEEctRirBarCnmtDqcIYxl2slRz6cTAFh0a4MqpUDTl505iiasFmLHJtNdMJohCkz+KjjKG7fTU4ZHy5Sy2andeULbyD+31cT+ZQOgNR2F5aAHU3CYvfx0qFw9ph5PA1AWqz+FoClPolsOOZKwrkObanbQplJebavhAgMBAAECgYAreHtcWIMrRU4ydLOWXQXzb1jjUfZUpqx+qtjQbvmB07YJq+9IftWO9cWOeLGeNTTk1hS+PC1BJRiwk9X2pdEpdqlCbri8mKPlu+Z37ZB+sNRiyl+2p4sDx9WTvw8dJHIsWFlDNnbHzS0oDexlOxX68fL4NcsZu5VLQLZV0W5YAQJBAPyIvCj9gw0OT1LPcj4Yks5V+5pjr4g7NqFxKEfxtPJErE8Zjz6Zm8x0/k2E8XCd63lVk8Dh13TJSqfYwh/+ZkECQQDE2nHL/X3qN4EEqsWfbB8piAO7/5Ux956fCrhUYKXiIPJsHyiojePAw4nXlf1Nd+Fnu6rjG35xgSNmUbu7Wh2hAkBEKzj3q69jp9g712nUX1fJwSYhAAXTNYDCxcQE37djqqwE0jZ7xIVtBKvdCyUNrGNzJmmzKIO7r9aqRnXoowjBAkBi3Rqdyne8c5e2UlXiFRkpcIf/mQLDD4t4cJfWuJtXEBjwOE3hKTGjFBFcVpXanER2JohSevJr6uFud8oC8+VBAkEAgNXtGYF9xdffvrpsjmq5H54W2TWq1GPDm7oF0Ct9jduElxZx11cdtcWYAzdU+bYjr+jrbut4X3IqDFhUMCOYfw==";
+
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -75,10 +76,10 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     ImageView ivWxpayCheck;
     @Bind(R.id.iv_alipay_check)
     ImageView ivAlipayCheck;
+
     ArrayList<PayModel.PayBean> payList = new ArrayList<>();
     NewOrderBean newOrderBean;
     NewOrderPresenter createOrderPresenter;
-    ModifyOrderPresenter modifyOrderDeliveringPresenter;/*修改用户订单状态*/
     String ipv4;
     String tradeNumber;
     int style = 0;//用来表示是否需要生成订单
@@ -95,7 +96,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     protected OrderInfo OnOrderCreate() {
         ipv4 = NetUtil.getPsdnIp();
         if (PayType.WeixinPay.equals(payType)) {
-            Log.i("RHG", "WXPay OrderCreate");
             return BuildOrderInfo("微信支付", "30m", "http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php",
                     getOutTradeNo(),
                     getItemsName(payList),
@@ -187,24 +187,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 //        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(tradeNumber,
 //                AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态
         showPayResult(true);
-    }
-
-    private void signInDialogShow(String content) {
-        final UIAlertView delDialog = new UIAlertView(this, "温馨提示", content,
-                "加入购物车", "登录并购买");
-        delDialog.show();
-        delDialog.setClicklistener(new UIAlertView.ClickListenerInterface() {
-                                       @Override
-                                       public void doLeft() {
-                                           delDialog.dismiss();
-                                       }
-
-                                       @Override
-                                       public void doRight() {
-                                           delDialog.dismiss();
-                                       }
-                                   }
-        );
     }
 
     private void showPayResult(boolean isSuccess) {
@@ -377,8 +359,6 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
             fee = ((NewOrderBackBean) o).getFee();
             price = ((NewOrderBackBean) o).getPrice();
             Log.i("RHG", "fee: " + fee + " price: " + price);
-            showPayResult(true);
-//            signInDialogShow("测试");
 
             //Pay(null);
 //            Log.i("RHG", "订单号:" + tradeNumber);

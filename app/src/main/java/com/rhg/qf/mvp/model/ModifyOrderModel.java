@@ -22,6 +22,7 @@ public class ModifyOrderModel {
      * time：2016/7/15 22:29
      * email：1013773046@qq.com
      */
+
     public Observable<String> modifyOrder(String orderId, final String styleOrTable) {
         final QFoodApiService _service = QFoodApiMamager.getInstant().getQFoodApiService();
         if (AppConstants.ORDER_WITHDRAW.equals(styleOrTable) || AppConstants.ORDER_FINISH.equals(styleOrTable)) {
@@ -39,14 +40,16 @@ public class ModifyOrderModel {
                         }
                     });
         }
-        if (AppConstants.ORDER_DELIVERING.equals(styleOrTable))
+        if (AppConstants.UPDATE_ORDER_DELIVER.equals(styleOrTable))
             return _service.modifyDeliverOrderState(styleOrTable, orderId).flatMap(new Func1<BaseBean, Observable<String>>() {
                 @Override
                 public Observable<String> call(final BaseBean baseBean) {
                     return Observable.create(new Observable.OnSubscribe<String>() {
                         @Override
                         public void call(Subscriber<? super String> subscriber) {
-                            subscriber.onNext(baseBean.getMsg());
+                            if (baseBean.getResult() == 0)
+                                subscriber.onNext("state_delivering_success");
+                            else subscriber.onNext("state_error");
                         }
                     });
                 }
@@ -60,25 +63,28 @@ public class ModifyOrderModel {
                                 @Override
                                 public void call(Subscriber<? super String> subscriber) {
                                     if (baseBean.getResult() == 0)
-                                        subscriber.onNext("status_success");
-                                    else subscriber.onNext("status_error");
+                                        subscriber.onNext("state_wait_success");
+                                    else subscriber.onNext("state_error");
 //                                    subscriber.onCompleted();
                                 }
                             });
                         }
                     }
             );
-        } else
+        } else if (AppConstants.UPDATE_ORDER_WAIT.equals(styleOrTable))
             return _service.modifyDeliverOrderState(styleOrTable, orderId).flatMap(new Func1<BaseBean, Observable<String>>() {
                 @Override
                 public Observable<String> call(final BaseBean baseBean) {
                     return Observable.create(new Observable.OnSubscribe<String>() {
                         @Override
                         public void call(Subscriber<? super String> subscriber) {
-                            subscriber.onNext(baseBean.getMsg());
+                            if (baseBean.getResult() == 0)
+                                subscriber.onNext("state_accept_success");
+                            else subscriber.onNext("state_error");
                         }
                     });
                 }
             });
+        return null;
     }
 }

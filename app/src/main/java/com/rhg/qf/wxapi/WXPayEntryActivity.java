@@ -67,6 +67,7 @@ public class WXPayEntryActivity extends BaseAppcompactActivity implements IWXAPI
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+
                 ivPayResult.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_right_blue));
                 tvPayResult.setText("支付成功");
             } else {

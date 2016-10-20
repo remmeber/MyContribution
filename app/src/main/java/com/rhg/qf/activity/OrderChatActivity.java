@@ -16,7 +16,11 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
+<<<<<<< HEAD
+ * desc:自主点餐
+=======
  * desc:自主点餐 TODO 目前未使用
+>>>>>>> 2726e02649fdc377b34571a59019133563595479
  * author：remember
  * time：2016/6/22 14:41
  * email：1013773046@qq.com
