@@ -73,10 +73,10 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
         @Override
         public void onItemClickListener(int position, Object item) {
             if (item instanceof String) {
-                searchEt.setText((String) item);
                 isShow = false;
                 searchEt.setText((String) item);
-                doSearch(searchEt.getText().toString());
+                doSearch((String) item);
+                searchEt.setCursorVisible(false);
                 historyResultsRcv.setVisibility(View.GONE);
                 tvHistoryResult.setVisibility(View.GONE);
                 itemResultsRcv.setVisibility(View.VISIBLE);
@@ -159,14 +159,23 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
                         SearchHistoryUtil.insertSearchHistory(searchEt.getText().toString().trim());
                         searchHistoryData.add(searchEt.getText().toString().trim());
                     }
+
+                    if (TextUtils.isEmpty(searchEt.getText().toString())) {
+                        ToastHelper.getInstance().displayToastWithQuickClose("搜索内容为空");
+                        return true;
+                    }
                         /*切换到内容搜索*/
-                    tvHistoryResult.setVisibility(View.GONE);/* 隐藏历史搜索textView*/
-                    tvSearchResult.setVisibility(View.VISIBLE);/* 显示内容搜索textView*/
-                    historyResultsRcv.setVisibility(View.GONE);/* 隐藏历史搜索recycleView*/
-                    itemResultsRcv.setVisibility(View.VISIBLE);/* 显示内容搜索recycleView*/
-                    isShow = false;
+                    searchEt.setCursorVisible(false);
                     doSearch(searchEt.getText().toString());
                     return true;
+                } else {
+                    searchEt.setCursorVisible(true);
+                    if(TextUtils.isEmpty(searchEt.getText())) {
+                        tvHistoryResult.setVisibility(View.VISIBLE);/* 隐藏历史搜索textView*/
+                        tvSearchResult.setVisibility(View.GONE);/* 显示内容搜索textView*/
+                        historyResultsRcv.setVisibility(View.VISIBLE);/*隐藏历史搜索recycleView*/
+                        itemResultsRcv.setVisibility(View.GONE);/* 显示内容搜索recycleView*/
+                    }
                 }
                 return false;
             }
@@ -201,14 +210,13 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!isShow) {
+//                if (!isShow) {
                     /*切换到历史搜索*/
-                    tvHistoryResult.setVisibility(View.VISIBLE);/* 隐藏历史搜索textView*/
-                    tvSearchResult.setVisibility(View.GONE);/* 显示内容搜索textView*/
-                    historyResultsRcv.setVisibility(View.VISIBLE);/*隐藏历史搜索recycleView*/
-                    itemResultsRcv.setVisibility(View.GONE);/* 显示内容搜索recycleView*/
-                    isShow = true;
-                }
+                tvHistoryResult.setVisibility(View.VISIBLE);/* 隐藏历史搜索textView*/
+                tvSearchResult.setVisibility(View.GONE);/* 显示内容搜索textView*/
+                historyResultsRcv.setVisibility(View.VISIBLE);/*隐藏历史搜索recycleView*/
+                itemResultsRcv.setVisibility(View.GONE);/* 显示内容搜索recycleView*/
+//                }
                 searchHistoryData.clear();
                 if (s.toString().trim().length() != 0) {
                     searchHistoryData = SearchHistoryUtil.getHistoryByName(s.toString().trim());
@@ -227,10 +235,6 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
      *email 1013773046@qq.com
      */
     private void doSearch(String s) {
-        if (TextUtils.isEmpty(searchEt.getText().toString())) {
-            ToastHelper.getInstance().displayToastWithQuickClose("搜索内容为空");
-            return;
-        }
         /*String _str = "";
         try {
             _str = URLEncoder.encode(s, "UTF-8");
@@ -242,14 +246,16 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
             case AppConstants.KEY_RESTAURANT_SEARCH:
                 if (restaurantSearchPresenter == null)
                     restaurantSearchPresenter = new RestaurantSearchPresenter(this);
-                restaurantSearchPresenter.getSearchRestaurant(AppConstants.SEARCHRESTAURANTS, s, searchIndex);
+                restaurantSearchPresenter.getSearchRestaurant(AppConstants.SEARCH_RESTAURANTS, s, searchIndex);
                 break;
             case AppConstants.KEY_HOTFOOD_SEARCH:
                 if (hotFoodSearchPresenter == null)
                     hotFoodSearchPresenter = new HotFoodSearchPresenter(this);
-                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCHHOTFOOD, s, searchIndex);
+                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCH_HOTFOOD, s, searchIndex);
                 break;
         }
+
+        searchMerchantAdapter.setmData(null);
     }
 
     @Override
@@ -261,6 +267,10 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
             hotFoodBeanList = ((HotFoodUrlBean) s).getRows();
             hotFoodAdapter.setHotFoodBeanList(hotFoodBeanList);
         }
+        tvHistoryResult.setVisibility(View.GONE);/* 隐藏历史搜索textView*/
+        tvSearchResult.setVisibility(View.VISIBLE);/* 显示内容搜索textView*/
+        historyResultsRcv.setVisibility(View.GONE);/* 隐藏历史搜索recycleView*/
+        itemResultsRcv.setVisibility(View.VISIBLE);/* 显示内容搜索recycleView*/
     }
 
     @Override

@@ -71,7 +71,7 @@ public class HotFoodActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         Bundle _bundle = new Bundle();
         _bundle.putString(AppConstants.KEY_PRODUCT_NAME, foodName);
         OverallHotFoodFm overallHotFoodFm = new OverallHotFoodFm();

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.rhg.qf.activity.BaseAppcompactActivity;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
@@ -147,12 +148,12 @@ public abstract class BasePayActivity extends Activity {
      * @param weixinMchId      微信平台申请到的商户号
      * @param weixinPrivateKey 微信支付秘钥
      */
-    public void RegisterBasePay(/*String aliPartner, String aliSellerId,
-                                String aliPrivateKey,*/ String weixinAppId, String weixinMchId,
+    public void RegisterBasePay(String aliPartner, String aliSellerId,
+                                String aliPrivateKey, String weixinAppId, String weixinMchId,
                                 String weixinPrivateKey) {
-//        KeyLibs.ali_partner = aliPartner;
-//        KeyLibs.ali_sellerId = aliSellerId;
-//        KeyLibs.ali_privateKey = aliPrivateKey;
+        KeyLibs.ali_partner = aliPartner;
+        KeyLibs.ali_sellerId = aliSellerId;
+        KeyLibs.ali_privateKey = aliPrivateKey;
         KeyLibs.weixin_appId = weixinAppId;
         KeyLibs.weixin_mchId = weixinMchId;
         KeyLibs.weixin_privateKey = weixinPrivateKey;
@@ -192,6 +193,7 @@ public abstract class BasePayActivity extends Activity {
                     PayResult payResult = new PayResult((String) msg.obj);
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
                     String resultInfo = payResult.getResult();
+                    Log.i("RHG", "result is:" + resultInfo + "\nmemo is :" + payResult.getMemo());
                     String resultStatus = payResult.getResultStatus();
 
                     if (TextUtils.equals(resultStatus, "9000")) {
@@ -205,7 +207,6 @@ public abstract class BasePayActivity extends Activity {
                             activity.Warning("支付结果确认中");
                         } else {
                             // -------调用重写方法
-                            Log.i("RHG", resultStatus);
                             activity.showError("支付失败");
                         }
                     }

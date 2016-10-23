@@ -1,9 +1,8 @@
 package com.rhg.qf.mvp.model;
 
-import android.util.Log;
-
-import com.rhg.qf.bean.TestBean;
+import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
+import com.rhg.qf.utils.AccountUtil;
 
 import java.io.File;
 
@@ -23,8 +22,8 @@ import rx.functions.Func1;
 public class UploadAndSaveImageModel {
 
     public Observable<String> UploadAndSaveImage(File file) {
-        String userName = "19216801";
-        String pwd = "123";
+        String userName = AccountUtil.getInstance().getUserName();
+        String pwd = AccountUtil.getInstance().getPwd();
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
         RequestBody desc_userName =
                 RequestBody.create(
@@ -34,14 +33,14 @@ public class UploadAndSaveImageModel {
                         MediaType.parse("multipart/form-data"), pwd);
         MultipartBody.Part part = MultipartBody.Part.createFormData("Pic", file.getName(), requestBody);
         return QFoodApiMamager.getInstant().getQFoodApiService().UploadHeadImage(part, desc_userName, desc_pwd)
-                .flatMap(new Func1<TestBean, Observable<String>>() {
+                .flatMap(new Func1<BaseBean, Observable<String>>() {
                     @Override
-                    public Observable<String> call(final TestBean testBean) {
+                    public Observable<String> call(final BaseBean baseBean) {
                         return Observable.create(new Observable.OnSubscribe<String>() {
                             @Override
                             public void call(Subscriber<? super String> subscriber) {
-                                Log.i("RHG", "DONE");
-                                subscriber.onNext("" + testBean.getMsg());
+                                //Log.i("RHG", "DONE");
+                                subscriber.onNext("" + baseBean.getMsg());
                             }
                         });
                     }

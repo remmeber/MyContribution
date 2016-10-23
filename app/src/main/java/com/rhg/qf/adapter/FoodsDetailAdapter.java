@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.bean.OrderDetailUrlBean;
+import com.rhg.qf.constants.AppConstants;
 
 import java.util.Locale;
 
@@ -47,7 +48,7 @@ public class FoodsDetailAdapter extends RecyclerView.Adapter<FoodsDetailAdapter.
         if (position == getItemCount() - 1) {
             holder.tvFoodName.setText("配送费");
             holder.tvFoodPrice.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                    /*foodsBeanList.get(0).getFee()*/"12.00"));
+                    String.valueOf(AppConstants.DELIVER_FEE)));
             return;
         }
         OrderDetailUrlBean.OrderDetailBean.FoodsBean _data = foodsBeanList.getFoods().get(position);

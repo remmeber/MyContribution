@@ -16,12 +16,13 @@ import android.view.View;
 import com.rhg.qf.R;
 
 /**
- * desc:
+ * desc: 星级评论的进度条
  * author：remember
  * time：2016/7/18 23:26
  * email：1013773046@qq.com
  */
 public class MyRatingBar extends View {
+    private Context context;
     //星星水平排列
     public static final int HORIZONTAL = 0;
     //星星垂直排列
@@ -34,7 +35,6 @@ public class MyRatingBar extends View {
     private Bitmap mSolidBitmap;
     //空心图片
     private Bitmap mHollowBitmap;
-    private Context context;
     //最大的数量
     private int starMaxNumber;
     private float starRating;
@@ -64,26 +64,6 @@ public class MyRatingBar extends View {
                 R.drawable.star_gray));
         mOrientation = a.getInt(R.styleable.MyRatingBar_star_orientation, HORIZONTAL);
         a.recycle();
-    }
-
-    public MyRatingBar(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        /*paint = new Paint();
-        rectSrc = new Rect();
-        dstF = new Rect();
-        this.context = context;
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MyRatingBar, defStyle, 0);
-        mSpaceWidth = a.getDimensionPixelSize(R.styleable.MyRatingBar_space_width, 0);
-        mStarWidth = a.getDimensionPixelSize(R.styleable.MyRatingBar_star_width, 0);
-        mStarHeight = a.getDimensionPixelSize(R.styleable.MyRatingBar_star_height, 0);
-        starMaxNumber = a.getInt(R.styleable.MyRatingBar_star_max, 0);
-        starRating = a.getFloat(R.styleable.MyRatingBar_star_rating, 0);
-        mSolidBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(),
-                a.getResourceId(R.styleable.MyRatingBar_star_solid, 0)));
-        mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(),
-                a.getResourceId(R.styleable.MyRatingBar_star_hollow, 0)));
-        mOrientation = a.getInt(R.styleable.MyRatingBar_star_orientation, HORIZONTAL);
-        a.recycle();*/
     }
 
     @Override
@@ -159,8 +139,8 @@ public class MyRatingBar extends View {
 
     /**
      * 设置星星的进度
-     *
-     * @param starRating
+     * @param starRating This should be float type number
+     *                   for setting rate.
      */
     public void setStarRating(float starRating) {
         this.starRating = starRating;
@@ -170,8 +150,8 @@ public class MyRatingBar extends View {
     /**
      * 获取缩放图片
      *
-     * @param bitmap
-     * @return
+     * @param bitmap    The bitmap which should been zoomed
+     * @return          The bitmap object
      */
     public Bitmap getZoomBitmap(Bitmap bitmap) {
         if (mStarWidth == 0 || mStarHeight == 0) {
@@ -207,8 +187,8 @@ public class MyRatingBar extends View {
     /**
      * Determines the width of this view
      *
-     * @param measureSpec A measureSpec packed into an int
-     * @return The width of the view, honoring constraints from measureSpec
+     * @param measureSpec   A measureSpec packed into an int
+     * @return              The width of the view, honoring constraints from measureSpec
      */
     private int measureLong(int measureSpec) {
         int result;

@@ -1,11 +1,11 @@
 package com.rhg.qf.utils;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.rhg.qf.constants.AppConstants;
 
 import java.io.File;
@@ -20,16 +20,12 @@ import java.io.IOException;
  * email：1013773046@qq.com
  */
 public class ImageUtils {
-    public static void TintFill(ImageView v, Drawable drawable, int tint) {
-        Drawable tint_drawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(tint_drawable, tint);
-        v.setImageDrawable(tint_drawable);
+    public static void showImage(String uri, ImageView imageView) {
+        ImageLoader.getInstance().displayImage(uri, imageView, new ImageSize(400, 300));
     }
 
-    public static Drawable TintWithoutFill(Drawable drawable, int tint) {
-        Drawable tint_drawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(tint_drawable, tint);
-        return tint_drawable;
+    public static void clearCache() {
+        ImageLoader.getInstance().clearMemoryCache();
     }
 
 
@@ -41,7 +37,7 @@ public class ImageUtils {
             file.mkdir();
         }
         File _file = new File(AppConstants.f_Path, DataUtil.getCurrentTime() + ".png");
-        FileOutputStream out = null;
+        FileOutputStream out;
         try {
             out = new FileOutputStream(_file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);

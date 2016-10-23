@@ -20,7 +20,7 @@ import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
-import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.ui.UIAlertView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     public void loadingData() {
         commonRefresh.setVisibility(View.VISIBLE);
         getDeliverOrder = new DeliverOrderPresenter(this);
-        getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, AccountUtil.getInstance().getUserID());
+            getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, AccountUtil.getInstance().getUserID());
     }
 
     @Override
@@ -120,7 +120,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
                 break;
             case R.id.bt_order_snatch:
                 btOrderSnatch.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
-                btOrderProgress.setBackgroundColor(getResources().getColor(R.color.white));
+                btOrderProgress.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
                 showDelDialog("正在改造，敬请期待");
                 break;
             case R.id.bt_order_progress:
@@ -134,27 +134,23 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     public void onStyleChange(String style, int position) {
         if (modifyOrderPresenter == null)
             modifyOrderPresenter = new ModifyOrderPresenter(this);
-        List<String> str = new ArrayList<>();
         switch (style) {
             case AppConstants.DELIVER_ORDER_UNACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_ACCEPT);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                str.add(deliverOrderBeanList.get(position).getID());
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
-                        AppConstants.UPDATE_ORDER_WAIT);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
+                    AppConstants.UPDATE_ORDER_WAIT);
                 break;
             case AppConstants.DELIVER_ORDER_ACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_DELIVERING);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                str.add(deliverOrderBeanList.get(position).getID());
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
                         AppConstants.UPDATE_ORDER_DELIVER);
                 break;
             case AppConstants.DELIVER_ORDER_DELIVERING:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_COMPLETE);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
-                str.add(deliverOrderBeanList.get(position).getID());
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(str,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
                         AppConstants.ORDER_FINISH);/*1表示已完成*/
                 break;
             default:

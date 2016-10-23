@@ -3,11 +3,11 @@ package com.rhg.qf.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BodyViewHolder;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.utils.ImageUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +41,7 @@ public class SearchMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBea
     @Override
     protected void bindBodyData(final BodyViewHolder holder, final MerchantUrlBean.MerchantBean data, int type) {
         holder.sellerName.setText(data.getName());
-        ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
+        ImageUtils.showImage(data.getPic(), holder.sellerImage);
         holder.demandMoney.setText(String.format(Locale.ENGLISH,
                 context.getResources().getString(R.string.tvDeliverRequire), data.getDelivery()));
         holder.foodType.setText(data.getStyle());

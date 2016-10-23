@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,8 +22,10 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
+import com.rhg.qf.bean.DeliverInfoBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.api.QFoodApi;
+import com.rhg.qf.mvp.presenter.GetDeliverInfoPresenter;
 import com.rhg.qf.mvp.presenter.PerfectDeliverInfoPresenter;
 import com.rhg.qf.mvp.presenter.UploadAndSaveImagePresenter;
 import com.rhg.qf.utils.AccountUtil;
@@ -70,6 +73,7 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
     ModifyHeadImageDialog modifyHeadImageDialog;
     UploadAndSaveImagePresenter uploadAndSaveImagePresenter;
     PerfectDeliverInfoPresenter perfectDeliverInfoPresenter;
+    GetDeliverInfoPresenter getDeliverInfoPresenter;
     String imageStr = "";
     Uri fileUri = null;
 
@@ -80,13 +84,12 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
 
 
     protected void initData() {
-        uploadAndSaveImagePresenter = new UploadAndSaveImagePresenter(this);
         tb_common.setBackgroundResource(R.color.colorBlueNormal);
         tbRightTv.setText(getResources().getString(R.string.tvEdit));
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         etNameWrap.setHint("姓名");
-        if (etNameWrap.getEditText() != null)
-            etNameWrap.getEditText().setText(AccountUtil.getInstance().getNickName());
+        /*if (etNameWrap.getEditText() != null)
+            etNameWrap.getEditText().setText(AccountUtil.getInstance().getNickName());*/
         etNameWrap.setError("");
         etIdWrap.setHint("身份证号");
         etPhoneWrap.setHint("手机号");
@@ -98,13 +101,28 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
             ImageLoader.getInstance().displayImage(imageStr, headView);
         } else {
             imageStr = QFoodApi.BASE_URL + "Pic/ClientPic/" +
-                    /*AccountUtil.getInstance().getUserID()*/"19216801" + ".jpg";
+                    AccountUtil.getInstance().getUserID() + ".jpg";
             ImageLoader.getInstance().displayImage(imageStr, headView);
             AccountUtil.getInstance().setHeadImageUrl(imageStr);
         }
+        getDeliverInfoPresenter = new GetDeliverInfoPresenter(this);
+        getDeliverInfoPresenter.getDeliverInfo(AppConstants.DELIVER);
          /*}else {
             ToastHelper.getInstance()._toast("请登录");
         }*/
+    }
+
+    private void setData(DeliverInfoBean.InfoBean infoBean) {
+        setEtText(etNameWrap, infoBean.getDName());
+        setEtText(etIdWrap, infoBean.getPersonId());
+        setEtText(etPhoneWrap, infoBean.getPhonenumber());
+        setEtText(etPlaceWrap, infoBean.getArea());
+        AccountUtil.getInstance().setDeliverID(infoBean.getID());
+    }
+
+    private void setEtText(TextInputLayout textInputLayout, String text) {
+        if (textInputLayout.getEditText() != null)
+            textInputLayout.getEditText().setText(text != null ? text : "");
     }
 
     @Override
@@ -113,7 +131,13 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
             if (((String) s).contains("/"))
                 ImageLoader.getInstance().displayImage((String) s, headView);
             else ToastHelper.getInstance()._toast((String) s);
+            return;
         }
+        if (s instanceof DeliverInfoBean.InfoBean) {
+            Log.i("RHG", "跑腿员信息：" + s);
+            setData((DeliverInfoBean.InfoBean) s);
+        }
+
     }
 
     @Override
@@ -177,6 +201,8 @@ public class DeliverInfoActivity extends BaseAppcompactActivity implements Modif
                     Log.i("RHG", "文件存在" + _file.getName());
                 } else
                     Log.i("RHG", "文件不存在");*/
+                if (uploadAndSaveImagePresenter == null)
+                    uploadAndSaveImagePresenter = new UploadAndSaveImagePresenter(this);
                 uploadAndSaveImagePresenter.UploadAndSaveImage(_file/*, userID, passWord*/);
                 /*ImageLoader.getInstance().clearMemoryCache();
                 ImageLoader.getInstance().clearDiskCache();*/

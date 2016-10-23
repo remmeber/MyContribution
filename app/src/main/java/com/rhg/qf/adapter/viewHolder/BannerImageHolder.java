@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rhg.qf.utils.ImageUtils;
 
 /**
  * desc:图片轮播页面
@@ -25,6 +25,6 @@ public class BannerImageHolder implements Holder<String> {
 
     @Override
     public void UpdateUI(Context context, int position, String data) {
-        ImageLoader.getInstance().displayImage(data, imageView);
+        ImageUtils.showImage(data, imageView);
     }
 }

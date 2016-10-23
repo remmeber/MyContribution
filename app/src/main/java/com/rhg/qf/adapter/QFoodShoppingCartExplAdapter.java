@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.ShoppingCartBean;
+import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.widget.SlideView;
-import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.ui.UIAlertView;
 
 import java.util.List;
 
@@ -177,7 +177,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         String goodsName = goods.getGoodsName();
         String goodsLogoUrl = goods.getGoodsLogoUrl();
 
-        ImageLoader.getInstance().displayImage(goodsLogoUrl, childViewHolder.goodsLogo);
+        ImageUtils.showImage(goodsLogoUrl, childViewHolder.goodsLogo);
         childViewHolder.goodsLogo.setDrawingCacheEnabled(true);
         childViewHolder.tvGoodsName.setText(goodsName);
         childViewHolder.tvGoodsPrice.setText(goodsprice);

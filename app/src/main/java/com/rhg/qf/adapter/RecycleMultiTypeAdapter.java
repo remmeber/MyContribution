@@ -2,6 +2,7 @@ package com.rhg.qf.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BannerImageHolder;
 import com.rhg.qf.adapter.viewHolder.BodyViewHolder;
@@ -28,6 +28,7 @@ import com.rhg.qf.bean.TextTypeBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.utils.BannerController;
+import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.widget.MyGridView;
 
 import java.util.ArrayList;
@@ -42,14 +43,14 @@ import java.util.Locale;
  */
 public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //--------------------------------Define Item Type----------------------------------------------
-    public static final int TYPE_HEADER = 0;
-    public static final int TYPE_BANNER = 1;
-    public static final int TYPE_SEARCH = 2;
-    public static final int TYPE_FAVORABLE = 3;
-    public static final int TYPE_RECOMMEND_TEXT = 4;
-    public static final int TYPE_RECOMMEND_LIST = 5;
-    public static final int TYPE_FOOTER = 6;
-    BannerController bannerController = new BannerController();
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_BANNER = 1;
+    private static final int TYPE_SEARCH = 2;
+    private static final int TYPE_FAVORABLE = 3;
+    private static final int TYPE_RECOMMEND_TEXT = 4;
+    private static final int TYPE_RECOMMEND_LIST = 5;
+    private static final int TYPE_FOOTER = 6;
+    private BannerController bannerController = new BannerController();
     //----------------------------------------------------------------------------------------------
     //
     private Context context;
@@ -146,6 +147,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         List<String> images = new ArrayList<>();
         List<BannerTypeUrlBean.BannerEntity> _bannerEntity = data.getBannerEntityList();
         int _count = _bannerEntity == null ? 0 : _bannerEntity.size();
+        Log.i("RHG", "TOTAL: " + _count);
         for (int i = 0; i < _count; i++) {
             images.add(_bannerEntity.get(i).getSrc());
         }
@@ -200,11 +202,11 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
 //        holder.homeRecycleAdapter.setOnRcvItemClickListener(data.getOnItemClick());
         final MerchantUrlBean.MerchantBean data = listData.getRecommendShopBeanEntity().get(position - 5);
         holder.sellerName.setText(data.getName());
-        ImageLoader.getInstance().displayImage(data.getPic(), holder.sellerImage);
+        ImageUtils.showImage(data.getPic(), holder.sellerImage);
         holder.sellerDistance.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvDistance),
                 data.getDistance()));
         holder.foodType.setText(data.getStyle());
-        holder.recommendText.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.recommendation), "好吃"));
+        holder.recommendText.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.recommendation), data.getReason()));
         if (onItemClickListener != null)
             holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
                 @Override

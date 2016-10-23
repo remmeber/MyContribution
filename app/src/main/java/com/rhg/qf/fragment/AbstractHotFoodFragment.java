@@ -64,7 +64,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        hotFoodPresenter.getHotFoods(AppConstants.HOTFOOD, hotFoodType, foodName);
+        hotFoodPresenter.getHotFoods(AppConstants.HOT_FOOD, hotFoodType, foodName);
     }
 
     @Override
@@ -81,7 +81,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                hotFoodPresenter.getHotFoods(AppConstants.HOTFOOD, hotFoodType, foodName);
+                hotFoodPresenter.getHotFoods(AppConstants.HOT_FOOD, hotFoodType, foodName);
             }
         });
     }

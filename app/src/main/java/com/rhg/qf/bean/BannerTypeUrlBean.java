@@ -56,7 +56,6 @@ public class BannerTypeUrlBean {
     public static class BannerEntity {
 
         String ID;
-        String Title;
         String Src;
 
         public String getID() {
@@ -65,14 +64,6 @@ public class BannerTypeUrlBean {
 
         public void setID(String ID) {
             this.ID = ID;
-        }
-
-        public String getTitle() {
-            return Title;
-        }
-
-        public void setTitle(String title) {
-            Title = title;
         }
 
         public String getSrc() {
@@ -85,7 +76,7 @@ public class BannerTypeUrlBean {
 
         @Override
         public String toString() {
-            return "ID: " + ID + " Title: " + Title + " Src: " + Src;
+            return "ID: " + ID + " Src: " + Src;
         }
     }
 }

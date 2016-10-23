@@ -1,6 +1,7 @@
 package com.rhg.qf.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class MainActivity extends BaseFragmentActivity implements BaseView
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {
+    private static final String[] FRAGMENT_TAG = {"HOME", "MERCHANT", "MY", "CART"};
     FragmentController fragmentController;
     //----------------------for rebound 弹簧效果---------------------------------------------------
     /*private final BaseSpringSystem mSpringSystem = SpringSystem.create();
@@ -63,16 +65,16 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
     }
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
 //        loadRootFragment(R.id.content_fragment, HomeFragment.newInstance());
-        List<Fragment> fragments = new ArrayList<>();
-        HomeFragment homeFragment = new HomeFragment();
-        fragments.add(homeFragment);
-        fragments.add(new SellerFragment());
-        fragments.add(new MyFragment());
-        fragments.add(new ShoppingCartFragment());
-        fragmentController = new FragmentController(getSupportFragmentManager(),
-                fragments, R.id.content_fragment);
+            List<Fragment> fragments = new ArrayList<>();
+            HomeFragment homeFragment = new HomeFragment();
+            fragments.add(homeFragment);
+            fragments.add(new SellerFragment());
+            fragments.add(new MyFragment());
+            fragments.add(new ShoppingCartFragment());
+            fragmentController = new FragmentController(getSupportFragmentManager(),
+                    fragments, R.id.content_fragment);
 
         //TODO---------------------底部导航栏=-------------------------------------------------------
 
@@ -127,7 +129,8 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //--------------------------------------------------------------------------------------------
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
 
-
+    }
 }

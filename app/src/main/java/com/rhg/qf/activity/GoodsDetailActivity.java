@@ -2,6 +2,7 @@ package com.rhg.qf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.ShoppingCartWithNumber;
-import com.rhg.qf.widget.UIAlertView;
+import com.rhg.qf.ui.UIAlertView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
@@ -176,8 +177,8 @@ public class GoodsDetailActivity extends BaseAppcompactActivity {
 
     @Override
     protected void initData() {
-        tbRightIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbRightIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_location_green));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         tbRightTv.setText(location);//TODO 根据定位来决定
         tbCenterTv.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
@@ -238,7 +239,7 @@ public class GoodsDetailActivity extends BaseAppcompactActivity {
             AccountUtil.getInstance().setPwd(_data.getPwd());
             if (getAddressPresenter == null)
                 getAddressPresenter = new GetAddressPresenter(this);
-            getAddressPresenter.getAddress(AppConstants.ADDRESS_DEFAULT);
+            getAddressPresenter.getAddress(AppConstants.TABLE_DEFAULT_ADDRESS);
             return;
         }
         if (o instanceof AddressUrlBean.AddressBean) {

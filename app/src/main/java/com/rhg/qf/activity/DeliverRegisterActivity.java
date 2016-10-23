@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
@@ -56,7 +57,7 @@ public class DeliverRegisterActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         countTimer = new MyCountDownTimer(60000, 1000, btCheckNumber);
         flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));

@@ -21,7 +21,6 @@ import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -74,6 +73,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     int orderTag;
     String orderPrice;
     String merchantName;
+    String productName;
     OrderDetailUrlBean.OrderDetailBean foodBean = new OrderDetailUrlBean.OrderDetailBean();
     private FoodsDetailAdapter foodsDetailAdapter;
 
@@ -81,6 +81,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     public void dataReceive(Intent intent) {
         orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
         merchantName = intent.getStringExtra(AppConstants.KEY_MERCHANT_NAME);
+        productName = merchantName;
         orderPrice = intent.getStringExtra(AppConstants.KEY_PRODUCT_PRICE);
         orderTag = intent.getIntExtra(AppConstants.KEY_ORDER_TAG, -1);
         /*
@@ -117,8 +118,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         /*recycleview*/
         tvMerchantName.setText(merchantName);
         lyTotalCount.setVisibility(View.VISIBLE);
-        tvTotalMoney.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
-                String.valueOf((Integer.valueOf(orderPrice) + AppConstants.DELIVER_FEE))));
+        tvTotalMoney.setText(String.format(Locale.ENGLISH, "%s",
+                String.valueOf((Float.valueOf(orderPrice) + AppConstants.DELIVER_FEE))));
         setText(btPayOrRateOrConform);
     }
 
@@ -174,9 +175,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
             case R.id.btDrawback:
                 if (modifyOrderPresenter == null)
                     modifyOrderPresenter = new ModifyOrderPresenter(this);
-                List<String> orderList = new ArrayList<>();
-                orderList.add(orderId);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderList/*订单号*/,
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(orderId/*订单号*/,
                         /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
                 break;
             case R.id.btPayOrRateOrConform:
@@ -190,12 +189,12 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                         return;
                     Intent intent = new Intent(this, PayActivity.class);
                     PayModel payModel = new PayModel();
-                    payModel.setReceiver(tvReceiver.getText().toString());
-                    payModel.setPhone(tvReceiverPhone.getText().toString());
-                    payModel.setAddress(tvReceiverAddress.getText().toString());
+                    payModel.setReceiver(tvReceiver.getText().toString().split(":")[1]);
+                    payModel.setPhone(tvReceiverPhone.getText().toString().split(":")[1]);
+                    payModel.setAddress(tvReceiverAddress.getText().toString().split(":")[1]);
                     ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
                     PayModel.PayBean _pay = new PayModel.PayBean();
-                    _pay.setProductName("");
+                    _pay.setProductName(merchantName);
                     _pay.setChecked(true);
                     _pay.setProductId(orderId);
                     int count = 1;

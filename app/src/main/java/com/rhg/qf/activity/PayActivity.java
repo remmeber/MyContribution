@@ -1,5 +1,6 @@
 package com.rhg.qf.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +16,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.PayItemAdapter;
 import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.AddressUrlBean;
+import com.rhg.qf.bean.NewOrderBackBean;
 import com.rhg.qf.bean.NewOrderBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
@@ -25,10 +27,13 @@ import com.rhg.qf.pay.BasePayActivity;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
+import com.rhg.qf.ui.UIAlertView;
+import com.rhg.qf.ui.UIPayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,12 @@ import butterknife.OnClick;
  */
 public class PayActivity extends BasePayActivity implements PayItemAdapter.PayItemClickListener,
         BaseView {
+    private final static String WX_MERCHANT_ID = "1374528702";
+    private final static String WX_PRIVATE_KEY = "shengzhoujiaze123456jiajiameishi";
+    private final static String ALI_PARTNER = "2088422291942751";
+    private final static String ALI_SELLER_ID = "18858558505";
+    private final static String ALI_PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMIwLMEyitvEEctRirBarCnmtDqcIYxl2slRz6cTAFh0a4MqpUDTl505iiasFmLHJtNdMJohCkz+KjjKG7fTU4ZHy5Sy2andeULbyD+31cT+ZQOgNR2F5aAHU3CYvfx0qFw9ph5PA1AWqz+FoClPolsOOZKwrkObanbQplJebavhAgMBAAECgYAreHtcWIMrRU4ydLOWXQXzb1jjUfZUpqx+qtjQbvmB07YJq+9IftWO9cWOeLGeNTTk1hS+PC1BJRiwk9X2pdEpdqlCbri8mKPlu+Z37ZB+sNRiyl+2p4sDx9WTvw8dJHIsWFlDNnbHzS0oDexlOxX68fL4NcsZu5VLQLZV0W5YAQJBAPyIvCj9gw0OT1LPcj4Yks5V+5pjr4g7NqFxKEfxtPJErE8Zjz6Zm8x0/k2E8XCd63lVk8Dh13TJSqfYwh/+ZkECQQDE2nHL/X3qN4EEqsWfbB8piAO7/5Ux956fCrhUYKXiIPJsHyiojePAw4nXlf1Nd+Fnu6rjG35xgSNmUbu7Wh2hAkBEKzj3q69jp9g712nUX1fJwSYhAAXTNYDCxcQE37djqqwE0jZ7xIVtBKvdCyUNrGNzJmmzKIO7r9aqRnXoowjBAkBi3Rqdyne8c5e2UlXiFRkpcIf/mQLDD4t4cJfWuJtXEBjwOE3hKTGjFBFcVpXanER2JohSevJr6uFud8oC8+VBAkEAgNXtGYF9xdffvrpsjmq5H54W2TWq1GPDm7oF0Ct9jduElxZx11cdtcWYAzdU+bYjr+jrbut4X3IqDFhUMCOYfw==";
+
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -69,32 +80,33 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     ArrayList<PayModel.PayBean> payList = new ArrayList<>();
     NewOrderBean newOrderBean;
     NewOrderPresenter createOrderPresenter;
-    ModifyOrderPresenter modifyOrderDeliveringPresenter;/*修改用户订单状态*/
     String ipv4;
     String tradeNumber;
-    String style;//用来表示是否需要生成订单
+    int style = 0;//用来表示是否需要生成订单
     String orderId;
     String receiver;
     String phone;
     String address;
+    String fee;
+    String price;
     private PayItemAdapter payItemAdapter;
+
 
     @Override
     protected OrderInfo OnOrderCreate() {
         ipv4 = NetUtil.getPsdnIp();
         if (PayType.WeixinPay.equals(payType)) {
-            Log.i("RHG", "WXPay OrderCreate");
-            return BuildOrderInfo("微信支付", "30m", "www.baidu.com",
+            return BuildOrderInfo("微信支付", "30m", "http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php",
                     getOutTradeNo(),
                     getItemsName(payList),
-                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    getCheckItemTotalMoney(payList),
                     ipv4);
         }
         if (PayType.AliPay.equals(payType)) {
-            return BuildOrderInfo("支付宝支付", "30m", "http://notify.msp.hk/notify.htm",
+            return BuildOrderInfo("支付宝支付", "30m", "http://jiaze917.com/Table/JsonSQL/alipay/notify_url.php",
                     getOutTradeNo(),
                     getItemsName(payList),
-                    String.valueOf(getCheckItemTotalMoney(payList)),
+                    getCheckItemTotalMoney(payList),
                     ipv4);
         }
         return null;
@@ -107,7 +119,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         _orderBean.setAddress(address);
         _orderBean.setFood(getCheckedFood(payList));
         _orderBean.setClient(AccountUtil.getInstance().getUserID());
-        _orderBean.setPrice(String.valueOf(getCheckItemTotalMoney(payList)));
+        _orderBean.setPrice(getCheckItemTotalMoney(payList));
         return _orderBean;
     }
 
@@ -117,6 +129,16 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         setContentView(R.layout.pay_layout);
         ButterKnife.bind(this);
         initData(getIntent());
+        createOrder();
+    }
+
+    private void createOrder() {
+        if (style == 0) {
+            newOrderBean = generateOrder();
+            if (createOrderPresenter == null)
+                createOrderPresenter = new NewOrderPresenter(this);
+            createOrderPresenter.createNewOrder(newOrderBean);
+        }
     }
 
     protected void initData(Intent intent) {
@@ -124,7 +146,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         PayModel payModel = intent.getParcelableExtra(AppConstants.KEY_PARCELABLE);
-        style = intent.getStringExtra(AppConstants.ORDER_STYLE);
+        style = intent.getIntExtra(AppConstants.ORDER_STYLE, 0);
         if (payModel != null) {
             receiver = payModel.getReceiver();
             phone = payModel.getPhone();
@@ -136,13 +158,13 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         rcvItemPay.setLayoutManager(new LinearLayoutManager(this));
         rcvItemPay.setHasFixedSize(true);
         rcvItemPay.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                SizeUtil.dip2px(1), getResources().getColor(R.color.colorInActive)));
+                SizeUtil.dip2px(1), ContextCompat.getColor(this, R.color.colorInActive)));
         payItemAdapter = new PayItemAdapter(this, payList);
         payItemAdapter.setOnPayItemClick(this);
         rcvItemPay.setAdapter(payItemAdapter);
 
-        RegisterBasePay(/*KeyLibs.ali_partner, KeyLibs.ali_sellerId, KeyLibs.ali_privateKey,*/
-                InitApplication.WXID, "10000100", null);
+        RegisterBasePay(ALI_PARTNER, ALI_SELLER_ID, ALI_PRIVATE_KEY,
+                InitApplication.WXID, WX_MERCHANT_ID, WX_PRIVATE_KEY);
 //        BuildOrderInfo()
     }
 
@@ -158,24 +180,38 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     /*支付成功的回调*/
     @Override
     protected void showSuccess(String s) {
-        ToastHelper.getInstance()._toast(s);
-        if (modifyOrderDeliveringPresenter == null) {
-            modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
-        }
-        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(getProductIdList(payList),
-                AppConstants.ORDER_DELIVERING);//修改为配送中的状态
+//        ToastHelper.getInstance()._toast(s);
+//        if (modifyOrderDeliveringPresenter == null) {
+//            modifyOrderDeliveringPresenter = new ModifyOrderPresenter(this);
+//        }
+//        modifyOrderDeliveringPresenter.modifyUserOrDeliverOrderState(tradeNumber,
+//                AppConstants.UPDATE_ORDER_PAID);//修改为待接单的状态
+        showPayResult(true);
+    }
+
+    private void showPayResult(boolean isSuccess) {
+        final UIPayView resultDialog;
+        if (isSuccess)
+            resultDialog = new UIPayView(PayActivity.this, R.layout.pay_result_success_layout, true);
+        else
+            resultDialog = new UIPayView(PayActivity.this, R.layout.pay_result_error_layout, true);
+        resultDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+        resultDialog.show();
     }
 
     @Override
     protected void Warning(String s) {
         ToastHelper.getInstance()._toast(s);
-
     }
 
     @Override
     protected void showError(String s) {
         ToastHelper.getInstance()._toast(s);
-
     }
 
     @OnClick({R.id.tb_left_iv, R.id.iv_edit_right, R.id.bt_pay_affirmance,
@@ -192,26 +228,11 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
                 break;
             case R.id.bt_pay_affirmance:
                 if (getCheckCount(payList) == 0) {
-                    ToastHelper.getInstance()._toast("当前未选择商品！");
+                    ToastHelper.getInstance().displayToastWithQuickClose("当前未选择商品！");
                     return;
                 }
-                newOrderBean = generateOrder();
-                if (style == null) {
-                    if (createOrderPresenter == null)
-                        createOrderPresenter = new NewOrderPresenter(this);
-                    createOrderPresenter.createNewOrder(newOrderBean);
-                } else
-                    Pay(v);
-                /*payContentBeanList.clear();
-                for (int i = 0; i < 3; i++) {
-                    PayContentBean payContentBean = new PayContentBean();
-                    payContentBean.setGoodsName("哈啊哈" + i);
-                    payContentBean.setGoodsDescription("好吃哦");
-                    payContentBean.setPayMoney("" + i * 2);
-                    payContentBeanList.add(payContentBean);
-                }
-                PayDialog payDialog = new PayDialog(this, payContentBeanList);
-                payDialog.show();*/
+                ToastHelper.getInstance().displayToastWithQuickClose("准备支付");
+                Pay(v);
                 break;
             case R.id.iv_wepay_check:
             case R.id.iv_wepay:
@@ -307,18 +328,19 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
     private List<String> getProductIdList(List<PayModel.PayBean> payList) {
         List<String> _bean = new ArrayList<>();
         for (PayModel.PayBean _payBean : payList) {
-            _bean.add(_payBean.getProductId());
+            if (_payBean.isChecked())
+                _bean.add(_payBean.getProductId());
         }
         return _bean;
     }
 
-    private int getCheckItemTotalMoney(List<PayModel.PayBean> payList) {
-        int count = 0;
+    private String getCheckItemTotalMoney(List<PayModel.PayBean> payList) {
+        float count = 0;
         for (PayModel.PayBean _payBean : payList) {
             if (_payBean.isChecked())
-                count += Integer.valueOf(_payBean.getProductPrice()) * Integer.valueOf(_payBean.getProductNumber());
+                count += Float.valueOf(DecimalUtil.multiply(_payBean.getProductPrice(), _payBean.getProductNumber()));
         }
-        return count;
+        return String.valueOf(count);
     }
 
     private String getItemsName(List<PayModel.PayBean> payList) {
@@ -331,14 +353,18 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
 
     @Override
     public void showData(Object o) {
-        if (o instanceof String)
-            if (!"error".equals(o)) {
-                tradeNumber = (String) o;
-                Log.i("RHG", "tradeNumber is :" + tradeNumber);
-                Pay(null);
-            } else
-                ToastHelper.getInstance()._toast((String) o);
+        if (o instanceof NewOrderBackBean) {
+            tradeNumber = ((NewOrderBackBean) o).getMsg();
+            ToastHelper.getInstance().displayToastWithQuickClose("订单生成成功");
+            fee = ((NewOrderBackBean) o).getFee();
+            price = ((NewOrderBackBean) o).getPrice();
+            Log.i("RHG", "fee: " + fee + " price: " + price);
 
+            //Pay(null);
+//            Log.i("RHG", "订单号:" + tradeNumber);
+        } else if (o instanceof String) {
+            ToastHelper.getInstance()._toast(o.toString());
+        }
     }
 
     /**
@@ -353,7 +379,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         key = key + r.nextInt();
         key = key.substring(0, 15);
         return key;*/
-        return tradeNumber;
+        return style == 0 ? tradeNumber : payList.get(0).getProductId();//style=0时，productId为商品的ID；style=1时，productId为订单的ID。
     }
 
     @Override

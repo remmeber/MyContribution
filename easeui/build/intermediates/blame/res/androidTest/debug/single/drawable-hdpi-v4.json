@@ -248,12 +248,12 @@
         "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_25.png"
     },
     {
-        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_13.png",
-        "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_13.png"
-    },
-    {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_1.png",
         "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_1.png"
+    },
+    {
+        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_13.png",
+        "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_13.png"
     },
     {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_groups_icon.png",
