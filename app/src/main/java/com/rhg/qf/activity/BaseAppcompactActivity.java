@@ -128,6 +128,7 @@ public abstract class BaseAppcompactActivity extends AppCompatActivity implement
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (null != this.getCurrentFocus() && this.getCurrentFocus() instanceof EditText) {
+            ((EditText) this.getCurrentFocus()).setCursorVisible(false);
             return KeyBoardUtil.closeKeybord((EditText) this.getCurrentFocus(), this);
         }
         return super.onTouchEvent(event);
