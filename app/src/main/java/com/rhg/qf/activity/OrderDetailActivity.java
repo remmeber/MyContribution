@@ -118,8 +118,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         /*recycleview*/
         tvMerchantName.setText(merchantName);
         lyTotalCount.setVisibility(View.VISIBLE);
-        tvTotalMoney.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
-                String.valueOf((Integer.valueOf(orderPrice) + AppConstants.DELIVER_FEE))));
+        tvTotalMoney.setText(String.format(Locale.ENGLISH, "%s",
+                String.valueOf((Float.valueOf(orderPrice) + AppConstants.DELIVER_FEE))));
         setText(btPayOrRateOrConform);
     }
 
