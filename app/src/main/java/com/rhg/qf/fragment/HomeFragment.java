@@ -105,7 +105,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void loadData() {
-        homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
         if (!AccountUtil.getInstance().hasAccount()) {
             reStartLocation();
         }
@@ -193,6 +192,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         isLocated = true;
 //        tlLeftTV.setText(s);
         AccountUtil.getInstance().setLocation(s);
+        homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
 //        progressBar.setVisibility(View.GONE);
     }
 

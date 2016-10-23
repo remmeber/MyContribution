@@ -95,7 +95,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     @Override
     protected void showSuccess(Object s) {
         if (s instanceof String) {
-            ToastHelper.getInstance()._toast((String) s);
+//            ToastHelper.getInstance()._toast((String) s);
             return;
         }
         deliverOrderBeanList = (List<DeliverOrderUrlBean.DeliverOrderBean>) s;
