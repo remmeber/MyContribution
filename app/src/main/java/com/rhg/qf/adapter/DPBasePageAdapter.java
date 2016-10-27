@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import com.rhg.qf.adapter.viewHolder.QFoodGridAdapterViewHolder;
 
 import java.util.List;
+
+
 /*
  *desc
  *author rhg
  *time 2016/10/9 10:37
  *email 1013773046@qq.com
->>>>>>> 2726e02649fdc377b34571a59019133563595479
  */
 public abstract class DPBasePageAdapter<T> extends PagerAdapter {
 
