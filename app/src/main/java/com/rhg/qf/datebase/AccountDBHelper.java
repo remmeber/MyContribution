@@ -17,7 +17,7 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     /**
      * 数据库名称常量
      */
-    public static final String DATABASE_NAME = "q_account.db3";
+    private static final String DATABASE_NAME = "q_account.db3";
     /**
      * 购物车表
      */
@@ -36,7 +36,7 @@ public class AccountDBHelper extends SQLiteOpenHelper {
 
     private static Context APPLICATION_CONTEXT;
 
-    public AccountDBHelper() {
+    private AccountDBHelper() {
         super(APPLICATION_CONTEXT, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -47,7 +47,6 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     public static AccountDBHelper getInstance() {
         if (helper == null) {
             helper = new AccountDBHelper();
-
         }
         return helper;
     }

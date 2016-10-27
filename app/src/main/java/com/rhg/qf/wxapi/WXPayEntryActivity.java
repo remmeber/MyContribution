@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseAppcompactActivity;
+import com.rhg.qf.ui.activity.BaseAppcompactActivity;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -38,7 +38,7 @@ public class WXPayEntryActivity extends BaseAppcompactActivity implements IWXAPI
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.pay_result_layout;
+        return R.layout.pay_result_success_layout;
     }
 
     @Override
@@ -67,6 +67,7 @@ public class WXPayEntryActivity extends BaseAppcompactActivity implements IWXAPI
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+
                 ivPayResult.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_right_blue));
                 tvPayResult.setText("支付成功");
             } else {

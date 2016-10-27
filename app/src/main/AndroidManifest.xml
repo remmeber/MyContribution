@@ -47,8 +47,9 @@
         </service>
 
         <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait">
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,66 +59,66 @@
 
 
         <activity
-            android:name=".activity.OrderListActivity"
+            android:name=".ui.activity.OrderListActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.OrderDetailActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.DeliverInfoActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.GoodsDetailActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ShopDetailActivity"
+            android:name=".ui.activity.OrderDetailActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.AddressActivity"
+            android:name=".ui.activity.DeliverInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GoodsDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ShopDetailActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.AddOrNewAddressActivity"
+            android:name=".ui.activity.AddressActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.AddOrNewAddressActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SearchActivity"
+            android:name=".ui.activity.SearchActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.HotFoodActivity"
+            android:name=".ui.activity.HotFoodActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.DeliverRegisterActivity"
+            android:name=".ui.activity.DeliverRegisterActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.DeliverStateNoneActivity"
+            android:name=".ui.activity.DeliverStateNoneActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.OrderChatActivity"
+            android:name=".ui.activity.OrderChatActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.DeliverOrderActivity"
+            android:name=".ui.activity.DeliverOrderActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChatActivity"
+            android:name=".ui.activity.ChatActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PersonalOrderActivity"
+            android:name=".ui.activity.PersonalOrderActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 
@@ -158,7 +159,7 @@
 
         <activity
 
-            android:name=".activity.PayActivity"
+            android:name=".ui.activity.PayActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -203,6 +204,11 @@
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.UMDefault" />
+
+        <provider
+            android:name=".datebase.DBProvider"
+            android:authorities="com.rhg.qf.DBProvider"
+            android:exported="false" />
 
         <meta-data
             android:name="EASEMOB_APPKEY"

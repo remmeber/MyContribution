@@ -90,6 +90,14 @@ public class AccountUtil {
         putStringByKey(AppConstants.SP_USER_ID, userID);
     }
 
+    public String getDeliverID() {
+        return getStringByKey(AppConstants.SP_DELIVER_ID);
+    }
+
+    public void setDeliverID(String deliverID) {
+        putStringByKey(AppConstants.SP_DELIVER_ID, deliverID);
+    }
+
     public String getUserName() {
         return getStringByKey(AppConstants.SP_USER_NAME);
     }

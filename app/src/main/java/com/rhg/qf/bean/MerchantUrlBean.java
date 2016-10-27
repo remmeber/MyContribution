@@ -44,14 +44,6 @@ public class MerchantUrlBean {
         this.rows = rows;
     }
 
-    @Override
-    public String toString() {
-        return "MerchantUrlBean{" +
-                "total='" + total + '\'' +
-                ", rows=" + rows +
-                '}';
-    }
-
     public static class MerchantBean {
 
         private String ID;

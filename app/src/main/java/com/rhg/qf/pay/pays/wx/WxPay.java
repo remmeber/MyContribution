@@ -8,6 +8,7 @@ import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.pays.IPayable;
 import com.rhg.qf.pay.security.wx.MD5;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.XmlUtil;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -75,7 +76,7 @@ public class WxPay implements IPayable {
             packageParams.put("notify_url", notifyUrl);/*接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。*/
             packageParams.put("out_trade_no", genOutTradNo(tradeNo));/*商户系统内部的订单号,32个字符内、可包含字母, */
             packageParams.put("spbill_create_ip", spbillCreateIp);/*用户端实际ip*/
-            packageParams.put("total_fee", "1");/*总金额*/
+            packageParams.put("total_fee", DecimalUtil.multiplyWithScale(totalFee, "100",0));/*总金额*/
             packageParams.put("trade_type", "APP");/*支付类型*/
             paramsForPrepay = packageParams;//将参数保存一份，待调用支付时使用
             String sign = Sign(packageParams);
@@ -118,17 +119,6 @@ public class WxPay implements IPayable {
         }
         return map.get("prepay_id");
 
-        /*String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-        byte[] buf = Util.httpPost(url, orderInfo.GetContent());
-        Map<String, String> xml = null;
-        if (buf != null) {
-            content = new String(buf);
-            xml = XmlUtil.DecodeXmlToMap(content);
-        }
-        if (xml != null) {
-            resultOfPrepay = xml;//保存预支付订单
-            return xml.get("prepay_id");
-        } else return null;*/
 
     }
 

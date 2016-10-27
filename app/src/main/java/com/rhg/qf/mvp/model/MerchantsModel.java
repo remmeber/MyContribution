@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 import rx.functions.Func2;
 
 /**
@@ -20,8 +22,8 @@ import rx.functions.Func2;
  */
 public class MerchantsModel {
     public Observable<List<MerchantUrlBean.MerchantBean>> getMerchants(String table, int page) {
-        QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
-        return Observable.zip(qFoodApiService.getHeadMerchant("toprestaurants"),
+//        QFoodApiService qFoodApiService = QFoodApiMamager.getInstant().getQFoodApiService();
+        return /*Observable.zip(qFoodApiService.getHeadMerchant("toprestaurants"),
                 qFoodApiService.getBodyMerchants(table, page,
                         AccountUtil.getInstance().getLongitude(),
                         AccountUtil.getInstance().getLatitude()),
@@ -34,8 +36,8 @@ public class MerchantsModel {
                         _merchantsList.addAll(merchantUrlBean.getRows());
                         return _merchantsList;
                     }
-                });
-        /*QFoodApiMamager.getInstant().getQFoodApiService().getBodyMerchants(table, page,
+                });*/
+        QFoodApiMamager.getInstant().getQFoodApiService().getBodyMerchants(table, page,
                 AccountUtil.getInstance().getLongitude(),
                 AccountUtil.getInstance().getLatitude())
                 .flatMap(new Func1<MerchantUrlBean, Observable<List<MerchantUrlBean.MerchantBean>>>() {
@@ -48,6 +50,6 @@ public class MerchantsModel {
                             }
                         });
                     }
-                });*/
+                });
     }
 }

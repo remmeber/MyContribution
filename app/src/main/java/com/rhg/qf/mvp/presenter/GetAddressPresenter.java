@@ -1,7 +1,6 @@
 package com.rhg.qf.mvp.presenter;
 
-import android.util.Log;
-
+import rx.android.schedulers.AndroidSchedulers;
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.mvp.model.GetAddressModel;
 import com.rhg.qf.mvp.view.BaseView;
@@ -9,7 +8,6 @@ import com.rhg.qf.mvp.view.BaseView;
 import java.util.List;
 
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -28,7 +26,6 @@ public class GetAddressPresenter {
     }
 
     public void getAddress(String Table) {
-        Log.i("RHG", "GET ADDRESS Presenter");
         getAddressModel.getAddress(Table).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<AddressUrlBean.AddressBean>>() {
