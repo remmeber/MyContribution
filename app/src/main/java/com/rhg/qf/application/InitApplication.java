@@ -13,8 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseFragmentActivity;
-import com.rhg.qf.datebase.AccountDBHelper;
+import com.rhg.qf.ui.activity.BaseFragmentActivity;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
@@ -29,7 +28,7 @@ import java.util.HashMap;
  * time：2016/5/28 16:22
  * email：1013773046@qq.com
  */
-public class InitApplication extends MultiDexApplication {
+public class InitApplication extends MultiDexApplication implements Runnable{
     public final static String QQID = "1105497604";
     public final static String QQKEY = "MdCq3ttlP0xlAPIg";
     public final static String WXID = "wxb066167618e700e6";/*已签名*/
@@ -97,12 +96,8 @@ public class InitApplication extends MultiDexApplication {
         initBDMap();
         super.onCreate();
         initApplication = this;
-        EaseUI.getInstance().init(this);
-        initAccountUtil();
-        AccountDBHelper.init(getApplicationContext());
-        initToast();
         initImageLoader();
-        thirdConfig();
+        new Thread(this).run();
     }
 
     /**
@@ -148,4 +143,11 @@ public class InitApplication extends MultiDexApplication {
         ImageLoader.getInstance().init(config);
     }
 
+    @Override
+    public void run() {
+        EaseUI.getInstance().init(this);
+        initAccountUtil();
+        initToast();
+        thirdConfig();
+    }
 }

@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 public class DecimalUtil {
 
     /**
-     * 金钱乘法
+     * 金钱加法
      *
      * @param v1
      * @param v2

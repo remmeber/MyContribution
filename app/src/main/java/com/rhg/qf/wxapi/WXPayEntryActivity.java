@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseAppcompactActivity;
+import com.rhg.qf.ui.activity.BaseAppcompactActivity;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
