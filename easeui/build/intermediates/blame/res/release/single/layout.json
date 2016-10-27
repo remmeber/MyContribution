@@ -48,12 +48,12 @@
         "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_sent_video.xml"
     },
     {
-        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_message.xml",
-        "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_message.xml"
-    },
-    {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_voice.xml",
         "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice.xml"
+    },
+    {
+        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_message.xml",
+        "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_message.xml"
     },
     {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_widget_contact_list.xml",

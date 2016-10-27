@@ -1,7 +1,9 @@
 package com.rhg.qf.mvp.presenter;
 
 import com.rhg.qf.bean.GoodsDetailUrlBean;
+import com.rhg.qf.mvp.base.RxPresenter;
 import com.rhg.qf.mvp.model.GoodsDetailModel;
+import com.rhg.qf.mvp.presenter.contact.GoodsDetailContact;
 import com.rhg.qf.mvp.view.BaseView;
 
 import rx.Observer;
@@ -14,13 +16,19 @@ import rx.schedulers.Schedulers;
  * time：2016/5/28 17:01
  * email：1013773046@qq.com
  */
-public class GoodsDetailPresenter {
+public class GoodsDetailPresenter extends RxPresenter<GoodsDetailContact.View<GoodsDetailUrlBean.GoodsDetailBean>> {
 
     BaseView baseView;
+
     GoodsDetailModel goodsDetailModel;
 
-    public GoodsDetailPresenter(BaseView baseView) {
+    /*public GoodsDetailPresenter(BaseView baseView) {
         this.baseView = baseView;
+        goodsDetailModel = new GoodsDetailModel();
+    }*/
+
+    public GoodsDetailPresenter(/*GoodsDetailContact.View<GoodsDetailUrlBean.GoodsDetailBean> view*/) {
+//        this.view = view;
         goodsDetailModel = new GoodsDetailModel();
     }
 
@@ -40,7 +48,8 @@ public class GoodsDetailPresenter {
 
                     @Override
                     public void onNext(GoodsDetailUrlBean.GoodsDetailBean goodsDetailBean) {
-                        baseView.showData(goodsDetailBean);
+//                        baseView.showData(goodsDetailBean);
+                        view.showContent(goodsDetailBean);
                     }
                 });
     }

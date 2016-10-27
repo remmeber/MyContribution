@@ -13,8 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseFragmentActivity;
-import com.rhg.qf.datebase.AccountDBHelper;
+import com.rhg.qf.ui.activity.BaseFragmentActivity;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
@@ -148,7 +147,6 @@ public class InitApplication extends MultiDexApplication implements Runnable{
     public void run() {
         EaseUI.getInstance().init(this);
         initAccountUtil();
-        AccountDBHelper.init(getApplicationContext());
         initToast();
         thirdConfig();
     }

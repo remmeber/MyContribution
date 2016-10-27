@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.rhg.qf.activity.BaseAppcompactActivity;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
