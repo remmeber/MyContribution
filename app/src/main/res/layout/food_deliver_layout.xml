@@ -143,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rb_deliver_service"
             android:layout_margin="@dimen/activity_horizontal_margin"
-            android:background="@drawable/btn_green_bg_normal"
+            android:background="@drawable/btn_blue_bg_normal"
             android:gravity="center"
             android:padding="@dimen/margin_small"
             android:text="@string/finish"

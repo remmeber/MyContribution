@@ -1,6 +1,8 @@
 package com.rhg.qf.ui.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -9,12 +11,14 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.rhg.qf.R;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.mvp.view.BaseView;
+import com.rhg.qf.runtimepermissions.PermissionsManager;
+import com.rhg.qf.runtimepermissions.PermissionsResultAction;
+import com.rhg.qf.ui.FragmentController;
 import com.rhg.qf.ui.fragment.HomeFragment;
 import com.rhg.qf.ui.fragment.MyFragment;
 import com.rhg.qf.ui.fragment.SellerFragment;
 import com.rhg.qf.ui.fragment.ShoppingCartFragment;
-import com.rhg.qf.mvp.view.BaseView;
-import com.rhg.qf.ui.FragmentController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,14 +71,14 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
     @Override
     protected void initData(Bundle savedInstanceState) {
 //        loadRootFragment(R.id.content_fragment, HomeFragment.newInstance());
-            List<Fragment> fragments = new ArrayList<>();
-            HomeFragment homeFragment = new HomeFragment();
-            fragments.add(homeFragment);
-            fragments.add(new SellerFragment());
-            fragments.add(new MyFragment());
-            fragments.add(new ShoppingCartFragment());
-            fragmentController = new FragmentController(getSupportFragmentManager(),
-                    fragments, R.id.content_fragment);
+        List<Fragment> fragments = new ArrayList<>();
+        HomeFragment homeFragment = new HomeFragment();
+        fragments.add(homeFragment);
+        fragments.add(new SellerFragment());
+        fragments.add(new MyFragment());
+        fragments.add(new ShoppingCartFragment());
+        fragmentController = new FragmentController(getSupportFragmentManager(),
+                fragments, R.id.content_fragment);
 
         //TODO---------------------底部导航栏=-------------------------------------------------------
 
@@ -106,6 +110,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
             public void onTabReselected(int position) {
             }
         });
+        requirePermission();
         //-----------------------------------------------------------------------------------------
     }
 
@@ -132,5 +137,20 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void requirePermission() {
+        PermissionsManager.getInstance().requestAllManifestPermissionsIfNecessary(this, new PermissionsResultAction() {
+            @Override
+            public void onGranted() {
+//              Toast.makeText(MainActivity.this, "All permissions have been granted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDenied(String permission) {
+                //Toast.makeText(MainActivity.this, "Permission " + permission + " has been denied", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

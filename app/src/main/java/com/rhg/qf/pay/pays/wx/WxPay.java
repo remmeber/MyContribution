@@ -76,7 +76,7 @@ public class WxPay implements IPayable {
             packageParams.put("notify_url", notifyUrl);/*接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。*/
             packageParams.put("out_trade_no", genOutTradNo(tradeNo));/*商户系统内部的订单号,32个字符内、可包含字母, */
             packageParams.put("spbill_create_ip", spbillCreateIp);/*用户端实际ip*/
-            packageParams.put("total_fee", DecimalUtil.multiplyWithScale(totalFee, "100",0));/*总金额*/
+            packageParams.put("total_fee", DecimalUtil.multiplyWithScale(totalFee, "100", 0));/*总金额*/
             packageParams.put("trade_type", "APP");/*支付类型*/
             paramsForPrepay = packageParams;//将参数保存一份，待调用支付时使用
             String sign = Sign(packageParams);

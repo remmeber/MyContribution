@@ -29,14 +29,13 @@ public class ChatActivity extends EaseBaseActivity {
         super.onCreate(arg0);
         setContentView(R.layout.activity_chat);
         activityInstance = this;
-        uname = dealUName(AccountUtil.getInstance().getNickName());
+        uname = "QF" + dealUName(AccountUtil.getInstance().getNickName());
         if (EMChat.getInstance().isLoggedIn()) {
             initView();
         } else
             createAccountToServer(uname, getPwd(uname), new EMCallBack() {
                 @Override
                 public void onSuccess() {
-                    //Log.i("RHG", "create account success");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -89,6 +88,12 @@ public class ChatActivity extends EaseBaseActivity {
 
             @Override
             public void onError(final int i, final String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
                 //Log.i("RHG", "登录失败" + " i= " + i + " s= " + s);
             }
 
@@ -97,7 +102,7 @@ public class ChatActivity extends EaseBaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastHelper.getInstance()._toast("正在获取客服聊天");
+                        ToastHelper.getInstance()._toast("正在获取客服聊天...");
 
                     }
                 });

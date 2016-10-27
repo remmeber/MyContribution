@@ -7,20 +7,12 @@
     tools:background="@color/colorBlueNormal"
     tools:ignore="contentDescription">
 
-    <TextView
-        android:id="@+id/tb_center_tv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_big"
-        tools:text="我的订单" />
-
     <ImageView
         android:id="@+id/tb_left_iv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:paddingLeft="@dimen/margin_small"
+        android:paddingRight="@dimen/margin_small"
         tools:src="@drawable/ic_chevron_left_black" />
 
     <LinearLayout
@@ -35,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:padding="@dimen/margin_little"
             tools:src="@drawable/ic_location_black" />
 
         <TextView
@@ -42,9 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:gravity="center"
+            android:layout_marginEnd="@dimen/margin_little"
+            android:layout_marginRight="@dimen/margin_little"
+            android:gravity="center_vertical"
             android:textSize="@dimen/text_medium"
             tools:text="修改" />
     </LinearLayout>
@@ -71,5 +64,15 @@
         android:textCursorDrawable="@null"
         android:visibility="gone"
         android:hint="@string/etSearchHint" />
+
+    <TextView
+        android:id="@+id/tb_center_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_big"
+        tools:text="我的订单" />
 
 </FrameLayout>
