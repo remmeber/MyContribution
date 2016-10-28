@@ -11,6 +11,7 @@
         android:id="@+id/tb_left_iv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="@drawable/btn_gray_light_style"
         android:paddingLeft="@dimen/margin_small"
         android:paddingRight="@dimen/margin_small"
         tools:src="@drawable/ic_chevron_left_black" />
@@ -25,8 +26,9 @@
         <ImageView
             android:id="@+id/tb_right_iv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_gray_light_style"
             android:padding="@dimen/margin_little"
             tools:src="@drawable/ic_location_black" />
 

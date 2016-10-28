@@ -234,6 +234,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
         if (o instanceof SignInBackBean.UserInfoBean) {
             ToastHelper.getInstance()._toast("登录成功");
+            userName.setClickable(false);
             isSignIn = true;
             SignInBackBean.UserInfoBean _data = (SignInBackBean.UserInfoBean) o;
             AccountUtil.getInstance().setUserID(_data.getID());

@@ -96,6 +96,7 @@
     <string name="contactAddress">收货地址</string>
     <string name="contactAddress_Null">收货地址为空</string>
     <string name="contactAddressDetail">补充详细地址(如门牌号、楼层号)</string>
+    <string name="sure2Modify">确定修改选中地址？</string>
     <string name="tvSave">保存</string>
     <string name="tvEdit">编辑</string>
     <!--收货地址-->

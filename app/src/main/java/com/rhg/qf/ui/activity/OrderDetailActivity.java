@@ -18,6 +18,7 @@ import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
@@ -118,8 +119,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         /*recycleview*/
         tvMerchantName.setText(merchantName);
         lyTotalCount.setVisibility(View.VISIBLE);
-        tvTotalMoney.setText(String.format(Locale.ENGLISH, "%s",
-                String.valueOf((Float.valueOf(orderPrice) + AppConstants.DELIVER_FEE))));
+        tvTotalMoney.setText(String.format(Locale.ENGLISH, "%s", DecimalUtil.addWithScale(orderPrice, "0", 2)
+               /* String.valueOf((Float.valueOf(orderPrice) + AppConstants.DELIVER_FEE))*/));
         setText(btPayOrRateOrConform);
     }
 

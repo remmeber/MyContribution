@@ -3,6 +3,7 @@ package com.rhg.qf.adapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -97,16 +98,10 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void setImage(String isChecked, ImageView ivCheck) {
         if ("1".equals(isChecked)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ivCheck.setImageDrawable(context.getDrawable(R.drawable.ic_check_green));
-            } else
-                ivCheck.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_check_green));
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ivCheck.setImageDrawable(context.getDrawable(R.drawable.ic_uncheck_green));
-            } else
-                ivCheck.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_uncheck_green));
-        }
+            ivCheck.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check_green));
+        } else
+            ivCheck.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_uncheck_green));
+
     }
 
     @Override

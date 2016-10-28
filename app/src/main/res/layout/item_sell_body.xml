@@ -4,7 +4,7 @@
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_gray_style"
+    android:background="@drawable/btn_gray_light_style"
     android:orientation="vertical">
 
     <!--<RelativeLayout

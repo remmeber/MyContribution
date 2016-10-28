@@ -107,7 +107,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
             @Override
             public void onLongClick(int position) {
                 longClickPosition = position;
-                showDelDialog(position, "确定修改选中地址？", MODIFY);
+                showDelDialog(position, getResources().getString(R.string.sure2Modify), MODIFY);
             }
         });
         /*rcyAddress.setRemoveListener(new SwipeDeleteRecycle.RemoveListener() {
@@ -129,21 +129,6 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         getAddressPresenter.getAddress(AppConstants.ADDRESS_TABLE);
-        /*if (data == null)
-            return;
-        AddressUrlBean.AddressBean _addressBean = data.getParcelableExtra(AppConstants.KEY_ADDRESS);
-        if (requestCode == AppConstants.BACK_WITH_UPDATE) {
-            AddressUrlBean.AddressBean changeItem = addressBeanList.get(longClickPosition);
-            changeItem.setName(_addressBean.getName());
-            changeItem.setPhone(_addressBean.getPhone());
-            changeItem.setAddress(_addressBean.getAddress());
-            addressAdapter.updateAddressBeanList(addressBeanList, longClickPosition);
-            rcyAddress.smoothScrollToPosition(longClickPosition);
-        } else {
-            addressBeanList.add(0, _addressBean);*//*插入到第一条*//*
-            addressAdapter.insertAddressBeanList(addressBeanList, 0);
-            rcyAddress.smoothScrollToPosition(0);
-        }*/
     }
 
     @Override
@@ -217,13 +202,6 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
         return _addressBean;
     }
 
-    /**
-     * 删除弹框
-     *
-     * @param position
-     * @param content
-     * @param tag
-     */
     private void showDelDialog(final int position, final String content, final int tag) {
         final UIAlertView delDialog = new UIAlertView(this, "温馨提示", content,
                 "取消", "确定");

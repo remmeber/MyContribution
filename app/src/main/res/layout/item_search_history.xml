@@ -8,10 +8,10 @@
     android:drawableLeft="@drawable/ic_search_history_black"
     android:drawablePadding="@dimen/margin_small"
     android:drawableStart="@drawable/ic_search_history_black"
+    android:background="@drawable/btn_gray_light_style"
     android:gravity="center_vertical"
-    android:paddingBottom="@dimen/margin_little"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/margin_little"
+    android:padding="@dimen/margin_little"
     android:textSize="@dimen/text_medium"
     tools:text="测试数据" />
