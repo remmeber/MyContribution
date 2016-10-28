@@ -178,7 +178,6 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
     }
 
 
-    /*TODO 登录*/
     private void doLogin() {
         if (signUtil == null)
             signUtil = new UmengUtil(this);

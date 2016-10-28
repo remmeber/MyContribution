@@ -4,6 +4,7 @@ package com.rhg.qf.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,8 @@ import butterknife.ButterKnife;
  * email：1013773046@qq.com
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
-    boolean isPrepare;
+    private boolean isViewPrepare = false;
+    boolean hasFetchData = false;
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
@@ -40,36 +42,66 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
-        isPrepare = true;
         initView(view);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        receiveData(getArguments());
+        initData();
+        if (!NetUtil.isConnected(getContext())) {
+            ToastHelper.getInstance()._toast("网络未连接");
+        } else if (getUserVisibleHint()) {
+            startLoc();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("RHG", "...........start");
+        if (getUserVisibleHint()&&hasFetchData) {
+            refresh();
+        }
+    }
+
+    protected void refresh() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("RHG", "...........onResume");
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        isViewPrepare = true;
+        loadDataIfPrepared();
+        fillData();
     }
 
     public int getLayoutResId() {
         return 0;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initData();
-        if (!NetUtil.isConnected(getContext())) {
-            ToastHelper.getInstance()._toast("网络未连接");
-        } else if (getUserVisibleHint()) {
-            startLoc();
-            loadData();
-            isPrepare = false;
-        }
-        fillData();
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isPrepare && isVisibleToUser) {
+        if (isVisibleToUser) {
+            loadDataIfPrepared();
+        }
+    }
+
+    private void loadDataIfPrepared() {
+        if (getUserVisibleHint() && !hasFetchData && isViewPrepare) {
+            hasFetchData = true;
             loadData();
         }
     }
@@ -120,6 +152,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
      * 从网络获取数据，在new的时候只加载一次，后期都需要refresh才能更新
      */
     public void loadData() {
+        Log.i("RHG", "----------------loadData");
     }
 
     protected abstract void initData();
@@ -175,6 +208,13 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        isViewPrepare = false;
+        hasFetchData = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         ButterKnife.unbind(this);
     }
 

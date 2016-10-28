@@ -18,6 +18,7 @@ import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
@@ -118,8 +119,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         /*recycleview*/
         tvMerchantName.setText(merchantName);
         lyTotalCount.setVisibility(View.VISIBLE);
-        tvTotalMoney.setText(String.format(Locale.ENGLISH, "%s",
-                String.valueOf((Float.valueOf(orderPrice) + AppConstants.DELIVER_FEE))));
+        tvTotalMoney.setText(String.format(Locale.ENGLISH, "%s", ""
+               /* String.valueOf((Float.valueOf(orderPrice) + AppConstants.DELIVER_FEE))*/));
         setText(btPayOrRateOrConform);
     }
 
@@ -142,7 +143,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
     protected void showSuccess(Object s) {
         if (s instanceof OrderDetailUrlBean.OrderDetailBean) {
             foodBean = (OrderDetailUrlBean.OrderDetailBean) s;
-            setData((OrderDetailUrlBean.OrderDetailBean) s);
+            setData(foodBean);
         }
         if (s instanceof String)
             ToastHelper.getInstance()._toast((String) s);
@@ -158,6 +159,9 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         tvOrderNote.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.tvNote),
                 /*TODO 缺少note*/"无"));
         tvMerchantName.setText("");/*接口中订单名字*/
+        tvTotalMoney.setText(String.format(Locale.ENGLISH, getResources().getString(R.string.countMoney),
+                DecimalUtil.addWithScale(orderDetail.getFee(), orderDetail.getPrice(), 2)));
+
         foodsDetailAdapter.setFoodsBeanList(orderDetail);
     }
 
@@ -179,7 +183,7 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                         /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
                 break;
             case R.id.btPayOrRateOrConform:
-                if (orderTag == AppConstants.USER_ORDER_DELIVERING) {
+                if (orderTag == AppConstants.USER_ORDER_DELIVERING || orderTag == AppConstants.USER_ORDER_COMPLETE) {
                     Intent intent = new Intent(this, DeliverStateNoneActivity.class);
                     intent.putExtra(AppConstants.KEY_ORDER_ID, orderId);
                     startActivity(intent);
@@ -200,7 +204,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
                     int count = 1;
                     _pay.setProductNumber(String.valueOf(count));
                     _pay.setProductPic("");
-                    _pay.setProductPrice(orderPrice == null ? "0" : String.valueOf(Integer.valueOf(orderPrice)));
+                    _pay.setProductPrice(orderPrice == null | "".equals(orderPrice) ? "0.00" : orderPrice);
+                    _pay.setDeliverFee(foodBean.getFee());
                     payBeen.add(_pay);
                     payModel.setPayBeanList(payBeen);
                     intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);

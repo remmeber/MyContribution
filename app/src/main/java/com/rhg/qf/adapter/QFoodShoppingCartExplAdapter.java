@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.bean.ShoppingCartBean;
+import com.rhg.qf.ui.UIAlertView;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.widget.SlideView;
-import com.rhg.qf.ui.UIAlertView;
 
 import java.util.List;
 
@@ -172,7 +173,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
         boolean isChildSelected = goods.isChildSelected();
         String goodsprice = String.format(context.getResources().getString(R.string.countMoney),
-                goods.getPrice());
+                DecimalUtil.addWithScale(goods.getFee() == null | "".equals(goods.getFee()) ? "0.00" : goods.getFee(),
+                        goods.getPrice() == null | "".equals(goods.getPrice()) ? "0.00" : goods.getPrice(), 2));
         String goodsNum = goods.getNumber();
         String goodsName = goods.getGoodsName();
         String goodsLogoUrl = goods.getGoodsLogoUrl();

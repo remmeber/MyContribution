@@ -7,6 +7,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BodyViewHolder;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ImageUtils;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
         holder.tv_orderTag.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvOrderNumber),
                 data.getID()));
         holder.tv_totalMoney.setText(String.format(context.getResources().getString(R.string.countMoney),
-                data.getPrice()));
+                DecimalUtil.addWithScale(data.getPrice(), data.getFee(), 2)));
         ImageUtils.showImage(data.getPic(), holder.sellerImage);
         holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
             @Override

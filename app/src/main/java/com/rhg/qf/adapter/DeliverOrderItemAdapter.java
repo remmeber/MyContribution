@@ -12,6 +12,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.bean.DeliverOrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
+import com.rhg.qf.utils.DecimalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -80,7 +81,8 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
     private void fillContent(DeliverOrderViewHolder holder, DeliverOrderUrlBean.DeliverOrderBean deliverOrderBean) {
         holder.tvOrderMerchantName.setText(deliverOrderBean.getName());
         holder.tvOrderMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                deliverOrderBean.getFee() == null ? "" : deliverOrderBean.getFee()));
+                DecimalUtil.addWithScale(deliverOrderBean.getFee() == null ? "0" : deliverOrderBean.getFee(),
+                        deliverOrderBean.getPrice() == null ? "0" : deliverOrderBean.getPrice(), 2)));
         holder.tvOrderNum.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.tvOrderNumber),
                 deliverOrderBean.getID()));
     }

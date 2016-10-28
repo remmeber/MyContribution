@@ -19,6 +19,7 @@ import com.rhg.qf.ui.fragment.HomeFragment;
 import com.rhg.qf.ui.fragment.MyFragment;
 import com.rhg.qf.ui.fragment.SellerFragment;
 import com.rhg.qf.ui.fragment.ShoppingCartFragment;
+import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,6 @@ import java.util.List;
 public class MainActivity extends BaseFragmentActivity implements BaseView
 //        implements NavigationView.OnNavigationItemSelectedListener  //TODO slideNavigationView
 {
-    private static final String[] FRAGMENT_TAG = {"HOME", "MERCHANT", "MY", "CART"};
     FragmentController fragmentController;
     //----------------------for rebound 弹簧效果---------------------------------------------------
     /*private final BaseSpringSystem mSpringSystem = SpringSystem.create();
@@ -56,6 +56,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
     private List<SearchItem> mSuggestionsList;*/
     //BottomNavigationBar
     BottomNavigationBar bottomNavigation;
+    long first = 0L;
 
 
     @Override
@@ -137,6 +138,18 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        long second = System.currentTimeMillis();
+        if (second - first > 1500) {
+            ToastHelper.getInstance().displayToastWithQuickClose("再按一次退出");
+            first = second;
+        } else {
+            super.onBackPressed();
+            finish();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)

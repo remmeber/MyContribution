@@ -16,6 +16,7 @@
     <color name="colorShop">#A0BAE967</color>
     <color name="colorSign">#BEE767</color>
     <color name="colorInActive">#BFBFBF</color>
+    <color name="colorGrayLight">#55BFBFBF</color>
     <color name="colorTab">#F7F8DD</color>
     <color name="colorSearchHint">#CFCFCD</color>
     <color name="colorProfile">#F1F0F8</color>

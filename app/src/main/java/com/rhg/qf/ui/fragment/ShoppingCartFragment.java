@@ -3,6 +3,7 @@ package com.rhg.qf.ui.fragment;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -11,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.PayActivity;
 import com.rhg.qf.adapter.QFoodShoppingCartExplAdapter;
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.OrderUrlBean;
@@ -20,7 +20,9 @@ import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.mvp.presenter.OrdersPresenter;
+import com.rhg.qf.ui.activity.PayActivity;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.SwipeDeleteExpandListView;
@@ -108,6 +110,28 @@ public class ShoppingCartFragment extends BaseFragment {
     }
 
     @Override
+    protected void refresh() {
+        super.refresh();
+        getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+    }
+
+    /*  @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isViewPrepare) {
+            Log.i("RHG", isVisibleToUser + "");
+            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+        }
+    }*/
+
+/*    *//*Fragment被activity覆盖后，重新显示出来时调用的方法*//*
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.setUserVisibleHint(true);
+    }*/
+
+    @Override
     protected void initView(View view) {
     }
 
@@ -192,7 +216,7 @@ public class ShoppingCartFragment extends BaseFragment {
             ToastHelper.getInstance()._toast(o.toString());
             return;
         }
-        ShoppingCartUtil.delAllGoods();
+//        ShoppingCartUtil.delAllGoods();
         shoppingCartBeanList.clear();
         for (OrderUrlBean.OrderBean orderBean : (List<OrderUrlBean.OrderBean>) o) {
             ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
@@ -201,12 +225,13 @@ public class ShoppingCartFragment extends BaseFragment {
             goods.setGoodsName(orderBean.getRName());
             goods.setGoodsLogoUrl(orderBean.getPic());
             goods.setPrice(orderBean.getPrice());
+            goods.setFee(orderBean.getFee());
             goods.setGoodsID(orderBean.getID());
             goods.setNumber("1");
             goodsList.add(goods);
             shoppingCartBean.setGoods(goodsList);
             shoppingCartBeanList.add(shoppingCartBean);
-            ShoppingCartUtil.addGoodToCart(orderBean.getID(), orderBean.getRName());
+//            ShoppingCartUtil.addGoodToCart(orderBean.getID(), orderBean.getRName());
         }
         updateListView();
     }
@@ -228,7 +253,8 @@ public class ShoppingCartFragment extends BaseFragment {
             _pay.setProductId(_goods.getGoodsID());
             _pay.setProductNumber(_goods.getNumber());
             _pay.setProductPic(_goods.getGoodsLogoUrl());
-            _pay.setProductPrice(_goods.getPrice());
+            _pay.setDeliverFee(_goods.getFee());
+            _pay.setProductPrice(DecimalUtil.add(_goods.getPrice(), _goods.getFee()));
             payBeen.add(_pay);
         }
         payModel.setPayBeanList(payBeen);

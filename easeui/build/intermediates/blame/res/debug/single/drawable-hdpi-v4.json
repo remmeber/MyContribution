@@ -1,39 +1,39 @@
 [
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatting_biaoqing_btn_enable.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatting_biaoqing_btn_enable.png"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_unread_count_bg.9.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_unread_count_bg.9.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatfrom_voice_playing.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatfrom_voice_playing.png"
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatting_biaoqing_btn_enable.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatting_biaoqing_btn_enable.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_app_panel_video_icon.9.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_app_panel_video_icon.9.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_record_animate_06.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_record_animate_06.png"
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatfrom_voice_playing.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatfrom_voice_playing.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_voice_playing_f2.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f2.png"
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_record_animate_06.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_record_animate_06.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_type_select_btn_pressed.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_type_select_btn_pressed.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_type_select_btn_nor.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_type_select_btn_nor.png"
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_voice_playing_f2.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f2.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_23.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ee_23.png"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_type_select_btn_nor.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_type_select_btn_nor.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_video_recorder_start_btn.png",
@@ -48,12 +48,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatting_setmode_keyboard_btn_normal.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_voice_playing_f3.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f3.png"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_groups_icon.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_groups_icon.png"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_voice_playing_f3.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f3.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_22.png",
@@ -116,12 +116,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_mm_title_back.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_26.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ee_26.png"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_20.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ee_20.png"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_26.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ee_26.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_1.png",
@@ -160,12 +160,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ee_11.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_appitem_del_btn_pressed.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_appitem_del_btn_pressed.png"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_search_clear_pressed.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_search_clear_pressed.png"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_appitem_del_btn_pressed.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_appitem_del_btn_pressed.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_30.png",
@@ -224,12 +224,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_video_play_btn_small_nor.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatfrom_voice_playing_f2.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatfrom_voice_playing_f2.png"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatfrom_bg_normal.9.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatfrom_bg_normal.9.png"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatfrom_voice_playing_f2.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatfrom_voice_playing_f2.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chat_face_normal.png",
