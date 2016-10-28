@@ -30,6 +30,7 @@
     <string name="needPay">应付金额:</string>
     <string name="countMoney">￥%s</string>
     <string name="countGoods">去结算</string>
+    <string name="deliverFee">含跑腿费:￥%.5s</string>
     <string name="delete">删除</string>
     <string name="enptyShoppingCart">购物车为空</string>
     <!--shoppingcart-->

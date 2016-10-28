@@ -41,12 +41,11 @@ public class NewOrderPresenter {
 
                     @Override
                     public void onNext(NewOrderBackBean s) {
-                        Log.i("RHG", s.toString());
-                        if(s.getResult()==0){
-                            if(s.getFee() == null)
+                        if (s.getResult() == 0) {
+                            if (s.getFee() == null)
                                 s.setFee("0");
                             createNewOrderView.showData(s);
-                        }else
+                        } else
                             createNewOrderView.showData("error");
                     }
                 });

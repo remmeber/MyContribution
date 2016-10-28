@@ -176,7 +176,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     @Override
     protected void onDestroy() {
-        ImageUtils.clearCache();
+//        ImageUtils.clearCache();
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);

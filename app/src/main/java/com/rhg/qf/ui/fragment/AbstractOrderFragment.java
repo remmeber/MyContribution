@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.OrderDetailActivity;
 import com.rhg.qf.adapter.QFoodOrderAdapter;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.OrdersPresenter;
+import com.rhg.qf.ui.activity.OrderDetailActivity;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.DecimalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +103,7 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     public void onItemClickListener(int position, OrderUrlBean.OrderBean item) {
         Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
         _intent.putExtra(AppConstants.KEY_ORDER_ID, item.getID());
-        _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, item.getPrice());
+        _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, DecimalUtil.addWithScale(item.getPrice(), item.getFee(), 2));
         _intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getRName());
         _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
         /*_intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());

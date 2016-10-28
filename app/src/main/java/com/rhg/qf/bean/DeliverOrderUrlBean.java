@@ -66,6 +66,7 @@ public class DeliverOrderUrlBean {
         private String ID;
         private String Style;
         private String Name;
+        private String Price;
         private String Fee;
 
         public String getID() {
@@ -90,6 +91,14 @@ public class DeliverOrderUrlBean {
 
         public void setName(String Name) {
             this.Name = Name;
+        }
+
+        public String getPrice() {
+            return Price;
+        }
+
+        public void setPrice(String price) {
+            Price = price;
         }
 
         public String getFee() {

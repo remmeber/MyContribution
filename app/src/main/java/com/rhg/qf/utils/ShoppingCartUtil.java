@@ -127,8 +127,9 @@ public class ShoppingCartUtil {
                 boolean isSelectd = listGoods.get(i).getGoods().get(j).isChildSelected();
                 if (isSelectd) {
                     String price = listGoods.get(i).getGoods().get(j).getPrice();
+                    String fee = listGoods.get(i).getGoods().get(j).getFee();
                     String num = listGoods.get(i).getGoods().get(j).getNumber();
-                    String countMoney = DecimalUtil.multiply(price, num);
+                    String countMoney = DecimalUtil.multiply(DecimalUtil.add(price, fee), num);
                     selectedMoney = DecimalUtil.add(selectedMoney, countMoney);
                     selectedCount = DecimalUtil.add(selectedCount, "1");
                 }
