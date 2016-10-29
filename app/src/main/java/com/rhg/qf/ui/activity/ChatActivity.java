@@ -2,6 +2,7 @@ package com.rhg.qf.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
