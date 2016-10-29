@@ -37,21 +37,34 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     // TODO: 子类重写该方法，获取数据的统一入口
     public void receiveData(Bundle arguments) {
+        Log.i("RHG", "...........receiveData");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("RHG", "...........onCreateView");
+        receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
         initView(view);
         return view;
     }
 
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i("RHG", "...........onViewCreated");
+        isViewPrepare = true;
+        loadDataIfPrepared();
+        fillData();
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        receiveData(getArguments());
+        Log.i("RHG", "...........onActivityCreated");
         initData();
         if (!NetUtil.isConnected(getContext())) {
             ToastHelper.getInstance()._toast("网络未连接");
@@ -63,14 +76,12 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("RHG", "...........start");
+        Log.i("RHG", "...........onStart");
         if (getUserVisibleHint()&&hasFetchData) {
             refresh();
         }
     }
 
-    protected void refresh() {
-    }
 
     @Override
     public void onResume() {
@@ -78,13 +89,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         Log.i("RHG", "...........onResume");
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isViewPrepare = true;
-        loadDataIfPrepared();
-        fillData();
+    protected void refresh() {
     }
+
 
     public int getLayoutResId() {
         return 0;
