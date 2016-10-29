@@ -97,7 +97,7 @@ public class InitApplication extends MultiDexApplication implements Runnable{
         super.onCreate();
         initApplication = this;
         initImageLoader();
-        new Thread(this).run();
+        new Thread().run();
     }
 
     /**
