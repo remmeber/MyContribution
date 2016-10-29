@@ -1,10 +1,13 @@
 package com.rhg.qf.ui.activity;
 
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,12 +19,19 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.DeliverOrderPresenter;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
+import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.RecycleViewDivider;
-import com.rhg.qf.ui.UIAlertView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +46,8 @@ import butterknife.OnClick;
  */
 public class DeliverOrderActivity extends BaseAppcompactActivity implements DeliverOrderItemAdapter.OrderStyleListener,
         RcvItemClickListener<DeliverOrderUrlBean.DeliverOrderBean> {
-
+    @Bind(R.id.fl_tab)
+    FrameLayout fl_tab;
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;
     @Bind(R.id.tb_left_iv)
@@ -61,17 +72,18 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     public void loadingData() {
         commonRefresh.setVisibility(View.VISIBLE);
         getDeliverOrder = new DeliverOrderPresenter(this);
-            getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, AccountUtil.getInstance().getUserID());
+        getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, AccountUtil.getInstance().getUserID());
     }
 
     @Override
     protected void initData() {
+        fl_tab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         tbCenterTv.setText(getResources().getString(R.string.myOrder));
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         commonRecycle.setLayoutManager(new LinearLayoutManager(this));
         commonRecycle.setHasFixedSize(false);
         RecycleViewDivider _divider = new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                SizeUtil.dip2px(16), getResources().getColor(R.color.white));
+                SizeUtil.dip2px(16), ContextCompat.getColor(this, R.color.white));
         commonRecycle.addItemDecoration(_divider);
         deliverOrderItemAdapter = new DeliverOrderItemAdapter(this, deliverOrderBeanList);
         deliverOrderItemAdapter.setOnRcvItemClick(this);
@@ -85,7 +97,39 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
                 getDeliverOrder.getDeliverOrder(AppConstants.DELIVER_ORDER, AccountUtil.getInstance().getUserID());
             }
         });
+
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpClient androidHttpClient = new DefaultHttpClient();
+                    HttpResponse httpResponse = androidHttpClient.execute(new HttpGet("http://www.baidu.com"));
+                    byte[] bytes = EntityUtils.toByteArray(httpResponse.getEntity());
+                    Message message = Message.obtain();
+                    message.what = 1;
+                    message.obj = bytes;
+                    handler.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();*/
     }
+
+/*    private static android.os.Handler handler = new android.os.Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+
+                    Log.i("RHG", " length is :" + ((byte[]) msg.obj).length);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    };*/
 
     @Override
     protected int getLayoutResId() {
@@ -120,7 +164,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
                 break;
             case R.id.bt_order_snatch:
                 btOrderSnatch.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
-                btOrderProgress.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+                btOrderProgress.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 showDelDialog("正在改造，敬请期待");
                 break;
             case R.id.bt_order_progress:
@@ -139,7 +183,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_ACCEPT);
                 deliverOrderItemAdapter.updateCertainPosition(deliverOrderBeanList, position);
                 modifyOrderPresenter.modifyUserOrDeliverOrderState(deliverOrderBeanList.get(position).getID(),
-                    AppConstants.UPDATE_ORDER_WAIT);
+                        AppConstants.UPDATE_ORDER_WAIT);
                 break;
             case AppConstants.DELIVER_ORDER_ACCEPT:
                 deliverOrderBeanList.get(position).setStyle(AppConstants.DELIVER_ORDER_DELIVERING);
