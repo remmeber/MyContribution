@@ -149,7 +149,7 @@ public class AppConstants {
 
     public static final int DELIVER_FEE = 0;
 
-    public static final String CUSTOMER_SERVER = "家家美食客服";
+    public static final String CUSTOMER_SERVER = "DeliuciousCS";
 
 
 }

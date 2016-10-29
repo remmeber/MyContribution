@@ -147,7 +147,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         List<String> images = new ArrayList<>();
         List<BannerTypeUrlBean.BannerEntity> _bannerEntity = data.getBannerEntityList();
         int _count = _bannerEntity == null ? 0 : _bannerEntity.size();
-        Log.i("RHG", "TOTAL: " + _count);
         for (int i = 0; i < _count; i++) {
             images.add(_bannerEntity.get(i).getSrc());
         }

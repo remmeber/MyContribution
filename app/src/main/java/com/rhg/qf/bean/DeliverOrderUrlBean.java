@@ -108,5 +108,26 @@ public class DeliverOrderUrlBean {
         public void setFee(String Fee) {
             this.Fee = Fee;
         }
+
+        @Override
+        public String toString() {
+            return "DeliverOrderBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Style='" + Style + '\'' +
+                    ", Name='" + Name + '\'' +
+                    ", Price='" + Price + '\'' +
+                    ", Fee='" + Fee + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "DeliverOrderUrlBean{" +
+                "result=" + result +
+                ", msg='" + msg + '\'' +
+                ", total=" + total +
+                ", rows=" + rows.toString() +
+                '}';
     }
 }

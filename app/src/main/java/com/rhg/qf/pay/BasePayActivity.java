@@ -57,7 +57,7 @@ public abstract class BasePayActivity extends Activity {
                 PayAli();
                 break;
             case WeixinPay:
-//                PayWeixin();
+                PayWeixin();
                 break;
 
             default:
