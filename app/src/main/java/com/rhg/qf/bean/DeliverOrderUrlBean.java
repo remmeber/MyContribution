@@ -66,6 +66,7 @@ public class DeliverOrderUrlBean {
         private String ID;
         private String Style;
         private String Name;
+        private String Price;
         private String Fee;
 
         public String getID() {
@@ -92,6 +93,14 @@ public class DeliverOrderUrlBean {
             this.Name = Name;
         }
 
+        public String getPrice() {
+            return Price;
+        }
+
+        public void setPrice(String price) {
+            Price = price;
+        }
+
         public String getFee() {
             return Fee;
         }
@@ -99,5 +108,26 @@ public class DeliverOrderUrlBean {
         public void setFee(String Fee) {
             this.Fee = Fee;
         }
+
+        @Override
+        public String toString() {
+            return "DeliverOrderBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Style='" + Style + '\'' +
+                    ", Name='" + Name + '\'' +
+                    ", Price='" + Price + '\'' +
+                    ", Fee='" + Fee + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "DeliverOrderUrlBean{" +
+                "result=" + result +
+                ", msg='" + msg + '\'' +
+                ", total=" + total +
+                ", rows=" + rows.toString() +
+                '}';
     }
 }

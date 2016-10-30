@@ -3,6 +3,7 @@ package com.rhg.qf.mvp.model;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -25,6 +26,7 @@ public class OrdersModel {
                         return Observable.create(new Observable.OnSubscribe<List<OrderUrlBean.OrderBean>>() {
                             @Override
                             public void call(Subscriber<? super List<OrderUrlBean.OrderBean>> subscriber) {
+//                                Collections.reverse(orderUrlBean.getRows());
                                 subscriber.onNext(orderUrlBean.getRows());
                             }
                         });

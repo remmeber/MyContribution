@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.bean.OrderDetailUrlBean;
-import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.utils.DecimalUtil;
 
 import java.util.Locale;
 
@@ -32,7 +32,7 @@ public class FoodsDetailAdapter extends RecyclerView.Adapter<FoodsDetailAdapter.
         this.foodsBeanList = foodsBeanList;
     }
 
-    public void setFoodsBeanList(OrderDetailUrlBean.OrderDetailBean foodsBeanList) {
+    public void  setFoodsBeanList(OrderDetailUrlBean.OrderDetailBean foodsBeanList) {
         this.foodsBeanList = foodsBeanList;
         notifyDataSetChanged();
     }
@@ -47,8 +47,7 @@ public class FoodsDetailAdapter extends RecyclerView.Adapter<FoodsDetailAdapter.
     public void onBindViewHolder(FoodsDetailAdapter.FoodListViewHolder holder, int position) {
         if (position == getItemCount() - 1) {
             holder.tvFoodName.setText("配送费");
-            holder.tvFoodPrice.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                    String.valueOf(AppConstants.DELIVER_FEE)));
+            holder.tvFoodPrice.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney), foodsBeanList.getFee()));
             return;
         }
         OrderDetailUrlBean.OrderDetailBean.FoodsBean _data = foodsBeanList.getFoods().get(position);

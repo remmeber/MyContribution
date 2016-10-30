@@ -120,6 +120,8 @@ public class ShoppingCartBean {
          * 价格，当前价格
          */
         private String price;
+
+        private String Fee;
         /**
          * 是否失效,0删除(失效),1正常
          */
@@ -253,6 +255,14 @@ public class ShoppingCartBean {
 
         public void setPrice(String price) {
             this.price = price;
+        }
+
+        public String getFee() {
+            return Fee;
+        }
+
+        public void setFee(String fee) {
+            Fee = fee;
         }
 
         public String getNumber() {

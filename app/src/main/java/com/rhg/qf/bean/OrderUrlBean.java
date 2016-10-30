@@ -73,6 +73,7 @@ public class OrderUrlBean {
         private String Address;
         private String Phone;
         private String Price;
+        private String Fee;
         private String Style;
         private String Otime;
         private String Deliver;
@@ -131,6 +132,14 @@ public class OrderUrlBean {
 
         public void setPrice(String Price) {
             this.Price = Price;
+        }
+
+        public String getFee() {
+            return Fee;
+        }
+
+        public void setFee(String fee) {
+            Fee = fee;
         }
 
         public String getStyle() {

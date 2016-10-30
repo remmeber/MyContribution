@@ -99,6 +99,7 @@ public class PayModel implements Parcelable {
         String productId;
         String productName;
         String productPrice;
+        String deliverFee;
         String productPic;
         String productNumber;
         boolean isChecked;
@@ -108,6 +109,7 @@ public class PayModel implements Parcelable {
             productId = in.readString();
             productName = in.readString();
             productPrice = in.readString();
+            deliverFee = in.readString();
             productPic = in.readString();
             productNumber = in.readString();
             isChecked = in.readByte() != 0;
@@ -148,6 +150,14 @@ public class PayModel implements Parcelable {
             this.productPrice = productPrice;
         }
 
+        public String getDeliverFee() {
+            return deliverFee;
+        }
+
+        public void setDeliverFee(String deliverFee) {
+            this.deliverFee = deliverFee;
+        }
+
         public String getProductPic() {
             return productPic;
         }
@@ -183,6 +193,7 @@ public class PayModel implements Parcelable {
             parcel.writeString(productId);
             parcel.writeString(productName);
             parcel.writeString(productPrice);
+            parcel.writeString(deliverFee);
             parcel.writeString(productPic);
             parcel.writeString(productNumber);
             parcel.writeByte((byte) (isChecked ? 1 : 0));

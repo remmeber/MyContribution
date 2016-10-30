@@ -2,6 +2,7 @@ package com.rhg.qf.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
@@ -29,8 +30,9 @@ public class ChatActivity extends EaseBaseActivity {
         super.onCreate(arg0);
         setContentView(R.layout.activity_chat);
         activityInstance = this;
-        uname = "QF" + dealUName(AccountUtil.getInstance().getNickName());
+        uname = dealUName(AccountUtil.getInstance().getNickName());
         if (EMChat.getInstance().isLoggedIn()) {
+            Log.i("RHG", "LOGIN SUCCESS");
             initView();
         } else
             createAccountToServer(uname, getPwd(uname), new EMCallBack() {
@@ -63,6 +65,12 @@ public class ChatActivity extends EaseBaseActivity {
 
                 }
             });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void initView() {

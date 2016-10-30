@@ -4,10 +4,12 @@ package com.rhg.qf.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
@@ -24,7 +26,8 @@ import butterknife.ButterKnife;
  * email：1013773046@qq.com
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
-    boolean isPrepare;
+    private boolean isViewPrepare = false;
+    boolean hasFetchData = false;
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
@@ -35,41 +38,90 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     // TODO: 子类重写该方法，获取数据的统一入口
     public void receiveData(Bundle arguments) {
+        if (AppConstants.DEBUG)
+            Log.i("RHG", "...........receiveData");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (AppConstants.DEBUG)
+            Log.i("RHG", "...........onCreateView");
         receiveData(getArguments());
         View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
-        isPrepare = true;
         initView(view);
         return view;
     }
 
-    public int getLayoutResId() {
-        return 0;
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (AppConstants.DEBUG)
+            Log.i("RHG", "...........onViewCreated");
+        isViewPrepare = true;
+        loadDataIfPrepared();
+        fillData();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (AppConstants.DEBUG)
+            Log.i("RHG", "...........onActivityCreated");
         initData();
         if (!NetUtil.isConnected(getContext())) {
             ToastHelper.getInstance()._toast("网络未连接");
         } else if (getUserVisibleHint()) {
             startLoc();
-            loadData();
-            isPrepare = false;
         }
-        fillData();
     }
+
+
+    /**
+     * UI从后台回显示出来后会调用该生命周期
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (AppConstants.DEBUG)
+            Log.i("RHG", "...........onStart");
+        if (getUserVisibleHint() && hasFetchData) {
+            refresh();
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (AppConstants.DEBUG)
+            Log.i("RHG", "...........onResume");
+    }
+
+    protected void refresh() {
+        if (AppConstants.DEBUG)
+            Log.i("RHG", ".............refresh");
+    }
+
+
+    public int getLayoutResId() {
+        return 0;
+    }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isPrepare && isVisibleToUser) {
+        if (isVisibleToUser) {
+            loadDataIfPrepared();
+        }
+    }
+
+    private void loadDataIfPrepared() {
+        if (getUserVisibleHint() && !hasFetchData && isViewPrepare) {
+            hasFetchData = true;
             loadData();
         }
     }
@@ -120,6 +172,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
      * 从网络获取数据，在new的时候只加载一次，后期都需要refresh才能更新
      */
     public void loadData() {
+        if (AppConstants.DEBUG)
+            Log.i("RHG", "----------------loadData");
     }
 
     protected abstract void initData();
@@ -175,6 +229,13 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        isViewPrepare = false;
+        hasFetchData = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         ButterKnife.unbind(this);
     }
 

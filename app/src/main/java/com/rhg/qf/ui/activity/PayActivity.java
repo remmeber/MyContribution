@@ -350,12 +350,10 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
             ToastHelper.getInstance().displayToastWithQuickClose("订单生成成功");
             fee = ((NewOrderBackBean) o).getFee();
             price = ((NewOrderBackBean) o).getPrice();
+//            Log.i("RHG", "Fee: " + fee + " price: " + price);
             payList.get(0).setProductPrice(DecimalUtil.add(fee, price));
-            payItemAdapter.notifyDataSetChanged();
-            Log.i("RHG", "fee: " + fee + " price: " + price);
-
-            //Pay(null);
-//            Log.i("RHG", "订单号:" + tradeNumber);
+            payList.get(0).setDeliverFee(fee);
+            payItemAdapter.setPayList(payList);
         } else if (o instanceof String) {
             ToastHelper.getInstance()._toast(o.toString());
         }
