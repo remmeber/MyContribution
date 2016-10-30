@@ -264,12 +264,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_input_bar_bg_active.9.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_normal.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatting_setmode_keyboard_btn_normal.png"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_msg_state_fail_resend_pressed.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_msg_state_fail_resend_pressed.png"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_normal.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\drawable-hdpi\\ease_chatting_setmode_keyboard_btn_normal.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_new_friends_icon.png",
