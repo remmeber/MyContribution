@@ -1,8 +1,6 @@
 package com.rhg.qf.mvp.model;
 
 
-import android.util.Log;
-
 import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 

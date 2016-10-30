@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.bean.OrderDetailUrlBean;
-import com.rhg.qf.utils.DecimalUtil;
 
 import java.util.Locale;
 

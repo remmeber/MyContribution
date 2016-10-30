@@ -80,12 +80,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_sent_picture.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_row_received_voice_call.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice_call.xml"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_search_bar.xml",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_search_bar.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_row_received_voice_call.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice_call.xml"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_layout_emojicon_menu.xml",

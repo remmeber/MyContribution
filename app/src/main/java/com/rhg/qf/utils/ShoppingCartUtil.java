@@ -156,10 +156,7 @@ public class ShoppingCartUtil {
 
     public static boolean hasSelectedGoods(List<ShoppingCartBean> listGoods) {
         String count = getShoppingCount(listGoods)[0];
-        if ("0".equals(count)) {
-            return false;
-        }
-        return true;
+        return !"0".equals(count);
     }
 
     /**

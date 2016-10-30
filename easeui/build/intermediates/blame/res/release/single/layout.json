@@ -48,12 +48,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice_call.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_alert_dialog.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_alert_dialog.xml"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_contact.xml",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_contact.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_alert_dialog.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_alert_dialog.xml"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_widget_contact_list.xml",
@@ -64,12 +64,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_video_call.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_voice.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice.xml"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_search_bar.xml",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_search_bar.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_voice.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice.xml"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_expression.xml",

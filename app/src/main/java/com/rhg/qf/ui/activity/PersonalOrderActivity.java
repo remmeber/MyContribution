@@ -22,9 +22,9 @@ import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.mvp.presenter.UserSignInPresenter;
 import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
+import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
-import com.rhg.qf.ui.UIAlertView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.ArrayList;

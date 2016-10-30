@@ -3,7 +3,6 @@ package com.rhg.qf.mvp.model;
 import com.rhg.qf.bean.OrderUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
-import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
