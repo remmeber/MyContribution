@@ -3,7 +3,6 @@ package com.rhg.qf.ui.fragment;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -109,10 +108,33 @@ public class ShoppingCartFragment extends BaseFragment {
         }
     }
 
+/*    @Override
+    public void onStart() {
+        if(hasFetchData){
+
+        }
+        super.onStart();
+    }*/
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && hasFetchData) {
+            refresh();
+        }
+    }
+
     @Override
     protected void refresh() {
         super.refresh();
-        getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+        if (AccountUtil.getInstance().hasAccount()) {
+            userId = AccountUtil.getInstance().getUserID();
+            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+        } else {
+            ToastHelper.getInstance()._toast("当前用户未登录");
+            shoppingCartBeanList.clear();
+            updateListView();
+        }
     }
 
     /*  @Override
@@ -145,6 +167,7 @@ public class ShoppingCartFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 if (AccountUtil.getInstance().hasAccount()) {
+                    userId = AccountUtil.getInstance().getUserID();
                     getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
                 } else {
                     ToastHelper.getInstance()._toast("当前用户未登录");

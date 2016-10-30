@@ -1,7 +1,6 @@
 package com.rhg.qf.ui.fragment;
 
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,17 +8,17 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.AddOrNewAddressActivity;
-import com.rhg.qf.ui.activity.AddressActivity;
-import com.rhg.qf.ui.activity.DeliverInfoActivity;
-import com.rhg.qf.ui.activity.DeliverOrderActivity;
-import com.rhg.qf.ui.activity.OrderListActivity;
 import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.SignInListener;
 import com.rhg.qf.mvp.presenter.UserSignInPresenter;
 import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.third.UmengUtil;
+import com.rhg.qf.ui.activity.AddOrNewAddressActivity;
+import com.rhg.qf.ui.activity.AddressActivity;
+import com.rhg.qf.ui.activity.DeliverInfoActivity;
+import com.rhg.qf.ui.activity.DeliverOrderActivity;
+import com.rhg.qf.ui.activity.OrderListActivity;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.SizeUtil;
@@ -102,11 +101,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        if (!isSignIn && AccountUtil.getInstance().hasAccount()) {
+        /*if (!isSignIn && AccountUtil.getInstance().hasAccount()) {
             isSignIn = true;
             userName.setText(AccountUtil.getInstance().getNickName());
             ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
-        }
+        }*/
     }
 
     @Override
@@ -114,20 +113,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //        flTAB.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
-        if (AccountUtil.getInstance().hasAccount()) {
-            userName.setText(AccountUtil.getInstance().getNickName());
-            userName.setClickable(false);
-            ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(),
-                    userHeader);
-            isSignIn = true;
-        } else {
-            userName.setText("请登录");
-            userName.setClickable(true);
-//        userName.setText();//TODO 此处需要根据本地账户来判断显示
-            userName.setOnClickListener(this);
-            userName.setTag(R.id.userName);
-        }
-
+        checkAccount();
 
         myInfo.setText(R.string.myOrder);
 
@@ -183,6 +169,21 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         addressModify.setTag(8);
     }
 
+    private void checkAccount() {
+        if (AccountUtil.getInstance().hasAccount()) {
+            userName.setText(AccountUtil.getInstance().getNickName());
+            userName.setClickable(false);
+            ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(),
+                    userHeader);
+            isSignIn = true;
+        } else {
+            userName.setText("请登录");
+            userName.setClickable(true);
+            userName.setOnClickListener(this);
+            userName.setTag(R.id.userName);
+        }
+    }
+
     private View getViewById(View parent, int centerId, int targetId) {
         return parent.findViewById(centerId).findViewById(targetId);
     }
@@ -191,32 +192,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (AccountUtil.getInstance().hasAccount()) {
-                isSignIn = true;
-                if ("请登录".equals(userName.getText())) {
-                    userName.setText(AccountUtil.getInstance().getNickName());
-                    ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
-                }
-            } else {
-                isSignIn = false;
-                userName.setClickable(true);
-                userName.setText("请登录");
-                userHeader.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_camera_with_circle));
-            }
-        }
+        if(hasFetchData)
+            refresh();
     }
 
-    /*Fragment被activity覆盖后，重新显示出来时调用的方法*/
     @Override
-    public void onStart() {
-        super.onStart();
-        this.setUserVisibleHint(true);
+    protected void refresh() {
+        checkAccount();
     }
 
     @Override
     protected void showFailed() {
-
+        refresh();
     }
 
     @Override
