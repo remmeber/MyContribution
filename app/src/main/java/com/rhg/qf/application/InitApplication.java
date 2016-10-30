@@ -13,8 +13,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.BaseFragmentActivity;
 import com.rhg.qf.locationservice.LocationService;
+import com.rhg.qf.ui.activity.BaseFragmentActivity;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.umeng.socialize.PlatformConfig;
@@ -93,11 +93,9 @@ public class InitApplication extends MultiDexApplication implements Runnable{
 
     @Override
     public void onCreate() {
-        initBDMap();
+        new Thread(this).run();
         super.onCreate();
         initApplication = this;
-        initImageLoader();
-        new Thread().run();
     }
 
     /**
@@ -145,9 +143,11 @@ public class InitApplication extends MultiDexApplication implements Runnable{
 
     @Override
     public void run() {
-        EaseUI.getInstance().init(this);
+        initBDMap();
         initAccountUtil();
+        initImageLoader();
         initToast();
         thirdConfig();
+        EaseUI.getInstance().init(this);
     }
 }
