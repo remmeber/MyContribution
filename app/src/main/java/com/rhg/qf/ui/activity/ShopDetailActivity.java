@@ -56,20 +56,13 @@ public class ShopDetailActivity extends BaseFragmentActivity {
 
     @Override
     public void dataReceive(Intent intent) {
-        /*此ACTIVITY会接收上一个ACTIVITY的消息*/
         if (intent != null) {
             bundle = intent.getExtras();
             merchantName = bundle.getString(AppConstants.KEY_MERCHANT_NAME);
             merchantId = bundle.getString(AppConstants.KEY_MERCHANT_ID, "");
-            shopLogoUrl = bundle.getString(AppConstants.KEY_MERCHANT_LOGO);
-
-            merchantPhone = bundle.getString(AppConstants.KEY_OR_SP_PHONE, "无");
-            merchantAddress = bundle.getString(AppConstants.KEY_ADDRESS, "无");
-            merchantNote = bundle.getString(AppConstants.KEY_NOTE, "无");
         } else {
             merchantName = "";
             merchantId = "";
-            shopLogoUrl = "http://img2.3lian.com/2014/f2/37/d/40.jpg";
         }
     }
 

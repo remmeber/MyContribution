@@ -1,6 +1,7 @@
 package com.rhg.qf.application;
 
 import android.app.Service;
+import android.graphics.Bitmap;
 import android.os.Vibrator;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -8,6 +9,9 @@ import android.util.Log;
 import com.baidu.mapapi.SDKInitializer;
 import com.easemob.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.MemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LimitedAgeMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -28,7 +32,7 @@ import java.util.HashMap;
  * time：2016/5/28 16:22
  * email：1013773046@qq.com
  */
-public class InitApplication extends MultiDexApplication implements Runnable{
+public class InitApplication extends MultiDexApplication implements Runnable {
     public final static String QQID = "1105497604";
     public final static String QQKEY = "MdCq3ttlP0xlAPIg";
     public final static String WXID = "wxb066167618e700e6";/*已签名*/
@@ -131,10 +135,14 @@ public class InitApplication extends MultiDexApplication implements Runnable{
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
                 showImageForEmptyUri(R.drawable.ic_pic_failed)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
                 .cacheInMemory(true).cacheOnDisk(true).build();
+
+        MemoryCache memoryCache = new LimitedAgeMemoryCache(new LruMemoryCache(4 * 1024 * 1024), 15 * 60);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 getApplicationContext()).defaultDisplayImageOptions(defaultOptions)
+                .memoryCache(memoryCache)
                 .threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())

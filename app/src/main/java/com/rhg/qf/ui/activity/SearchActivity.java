@@ -255,7 +255,7 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
                 break;
         }
 
-        searchMerchantAdapter.setmData(null);
+//        searchMerchantAdapter.setmData(null);
     }
 
     @Override

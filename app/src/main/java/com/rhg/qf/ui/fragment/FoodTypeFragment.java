@@ -44,12 +44,10 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     @Bind(R.id.common_swipe)
     SwipeRefreshLayout commonSwipe;
 
-    String merchantName;
     RefreshListener refreshListener;
 
     @Override
     public void receiveData(Bundle arguments) {
-        merchantName = arguments.getString(AppConstants.KEY_MERCHANT_NAME);
     }
 
     @Override
@@ -133,7 +131,6 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
         intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
-        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, merchantName);
 //        intent.putExtra() //todo 传递参数
         startActivityForResult(intent, 1);
     }

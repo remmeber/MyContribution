@@ -1,5 +1,7 @@
 package com.rhg.qf.mvp.presenter;
 
+import android.util.Log;
+
 import com.rhg.qf.bean.GoodsDetailUrlBean;
 import com.rhg.qf.mvp.base.RxPresenter;
 import com.rhg.qf.mvp.model.GoodsDetailModel;
@@ -43,12 +45,13 @@ public class GoodsDetailPresenter extends RxPresenter<GoodsDetailContact.View<Go
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("RHG", "error: " + e.getMessage());
                     }
 
                     @Override
                     public void onNext(GoodsDetailUrlBean.GoodsDetailBean goodsDetailBean) {
 //                        baseView.showData(goodsDetailBean);
+                        Log.i("RHG", goodsDetailBean.toString());
                         view.showContent(goodsDetailBean);
                     }
                 });
