@@ -64,7 +64,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        hotFoodPresenter.getHotFoods(AppConstants.HOT_FOOD, hotFoodType, foodName);
+        hotFoodPresenter.getHotFoods(AppConstants.SEARCH_HOTFOOD, hotFoodType, foodName);
     }
 
     @Override

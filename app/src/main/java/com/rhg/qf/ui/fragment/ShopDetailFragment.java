@@ -8,6 +8,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.bean.MerchantInfoDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.MerchantInfoDetailPresenter;
+import com.rhg.qf.ui.activity.ShopDetailActivity;
 
 import java.util.Locale;
 
@@ -35,10 +36,11 @@ public class ShopDetailFragment extends BaseFragment {
         merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
     }
 
+
     @Override
     public void loadData() {
-        getMerchantInfoPresenter = new MerchantInfoDetailPresenter(this);
-        getMerchantInfoPresenter.getMerchantInfo(AppConstants.MERCHANT_INFO, "1");
+        /*getMerchantInfoPresenter = new MerchantInfoDetailPresenter(this);
+        getMerchantInfoPresenter.getMerchantInfo(AppConstants.MERCHANT_INFO, merchantId);*/
     }
 
     @Override
@@ -48,6 +50,8 @@ public class ShopDetailFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        getMerchantInfoPresenter = new MerchantInfoDetailPresenter(this);
+        getMerchantInfoPresenter.getMerchantInfo(AppConstants.MERCHANT_INFO, merchantId);
     }
 
     @Override
@@ -68,7 +72,11 @@ public class ShopDetailFragment extends BaseFragment {
                     _data.getAddress()));
             tvSellerNote.setText(String.format(Locale.ENGLISH, getContext().getResources().getString(R.string.tvMerchantNote),
                     _data.getMessage()));
+            if (mActivity != null) {
+                ((ShopDetailActivity) mActivity).setMerchantName(_data.getName());
+            }
         }
 
     }
+
 }

@@ -253,19 +253,9 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
-        Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PRODUCT_ID, bannerEntity.getID());
+        Intent intent = new Intent(getContext(), ShopDetailActivity.class);
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID, bannerEntity.getID());
         startActivity(intent);
-        /*Intent intent = new Intent(getContext(), ShopDetailActivity.class);
-        intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
-        intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
-        intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");
-        intent.putExtra(AppConstants.KEY_MERCHANT_ID, "20160517");
-        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, "荣哥土菜馆");
-        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, AppConstants.images[3]);
-        startActivity(intent);*/
-
-//        startActivity(new Intent(getContext(), HotFoodActivity.class));
     }
 
     @Override
@@ -278,11 +268,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     @Override
     public void onItemClickListener(int position, MerchantUrlBean.MerchantBean item) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
-
-        /*intent.putExtra(AppConstants.KEY_OR_SP_PHONE, "1234567890");
-        intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");
-        intent.putExtra(AppConstants.KEY_NOTE, "东南大学是一所985高校");*/
-
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getName());
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, item.getPic());

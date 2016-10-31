@@ -1,6 +1,8 @@
 package com.rhg.qf.ui.fragment;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +33,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    protected Activity mActivity;
 //    private Unbinder bind;
 
     public BaseFragment() {
@@ -105,6 +108,17 @@ public abstract class BaseFragment extends Fragment implements BaseView {
             Log.i("RHG", ".............refresh");
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mActivity = null;
+    }
 
     public int getLayoutResId() {
         return 0;

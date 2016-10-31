@@ -81,7 +81,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
         tbCenterTv.setText("店铺详情");
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.chevron_left_black));
         flTab.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
-        tvShopName.setText(merchantName);
+//        tvShopName.setText(merchantName);
         ImageUtils.showImage(shopLogoUrl, ivShopLogo);
         Fragment fragment;
         Bundle bundle = new Bundle();
@@ -141,4 +141,7 @@ public class ShopDetailActivity extends BaseFragmentActivity {
         super.onBackPressed();
     }
 
+    public void setMerchantName(String merchantName) {
+        tvShopName.setText(merchantName);
+    }
 }
