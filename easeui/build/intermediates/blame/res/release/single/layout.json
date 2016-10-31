@@ -84,12 +84,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_expression_gridview.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_activity_baidumap.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_activity_baidumap.xml"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_showvideo_activity.xml",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_showvideo_activity.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_activity_baidumap.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_activity_baidumap.xml"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\release\\layout\\ease_scroll_tab_item.xml",

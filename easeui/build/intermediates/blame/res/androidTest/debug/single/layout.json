@@ -120,16 +120,16 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_activity_show_big_image.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_expression.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_expression.xml"
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_fragment_chat.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_fragment_chat.xml"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_search_bar.xml",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_search_bar.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_fragment_chat.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_fragment_chat.xml"
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_expression.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_expression.xml"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_sent_picture.xml",

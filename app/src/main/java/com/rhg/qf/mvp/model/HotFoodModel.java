@@ -26,6 +26,7 @@ public class HotFoodModel {
                                     @Override
                                     public void call(Subscriber<? super List<HotFoodUrlBean.HotFoodBean>>
                                                              subscriber) {
+                                        //Log.i("RHG",hotFoodUrlBean.toString());
                                         subscriber.onNext(hotFoodUrlBean.getRows());
                                     }
                                 });

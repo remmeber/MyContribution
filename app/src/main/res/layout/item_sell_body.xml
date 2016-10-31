@@ -139,11 +139,13 @@
             android:id="@+id/tv_recommend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_small"
-            android:text="推荐理由\n"
+            android:layout_toEndOf="@id/foodType"
+            android:layout_toRightOf="@id/foodType"
+            android:maxWidth="150dp"
             android:textColor="@color/colorYellowNormal"
-            android:visibility="gone" />
+            android:textSize="@dimen/text_small"
+            tools:text="推荐理由\n好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃" />
 
         <ImageView
             android:id="@+id/homeForward"

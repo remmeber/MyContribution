@@ -8,10 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.HotFoodActivity;
-import com.rhg.qf.ui.activity.PersonalOrderActivity;
-import com.rhg.qf.ui.activity.SearchActivity;
-import com.rhg.qf.ui.activity.ShopDetailActivity;
 import com.rhg.qf.adapter.QFoodGridViewAdapter;
 import com.rhg.qf.adapter.RecycleMultiTypeAdapter;
 import com.rhg.qf.application.InitApplication;
@@ -32,6 +28,11 @@ import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.HomePresenter;
+import com.rhg.qf.ui.activity.GoodsDetailActivity;
+import com.rhg.qf.ui.activity.HotFoodActivity;
+import com.rhg.qf.ui.activity.PersonalOrderActivity;
+import com.rhg.qf.ui.activity.SearchActivity;
+import com.rhg.qf.ui.activity.ShopDetailActivity;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
 
@@ -105,10 +106,9 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void loadData() {
-        homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
-        if (!AccountUtil.getInstance().hasAccount()) {
+        /*if (!AccountUtil.getInstance().hasAccount()) {
             reStartLocation();
-        }
+        }*/
     }
 
 
@@ -193,6 +193,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         isLocated = true;
 //        tlLeftTV.setText(s);
         AccountUtil.getInstance().setLocation(s);
+        homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
 //        progressBar.setVisibility(View.GONE);
     }
 
@@ -252,6 +253,9 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
+        Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
+        intent.putExtra(AppConstants.KEY_PRODUCT_ID, bannerEntity.getID());
+        startActivity(intent);
         /*Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         intent.putExtra(AppConstants.KEY_PHONE, "1234567890");
         intent.putExtra(AppConstants.KEY_ADDRESS, "江苏省南京市江宁区东南大学");

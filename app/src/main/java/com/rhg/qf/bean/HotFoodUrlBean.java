@@ -135,5 +135,29 @@ public class HotFoodUrlBean {
         public void setPic(String pic) {
             Pic = pic;
         }
+
+        @Override
+        public String toString() {
+            return "HotFoodBean{" +
+                    "ID='" + ID + '\'' +
+                    ", RName='" + RName + '\'' +
+                    ", FName='" + FName + '\'' +
+                    ", Stars='" + Stars + '\'' +
+                    ", Delivery='" + Delivery + '\'' +
+                    ", Fee='" + Fee + '\'' +
+                    ", Price='" + Price + '\'' +
+                    ", Pic='" + Pic + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "HotFoodUrlBean{" +
+                "result=" + result +
+                ", msg='" + msg + '\'' +
+                ", total=" + total +
+                ", rows=" + rows.toString() +
+                '}';
     }
 }

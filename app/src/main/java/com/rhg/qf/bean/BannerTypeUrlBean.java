@@ -55,15 +55,15 @@ public class BannerTypeUrlBean {
 
     public static class BannerEntity {
 
-        String ID;
+        String id;
         String Src;
 
         public String getID() {
-            return ID;
+            return id;
         }
 
-        public void setID(String ID) {
-            this.ID = ID;
+        public void setID(String id) {
+            this.id = id;
         }
 
         public String getSrc() {
@@ -76,7 +76,17 @@ public class BannerTypeUrlBean {
 
         @Override
         public String toString() {
-            return "ID: " + ID + " Src: " + Src;
+            return "ID: " + id + " Src: " + Src;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "BannerTypeUrlBean{" +
+                "total='" + total + '\'' +
+                ", rows=" + rows.toString() +
+                ", result=" + result +
+                ", msg='" + msg + '\'' +
+                '}';
     }
 }

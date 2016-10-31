@@ -1,6 +1,7 @@
 package com.rhg.qf.ui.fragment;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -114,6 +115,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
         checkAccount();
+        userName.setTag(R.id.userName);
+        userName.setOnClickListener(this);
 
         myInfo.setText(R.string.myOrder);
 
@@ -179,8 +182,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         } else {
             userName.setText("请登录");
             userName.setClickable(true);
-            userName.setOnClickListener(this);
-            userName.setTag(R.id.userName);
+            isSignIn = false;
+            userHeader.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_camera_with_circle));
         }
     }
 

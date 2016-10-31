@@ -93,9 +93,10 @@ public class InitApplication extends MultiDexApplication implements Runnable{
 
     @Override
     public void onCreate() {
-        new Thread(this).run();
+        initBDMap();
         super.onCreate();
         initApplication = this;
+        new Thread(this).run();
     }
 
     /**
@@ -143,7 +144,6 @@ public class InitApplication extends MultiDexApplication implements Runnable{
 
     @Override
     public void run() {
-        initBDMap();
         initAccountUtil();
         initImageLoader();
         initToast();
