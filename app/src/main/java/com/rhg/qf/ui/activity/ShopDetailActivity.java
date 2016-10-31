@@ -60,9 +60,11 @@ public class ShopDetailActivity extends BaseFragmentActivity {
             bundle = intent.getExtras();
             merchantName = bundle.getString(AppConstants.KEY_MERCHANT_NAME);
             merchantId = bundle.getString(AppConstants.KEY_MERCHANT_ID, "");
+            shopLogoUrl = bundle.getString(AppConstants.KEY_MERCHANT_LOGO);
         } else {
             merchantName = "";
             merchantId = "";
+            shopLogoUrl="";
         }
     }
 

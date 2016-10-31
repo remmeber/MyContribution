@@ -255,6 +255,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, bannerEntity.getID());
+        intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, bannerEntity.getSrc());
         startActivity(intent);
     }
 

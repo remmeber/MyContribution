@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\push_top_out2.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\anim\\push_top_out2.xml"
-    },
-    {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_right.xml",
         "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_right.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\push_top_out2.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\anim\\push_top_out2.xml"
     },
     {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_out_to_right.xml",

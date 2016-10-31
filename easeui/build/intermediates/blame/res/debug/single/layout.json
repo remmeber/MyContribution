@@ -56,12 +56,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_sent_picture.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_layout_emojicon_menu.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_layout_emojicon_menu.xml"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_row_received_voice_call.xml",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice_call.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_layout_emojicon_menu.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_layout_emojicon_menu.xml"
     },
     {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_chat_menu_item.xml",
@@ -104,24 +104,24 @@
         "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_picture.xml"
     },
     {
-        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_conversation_item.xml",
-        "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_conversation_item.xml"
-    },
-    {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_row_received_voice.xml",
         "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_row_received_voice.xml"
+    },
+    {
+        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_conversation_item.xml",
+        "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_conversation_item.xml"
     },
     {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_layout_chat_primary_menu.xml",
         "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_layout_chat_primary_menu.xml"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_chat_message_list.xml",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_chat_message_list.xml"
-    },
-    {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_chat_message_list.xml",
         "source": "E:\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_chat_message_list.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_chat_message_list.xml",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\src\\main\\res\\layout\\ease_chat_message_list.xml"
     },
     {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\debug\\layout\\ease_row_received_bigexpression.xml",

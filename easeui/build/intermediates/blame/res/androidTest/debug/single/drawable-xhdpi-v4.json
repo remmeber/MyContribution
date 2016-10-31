@@ -4,12 +4,12 @@
         "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_item_file.png"
     },
     {
-        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_blue_add.png",
-        "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_blue_add.png"
-    },
-    {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_delete_expression.png",
         "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_delete_expression.png"
+    },
+    {
+        "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_blue_add.png",
+        "source": "E:\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_blue_add.png"
     },
     {
         "merged": "E:\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_location_pressed.png",
@@ -36,12 +36,12 @@
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_video_call_receive.png"
     },
     {
-        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_face_pressed.png",
-        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_face_pressed.png"
-    },
-    {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_close_icon.png",
         "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_close_icon.png"
+    },
+    {
+        "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_chat_face_pressed.png",
+        "source": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\ease_chat_face_pressed.png"
     },
     {
         "merged": "D:\\AndroidWorkSpace\\MyContribution\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\ease_app_panel_video_icon.9.png",

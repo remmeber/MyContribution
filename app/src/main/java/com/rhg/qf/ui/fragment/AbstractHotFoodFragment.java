@@ -10,12 +10,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.GoodsDetailActivity;
 import com.rhg.qf.adapter.HotFoodAdapter;
 import com.rhg.qf.bean.HotFoodUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.HotFoodPresenter;
+import com.rhg.qf.mvp.presenter.HotFoodSearchPresenter;
+import com.rhg.qf.ui.activity.GoodsDetailActivity;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
 
@@ -41,6 +42,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     List<HotFoodUrlBean.HotFoodBean> hotFoodBeanList = new ArrayList<>();
     HotFoodAdapter hotFoodAdapter;
     HotFoodPresenter hotFoodPresenter;
+    HotFoodSearchPresenter hotFoodSearchPresenter;
     int hotFoodType;
     String foodName;
 
@@ -64,7 +66,11 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
-        hotFoodPresenter.getHotFoods(AppConstants.SEARCH_HOTFOOD, hotFoodType, foodName);
+        if (hotFoodSearchPresenter == null)
+            hotFoodSearchPresenter = new HotFoodSearchPresenter(this);
+        hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCH_HOTFOOD, foodName, hotFoodType + 1);
+
+//        hotFoodPresenter.getHotFoods(AppConstants.SEARCH_HOTFOOD, hotFoodType, foodName);
     }
 
     @Override
@@ -81,9 +87,11 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                hotFoodPresenter.getHotFoods(AppConstants.HOT_FOOD, hotFoodType, foodName);
+//                hotFoodPresenter.getHotFoods(AppConstants.HOT_FOOD, hotFoodType, foodName);
+                hotFoodSearchPresenter.getSearchHotFood(AppConstants.SEARCH_HOTFOOD, foodName, hotFoodType + 1);
             }
         });
+
     }
 
 
@@ -97,8 +105,13 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
 
     @Override
     public void showSuccess(Object o) {
-        hotFoodBeanList = (List<HotFoodUrlBean.HotFoodBean>) o;
-        hotFoodAdapter.setHotFoodBeanList(hotFoodBeanList);
+        if (o instanceof HotFoodUrlBean) {
+            hotFoodBeanList = ((HotFoodUrlBean) o).getRows();
+            hotFoodAdapter.setHotFoodBeanList(hotFoodBeanList);
+        }else {
+            hotFoodBeanList = (List<HotFoodUrlBean.HotFoodBean>) o;
+            hotFoodAdapter.setHotFoodBeanList(hotFoodBeanList);
+        }
         if (commonRefresh.getVisibility() == View.VISIBLE)
             commonRefresh.setVisibility(View.GONE);
         if (commonSwipe.isRefreshing())

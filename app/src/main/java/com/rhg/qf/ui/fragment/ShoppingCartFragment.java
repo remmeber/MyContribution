@@ -119,6 +119,9 @@ public class ShoppingCartFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser && ToastHelper.getInstance().isShowing()) {
+            ToastHelper.getInstance().cancel();
+        }
         if (isVisibleToUser && hasFetchData) {
             refresh();
         }
