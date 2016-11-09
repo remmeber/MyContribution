@@ -21,6 +21,7 @@ public class LineProgress extends View {
     public static final float DEFAULT_TEXT_SIZE = 12;
     public static final int DEFAULT_COLOR = Color.GRAY;
     public static final int COVERED_COLOR = Color.GREEN;
+    public static final int STATE_NONE = 0;
     public static final int STATE_LEFT = 0;
     public static final int STATE_CENTER = 1;
     public static final int STATE_RIGHT = 2;
@@ -31,7 +32,7 @@ public class LineProgress extends View {
     float leftX;
     float centerX;
     float rightX;
-    private int state = -1;
+    private int state = STATE_NONE;
     private float strokeWidth = SizeUtil.dip2px(18);
     private float mTextSize = DEFAULT_TEXT_SIZE;
     private int mTextDefaultColor;/*默认字体颜色*/

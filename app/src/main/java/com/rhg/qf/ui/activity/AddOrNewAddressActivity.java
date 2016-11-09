@@ -16,6 +16,7 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
+import com.rhg.qf.utils.RegexUtils;
 import com.rhg.qf.utils.ToastHelper;
 
 import butterknife.Bind;
@@ -141,11 +142,11 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                     ToastHelper.getInstance()._toast(getResources().getString(R.string.contacts_Null));
                     break;
                 }
-                if (TextUtils.isEmpty(addNewAddressContactAddressContent.getText())) {
-                    ToastHelper.getInstance()._toast(getResources().getString(R.string.contactAddress_Null));
+                if (!RegexUtils.isPhoneNumber(addNewAddressContactsContent.getText().toString())) {
+                    ToastHelper.getInstance()._toast("手机号码格式错误");
                     break;
                 }
-                if (TextUtils.isEmpty(addNewAddressContentDetail.getText())) {
+                if (TextUtils.isEmpty(addNewAddressContactAddressContent.getText())) {
                     ToastHelper.getInstance()._toast(getResources().getString(R.string.contactAddress_Null));
                     break;
                 }

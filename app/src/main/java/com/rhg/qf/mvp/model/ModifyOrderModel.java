@@ -34,7 +34,7 @@ public class ModifyOrderModel {
                                 @Override
                                 public void call(Subscriber<? super String> subscriber) {
                                     if (baseBean.getResult() == 0)
-                                        subscriber.onNext(baseBean.getMsg());
+                                        subscriber.onNext("order_modify_success");
                                 }
                             });
                         }

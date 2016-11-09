@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.PayModel;
-import com.rhg.qf.utils.DecimalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -67,17 +66,17 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         });
 //        holder.rlPayCheck.setOnClickListener(this);
         holder.lyTotalCount.setVisibility(View.VISIBLE);
-        String _totalPrice;
+     /*   String _totalPrice;
         if ("0".equals(payList.get(position).getProductNumber()))
             _totalPrice = payList.get(position).getProductPrice();
         else
-            _totalPrice = /*Integer.valueOf(payList.get(position).getProductPrice()) *
-                    Integer.valueOf(payList.get(position).getProductNumber())*/
-                    DecimalUtil.multiplyWithScale(payList.get(position).getProductPrice(),
+            _totalPrice = *//*Integer.valueOf(payList.get(position).getProductPrice()) *
+                    Integer.valueOf(payList.get(position).getProductNumber())*//*
+                    DecimalUtil.multiplyWithScale(,
                             payList.get(position).getProductNumber(),
-                            2);
+                            2);*/
         holder.tvTotalMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                _totalPrice));
+                payList.get(position).getProductPrice()));
         ImageLoader.getInstance().displayImage(payList.get(position).getProductPic(), holder.ivPayImage);
         holder.tvDeliverFee.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.deliverFee),
                 payList.get(position).getDeliverFee() == null | "".equals(payList.get(position).getDeliverFee()) ? "0.00" : payList.get(position).getDeliverFee()));

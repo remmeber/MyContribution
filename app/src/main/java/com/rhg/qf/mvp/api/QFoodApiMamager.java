@@ -5,6 +5,7 @@ import com.rhg.qf.utils.NetUtil;
 import com.rhg.qf.utils.ToastHelper;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -23,30 +24,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class QFoodApiMamager {
     private static QFoodApiMamager mInstant;
-    private final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override
-        public Response intercept(Interceptor.Chain chain) throws IOException {
-            if (!NetUtil.isConnected(InitApplication.getInstance())) {
-                ToastHelper.getInstance()._toast("no network");
-                return null;
-            }
-            Request request = chain.request();
-            return chain.proceed(request);
-          /*  if (NetUtil.isConnected(InitApplication.getInstance())) {
-                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-                String cacheControl = request.cacheControl().toString();
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", cacheControl)
-                        .removeHeader("Pragma")
-                        .build();
-            } else {
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=86400")
-                        .removeHeader("Pragma")
-                        .build();
-            }*/
-        }
-    };
     private QFoodApiService QFoodApiService;
 
     private QFoodApiMamager() {
@@ -61,6 +38,18 @@ public class QFoodApiMamager {
                 .addInterceptor(signingInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .build();*/
+        final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
+            @Override
+            public Response intercept(Interceptor.Chain chain) throws IOException {
+                if (!NetUtil.isConnected(InitApplication.getInstance())) {
+                    ToastHelper.getInstance()._toast("no network");
+                    return null;
+                }
+                Request request = chain.request().newBuilder().addHeader("Cache-Control", String.format(Locale.ENGLISH,"max-age=%d", 60)).build();
+                return chain.proceed(request);
+            }
+        };
+
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
                 .readTimeout(5000, TimeUnit.MILLISECONDS)

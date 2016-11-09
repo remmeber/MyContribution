@@ -187,7 +187,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
      * 设置属性，监听等
      */
     protected void setUpView() {
-        titleBar.setTitle(toChatUsername);
+        titleBar.setTitle(EaseConstant.JJMS_SERVER);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) { // 单聊
             // 设置标题
             if (EaseUserUtils.getUserInfo(toChatUsername) != null) {

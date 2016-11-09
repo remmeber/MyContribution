@@ -1,6 +1,9 @@
 package com.rhg.qf.ui.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,12 +11,10 @@ import com.rhg.qf.R;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.DeliverStatePresenter;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
+import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.LineProgress;
 import com.rhg.qf.widget.MyRatingBar;
-import com.rhg.qf.ui.UIAlertView;
-
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -39,6 +40,7 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
     DeliverStatePresenter getDeliverStatePresenter;
     ModifyOrderPresenter modifyOrderPresenter;
     UIAlertView delDialog;
+
     @Override
     public void dataReceive(Intent intent) {
         orderId = intent.getStringExtra(AppConstants.KEY_ORDER_ID);
@@ -49,6 +51,7 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
         if (getDeliverStatePresenter == null)
             getDeliverStatePresenter = new DeliverStatePresenter(this);
         getDeliverStatePresenter.getDeliverState(AppConstants.ORDER_STYLE, orderId);
+
     }
 
     @Override
@@ -59,7 +62,7 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
 
     @Override
     protected void initData() {
-        tbLeftIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_chevron_left_black));
+        tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         rbDeliverService.setIsIndicator(false);
         rbMouthFeel.setIsIndicator(false);
         modifyOrderPresenter = new ModifyOrderPresenter(this);
@@ -70,7 +73,27 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
     @Override
     protected void showSuccess(Object s) {
         if (s instanceof String) {
-            foodDeliverProgress.setState(1);
+//            ToastHelper.getInstance()._toast(s.toString());
+            if ("40".equals(s)) {
+                foodDeliverProgress.setState(-1);
+                return;
+            }
+            if ("60".equals(s)) {
+                foodDeliverProgress.setState(0);
+                return;
+            }
+            if ("80".equals(s)) {
+                foodDeliverProgress.setState(1);
+                return;
+            }
+            if ("100".equals(s)) {
+                foodDeliverProgress.setState(2);
+                return;
+            }
+            if(((String) s).contains("order")){
+                finish();
+            }
+
         }
     }
 
@@ -87,8 +110,8 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
                 finish();
                 break;
             case R.id.bt_conform_receive:
-                if (foodDeliverProgress.getState() == -1) {
-                    ToastHelper.getInstance()._toast("当前商品还未下单！");
+                if (foodDeliverProgress.getState() == LineProgress.STATE_NONE) {
+                    ToastHelper.getInstance()._toast("商品正在等待接单！");
                     break;
                 }
                 if (foodDeliverProgress.getState() == LineProgress.STATE_LEFT) {
@@ -100,10 +123,15 @@ public class DeliverStateNoneActivity extends BaseAppcompactActivity {
                 dialogShow();
                 break;
             case R.id.bt_finish:
-                String mouthFeelRate = String.format(Locale.ENGLISH, "%.2f", getRate(rbMouthFeel));
-                String deliverServiceRate = String.format(Locale.ENGLISH, "%.2f", getRate(rbDeliverService));
-                ToastHelper.getInstance()._toast("口感评分：" + mouthFeelRate +
-                        ",送货服务：" + deliverServiceRate);
+//                final String mouthFeelRate = String.format(Locale.ENGLISH, "%.2f", getRate(rbMouthFeel));
+//                final String deliverServiceRate = String.format(Locale.ENGLISH, "%.2f", getRate(rbDeliverService));
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastHelper.getInstance()._toast("感谢您的评论"/*"口感评分：" + mouthFeelRate +
+                                ",送货服务：" + deliverServiceRate*/);
+                    }
+                },1000);
                 break;
         }
     }

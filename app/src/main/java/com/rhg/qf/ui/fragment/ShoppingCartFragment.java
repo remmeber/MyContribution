@@ -3,6 +3,7 @@ package com.rhg.qf.ui.fragment;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -18,6 +19,7 @@ import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
+import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.mvp.presenter.OrdersPresenter;
 import com.rhg.qf.ui.activity.PayActivity;
 import com.rhg.qf.utils.AccountUtil;
@@ -42,6 +44,7 @@ public class ShoppingCartFragment extends BaseFragment {
     List<ShoppingCartBean> shoppingCartBeanList;
     List<ShoppingCartBean.Goods> goodsList;
     QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
+    ModifyOrderPresenter modifyOrderPresenter;
     OrdersPresenter getOrdersPresenter;
 
     @Bind(R.id.tb_center_tv)
@@ -196,6 +199,15 @@ public class ShoppingCartFragment extends BaseFragment {
                 String countMoney = String.format(getResources().getString(R.string.countMoney), CountMoney);
                 tvCountMoney.setText(countMoney);
             }
+
+            @Override
+            public void removeData(String Id) {
+                if (modifyOrderPresenter == null)
+                    modifyOrderPresenter = new ModifyOrderPresenter(ShoppingCartFragment.this);
+                Log.i("RHG", "Id: " + Id);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(Id/*订单号*/,
+                        /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
+            }
         });
         updateListView();
     }
@@ -238,9 +250,14 @@ public class ShoppingCartFragment extends BaseFragment {
             createOrderAndToPay(addressBean);
             return;
         }
-        if (o instanceof String && "error".equals(o)) {
-            ToastHelper.getInstance()._toast(o.toString());
-            return;
+        if (o instanceof String) {
+            if ("error".equals(o)) {
+                ToastHelper.getInstance()._toast(o.toString());
+                return;
+            }
+            if (((String) o).contains("order")) {
+                refresh();
+            }
         }
 //        ShoppingCartUtil.delAllGoods();
         shoppingCartBeanList.clear();

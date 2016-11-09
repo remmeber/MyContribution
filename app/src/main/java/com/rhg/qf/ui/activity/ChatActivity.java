@@ -30,7 +30,7 @@ public class ChatActivity extends EaseBaseActivity {
         super.onCreate(arg0);
         setContentView(R.layout.activity_chat);
         activityInstance = this;
-        uname = dealUName(AccountUtil.getInstance().getNickName());
+        uname = "QF" + dealUName(AccountUtil.getInstance().getNickName());
         if (EMChat.getInstance().isLoggedIn()) {
             Log.i("RHG", "LOGIN SUCCESS");
             initView();

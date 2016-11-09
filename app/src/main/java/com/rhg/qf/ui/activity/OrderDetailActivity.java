@@ -19,7 +19,6 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
 import com.rhg.qf.mvp.presenter.OrderDetailPresenter;
 import com.rhg.qf.utils.DecimalUtil;
-import com.rhg.qf.utils.ToastHelper;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -109,8 +108,8 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
         ivEditRight.setVisibility(View.GONE);
         tvEdit.setVisibility(View.GONE);
-        if (orderTag != AppConstants.USER_ORDER_DELIVERING)
-            btDrawback.setVisibility(View.GONE);
+        /*if (orderTag != AppConstants.USER_ORDER_DELIVERING)
+            btDrawback.setVisibility(View.GONE);*/
         /*recycleview*/
         rcyPayItem.setLayoutManager(new LinearLayoutManager(this));
         rcyPayItem.setHasFixedSize(true);
@@ -145,8 +144,11 @@ public class OrderDetailActivity extends BaseAppcompactActivity {
             foodBean = (OrderDetailUrlBean.OrderDetailBean) s;
             setData(foodBean);
         }
-        if (s instanceof String)
-            ToastHelper.getInstance()._toast((String) s);
+        if (s instanceof String) {
+            if (((String) s).contains("order"))
+                finish();
+//            ToastHelper.getInstance()._toast((String) s);
+        }
     }
 
     private void setData(OrderDetailUrlBean.OrderDetailBean orderDetail) {

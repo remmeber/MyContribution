@@ -20,7 +20,6 @@ import com.rhg.qf.bean.HeaderTypeModel;
 import com.rhg.qf.bean.HomeBean;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.bean.RecommendListTypeModel;
-import com.rhg.qf.bean.RecommendListUrlBean;
 import com.rhg.qf.bean.RecommendTextTypeModel;
 import com.rhg.qf.bean.TextTypeBean;
 import com.rhg.qf.constants.AppConstants;
@@ -28,7 +27,6 @@ import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.HomePresenter;
-import com.rhg.qf.ui.activity.GoodsDetailActivity;
 import com.rhg.qf.ui.activity.HotFoodActivity;
 import com.rhg.qf.ui.activity.PersonalOrderActivity;
 import com.rhg.qf.ui.activity.SearchActivity;
@@ -53,39 +51,26 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         RecycleMultiTypeAdapter.OnSearch,
         RcvItemClickListener<MerchantUrlBean.MerchantBean>,
         View.OnClickListener {
+
     FavorableTypeModel favorableTypeModel;
-
     BannerTypeBean bannerTypeBean;
-
     TextTypeBean textTypeBean;
-
     RecommendListTypeModel recommendListTypeModel;
-    List<RecommendListUrlBean.RecommendShopBeanEntity> recommendShopBeanEntityList = new ArrayList<>();
-
     RecycleMultiTypeAdapter recycleMultiTypeAdapter;
-//    ProgressBar progressBar;
-
-//    View view;
-    /*toolbar 相关*/
-    /*RelativeLayout tlLeftRL;
-    ImageView tlLeftIV;
-    TextView tlLeftTV;
-    TextView tlCenterTV;
-    ImageView tlRightLL;*/
-    /*toolbar 相关*/
 
     HomePresenter homePresenter;
-    //itme的数据类型集合
-    List<Object> mData;
-
     MyLocationListener myLocationListener;
+
+    List<Object> mData;
     boolean isLocated;
+
     @Bind(R.id.home_recycle)
     RecyclerView home_rcv;
     @Bind(R.id.home_swipe)
     SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
+        AppConstants.DEBUG = true;
         homePresenter = new HomePresenter(this);
         myLocationListener = new MyLocationListener(this);
         favorableTypeModel = new FavorableTypeModel();
@@ -111,14 +96,15 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         }*/
     }
 
+    @Override
+    protected void refresh() {
+        if(!isLocated){
+            reStartLocation();
+        }
+    }
 
     @Override
     protected void initData() {
-        /*tlLeftIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_green));
-        tlLeftRL.setOnClickListener(this);
-        tlCenterTV.setOnClickListener(this);
-        tlRightLL.setOnClickListener(this);*/
-
         mData = new ArrayList<>();
         recycleMultiTypeAdapter = new RecycleMultiTypeAdapter(getContext(), mData);
         recycleMultiTypeAdapter.setBannerClickListener(this);
@@ -134,9 +120,10 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                /*if (TextUtils.isEmpty(tlLeftTV.getText()) || "null".equals(tlLeftTV.getText())) {
+                if("".equals(AccountUtil.getInstance().getLatitude())) {
                     reStartLocation();
-                }*/
+                    return;
+                }
                 homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
             }
         });
@@ -191,7 +178,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     @Override
     public void showLocSuccess(String s) {
         isLocated = true;
-//        tlLeftTV.setText(s);
         AccountUtil.getInstance().setLocation(s);
         homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
 //        progressBar.setVisibility(View.GONE);
@@ -211,8 +197,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
                 R.layout.item_grid_rcv));
         mData.add(favorableTypeModel);
         mData.add(new RecommendTextTypeModel());
-//        recommendListTypeModel.setOnItemClick(this);
-//        recommendListTypeModel.setHomeRecycleAdapter(new HomeRecycleAdapter(getContext()));
         mData.add(recommendListTypeModel);
         mData.add(new FooterTypeModel("FooterType", R.color.colorPrimaryDark));
         recycleMultiTypeAdapter.notifyDataSetChanged();

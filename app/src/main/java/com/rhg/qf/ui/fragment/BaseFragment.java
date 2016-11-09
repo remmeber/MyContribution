@@ -104,8 +104,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     }
 
     protected void refresh() {
-        if (AppConstants.DEBUG)
-            Log.i("RHG", ".............refresh");
     }
 
     @Override
@@ -157,8 +155,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
         if (mLocationListener == null) {
             mLocationListener = getLocationListener();
-            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
         }
+        locationService.setLocationOption(locationService.getDefaultLocationClientOption());
         locationService.registerListener(mLocationListener);
 //        getLocation(locationService, mLocationListener);
         mLocationListener.getLocation(locationService);

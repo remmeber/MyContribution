@@ -61,6 +61,20 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     }
 
     @Override
+    protected void refresh() {
+        commonRefresh.setVisibility(View.VISIBLE);
+        getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, style);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && hasFetchData) {
+            refresh();
+        }
+    }
+
+    @Override
     public void loadData() {
         commonRefresh.setVisibility(View.VISIBLE);
         getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, style);
