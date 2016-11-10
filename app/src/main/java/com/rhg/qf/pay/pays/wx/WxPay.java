@@ -41,17 +41,13 @@ public class WxPay implements IPayable {
     private IWXAPI msgApi;
     //生成预付单需要的参数
     private Map<String, String> paramsForPrepay = null;
-    //预付单
-    private Map<String, String> resultOfPrepay;
 
     public WxPay() {
-//        getPrepayId = new GetPrepayIdImpl(this);
     }
 
     @Override
     public String Pay(Activity activity, OrderInfo orderInfo, String prepayId) {
         boolean isSuccess = msgApi.sendReq(BuildCallAppParams());
-        Log.i("RHG", "SUCCESS ?:" + isSuccess);
         return String.valueOf(isSuccess);
     }
 
@@ -116,12 +112,11 @@ public class WxPay implements IPayable {
             String content = new String(response);
         /*content = content.replace("<![CDATA[", "");
         content = content.replace("]]>", "");*/
-            Log.i("RHG", "response: " + content);
+//            Log.i("RHG", "response: " + content);
 //        return null;
 //        Map<String, String> map = XmlUtil.DecodeXmlToMap(content);
             JSONObject jsonObject = new JSONObject(content);
             if ("SUCCESS".equals(jsonObject.get("return_code"))) {
-                Log.i("RHG", "response: " + jsonObject.get("appid") + " " + jsonObject.get("mch_id") + " " + jsonObject.get("nonce_str") + " " + jsonObject.get("trade_type"));
                 paramsForPrepay.put("appid", (String) jsonObject.get("appid"));
                 paramsForPrepay.put("mch_id", (String) jsonObject.get("mch_id"));
                 paramsForPrepay.put("nonce_str", (String) jsonObject.get("nonce_str"));
@@ -144,7 +139,15 @@ public class WxPay implements IPayable {
         req.packageValue = "Sign=WXPay";
         req.nonceStr = paramsForPrepay.get("nonce_str");
         req.timeStamp = String.valueOf(GetTimeStamp());
-        req.sign = paramsForPrepay.get("sign");
+        Map<String, String> signParams = new LinkedHashMap<>();
+        signParams.put("appid", req.appId);
+        signParams.put("noncestr", req.nonceStr);
+        signParams.put("package", req.packageValue);
+        signParams.put("partnerid", req.partnerId);
+        signParams.put("prepayid", req.prepayId);
+        signParams.put("timestamp", req.timeStamp);
+        req.sign = Sign(signParams);
+        Log.i("RHG", req.sign);
         return req;
     }
 
