@@ -54,7 +54,7 @@ public interface IPayable {
      * @param orderInfo 规范的订单参数信息
      * @return
      */
-    String GetPrepayId(OrderInfo orderInfo);
+    void GenParam(OrderInfo orderInfo);
 
     void unRegisterApp();
 }

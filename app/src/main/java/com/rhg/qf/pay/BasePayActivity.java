@@ -108,9 +108,9 @@ public abstract class BasePayActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String prepayId = payManager.GetPrepayId(orderInfo);
+                payManager.GenParam(orderInfo);
                 // 4.调起支付
-                payManager.Pay(null, null, prepayId);
+                payManager.Pay(null, null, null);
             }
         }).start();
 
