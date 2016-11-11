@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.ui.UIAlertView;
-import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.widget.SlideView;
@@ -173,9 +172,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         goods.slideView.shrink();
 
         boolean isChildSelected = goods.isChildSelected();
-        String goodsprice = String.format(context.getResources().getString(R.string.countMoney),
-                DecimalUtil.addWithScale(goods.getFee() == null | "".equals(goods.getFee()) ? "0.00" : goods.getFee(),
-                        goods.getPrice() == null | "".equals(goods.getPrice()) ? "0.00" : goods.getPrice(), 2));
+        String goodsPrice = goods.getPrice();
         String goodsNum = goods.getNumber();
         String goodsName = goods.getGoodsName();
         String goodsLogoUrl = goods.getGoodsLogoUrl();
@@ -183,7 +180,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         ImageUtils.showImage(goodsLogoUrl, childViewHolder.goodsLogo);
         childViewHolder.goodsLogo.setDrawingCacheEnabled(true);
         childViewHolder.tvGoodsName.setText(goodsName);
-        childViewHolder.tvGoodsPrice.setText(goodsprice);
+        childViewHolder.tvGoodsPrice.setText(goodsPrice);
         childViewHolder.goodsCount.setText(goodsNum);
 
         childViewHolder.btGoodsCheck.setTag(groupPosition + "," + childPosition);

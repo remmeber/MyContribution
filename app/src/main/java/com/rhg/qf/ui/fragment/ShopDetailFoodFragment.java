@@ -35,7 +35,7 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
     ShopDetailPresenter shopDetailPresenter;
 
     String merchantId;
-//    String merchantName;
+    String merchantName;
 
     public ShopDetailFoodFragment() {
         shopDetailPresenter = new ShopDetailPresenter(this);
@@ -44,7 +44,7 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
     @Override
     public void receiveData(Bundle arguments) {
         merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID);
-//        merchantName = arguments.getString(AppConstants.KEY_MERCHANT_NAME);
+        merchantName = arguments.getString(AppConstants.KEY_MERCHANT_NAME);
     }
 
     @Override
@@ -97,7 +97,8 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
             for (int i = 0; i < shopDetailLocalModel.getVarietys().size(); i++) {
                 if (i >= fragments.size()) {
                     Bundle bundle = new Bundle();
-//                    bundle.putString(AppConstants.KEY_MERCHANT_NAME, merchantName);
+                    bundle.putString(AppConstants.KEY_MERCHANT_ID, merchantId);
+                    bundle.putString(AppConstants.KEY_MERCHANT_NAME, merchantName);
                     fragment = new FoodTypeFragment();
                     fragment.setArguments(bundle);
                 } else

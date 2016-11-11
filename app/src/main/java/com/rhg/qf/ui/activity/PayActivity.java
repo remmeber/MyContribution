@@ -330,7 +330,7 @@ public class PayActivity extends BasePayActivity implements PayItemAdapter.PayIt
         float count = 0;
         for (PayModel.PayBean _payBean : payList) {
             if (_payBean.isChecked())
-                count += Float.valueOf(DecimalUtil.multiply(_payBean.getProductPrice(), _payBean.getProductNumber()));
+                count += Float.valueOf(_payBean.getProductPrice());
         }
         return String.valueOf(count);
     }

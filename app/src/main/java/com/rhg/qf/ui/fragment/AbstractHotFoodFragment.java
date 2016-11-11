@@ -108,7 +108,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         if (o instanceof HotFoodUrlBean) {
             hotFoodBeanList = ((HotFoodUrlBean) o).getRows();
             hotFoodAdapter.setHotFoodBeanList(hotFoodBeanList);
-        }else {
+        } else {
             hotFoodBeanList = (List<HotFoodUrlBean.HotFoodBean>) o;
             hotFoodAdapter.setHotFoodBeanList(hotFoodBeanList);
         }
@@ -122,6 +122,8 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     public void onItemClickListener(int position, HotFoodUrlBean.HotFoodBean item) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getRId());
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getRName());
         startActivity(intent);
     }
 

@@ -17,9 +17,11 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.viewHolder.BannerImageHolder;
 import com.rhg.qf.application.InitApplication;
 import com.rhg.qf.bean.AddressUrlBean;
+import com.rhg.qf.bean.FoodInfoBean;
 import com.rhg.qf.bean.GoodsDetailUrlBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.bean.ShareModel;
+import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.bean.SignInBackBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.datebase.AccountDao;
@@ -35,6 +37,7 @@ import com.rhg.qf.mvp.presenter.contact.GoodsDetailContact;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.AccountUtil;
+import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.ShoppingCartWithNumber;
@@ -84,21 +87,27 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
 
     Bundle bundle;
     GoodsDetailPresenter goodsDetailPresenter;
+
     String foodId;
+    String merchantId;
+    String merchantName;
     String image;
+    String price;
+    boolean isExitInDB;
+
     UserSignInPresenter userSignInPresenter;
     UserSignUpPresenter userSignUpPresenter;
     GetAddressPresenter getAddressPresenter;
+
     String nickName;
     String openid;
     String unionid;
     String headImageUrl;
     AddressUrlBean.AddressBean addressBean;
-    String merchantName;
+
     private boolean isNeedLoc;
     private String location;
     private MyLocationListener myLocationListener;
-    private String price;
     private UmengUtil signUtil;
 
 
@@ -109,23 +118,6 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
         if (TextUtils.isEmpty(location)) {
             isNeedLoc = true;
         }
-
-        /*
-        LikeDao likeDao = LikeDao.getInstance();
-        likeDao.saveGoodsLikeInfo("20160518", 1).saveGoodsLikeInfo("20160519", 1)
-                .saveGoodsLikeInfo("20160520", 1);
-        if (likeDao.isExistLike("20160518")) {
-            int _num = likeDao.getNumByProductID("20160518");
-            if (_num == 1)
-                isLike = true;
-        }
-        *//*goodsDetailBean = new GoodsDetailBean("20160518", images, isLike,
-                "黄焖鸡米饭", "销量:90", "很好吃", "￥:16");*//*
-        goodsDetailBean.setLike(isLike);*/
-        //todo 模拟购物车数量数据库
-        ShoppingCartUtil.addGoodToCart("20160518", "3");
-        ShoppingCartUtil.addGoodToCart("20160519", "3");
-        ShoppingCartUtil.addGoodToCart("20160522", "3");
     }
 
     @Override
@@ -159,6 +151,7 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
     public void dataReceive(Intent intent) {
         if (intent != null) {
             foodId = intent.getStringExtra(AppConstants.KEY_PRODUCT_ID);
+            merchantId = intent.getStringExtra(AppConstants.KEY_MERCHANT_ID);
             merchantName = intent.getStringExtra(AppConstants.KEY_MERCHANT_NAME);
 //            merchantSrc = bundle.getString(AppConstants.KEY_PRODUCT_PRICE, null);
         }
@@ -199,11 +192,12 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
         tbCenterTv.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
         AccountDao accountDao = AccountDao.getInstance();
-        String _productId = String.valueOf(foodId);
-        if (accountDao.isExistGood(_productId)) {
-            String _num = accountDao.getNumByProductID(_productId);
-            etNum.setText(_num);
-            ivAddToShoppingCart.setNum(_num);
+        if (accountDao.isExist(ShoppingCartBean.KEY_MERCHANT_ID, merchantId) &&
+                accountDao.isExist(ShoppingCartBean.KEY_FOOD_ID, foodId)) {
+                isExitInDB = true;
+                String _num = accountDao.getNumByFoodID(foodId);
+                etNum.setText(_num);
+                ivAddToShoppingCart.setNum(_num);
         } else {
             etNum.setText("0");
             ivAddToShoppingCart.setNum("0");
@@ -318,19 +312,33 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
                 reStartLocation();
                 break;
             case R.id.ivReduce:
-                int t = Integer.valueOf(etNum.getText().toString());
-                if (t != 0) {
-                    etNum.setText(String.valueOf(t - 1));
-                    ivAddToShoppingCart.setNum(String.valueOf(t - 1));
-                    //TODO 需要更新购物车数据库的数据
+                String Num = "0".equals(etNum.getText().toString()) ? "0" : DecimalUtil.subtract(etNum.getText().toString(), "1");
+                etNum.setText(Num);
+                ivAddToShoppingCart.setNum(Num);
+                if (isExitInDB) {
+                    ShoppingCartUtil.updateGoodsNumber(foodId, Num);
+                } else {
+                    FoodInfoBean foodInfoBean = new FoodInfoBean(foodId, Num, merchantName, tvGoodsName.getText().toString(), image,
+                            price, merchantId);
+                    ShoppingCartUtil.addGoodToCart(foodInfoBean);
+                    isExitInDB = true;
                 }
                 break;
             case R.id.ivAdd:
-                String text = etNum.getText().toString();
-                int num = Integer.valueOf(text);
-                etNum.setText(String.valueOf(num + 1));
-                ivAddToShoppingCart.setNum(String.valueOf(num + 1));
+                String foodNum = DecimalUtil.add(etNum.getText().toString(), "1");
+                etNum.setText(foodNum);
+                ivAddToShoppingCart.setNum(foodNum);
                 //TODO 需要更新购物车数据库的数据
+                if (isExitInDB) {
+                    ShoppingCartUtil.updateGoodsNumber(foodId, foodNum);
+                } else {
+                    FoodInfoBean foodInfoBean = new FoodInfoBean(foodId, foodNum, merchantName, tvGoodsName.getText().toString(), image,
+                            price, merchantId);
+                    Log.i("RHG", foodInfoBean.toString());
+                    ShoppingCartUtil.addGoodToCart(foodInfoBean);
+                    isExitInDB = true;
+                }
+
                 break;
             case R.id.ivAddToShoppingCart:
                /* LikeDao likeDao = LikeDao.getInstance();

@@ -14,21 +14,21 @@ import android.widget.TextView;
 import com.rhg.qf.R;
 import com.rhg.qf.adapter.QFoodShoppingCartExplAdapter;
 import com.rhg.qf.bean.AddressUrlBean;
-import com.rhg.qf.bean.OrderUrlBean;
+import com.rhg.qf.bean.FoodInfoBean;
 import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.mvp.presenter.ModifyOrderPresenter;
-import com.rhg.qf.mvp.presenter.OrdersPresenter;
 import com.rhg.qf.ui.activity.PayActivity;
 import com.rhg.qf.utils.AccountUtil;
-import com.rhg.qf.utils.DecimalUtil;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.rhg.qf.widget.SwipeDeleteExpandListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -45,7 +45,7 @@ public class ShoppingCartFragment extends BaseFragment {
     List<ShoppingCartBean.Goods> goodsList;
     QFoodShoppingCartExplAdapter QFoodShoppingCartExplAdapter;
     ModifyOrderPresenter modifyOrderPresenter;
-    OrdersPresenter getOrdersPresenter;
+//    OrdersPresenter getOrdersPresenter;
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTV;
@@ -100,15 +100,63 @@ public class ShoppingCartFragment extends BaseFragment {
 
     @Override
     public void loadData() {
-        getOrdersPresenter = new OrdersPresenter(this);
+//        getOrdersPresenter = new OrdersPresenter(this);
         if (AccountUtil.getInstance().hasAccount()) {
-            userId = AccountUtil.getInstance().getUserID();
-            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+//            userId = AccountUtil.getInstance().getUserID();
+//            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+            List<FoodInfoBean> foodInfoBeanList = ShoppingCartUtil.getAllProductID();
+            FoodInfoBean foodInfoBean = foodInfoBeanList.get(0);
+            Log.i("RHG", foodInfoBean.toString());
+            Collections.sort(foodInfoBeanList, new Comparator<FoodInfoBean>() {
+                @Override
+                public int compare(FoodInfoBean o1, FoodInfoBean o2) {
+                    return o1.getMerchantId().compareTo(o2.getMerchantId());
+                }
+            });
+
+            setData(foodInfoBeanList);
         } else {
             ToastHelper.getInstance()._toast("当前用户未登录");
             shoppingCartBeanList.clear();
             updateListView();
         }
+    }
+
+    private void setData(List<FoodInfoBean> foodInfoBeanList) {
+        shoppingCartBeanList.clear();
+        String lastMerchantId = "-1";
+        String newMerchantId;
+        ShoppingCartBean shoppingCartBean = null;
+        List<ShoppingCartBean.Goods> goodsList = null;
+        for (FoodInfoBean foodInfoBean : foodInfoBeanList) {
+            newMerchantId = foodInfoBean.getMerchantId();
+
+            if (!newMerchantId.equals(lastMerchantId)) {
+                shoppingCartBean = new ShoppingCartBean();
+            }
+            if (shoppingCartBean == null)
+                throw new NullPointerException("can not apply null object");
+            shoppingCartBean.setMerchantName(foodInfoBean.getMerchantName());
+            shoppingCartBean.setMerID(foodInfoBean.getMerchantId());
+            if (!newMerchantId.equals(lastMerchantId))
+                goodsList = new ArrayList<>();
+            ShoppingCartBean.Goods goods = new ShoppingCartBean.Goods();
+            goods.setGoodsName(foodInfoBean.getFoodName());
+            goods.setGoodsLogoUrl(foodInfoBean.getFoodUri());
+            goods.setPrice(foodInfoBean.getFoodPrice());
+            goods.setGoodsID(foodInfoBean.getFoodId());
+            goods.setNumber(foodInfoBean.getFoodNum());
+            if (goodsList == null)
+                throw new NullPointerException("can not apply null object");
+            goodsList.add(goods);
+            if (!newMerchantId.equals(lastMerchantId)) {
+                shoppingCartBean.setGoods(goodsList);
+                shoppingCartBeanList.add(shoppingCartBean);
+                lastMerchantId = newMerchantId;
+            }
+//            ShoppingCartUtil.addGoodToCart(orderBean.getID(), orderBean.getRName());
+        }
+        updateListView();
     }
 
 /*    @Override
@@ -135,7 +183,9 @@ public class ShoppingCartFragment extends BaseFragment {
         super.refresh();
         if (AccountUtil.getInstance().hasAccount()) {
             userId = AccountUtil.getInstance().getUserID();
-            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+//            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+            List<FoodInfoBean> foodInfoBeanList = ShoppingCartUtil.getAllProductID();
+            setData(foodInfoBeanList);
         } else {
             ToastHelper.getInstance()._toast("当前用户未登录");
             shoppingCartBeanList.clear();
@@ -174,7 +224,9 @@ public class ShoppingCartFragment extends BaseFragment {
             public void onRefresh() {
                 if (AccountUtil.getInstance().hasAccount()) {
                     userId = AccountUtil.getInstance().getUserID();
-                    getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+//                    getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
+                    List<FoodInfoBean> foodInfoBeanList = ShoppingCartUtil.getAllProductID();
+                    setData(foodInfoBeanList);
                 } else {
                     ToastHelper.getInstance()._toast("当前用户未登录");
                 }
@@ -260,7 +312,7 @@ public class ShoppingCartFragment extends BaseFragment {
             }
         }
 //        ShoppingCartUtil.delAllGoods();
-        shoppingCartBeanList.clear();
+        /*shoppingCartBeanList.clear();
         for (OrderUrlBean.OrderBean orderBean : (List<OrderUrlBean.OrderBean>) o) {
             ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
             List<ShoppingCartBean.Goods> goodsList = new ArrayList<>();
@@ -276,7 +328,7 @@ public class ShoppingCartFragment extends BaseFragment {
             shoppingCartBeanList.add(shoppingCartBean);
 //            ShoppingCartUtil.addGoodToCart(orderBean.getID(), orderBean.getRName());
         }
-        updateListView();
+        updateListView();*/
     }
 
     private void createOrderAndToPay(AddressUrlBean.AddressBean addressBean) {
@@ -286,23 +338,10 @@ public class ShoppingCartFragment extends BaseFragment {
         payModel.setReceiver(addressBean.getName());
         payModel.setPhone(addressBean.getPhone());
         payModel.setAddress(addressBean.getAddress().concat(addressBean.getDetail()));
-        ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
-        List<ShoppingCartBean.Goods> goodsList = ShoppingCartUtil.getSelectGoods(shoppingCartBeanList);
-        for (ShoppingCartBean.Goods _goods : goodsList) {
-            PayModel.PayBean _pay = new PayModel.PayBean();
-            _pay.setMerchantName(_goods.getGoodsName());
-            _pay.setProductName(_goods.getGoodsName());
-            _pay.setChecked(true);
-            _pay.setProductId(_goods.getGoodsID());
-            _pay.setProductNumber(_goods.getNumber());
-            _pay.setProductPic(_goods.getGoodsLogoUrl());
-            _pay.setDeliverFee(_goods.getFee());
-            _pay.setProductPrice(DecimalUtil.add(_goods.getPrice(), _goods.getFee()));
-            payBeen.add(_pay);
-        }
+        ArrayList<PayModel.PayBean> payBeen = ShoppingCartUtil.getSelectGoods(shoppingCartBeanList);
         payModel.setPayBeanList(payBeen);
         intent.putExtra(AppConstants.KEY_PARCELABLE, payModel);
-        intent.putExtra(AppConstants.ORDER_STYLE, AppConstants.USER_ORDER_UNPAID);
+//        intent.putExtra(AppConstants.ORDER_STYLE, AppConstants.USER_ORDER_UNPAID);
         startActivity(intent);
     }
 

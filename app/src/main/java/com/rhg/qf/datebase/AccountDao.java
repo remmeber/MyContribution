@@ -3,8 +3,10 @@ package com.rhg.qf.datebase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.rhg.qf.bean.AddressUrlBean;
+import com.rhg.qf.bean.FoodInfoBean;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.constants.AppConstants;
 
@@ -74,12 +76,17 @@ public class AccountDao {
     }*/
 
 
-    public boolean isExistGood(String productID) {
-        if (productID == null) {
+    /**
+     * @param Name ShoppingCartBean.KEY_FOOD_ID or ShoppingCartBean.KEY_MERCHANT_ID
+     * @param ID   productId or merchantId
+     * @return
+     */
+    public boolean isExist(String Name, String ID) {
+        if (ID != null && "".equals(ID)) {
             return false;
         }
         db = AccountDBHelper.getInstance().getReadableDatabase();
-        cursor = db.query(AccountDBHelper.Q_SHOPPING_CART_TABLE, null, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID}, null, null, null);
+        cursor = db.query(AccountDBHelper.Q_SHOPPING_CART_TABLE, null, Name + "=?", new String[]{ID}, null, null, null);
         boolean isExist = cursor.moveToFirst();
         close();
         return isExist;
@@ -88,17 +95,21 @@ public class AccountDao {
     /**
      * 添加购物车商品信息
      *
-     * @param productID 规格ID
-     * @param num       商品数量
+     * @param foodInfoBean The food info object which should be added in to db
      */
-    public void saveShoppingInfo(String productID, String num) {
-        if (productID == null || "".equals(productID) || num == null || "".equals(num)) {
+    public void saveCartInfo(FoodInfoBean foodInfoBean) {
+        if (foodInfoBean == null) {
             return;
         }
         db = AccountDBHelper.getInstance().getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ShoppingCartBean.KEY_PRODUCT_ID, productID);
-        values.put(ShoppingCartBean.KEY_NUM, num);
+        values.put(ShoppingCartBean.KEY_FOOD_ID, foodInfoBean.getFoodId() == null ? "" : foodInfoBean.getFoodId());
+        values.put(ShoppingCartBean.KEY_FOOD_NAME, foodInfoBean.getFoodName());
+        values.put(ShoppingCartBean.KEY_MERCHANT_NAME, foodInfoBean.getMerchantName());
+        values.put(ShoppingCartBean.KEY_FOOD_URI, foodInfoBean.getFoodUri());
+        values.put(ShoppingCartBean.KEY_NUM, foodInfoBean.getFoodNum());
+        values.put(ShoppingCartBean.KEY_FOOD_PRICE, foodInfoBean.getFoodPrice());
+        values.put(ShoppingCartBean.KEY_MERCHANT_ID, foodInfoBean.getMerchantId());
         db.insert(AccountDBHelper.Q_SHOPPING_CART_TABLE, null, values);
         close();
     }
@@ -141,7 +152,7 @@ public class AccountDao {
         }
         db = AccountDBHelper.getInstance().getReadableDatabase();
         for (int i = 0; i < itemList.size(); i++) {
-            db.delete(AccountDBHelper.Q_SHOPPING_CART_TABLE, ShoppingCartBean.KEY_PRODUCT_ID + " =?", new String[]{itemList.get(i)});
+            db.delete(AccountDBHelper.Q_SHOPPING_CART_TABLE, ShoppingCartBean.KEY_FOOD_ID + " =?", new String[]{itemList.get(i)});
         }
         close();
     }*/
@@ -152,7 +163,7 @@ public class AccountDao {
      * @param productID 规格ID
      * @param num       商品数量
      */
-    public void updateGoodsNum(String productID, String num) {
+    public void updateFoodNum(String productID, String num) {
         if (productID == null || "".equals(productID) || num == null || "".equals(num)) {
             return;
         }
@@ -160,7 +171,8 @@ public class AccountDao {
         ContentValues values = new ContentValues();
         if (!"".equals(productID) && !"".equals(num)) {
             values.put(ShoppingCartBean.KEY_NUM, num);
-            db.update(AccountDBHelper.Q_SHOPPING_CART_TABLE, values, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID});
+            Log.i("RHG", "MODIFY ID:" + productID);
+            db.update(AccountDBHelper.Q_SHOPPING_CART_TABLE, values, ShoppingCartBean.KEY_FOOD_ID + "=?", new String[]{productID});
         }
         close();
     }
@@ -179,12 +191,12 @@ public class AccountDao {
         close();
     }
 
-    public String getNumByProductID(String productID) {
+    public String getNumByFoodID(String productID) {
         if (productID == null) {
             return "1";
         }
         db = AccountDBHelper.getInstance().getReadableDatabase();
-        cursor = db.query(AccountDBHelper.Q_SHOPPING_CART_TABLE, new String[]{ShoppingCartBean.KEY_NUM}, ShoppingCartBean.KEY_PRODUCT_ID + "=?", new String[]{productID}, null, null, null);
+        cursor = db.query(AccountDBHelper.Q_SHOPPING_CART_TABLE, new String[]{ShoppingCartBean.KEY_NUM}, ShoppingCartBean.KEY_FOOD_ID + "=?", new String[]{productID}, null, null, null);
         if (cursor.moveToFirst()) {
             return cursor.getString(0);
         }
@@ -197,17 +209,26 @@ public class AccountDao {
      *
      * @return 购物车中的商品信息
      */
-    public List<String> getProductList() {
+    public List<FoodInfoBean> getCartList() {
         db = AccountDBHelper.getInstance().getReadableDatabase();
-        List<String> mList = new ArrayList<>();
+        List<FoodInfoBean> mList = new ArrayList<>();
         Cursor cursor = db.query(AccountDBHelper.Q_SHOPPING_CART_TABLE,
-                new String[]{ShoppingCartBean.KEY_PRODUCT_ID},
+                new String[]{ShoppingCartBean.KEY_FOOD_ID, ShoppingCartBean.KEY_FOOD_NAME, ShoppingCartBean.KEY_MERCHANT_NAME,
+                        ShoppingCartBean.KEY_FOOD_URI, ShoppingCartBean.KEY_NUM, ShoppingCartBean.KEY_FOOD_PRICE, ShoppingCartBean.KEY_MERCHANT_ID},
                 null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 String productID = cursor.getString(0);
+                String foodUri = cursor.getString(1);
+                String merchantName = cursor.getString(2);
+                String foodNum = cursor.getString(3);
+                String foodName = cursor.getString(4);
+                String foodPrice = cursor.getString(5);
+                String merchantId = cursor.getString(6);
                 if (productID != null && !"".equals(productID)) {
-                    mList.add(productID);
+                    FoodInfoBean foodInfoBean = new FoodInfoBean(productID, foodName, merchantName, foodUri, foodNum, foodPrice, merchantId);
+                    Log.i("RHG", "OUT:" + foodInfoBean.toString());
+                    mList.add(foodInfoBean);
                 }
             } while (cursor.moveToNext());
         }

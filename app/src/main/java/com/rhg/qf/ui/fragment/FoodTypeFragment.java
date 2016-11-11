@@ -10,13 +10,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.GoodsDetailActivity;
 import com.rhg.qf.adapter.GoodsListAdapter;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.impl.RefreshListener;
 import com.rhg.qf.mvp.presenter.ShopDetailPresenter;
+import com.rhg.qf.ui.activity.GoodsDetailActivity;
 import com.rhg.qf.widget.VerticalTabLayout;
 
 import java.util.ArrayList;
@@ -35,8 +35,11 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList;
     GoodsListAdapter goodsListAdapter;
     ShopDetailPresenter shopDetailPresenter;
+    RefreshListener refreshListener;
 
     String merchantId;
+    String merchantName;
+
     @Bind(R.id.common_recycle)
     RecyclerView commonRecycle;
     @Bind(R.id.common_refresh)
@@ -44,10 +47,11 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     @Bind(R.id.common_swipe)
     SwipeRefreshLayout commonSwipe;
 
-    RefreshListener refreshListener;
 
     @Override
     public void receiveData(Bundle arguments) {
+        merchantId = arguments.getString(AppConstants.KEY_MERCHANT_ID, "");
+        merchantName = arguments.getString(AppConstants.KEY_MERCHANT_NAME, "");
     }
 
     @Override
@@ -60,6 +64,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         /*commonRefresh.setVisibility(View.VISIBLE);
         shopDetailPresenter.getShopDetail(AppConstants.TABLE_FOOD, merchantId);*/
     }
+
 
     @Override
     protected void initData() {
@@ -127,9 +132,11 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     @Override
     public void onItemClickListener(int position, ShopDetailUrlBean.ShopDetailBean item) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
-        /*intent.putExtra(AppConstants.KEY_PRODUCT_ID, "20160518");
+        /*intent.putExtra(AppConstants.KEY_FOOD_ID, "20160518");
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
         intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, "90");*/
+        intent.putExtra(AppConstants.KEY_MERCHANT_ID, merchantId);
+        intent.putExtra(AppConstants.KEY_MERCHANT_NAME, merchantName);
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
 //        intent.putExtra() //todo 传递参数
         startActivityForResult(intent, 1);

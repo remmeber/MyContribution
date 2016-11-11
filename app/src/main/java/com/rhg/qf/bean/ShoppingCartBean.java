@@ -11,8 +11,13 @@ import java.util.List;
  * email：1013773046@qq.com
  */
 public class ShoppingCartBean {
-    public static final String KEY_PRODUCT_ID = "productId";
+    public static final String KEY_FOOD_ID = "foodId";
     public static final String KEY_NUM = "productNum";
+    public static final String KEY_MERCHANT_NAME = "merchantName";
+    public static final String KEY_FOOD_NAME = "foodName";
+    public static final String KEY_FOOD_URI = "foodUri";
+    public static final String KEY_FOOD_PRICE = "foodPrice";
+    public static final String KEY_MERCHANT_ID = "merchantId";
 
     /**
      * 组是否被选中

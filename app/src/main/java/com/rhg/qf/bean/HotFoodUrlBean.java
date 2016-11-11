@@ -64,6 +64,7 @@ public class HotFoodUrlBean {
 
     public static class HotFoodBean {
         private String ID;
+        private String RId;
         private String RName;
         private String FName;
         private String Stars;
@@ -134,6 +135,14 @@ public class HotFoodUrlBean {
 
         public void setPic(String pic) {
             Pic = pic;
+        }
+
+        public String getRId() {
+            return RId;
+        }
+
+        public void setRId(String RId) {
+            this.RId = RId;
         }
 
         @Override

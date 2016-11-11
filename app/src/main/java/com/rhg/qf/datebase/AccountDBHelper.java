@@ -65,8 +65,13 @@ public class AccountDBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TB_ADDRESS);
         String CREATE_TB_SHOPPING_CART = "create table " + Q_SHOPPING_CART_TABLE + "("
                 + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ShoppingCartBean.KEY_PRODUCT_ID + " text,"
-                + ShoppingCartBean.KEY_NUM + " text"
+                + ShoppingCartBean.KEY_FOOD_ID + " text,"
+                + ShoppingCartBean.KEY_FOOD_NAME + " text,"
+                + ShoppingCartBean.KEY_MERCHANT_NAME + " text,"
+                + ShoppingCartBean.KEY_FOOD_URI + " text,"
+                + ShoppingCartBean.KEY_NUM + " text,"
+                + ShoppingCartBean.KEY_FOOD_PRICE + " text,"
+                + ShoppingCartBean.KEY_MERCHANT_ID + " text"
                 + ");";
         db.execSQL(CREATE_TB_SHOPPING_CART);
 
