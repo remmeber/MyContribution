@@ -3,7 +3,6 @@ package com.rhg.qf.datebase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.bean.FoodInfoBean;
@@ -87,6 +86,9 @@ public class AccountDao {
         }
         db = AccountDBHelper.getInstance().getReadableDatabase();
         cursor = db.query(AccountDBHelper.Q_SHOPPING_CART_TABLE, null, Name + "=?", new String[]{ID}, null, null, null);
+//        Log.i("RHG", "cursor is :" + (cursor == null));
+        if (cursor == null)
+            return false;
         boolean isExist = cursor.moveToFirst();
         close();
         return isExist;
@@ -171,7 +173,7 @@ public class AccountDao {
         ContentValues values = new ContentValues();
         if (!"".equals(productID) && !"".equals(num)) {
             values.put(ShoppingCartBean.KEY_NUM, num);
-            Log.i("RHG", "MODIFY ID:" + productID);
+//            Log.i("RHG", "MODIFY ID:" + productID);
             db.update(AccountDBHelper.Q_SHOPPING_CART_TABLE, values, ShoppingCartBean.KEY_FOOD_ID + "=?", new String[]{productID});
         }
         close();
@@ -227,7 +229,7 @@ public class AccountDao {
                 String merchantId = cursor.getString(6);
                 if (productID != null && !"".equals(productID)) {
                     FoodInfoBean foodInfoBean = new FoodInfoBean(productID, foodName, merchantName, foodUri, foodNum, foodPrice, merchantId);
-                    Log.i("RHG", "OUT:" + foodInfoBean.toString());
+//                    Log.i("RHG", "OUT:" + foodInfoBean.toString());
                     mList.add(foodInfoBean);
                 }
             } while (cursor.moveToNext());
