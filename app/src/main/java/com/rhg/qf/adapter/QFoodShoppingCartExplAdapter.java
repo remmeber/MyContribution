@@ -58,14 +58,28 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
                     clickPosition = (int) v.getTag();
                     break;
                 case R.id.ivAdd:
-                    ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
-                    setDataChange();
+                    String addTag = String.valueOf(v.getTag());
+                    if (addTag.contains(",")) {
+                        String s[] = addTag.split(",");
+                        int groupPosition = Integer.parseInt(s[0]);
+                        int childPosition = Integer.parseInt(s[1]);
+                        String merchantId = ((ShoppingCartBean) getGroup(groupPosition)).getMerID();
+                        ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) getChild(groupPosition, childPosition), merchantId,
+                                (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
+                        setDataChange();
+                    }
                     break;
                 case R.id.ivReduce:
-                    ShoppingCartUtil.addOrReduceGoodsNum(false, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
-                    setDataChange();
+                    String reduceTag = String.valueOf(v.getTag());
+                    if (reduceTag.contains(",")) {
+                        String s[] = reduceTag.split(",");
+                        int groupPosition = Integer.parseInt(s[0]);
+                        int childPosition = Integer.parseInt(s[1]);
+                        String merchantId = ((ShoppingCartBean) getGroup(groupPosition)).getMerID();
+                        ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) getChild(groupPosition, childPosition), merchantId,
+                                (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
+                        setDataChange();
+                    }
                     break;
                 case R.id.holder:
                     String deleteTag = String.valueOf(v.getTag());
@@ -184,8 +198,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         childViewHolder.goodsCount.setText(goodsNum);
 
         childViewHolder.btGoodsCheck.setTag(groupPosition + "," + childPosition);
-        childViewHolder.btReduceNum.setTag(goods);
-        childViewHolder.btAddNum.setTag(goods);
+        childViewHolder.btReduceNum.setTag(groupPosition + "," + childPosition);
+        childViewHolder.btAddNum.setTag(groupPosition + "," + childPosition);
         childViewHolder.delete.setTag(groupPosition + "," + childPosition);
 
         ShoppingCartUtil.checkItem(isChildSelected, childViewHolder.btGoodsCheck);
@@ -234,8 +248,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
                                        @Override
                                        public void doRight() {
-                                           delGoods(groupPosition, childPosition, productID);
-                                           ShoppingCartUtil.delGood(productID);
+                                           delGoods(groupPosition, childPosition, ((ShoppingCartBean)getGroup(groupPosition)).getMerID(), productID);
                                            setDataChange();
                                            notifyDataSetChanged();
                                            delDialog.dismiss();
@@ -250,8 +263,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
      * @param groupPosition
      * @param childPosition
      */
-    private void delGoods(int groupPosition, int childPosition, String Id) {
-        onDataChangeListener.removeData(Id);
+    private void delGoods(int groupPosition, int childPosition,String merchantId, String foodId) {
+        onDataChangeListener.removeData(merchantId, foodId);
         mData.get(groupPosition).getGoods().remove(childPosition);
         if (mData.get(groupPosition).getGoods().size() == 0) {
             mData.remove(groupPosition);
@@ -272,7 +285,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     public interface DataChangeListener {
         void onDataChange(String CountMoney);
 
-        void removeData(String Id);
+        void removeData(String merchantId ,String foodId);
     }
 
     class GroupViewHolder {

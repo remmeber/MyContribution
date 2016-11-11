@@ -183,9 +183,9 @@ public class ShoppingCartUtil {
      *
      * @param productID 规格ID
      */
-    public static void delGood(String productID) {
+    public static void delGood(String merchantId, String productID) {
         AccountDao.getInstance().deleteItemInTableById(AccountDBHelper.Q_SHOPPING_CART_TABLE,
-                ShoppingCartBean.KEY_FOOD_ID, productID);
+                ShoppingCartBean.KEY_FOOD_ID + " =? and " + ShoppingCartBean.KEY_MERCHANT_ID + " =?", new String[]{productID ,merchantId});
     }
 
     /**
@@ -198,7 +198,7 @@ public class ShoppingCartUtil {
     /**
      * 增减数量，操作通用，数据不通用
      */
-    public static void addOrReduceGoodsNum(boolean isPlus, ShoppingCartBean.Goods goods, TextView tvNum) {
+    public static void addOrReduceGoodsNum(boolean isPlus, ShoppingCartBean.Goods goods, String merchantId, TextView tvNum) {
         String num;
         if (isPlus) {
             num = DecimalUtil.add(goods.getNumber(), "1");
@@ -208,7 +208,7 @@ public class ShoppingCartUtil {
         String productID = goods.getGoodsID();
         tvNum.setText(num);
         goods.setNumber(num);
-        updateGoodsNumber(productID, num);
+        updateGoodsNumber(merchantId, productID, num);
     }
 
     /**
@@ -217,8 +217,8 @@ public class ShoppingCartUtil {
      * @param productID
      * @param num
      */
-    public static void updateGoodsNumber(String productID, String num) {
-        AccountDao.getInstance().updateFoodNum(productID, num);
+    public static void updateGoodsNumber(String merchantID, String productID, String num) {
+        AccountDao.getInstance().updateFoodNum(merchantID, productID, num);
     }
 
     /**

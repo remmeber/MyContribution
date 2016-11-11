@@ -53,15 +53,15 @@ public interface QFoodApiService {
     @FormUrlEncoded
     @POST("Table/Json.php")
     Observable<MerchantUrlBean> getHomeMerchants(@Field("Table") String headrestaurants,
-                                                 @Field("X") String x,
-                                                 @Field("Y") String y);
+                                                 @Field("Y") String y,
+                                                 @Field("X") String x);
 
     /*API11 所有店铺head*/
     @FormUrlEncoded
     @POST("Table/Json.php")
     Observable<HeadMerchantUrlBean> getHeadMerchant(@Field("Table") String toprestaurant,
-                                                    @Field("X") String x,
-                                                    @Field("Y") String y);
+                                                    @Field("Y") String y,
+                                                    @Field("X") String x);
 
     /*所有店铺body*/
     @FormUrlEncoded
@@ -69,8 +69,8 @@ public interface QFoodApiService {
 //table : restaurants,order：0.按销量 1.按距离 2.按评分
     Observable<MerchantUrlBean> getBodyMerchants(@Field("Table") String table,
                                                  @Field("Order") int order,
-                                                 @Field("X") String longitude,
-                                                 @Field("Y") String latitude);
+                                                 @Field("Y") String y,
+                                                 @Field("X") String x);
 
     /*API2 店铺食品详情*/
     @FormUrlEncoded
@@ -206,8 +206,8 @@ public interface QFoodApiService {
     Observable<HotFoodUrlBean> getHotGoodsForSearch(@Field("Table") String hotFood,
                                                     @Field("Hotfoodkey") String searchContent,
                                                     @Field("Order") String order,
-                                                    @Field("X") String X,
-                                                    @Field("Y") String Y);
+                                                    @Field("Y") String y,
+                                                    @Field("X") String x);
 
 
     /*API19 跑腿员订单详情*/
@@ -246,8 +246,8 @@ public interface QFoodApiService {
                                              @Field("Receiver") String receiver,
                                              @Field("Phone") String phone,
                                              @Field("Price") String price,
-                                             @Field("X") String X,
-                                             @Field("Y") String Y,
+                                             @Field("Y") String y,
+                                             @Field("X") String x,
                                              @Field("Food") String foodBeen
                                      /*@Body NewOrderBean newOrderBean*/);
 

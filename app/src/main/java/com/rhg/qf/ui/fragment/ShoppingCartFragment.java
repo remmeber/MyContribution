@@ -3,7 +3,6 @@ package com.rhg.qf.ui.fragment;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -106,7 +105,7 @@ public class ShoppingCartFragment extends BaseFragment {
 //            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
             List<FoodInfoBean> foodInfoBeanList = ShoppingCartUtil.getAllProductID();
             FoodInfoBean foodInfoBean = foodInfoBeanList.get(0);
-            Log.i("RHG", foodInfoBean.toString());
+//            Log.i("RHG", foodInfoBean.toString());
             Collections.sort(foodInfoBeanList, new Comparator<FoodInfoBean>() {
                 @Override
                 public int compare(FoodInfoBean o1, FoodInfoBean o2) {
@@ -253,12 +252,14 @@ public class ShoppingCartFragment extends BaseFragment {
             }
 
             @Override
-            public void removeData(String Id) {
-                if (modifyOrderPresenter == null)
+            public void removeData(String merchantId,String foodId) {
+                /*if (modifyOrderPresenter == null)
                     modifyOrderPresenter = new ModifyOrderPresenter(ShoppingCartFragment.this);
                 Log.i("RHG", "Id: " + Id);
-                modifyOrderPresenter.modifyUserOrDeliverOrderState(Id/*订单号*/,
-                        /*0:退单，1,：完成*/AppConstants.ORDER_WITHDRAW);
+                modifyOrderPresenter.modifyUserOrDeliverOrderState(Id*//*订单号*//*,
+                        *//*0:退单，1,：完成*//*AppConstants.ORDER_WITHDRAW);*/
+                ShoppingCartUtil.delGood(merchantId, foodId);
+
             }
         });
         updateListView();
