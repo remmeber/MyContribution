@@ -76,7 +76,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
                         int groupPosition = Integer.parseInt(s[0]);
                         int childPosition = Integer.parseInt(s[1]);
                         String merchantId = ((ShoppingCartBean) getGroup(groupPosition)).getMerID();
-                        ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) getChild(groupPosition, childPosition), merchantId,
+                        ShoppingCartUtil.addOrReduceGoodsNum(false, (ShoppingCartBean.Goods) getChild(groupPosition, childPosition), merchantId,
                                 (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
                         setDataChange();
                     }

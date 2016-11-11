@@ -2,6 +2,7 @@ package com.rhg.qf.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,7 +125,8 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getRId());
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getRName());
-        startActivity(intent);
+        //noinspection unchecked
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 
 }

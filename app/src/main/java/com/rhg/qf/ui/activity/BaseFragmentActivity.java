@@ -3,13 +3,16 @@ package com.rhg.qf.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 
 import com.rhg.qf.application.InitApplication;
@@ -38,6 +41,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+            getWindow().setExitTransition(new Explode());
+        }
         super.onCreate(savedInstanceState);
 //        InitApplication.getInstance().addActivity(this);
         setContentView(getLayoutResId());
@@ -227,7 +234,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             InitApplication.getInstance().exit();
             return;
         }
-        finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else finish();
     }
 
     @Override

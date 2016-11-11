@@ -10,10 +10,8 @@ import android.widget.EditText;
 
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
-import com.rhg.qf.mvp.base.IPresenter;
 import com.rhg.qf.mvp.base.IView;
 import com.rhg.qf.mvp.base.RxPresenter;
-import com.rhg.qf.mvp.presenter.contact.GoodsDetailContact;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.KeyBoardUtil;
