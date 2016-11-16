@@ -35,7 +35,6 @@ import java.util.Map;
  * email：1013773046@qq.com
  */
 public class MyFragment extends BaseFragment implements View.OnClickListener {
-    boolean hasAccount = true;
 
     ImageView userHeader;
     TextView userName;
@@ -100,18 +99,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        /*if (!isSignIn && AccountUtil.getInstance().hasAccount()) {
-            isSignIn = true;
-            userName.setText(AccountUtil.getInstance().getNickName());
-            ImageUtils.showImage(AccountUtil.getInstance().getHeadImageUrl(), userHeader);
-        }*/
-    }
-
-    @Override
     protected void initData() {
-//        flTAB.setBackgroundColor(getResources().getColor(R.color.colorGreenNormal));
         userHeader.setOnClickListener(this);
         userHeader.setTag(R.id.userHeader);
         checkAccount();

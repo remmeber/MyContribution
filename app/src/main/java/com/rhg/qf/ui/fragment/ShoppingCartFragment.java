@@ -48,8 +48,8 @@ public class ShoppingCartFragment extends BaseFragment {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTV;
-    @Bind(R.id.tb_right_tv)
-    TextView tbRightTV;
+    @Bind(R.id.tb_right_ll)
+    LinearLayout tbRight;
     @Bind(R.id.fl_tab)
     FrameLayout fl_tab;
     @Bind(R.id.rl_shopping_cart_empty)
@@ -216,7 +216,7 @@ public class ShoppingCartFragment extends BaseFragment {
     protected void initData() {
         fl_tab.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         tbCenterTV.setText(getResources().getString(R.string.shoppingCart));
-        tbRightTV.setText(getResources().getString(R.string.tvEdit));
+        tbRight.setVisibility(View.GONE);
         srlShoppingCart.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         srlShoppingCart.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -252,7 +252,7 @@ public class ShoppingCartFragment extends BaseFragment {
             }
 
             @Override
-            public void removeData(String merchantId,String foodId) {
+            public void removeData(String merchantId, String foodId) {
                 /*if (modifyOrderPresenter == null)
                     modifyOrderPresenter = new ModifyOrderPresenter(ShoppingCartFragment.this);
                 Log.i("RHG", "Id: " + Id);

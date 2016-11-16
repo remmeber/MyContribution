@@ -18,6 +18,8 @@ import com.rhg.qf.mvp.presenter.OrdersPresenter;
 import com.rhg.qf.ui.activity.OrderDetailActivity;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.DecimalUtil;
+import com.rhg.qf.utils.SizeUtil;
+import com.rhg.qf.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +91,9 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
         commonRecycle.setLayoutManager(linearLayoutManager);
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setAdapter(qFoodOrderAdapter);
+        commonRecycle.addItemDecoration(new RecycleViewDivider(getContext(),
+                LinearLayoutManager.HORIZONTAL, SizeUtil.dip2px(5),
+                ContextCompat.getColor(getContext(), R.color.colorGrayLight)));
         commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -115,13 +120,13 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     }
 
     @Override
-    public void onItemClickListener(View view,int position, OrderUrlBean.OrderBean item) {
+    public void onItemClickListener(View view, int position, OrderUrlBean.OrderBean item) {
         Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
         _intent.putExtra(AppConstants.KEY_ORDER_ID, item.getID());
         _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, DecimalUtil.addWithScale(item.getPrice(), item.getFee(), 2));
         _intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getRName());
         _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
-        startActivity(_intent, ActivityOptionsCompat.makeScaleUpAnimation(view,(int)view.getX(),(int)view.getY(),view.getWidth(),view.getHeight()).toBundle());
+        startActivity(_intent, ActivityOptionsCompat.makeScaleUpAnimation(view, (int) view.getX(), (int) view.getY(), view.getWidth(), view.getHeight()).toBundle());
     }
 
     protected abstract int getFmTag();

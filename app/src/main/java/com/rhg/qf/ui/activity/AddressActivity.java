@@ -13,6 +13,7 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.AddressAdapter;
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.impl.DeleteItemListener;
 import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.ui.UIAlertView;
@@ -55,7 +56,7 @@ public class AddressActivity extends BaseAppcompactActivity {
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenter(this);
     AddOrUpdateAddressPresenter addOrUpdateAddressPresenter = new AddOrUpdateAddressPresenter(this);
-    private AddressAdapter.ItemListener deleteListener = new AddressAdapter.ItemListener() {
+    private DeleteItemListener deleteListener = new DeleteItemListener() {
         @Override
         public void onDelete(int position) {
             showDelDialog(position, "确定要删除选中的地址?", DELETE);

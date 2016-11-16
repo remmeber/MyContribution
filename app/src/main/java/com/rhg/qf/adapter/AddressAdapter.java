@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.bean.AddressUrlBean;
+import com.rhg.qf.impl.DeleteItemListener;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<AddressUrlBean.AddressBean> addressBeanList;
-    private ItemListener mItemListener;
+    private DeleteItemListener mItemListener;
 
     public AddressAdapter(Context content, List<AddressUrlBean.AddressBean> addressBeanList) {
         this.context = content;
@@ -108,16 +109,8 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return addressBeanList == null ? 0 : addressBeanList.size();
     }
 
-    public void setItemListener(ItemListener mItemListener) {
+    public void setItemListener(DeleteItemListener mItemListener) {
         this.mItemListener = mItemListener;
-    }
-
-    public interface ItemListener {
-        void onDelete(int position);
-
-        void onItemClick(int position);
-
-        void onLongClick(int position);
     }
 
     public class AddressViewHolder extends RecyclerView.ViewHolder {

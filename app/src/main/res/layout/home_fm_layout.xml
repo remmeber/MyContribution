@@ -7,16 +7,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:layout_gravity="top"
         android:background="@color/colorBlueNormal">
 
         <ImageView
             android:id="@+id/iv_left"
             android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_height="?actionBarSize"
             android:layout_marginLeft="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin_small"
+            android:layout_centerVertical="true"
             android:src="@mipmap/deliver"
             tools:ignore="contentDescription" />
 
@@ -31,6 +32,7 @@
             android:layout_toRightOf="@id/iv_left"
             android:layout_toStartOf="@id/iv_right"
             android:background="@drawable/btn_gray_normal"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:hint="@string/personalOrder"
             android:padding="5dp"
@@ -39,7 +41,7 @@
         <ImageView
             android:id="@+id/iv_right"
             android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_height="?actionBarSize"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="5dp"

@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  *time 2016/7/7 10:36
  *email 1013773046@qq.com
  */
-public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IView>> extends AppCompatActivity implements BaseView{
+public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IView>> extends AppCompatActivity implements BaseView {
 
     protected T presenter;
 
@@ -36,6 +36,7 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    private View decorView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -47,10 +48,38 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
         getWindow().setExitTransition(explode);
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                // Note that system bars will only be "visible" if none of the
+                // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    // The system bars are visible. Make any desired
+                    // adjustments to your UI, such as showing the action bar or
+                    // other navigational controls.
+                    hideNavigationBar(decorView);
+                } else {
+                    // The system bars are NOT visible. Make any desired
+                    // adjustments to your UI, such as hiding the action bar or
+                    // other navigational controls.
+                }
+            }
+        });
         ButterKnife.bind(this);
         dataReceive(getIntent());
         loadingData();
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideNavigationBar(decorView);
+    }
+
+    public void hideNavigationBar(View decorView) {
+
     }
 
     protected abstract void initData();

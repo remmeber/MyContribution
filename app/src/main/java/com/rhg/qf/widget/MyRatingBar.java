@@ -22,7 +22,6 @@ import com.rhg.qf.R;
  * email：1013773046@qq.com
  */
 public class MyRatingBar extends View {
-    private Context context;
     //星星水平排列
     public static final int HORIZONTAL = 0;
     //星星垂直排列
@@ -50,7 +49,6 @@ public class MyRatingBar extends View {
         paint = new Paint();
         rectSrc = new Rect();
         dstF = new Rect();
-        this.context = context;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MyRatingBar);
         mSpaceWidth = a.getDimensionPixelSize(R.styleable.MyRatingBar_space_width, 0);
         mStarWidth = a.getDimensionPixelSize(R.styleable.MyRatingBar_star_width, 0);

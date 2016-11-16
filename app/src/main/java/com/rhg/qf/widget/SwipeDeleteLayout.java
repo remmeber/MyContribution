@@ -2,13 +2,16 @@ package com.rhg.qf.widget;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 
@@ -40,10 +43,18 @@ public class SwipeDeleteLayout extends LinearLayout {
     int mTouchSlop;
     static final int animationTime = 100;
 
+
     public SwipeDeleteLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, null);
+    }
+
+    public SwipeDeleteLayout(Context context, AttributeSet attrs, Interpolator anim) {
         super(context, attrs);
-        mScroller = new Scroller(context, new AccelerateInterpolator());
+        if (anim == null)
+            mScroller = new Scroller(context, new AccelerateDecelerateInterpolator());
+        else mScroller = new Scroller(context, anim);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+
     }
 
 
@@ -74,7 +85,6 @@ public class SwipeDeleteLayout extends LinearLayout {
                         Log.i("RHG", "MOVE DONE HORIZONTAL");
                         disallowParentsInterceptTouchEvent(getParent());
                         intercept = true;
-
                     }
 
                 }
@@ -88,6 +98,7 @@ public class SwipeDeleteLayout extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        Log.i("RHG", "DONE....intercept: " + intercept);
         if (state == EXPAND || state == EXPANDING) {
             Rect rect = new Rect();
             getChildAt(1).getHitRect(rect);//获得侧滑视图的点击区域
@@ -112,6 +123,10 @@ public class SwipeDeleteLayout extends LinearLayout {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (mParent instanceof ExpandableListView) {
+                    Log.i("RHG", "SwipeDeleteExpandListView.....");
+                    ((SwipeDeleteExpandListView) mParent).setExpandedSwipeLayout(this);
+                }
                 float newX = event.getX();
                 float newY = event.getY();
                 int dx = (int) (newX - startX);
@@ -121,21 +136,17 @@ public class SwipeDeleteLayout extends LinearLayout {
                 } else {
                     scrollTo(rightWidth, 0);
                 }
-                state = EXPANDING;
                 invalidate();
                 startX = newX;
                 startY = newY;
                 break;
             case MotionEvent.ACTION_UP:
-                intercept = false;
                 if (getScrollX() < rightWidth / 2) {
                     mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0, animationTime);
                     Log.i("RHG", "UPDONG<1/2");
-                    state = SHRINK;
                 } else {
                     mScroller.startScroll(getScrollX(), 0, rightWidth - getScrollX(), 0, animationTime);
                     Log.i("RHG", "UPDONG>1/2");
-                    state = EXPAND;
                 }
                 invalidate();
                 allowParentsInterceptTouchEvent(getParent());
@@ -179,10 +190,6 @@ public class SwipeDeleteLayout extends LinearLayout {
 //        Log.i("RHG", "l: " + l + " ,t: " + t + " ,r: " + r + " ,b: " + b);
     }
 
-
-    /**
-     * @return the current layout swipe state
-     */
     public int getState() {
         return state;
     }
@@ -203,20 +210,27 @@ public class SwipeDeleteLayout extends LinearLayout {
         } else {
             if (getScrollX() == 0) {
                 Log.i("RHG", "shrink.....");
-//                intercept = false;
+                intercept = false;
                 state = SHRINK;
-                ((MyRcv) mParent).setExpandedSwipeLayout(null);
+                if (mParent instanceof RecyclerView)
+                    ((MyRcv) mParent).setExpandedSwipeLayout(null);
+                else if (mParent instanceof ExpandableListView)
+                    ((SwipeDeleteExpandListView) mParent).setExpandedSwipeLayout(null);
             } else if (getScrollX() == rightWidth) {
                 Log.i("RHG", "expand.....");
-                state = EXPAND;
-                if (mParent instanceof MyRcv) {
+                if (mParent instanceof RecyclerView) {
                     Log.i("RHG", "recycleView.....");
                     ((MyRcv) mParent).setExpandedSwipeLayout(this);
+                } else if (mParent instanceof ExpandableListView) {
+                    Log.i("RHG", "SwipeDeleteExpandListView.....");
+                    ((SwipeDeleteExpandListView) mParent).setExpandedSwipeLayout(this);
                 }
+                state = EXPAND;
             } else {
                 Log.i("RHG", "expanding.....");
                 state = EXPANDING;
             }
+
         }
         super.computeScroll();
     }
@@ -236,5 +250,4 @@ public class SwipeDeleteLayout extends LinearLayout {
         }
         parent.requestDisallowInterceptTouchEvent(false);
     }
-
 }

@@ -38,6 +38,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    View decorView = null;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -51,6 +52,26 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         super.onCreate(savedInstanceState);
 //        InitApplication.getInstance().addActivity(this);
         setContentView(getLayoutResId());
+
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                // Note that system bars will only be "visible" if none of the
+                // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    // The system bars are visible. Make any desired
+                    // adjustments to your UI, such as showing the action bar or
+                    // other navigational controls.
+                    hideNavigationBar(decorView);
+                } else {
+                    // The system bars are NOT visible. Make any desired
+                    // adjustments to your UI, such as hiding the action bar or
+                    // other navigational controls.
+                }
+            }
+        });
+
         ButterKnife.bind(this);
         dataReceive(getIntent());
         /*isFirstLoc = isNeedFirstLoc();
@@ -59,6 +80,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         initData(savedInstanceState);
         loadingData();
 //        bindData(loadData());
+    }
+
+    public void hideNavigationBar(View decorView) {
+
     }
 
     protected boolean isNeedFirstLoc() {
@@ -89,6 +114,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     @Override
     protected void onResume() {
         super.onResume();
+        hideNavigationBar(decorView);
         /*IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_NETWORK_CHANGE);
         filter.addAction(ACTION_PUSH_DATA);

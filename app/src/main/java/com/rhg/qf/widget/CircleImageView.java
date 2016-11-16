@@ -15,7 +15,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -133,7 +132,7 @@ public class CircleImageView extends ImageView {
         super.onSizeChanged(w, h, oldw, oldh);
         setup();
     }
-
+/*
     public int getBorderColor() {
         return mBorderColor;
     }
@@ -149,7 +148,7 @@ public class CircleImageView extends ImageView {
     }
 
     public void setBorderColorResource(@ColorRes int borderColorRes) {
-        setBorderColor(getContext().getResources().getColor(borderColorRes));
+        setBorderColor(ContextCompat.getColor(getContext(), borderColorRes));
     }
 
     public int getBorderWidth() {
@@ -176,7 +175,7 @@ public class CircleImageView extends ImageView {
 
         mBorderOverlay = borderOverlay;
         setup();
-    }
+    }*/
 
     @Override
     public void setImageBitmap(Bitmap bm) {

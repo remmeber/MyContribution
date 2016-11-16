@@ -71,14 +71,6 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     protected void initData() {
         if (shopDetailBeanList == null)
             shopDetailBeanList = new ArrayList<>();
-        /*for (int i = 0; i < 4; i++) {
-            GoodsDetailBean goodsDetailBean = new GoodsDetailBean();
-            goodsDetailBean.setImageUrls(images);
-            goodsDetailBean.setGoodsName("哈哈" + i);
-            goodsDetailBean.setGoodSellNum("" + i);
-            goodsDetailBean.setGoodsPrice(i + "0");
-            goodsDetailBeanList.add(goodsDetailBean);
-        }*/
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         goodsListAdapter = new GoodsListAdapter(getContext(), shopDetailBeanList);
