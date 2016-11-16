@@ -19,8 +19,8 @@ import com.rhg.qf.mvp.presenter.GetAddressPresenter;
 import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.SizeUtil;
-import com.rhg.qf.widget.MyRcv;
 import com.rhg.qf.widget.RecycleViewDivider;
+import com.rhg.qf.widget.SwipeDeleteRecycleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class AddressActivity extends BaseAppcompactActivity {
     @Bind(R.id.fl_tab)
     FrameLayout flTab;
     @Bind(R.id.rcy_address)
-    MyRcv rcyAddress;
+    SwipeDeleteRecycleView rcyAddress;
     @Bind(R.id.srl_address)
     SwipeRefreshLayout srlAddress;
     AddressAdapter addressAdapter;

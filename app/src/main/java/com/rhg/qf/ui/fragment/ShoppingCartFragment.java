@@ -104,7 +104,6 @@ public class ShoppingCartFragment extends BaseFragment {
 //            userId = AccountUtil.getInstance().getUserID();
 //            getOrdersPresenter.getOrders(AppConstants.TABLE_ORDER, userId, AppConstants.USER_ORDER_UNPAID);
             List<FoodInfoBean> foodInfoBeanList = ShoppingCartUtil.getAllProductID();
-            FoodInfoBean foodInfoBean = foodInfoBeanList.get(0);
 //            Log.i("RHG", foodInfoBean.toString());
             Collections.sort(foodInfoBeanList, new Comparator<FoodInfoBean>() {
                 @Override

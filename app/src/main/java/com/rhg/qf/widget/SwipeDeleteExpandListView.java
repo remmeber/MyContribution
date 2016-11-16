@@ -38,6 +38,7 @@ public class SwipeDeleteExpandListView extends ExpandableListView implements Nes
 
     private void init(Context context) {
         ViewCompat.setNestedScrollingEnabled(this, true);
+
     }
 
     @Override
@@ -56,8 +57,28 @@ public class SwipeDeleteExpandListView extends ExpandableListView implements Nes
         return mExpandedLayout != null;
     }
 
-    public void setExpandedSwipeLayout(SwipeDeleteLayout mExpandedLayout) {
+
+    /**
+     * @param mExpandedLayout 滑动的对象
+     * @return 当前对象的滑动是否能成功，成功则赋值。
+     */
+    public boolean setExpandedSwipeLayout(SwipeDeleteLayout mExpandedLayout) {
+        if (mExpandedLayout != null && this.mExpandedLayout != null) {
+//            Log.i("RHG", mExpandedLayout + "都不空");
+            if (mExpandedLayout == this.mExpandedLayout) {
+//                Log.i("RHG", mExpandedLayout + "同一对象");
+                return false;
+            } else {
+                if (this.mExpandedLayout.getState() != SwipeDeleteLayout.SHRINK) {
+//                    Log.i("RHG", mExpandedLayout + "不同一对象，先关闭");
+                    this.mExpandedLayout.shrink();
+                    return false;
+                }
+            }
+        }
+//        Log.i("RHG", mExpandedLayout + "直接赋值");
         this.mExpandedLayout = mExpandedLayout;
+        return true;
     }
 
     @Override

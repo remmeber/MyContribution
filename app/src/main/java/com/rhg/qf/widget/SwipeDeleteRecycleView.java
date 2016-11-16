@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 
 public class SwipeDeleteRecycleView extends RecyclerView {
 
-    SwipeDeleteLayout expandedSwipeLayout;
+    SwipeDeleteLayout mExpandedLayout;
 
     public SwipeDeleteRecycleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -28,7 +28,7 @@ public class SwipeDeleteRecycleView extends RecyclerView {
     @Override
     public boolean canScrollVertically(int direction) {
         if (hasExpandState()) {
-            expandedSwipeLayout.shrink();
+            mExpandedLayout.shrink();
             return false;
         }
         return super.canScrollVertically(direction);
@@ -36,17 +36,33 @@ public class SwipeDeleteRecycleView extends RecyclerView {
 
 
     boolean hasExpandState() {
-        return expandedSwipeLayout != null;
+        return mExpandedLayout != null;
     }
 
-    public void setExpandedSwipeLayout(SwipeDeleteLayout expandedSwipeLayout) {
-        this.expandedSwipeLayout = expandedSwipeLayout;
+    public boolean setExpandedSwipeLayout(SwipeDeleteLayout mExpandedLayout) {
+        if (mExpandedLayout != null && this.mExpandedLayout != null) {
+            if (isSameObj(mExpandedLayout))
+                return false;
+            else {
+                if (this.mExpandedLayout.getState() != SwipeDeleteLayout.SHRINK) {
+                    this.mExpandedLayout.shrink();
+                    return false;
+                }
+            }
+        }
+        this.mExpandedLayout = mExpandedLayout;
+        return true;
     }
+
+    boolean isSameObj(SwipeDeleteLayout mExpandedLayout) {
+        return mExpandedLayout == this.mExpandedLayout;
+    }
+
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (expandedSwipeLayout != null)
-            expandedSwipeLayout = null;
+        if (mExpandedLayout != null)
+            mExpandedLayout = null;
     }
 }

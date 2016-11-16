@@ -17,7 +17,7 @@
             android:layout_above="@+id/bt_add_new_address"
             android:layout_marginTop="@dimen/margin_little">
 
-            <com.rhg.qf.widget.MyRcv
+            <com.rhg.qf.widget.SwipeDeleteRecycleView
                 android:id="@+id/rcy_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

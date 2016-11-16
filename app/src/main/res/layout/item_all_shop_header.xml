@@ -15,12 +15,12 @@
         tools:ignore="contentDescription"
         tools:src="@drawable/ic_pic_failed" />
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="2dp"
 
-        android:background="@color/colorInActive" />
+        android:background="@color/colorInActive" />-->
 
     <RelativeLayout
         android:id="@+id/ll_header_seller_name"
@@ -119,10 +119,10 @@
 
     <!--</RelativeLayout>-->
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="2dp"
-        android:background="@color/colorInActive" />
+        android:background="@color/colorInActive" />-->
 
 </LinearLayout>
