@@ -12,11 +12,11 @@ import android.util.AttributeSet;
  *email 1013773046@qq.com
  */
 
-public class MyRcv extends RecyclerView {
+public class SwipeDeleteRecycleView extends RecyclerView {
 
     SwipeDeleteLayout expandedSwipeLayout;
 
-    public MyRcv(Context context, @Nullable AttributeSet attrs) {
+    public SwipeDeleteRecycleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
