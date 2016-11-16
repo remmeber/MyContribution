@@ -91,9 +91,16 @@ public class SwipeDeleteLayout extends LinearLayout {
         if (state == EXPAND || state == EXPANDING) {
             Rect rect = new Rect();
             getChildAt(1).getHitRect(rect);//获得侧滑视图的点击区域
+            Log.i("RHG", "rect: " + rect.toString() + " ,ev.getX：" + ev.getX() + " ,ev.getY: " + ev.getY());
+            if (rect.contains((int) ev.getX() + rightWidth, (int) ev.getY())) {
+                Log.i("RHG", "SHOULD CLICK....");
+                mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0, animationTime);//点击完都关闭
+                invalidate();
+                return false;
+            }
             mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0, animationTime);//点击完都关闭
             invalidate();
-            return !rect.contains((int) ev.getX() + rightWidth, (int) ev.getY());
+            return true;
         }
 
         return intercept || super.onInterceptTouchEvent(ev);

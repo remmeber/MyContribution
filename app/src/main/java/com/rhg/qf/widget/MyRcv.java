@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 
 /*
  *desc
@@ -28,17 +27,13 @@ public class MyRcv extends RecyclerView {
 
     @Override
     public boolean canScrollVertically(int direction) {
-        return hasExpandState() || super.canScrollVertically(direction);
+        if (hasExpandState()) {
+            expandedSwipeLayout.shrink();
+            return false;
+        }
+        return super.canScrollVertically(direction);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent e) {
-        if(hasExpandState()){
-            expandedSwipeLayout.shrink();
-            return true;
-        }
-        return super.onInterceptTouchEvent(e);
-    }
 
     boolean hasExpandState() {
         return expandedSwipeLayout != null;
