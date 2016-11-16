@@ -316,6 +316,10 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
                 etNum.setText(Num);
                 ivAddToShoppingCart.setNum(Num);
                 if (isExitInDB) {
+                    if ("0".equals(Num)) {
+                        ShoppingCartUtil.delGood(merchantId, foodId);
+                        return;
+                    }
                     ShoppingCartUtil.updateGoodsNumber(merchantId, foodId, Num);
                 } else {
                     FoodInfoBean foodInfoBean = new FoodInfoBean(foodId, Num, merchantName, tvGoodsName.getText().toString(), image,

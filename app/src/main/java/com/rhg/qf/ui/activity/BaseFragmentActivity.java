@@ -1,5 +1,6 @@
 package com.rhg.qf.ui.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -7,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.transition.Explode;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,12 +39,15 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     private LocationService locationService;
     private MyLocationListener mLocationListener;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            getWindow().setExitTransition(new Explode());
-        }
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        android.transition.Fade fade = new android.transition.Fade();
+        fade.setDuration(500);
+        getWindow().setEnterTransition(fade);
+
         super.onCreate(savedInstanceState);
 //        InitApplication.getInstance().addActivity(this);
         setContentView(getLayoutResId());

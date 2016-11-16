@@ -60,7 +60,7 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
             @Override
             public void onClick(View v) {
                 if (getOnRcvItemClickListener() != null)
-                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
+                    getOnRcvItemClickListener().onItemClickListener(holder.headerlayout,holder.getAdapterPosition(), null);
             }
         });
     }
@@ -80,7 +80,7 @@ public class QFoodMerchantAdapter extends RecycleAbstractAdapter<MerchantUrlBean
             @Override
             public void onClick(View v) {
                 if (getOnRcvItemClickListener() != null)
-                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), null);
+                    getOnRcvItemClickListener().onItemClickListener(holder.frameLayout_item,holder.getAdapterPosition(), null);
             }
         });
 

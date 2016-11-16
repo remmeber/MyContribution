@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.rhg.qf.R;
 import com.rhg.qf.bean.ShopDetailUrlBean;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.utils.ImageUtils;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -66,7 +68,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             @Override
             public void onClick(View v) {
                 if (onGoodsItemClickListener != null)
-                    onGoodsItemClickListener.onItemClickListener(goodsDetailViewHolder.getAdapterPosition(),
+                    onGoodsItemClickListener.onItemClickListener(goodsDetailViewHolder.llGoodsItem,goodsDetailViewHolder.getAdapterPosition(),
                             shopDetailBean);
             }
         });

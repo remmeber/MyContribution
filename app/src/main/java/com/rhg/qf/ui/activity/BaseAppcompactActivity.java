@@ -1,11 +1,15 @@
 package com.rhg.qf.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 
 import com.rhg.qf.locationservice.LocationService;
@@ -34,8 +38,13 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
     private MyLocationListener mLocationListener;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        Explode explode = new Explode();
+        explode.setDuration(1000);
+        getWindow().setExitTransition(explode);
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
         ButterKnife.bind(this);

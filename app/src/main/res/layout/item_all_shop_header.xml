@@ -64,7 +64,7 @@
             android:src="@drawable/ic_chevron_right_blue"
             tools:ignore="contentDescription" />
 
-        <View
+        <!--<View
             android:id="@+id/headerline"
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -72,7 +72,8 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:background="@drawable/virtual_line"
-            android:layerType="software" />
+            android:visibility="gone"
+            android:layerType="software" />-->
     </RelativeLayout>
 
     <RelativeLayout

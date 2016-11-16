@@ -65,7 +65,7 @@ public class DeliverOrderItemAdapter extends RecyclerView.Adapter<DeliverOrderIt
             @Override
             public void onClick(View view) {
                 if (onRcvItemClick != null)
-                    onRcvItemClick.onItemClickListener(holder.getAdapterPosition(),
+                    onRcvItemClick.onItemClickListener(holder.rlOrderInfo, holder.getAdapterPosition(),
                             deliverOrderBeanList.get(holder.getAdapterPosition()));
             }
         });

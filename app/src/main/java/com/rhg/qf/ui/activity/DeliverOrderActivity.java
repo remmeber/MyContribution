@@ -194,7 +194,7 @@ public class DeliverOrderActivity extends BaseAppcompactActivity implements Deli
     }
 
     @Override
-    public void onItemClickListener(int position, DeliverOrderUrlBean.DeliverOrderBean item) {
+    public void onItemClickListener(View view,int position, DeliverOrderUrlBean.DeliverOrderBean item) {
 
     }
 

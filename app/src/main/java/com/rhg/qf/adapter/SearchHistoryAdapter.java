@@ -40,14 +40,14 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        SearchHistoryViewHolder searchHistoryViewHolder = (SearchHistoryViewHolder) holder;
+        final SearchHistoryViewHolder searchHistoryViewHolder = (SearchHistoryViewHolder) holder;
         final int clickPosition = holder.getAdapterPosition();
         searchHistoryViewHolder.tvSearchHistory.setText(searchHistory.get(clickPosition));
         searchHistoryViewHolder.tvSearchHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onSearchItemClick != null)
-                    onSearchItemClick.onItemClickListener(clickPosition, searchHistory.get(clickPosition));
+                    onSearchItemClick.onItemClickListener(searchHistoryViewHolder.tvSearchHistory,clickPosition, searchHistory.get(clickPosition));
             }
         });
     }

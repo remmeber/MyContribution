@@ -120,7 +120,7 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     }
 
     @Override
-    public void onItemClickListener(int position, HotFoodUrlBean.HotFoodBean item) {
+    public void onItemClickListener(View view,int position, HotFoodUrlBean.HotFoodBean item) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getRId());

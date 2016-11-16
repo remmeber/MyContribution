@@ -1,5 +1,7 @@
 package com.rhg.qf.impl;
 
+import android.view.View;
+
 /**
  * desc:RecycleView点击统一回调
  * author：remember
@@ -7,5 +9,5 @@ package com.rhg.qf.impl;
  * email：1013773046@qq.com
  */
 public interface RcvItemClickListener<T> {
-    void onItemClickListener(int position, T item);
+    void onItemClickListener(View view, int position, T item);
 }

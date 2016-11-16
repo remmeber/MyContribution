@@ -1,6 +1,7 @@
 package com.rhg.qf.ui.fragment;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -114,16 +115,13 @@ public abstract class AbstractOrderFragment extends BaseFragment implements RcvI
     }
 
     @Override
-    public void onItemClickListener(int position, OrderUrlBean.OrderBean item) {
+    public void onItemClickListener(View view,int position, OrderUrlBean.OrderBean item) {
         Intent _intent = new Intent(getContext(), OrderDetailActivity.class);
         _intent.putExtra(AppConstants.KEY_ORDER_ID, item.getID());
         _intent.putExtra(AppConstants.KEY_PRODUCT_PRICE, DecimalUtil.addWithScale(item.getPrice(), item.getFee(), 2));
         _intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getRName());
         _intent.putExtra(AppConstants.KEY_ORDER_TAG, style);
-        /*_intent.putExtra(AppConstants.SP_USER_NAME, item.getReceiver());
-        _intent.putExtra(AppConstants.KEY_ADDRESS, item.getAddress());
-        _intent.putExtra(AppConstants.KEY_OR_SP_PHONE, item.getPhone());;*/
-        startActivity(_intent);
+        startActivity(_intent, ActivityOptionsCompat.makeScaleUpAnimation(view,(int)view.getX(),(int)view.getY(),view.getWidth(),view.getHeight()).toBundle());
     }
 
     protected abstract int getFmTag();
