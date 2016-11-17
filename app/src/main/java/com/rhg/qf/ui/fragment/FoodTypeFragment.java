@@ -2,6 +2,7 @@ package com.rhg.qf.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,14 +71,6 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     protected void initData() {
         if (shopDetailBeanList == null)
             shopDetailBeanList = new ArrayList<>();
-        /*for (int i = 0; i < 4; i++) {
-            GoodsDetailBean goodsDetailBean = new GoodsDetailBean();
-            goodsDetailBean.setImageUrls(images);
-            goodsDetailBean.setGoodsName("哈哈" + i);
-            goodsDetailBean.setGoodSellNum("" + i);
-            goodsDetailBean.setGoodsPrice(i + "0");
-            goodsDetailBeanList.add(goodsDetailBean);
-        }*/
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         goodsListAdapter = new GoodsListAdapter(getContext(), shopDetailBeanList);
@@ -130,7 +123,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
     }
 
     @Override
-    public void onItemClickListener(int position, ShopDetailUrlBean.ShopDetailBean item) {
+    public void onItemClickListener(View view,int position, ShopDetailUrlBean.ShopDetailBean item) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         /*intent.putExtra(AppConstants.KEY_FOOD_ID, "20160518");
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, "土豆丝");
@@ -139,7 +132,7 @@ public class FoodTypeFragment extends BaseFragment implements RcvItemClickListen
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, merchantName);
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
 //        intent.putExtra() //todo 传递参数
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 1, ActivityOptionsCompat.makeScaleUpAnimation(view,(int)view.getX(),(int)view.getY(),view.getWidth(),view.getHeight()).toBundle());
     }
 
     public void setShopDetailBeanList(List<ShopDetailUrlBean.ShopDetailBean> shopDetailBeanList) {

@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.SearchActivity;
 import com.rhg.qf.adapter.QFoodVpAdapter;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.ui.activity.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,7 @@ import butterknife.OnClick;
  * email：1013773046@qq.com
  */
 public class SellerFragment extends BaseFragment {
-    private static final String TAG = "SellerFragment";
-    List<Fragment> fragments = new ArrayList<Fragment>();
+    List<Fragment> fragments = new ArrayList<>();
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;

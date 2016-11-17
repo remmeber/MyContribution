@@ -29,7 +29,6 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
     public TextView tv_orderTag;//订单号
     public TextView tv_state;//状态{已完成，待付款}
     //这四个在商家页面显示
-    private View line;
     private ImageView sellerForward;
     //以下均在主页中显示
     private ImageView homeFoward;//TODO 在商家页面隐藏
@@ -39,7 +38,6 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
 
     public BodyViewHolder(View itemView, int type) {
         super(itemView);
-        line = itemView.findViewById(R.id.lineShowInsellNumberItem);
         sellerForward = (ImageView) itemView.findViewById(R.id.imageshowInsellerItem);
         demandMoney = (TextView) itemView.findViewById(R.id.tv_required);
         deliverMoney = (TextView) itemView.findViewById(R.id.tv_money);
@@ -67,7 +65,6 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
                 sellerDistance.setVisibility(View.VISIBLE);
                 tv_state.setVisibility(View.GONE);
                 sellerForward.setVisibility(View.GONE);
-                line.setVisibility(View.GONE);
                 tv_orderTime.setVisibility(View.GONE);
                 tv_orderTag.setVisibility(View.GONE);
                 demandMoney.setVisibility(View.GONE);
@@ -76,7 +73,6 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
                 break;
             case AppConstants.TypeSeller:
                 foodType.setVisibility(View.VISIBLE);
-                line.setVisibility(View.VISIBLE);
                 sellerForward.setVisibility(View.VISIBLE);
                 demandMoney.setVisibility(View.VISIBLE);
                 deliverMoney.setVisibility(View.VISIBLE);
@@ -93,7 +89,6 @@ public class BodyViewHolder extends RecyclerView.ViewHolder {
                 sellerIcon.setVisibility(View.VISIBLE);
                 tv_state.setVisibility(View.VISIBLE);
                 sellerForward.setVisibility(View.VISIBLE);
-                line.setVisibility(View.VISIBLE);
                 tv_orderTime.setVisibility(View.VISIBLE);
                 tv_orderTag.setVisibility(View.VISIBLE);
                 ly_totalCount.setVisibility(View.VISIBLE);

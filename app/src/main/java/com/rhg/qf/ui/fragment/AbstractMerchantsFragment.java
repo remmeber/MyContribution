@@ -2,6 +2,7 @@ package com.rhg.qf.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +11,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.rhg.qf.R;
-import com.rhg.qf.ui.activity.ShopDetailActivity;
 import com.rhg.qf.adapter.QFoodMerchantAdapter;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.mvp.presenter.MerchantsPresenter;
+import com.rhg.qf.ui.activity.ShopDetailActivity;
+import com.rhg.qf.utils.SizeUtil;
+import com.rhg.qf.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +70,9 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         qFoodMerchantAdapter = new QFoodMerchantAdapter(getContext(), dataBySellNumberModels);
         qFoodMerchantAdapter.setOnRcvItemClickListener(this);
         commonRecycle.setAdapter(qFoodMerchantAdapter);
+        commonRecycle.addItemDecoration(new RecycleViewDivider(getContext(),
+                LinearLayoutManager.HORIZONTAL, SizeUtil.dip2px(5),
+                ContextCompat.getColor(getContext(), R.color.colorGrayLight)));
         commonSwipe.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(getContext(), R.color.colorBlueNormal));
         commonSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -105,7 +111,7 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
 
 
     @Override
-    public void onItemClickListener(int position, MerchantUrlBean.MerchantBean item) {
+    public void onItemClickListener(View view, int position, MerchantUrlBean.MerchantBean item) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         MerchantUrlBean.MerchantBean merchantBean = dataBySellNumberModels.get(position);
         /*目前后台还没有加入这是三个字段*/
@@ -113,7 +119,7 @@ public abstract class AbstractMerchantsFragment extends BaseFragment implements 
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, merchantBean.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, merchantBean.getName());
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, merchantBean.getPic());
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 1, ActivityOptionsCompat.makeScaleUpAnimation(view, (int) view.getX(), (int) view.getY(), view.getWidth(), view.getHeight()).toBundle());
         /*Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         intent.putExtra("productId","20160518");
         intent.putExtra("productName","黄焖鸡米饭");

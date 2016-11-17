@@ -1,6 +1,9 @@
 package com.rhg.qf.ui.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -70,8 +73,9 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
     private int searchTag;
     private int searchIndex;
     private RcvItemClickListener itemClick = new RcvItemClickListener() {
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
-        public void onItemClickListener(int position, Object item) {
+        public void onItemClickListener(View view, int position, Object item) {
             if (item instanceof String) {
                 isShow = false;
                 searchEt.setText((String) item);
@@ -83,13 +87,20 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
                 tvSearchResult.setVisibility(View.VISIBLE);
                 return;
             }
-            Intent intent = new Intent(SearchActivity.this, GoodsDetailActivity.class);
+            Intent intent = new Intent();
             if (item instanceof MerchantUrlBean.MerchantBean) {
-                intent.putExtra(AppConstants.KEY_PRODUCT_ID, ((MerchantUrlBean.MerchantBean) item).getID());
+                intent.setClass(SearchActivity.this, ShopDetailActivity.class);
+                intent.putExtra(AppConstants.KEY_MERCHANT_ID, ((MerchantUrlBean.MerchantBean) item).getID());
+                intent.putExtra(AppConstants.KEY_MERCHANT_NAME, ((MerchantUrlBean.MerchantBean) item).getName());
+                intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, ((MerchantUrlBean.MerchantBean) item).getPic());
             } else if (item instanceof HotFoodUrlBean.HotFoodBean) {
+                intent.setClass(SearchActivity.this, GoodsDetailActivity.class);
                 intent.putExtra(AppConstants.KEY_PRODUCT_ID, ((HotFoodUrlBean.HotFoodBean) item).getID());
+                intent.putExtra(AppConstants.KEY_MERCHANT_ID, ((HotFoodUrlBean.HotFoodBean) item).getRId());
+                intent.putExtra(AppConstants.KEY_MERCHANT_NAME, ((HotFoodUrlBean.HotFoodBean) item).getRName());
             }
-            startActivity(intent);
+            //noinspection unchecked
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(SearchActivity.this).toBundle());
         }
     };
 
@@ -155,14 +166,13 @@ public class SearchActivity extends BaseAppcompactActivity implements View.OnCli
                 }
                 if (event.getRawX() > searchEt.getWidth() -
                         searchEt.getCompoundDrawables()[2].getBounds().width()) {
-                    if (searchHistoryData.size() == 0) {
-                        SearchHistoryUtil.insertSearchHistory(/*SearchActivity.this,*/ searchEt.getText().toString().trim());
-                        searchHistoryData.add(searchEt.getText().toString().trim());
-                    }
-
                     if (TextUtils.isEmpty(searchEt.getText().toString())) {
                         ToastHelper.getInstance().displayToastWithQuickClose("搜索内容为空");
                         return true;
+                    }
+                    if (searchHistoryData.size() == 0) {
+                        SearchHistoryUtil.insertSearchHistory(/*SearchActivity.this,*/ searchEt.getText().toString().trim());
+                        searchHistoryData.add(searchEt.getText().toString().trim());
                     }
                         /*切换到内容搜索*/
                     searchEt.setCursorVisible(false);

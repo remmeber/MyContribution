@@ -51,7 +51,7 @@ public class QFoodOrderAdapter extends RecycleAbstractAdapter<OrderUrlBean.Order
             @Override
             public void onClick(View v) {
                 if (getOnRcvItemClickListener() != null)
-                    getOnRcvItemClickListener().onItemClickListener(holder.getAdapterPosition(), data);
+                    getOnRcvItemClickListener().onItemClickListener(holder.frameLayout_item,holder.getAdapterPosition(), data);
             }
         });
     }

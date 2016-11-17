@@ -1,19 +1,21 @@
 package com.rhg.qf.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
-import com.rhg.qf.mvp.base.IPresenter;
 import com.rhg.qf.mvp.base.IView;
 import com.rhg.qf.mvp.base.RxPresenter;
-import com.rhg.qf.mvp.presenter.contact.GoodsDetailContact;
 import com.rhg.qf.mvp.view.BaseView;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.KeyBoardUtil;
@@ -26,7 +28,7 @@ import butterknife.ButterKnife;
  *time 2016/7/7 10:36
  *email 1013773046@qq.com
  */
-public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IView>> extends AppCompatActivity implements BaseView{
+public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IView>> extends AppCompatActivity implements BaseView {
 
     protected T presenter;
 
@@ -34,16 +36,50 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    private View decorView;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        Explode explode = new Explode();
+        explode.setDuration(1000);
+        getWindow().setExitTransition(explode);
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                // Note that system bars will only be "visible" if none of the
+                // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    // The system bars are visible. Make any desired
+                    // adjustments to your UI, such as showing the action bar or
+                    // other navigational controls.
+                    hideNavigationBar(decorView);
+                } else {
+                    // The system bars are NOT visible. Make any desired
+                    // adjustments to your UI, such as hiding the action bar or
+                    // other navigational controls.
+                }
+            }
+        });
         ButterKnife.bind(this);
         dataReceive(getIntent());
         loadingData();
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideNavigationBar(decorView);
+    }
+
+    public void hideNavigationBar(View decorView) {
+
     }
 
     protected abstract void initData();

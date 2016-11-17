@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_tab"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    tools:background="@color/colorBlueNormal"
-    tools:ignore="contentDescription">
+    android:layout_height="?actionBarSize"
+    android:elevation="@dimen/margin_little"
+    tools:background="?colorAccent"
+    tools:ignore="contentDescription"
+    tools:targetApi="lollipop">
 
     <ImageView
         android:id="@+id/tb_left_iv"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="?actionBarSize"
         android:background="@drawable/btn_gray_light_style"
         android:paddingLeft="@dimen/margin_small"
         android:paddingRight="@dimen/margin_small"
@@ -19,7 +21,7 @@
     <LinearLayout
         android:id="@+id/tb_right_ll"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="?actionBarSize"
         android:layout_gravity="end"
         android:orientation="horizontal">
 
@@ -70,7 +72,7 @@
     <TextView
         android:id="@+id/tb_center_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="?actionBarSize"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:textColor="@color/black"

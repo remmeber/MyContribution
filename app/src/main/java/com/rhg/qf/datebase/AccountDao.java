@@ -133,12 +133,12 @@ public class AccountDao {
     }
 
 
-    public void deleteItemInTableById(String Table, String conditionId, String condition) {
+    public void deleteItemInTableById(String Table, String conditionId, String[] condition) {
         if (condition == null) {
             return;
         }
         db = AccountDBHelper.getInstance().getReadableDatabase();
-        db.delete(Table, conditionId + " =?", new String[]{condition});
+        int delete = db.delete(Table, conditionId, condition);
         close();
     }
 
@@ -165,7 +165,7 @@ public class AccountDao {
      * @param productID 规格ID
      * @param num       商品数量
      */
-    public void updateFoodNum(String productID, String num) {
+    public void updateFoodNum(String merchantID, String productID, String num) {
         if (productID == null || "".equals(productID) || num == null || "".equals(num)) {
             return;
         }
@@ -174,7 +174,7 @@ public class AccountDao {
         if (!"".equals(productID) && !"".equals(num)) {
             values.put(ShoppingCartBean.KEY_NUM, num);
 //            Log.i("RHG", "MODIFY ID:" + productID);
-            db.update(AccountDBHelper.Q_SHOPPING_CART_TABLE, values, ShoppingCartBean.KEY_FOOD_ID + "=?", new String[]{productID});
+            db.update(AccountDBHelper.Q_SHOPPING_CART_TABLE, values, ShoppingCartBean.KEY_FOOD_ID + "=? and " + ShoppingCartBean.KEY_MERCHANT_ID + "=?", new String[]{productID, merchantID});
         }
         close();
     }

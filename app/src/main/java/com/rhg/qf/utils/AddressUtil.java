@@ -31,8 +31,8 @@ public class AddressUtil {
      * email：1013773046@qq.com
      */
     public static void deleteOneAddress(String whereArg) {
-        AccountDao.getInstance().deleteItemInTableById(AccountDBHelper.Q_ADDRESS_TABLE, AppConstants.ADDRESS_ID,
-                whereArg);
+        AccountDao.getInstance().deleteItemInTableById(AccountDBHelper.Q_ADDRESS_TABLE, AppConstants.ADDRESS_ID+" =?",
+                new String[]{whereArg});
     }
 
     /**

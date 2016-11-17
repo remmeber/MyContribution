@@ -2,6 +2,7 @@ package com.rhg.qf.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -78,8 +79,8 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
         commonRecycle.setHasFixedSize(true);
         commonRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
         commonRecycle.addItemDecoration(new RecycleViewDivider(getContext(),
-                LinearLayoutManager.HORIZONTAL, SizeUtil.dip2px(2),
-                ContextCompat.getColor(getContext(), R.color.colorInActive)));
+                LinearLayoutManager.HORIZONTAL, SizeUtil.dip2px(5),
+                ContextCompat.getColor(getContext(), R.color.colorGrayLight)));
         hotFoodAdapter = new HotFoodAdapter(getContext(), hotFoodBeanList);
         hotFoodAdapter.setOnRcvItemClickListener(this);
         commonRecycle.setAdapter(hotFoodAdapter);
@@ -119,12 +120,13 @@ public abstract class AbstractHotFoodFragment extends BaseFragment implements Rc
     }
 
     @Override
-    public void onItemClickListener(int position, HotFoodUrlBean.HotFoodBean item) {
+    public void onItemClickListener(View view,int position, HotFoodUrlBean.HotFoodBean item) {
         Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
         intent.putExtra(AppConstants.KEY_PRODUCT_ID, item.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getRId());
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getRName());
-        startActivity(intent);
+        //noinspection unchecked
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 
 }

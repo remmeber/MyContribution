@@ -17,6 +17,7 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.ui.fragment.ShopDetailFoodFragment;
 import com.rhg.qf.ui.fragment.ShopDetailFragment;
 import com.rhg.qf.utils.ImageUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +65,13 @@ public class ShopDetailActivity extends BaseFragmentActivity {
         } else {
             merchantName = "";
             merchantId = "";
-            shopLogoUrl="";
+            shopLogoUrl = "";
         }
+    }
+
+    @Override
+    public void hideNavigationBar(View decorView) {
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);//隐藏屏幕下方的虚拟导航栏
     }
 
     @Override()

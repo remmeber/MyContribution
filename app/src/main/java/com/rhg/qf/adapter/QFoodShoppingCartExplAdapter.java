@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,7 +15,6 @@ import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.ShoppingCartUtil;
-import com.rhg.qf.widget.SlideView;
 
 import java.util.List;
 
@@ -24,10 +24,9 @@ import java.util.List;
  * time：2016/5/28 16:19
  * email：1013773046@qq.com
  */
-public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter implements SlideView.OnSlideListener {
+public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter {
     List<ShoppingCartBean> mData;
     Context context;
-    SlideView lastSlideView;
     private DataChangeListener onDataChangeListener;
 
     //TODO--------------------------购物车事件监听--------------------------------------------------
@@ -58,24 +57,27 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
                     clickPosition = (int) v.getTag();
                     break;
                 case R.id.ivAdd:
-                    ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
-                    setDataChange();
-                    break;
-                case R.id.ivReduce:
-                    ShoppingCartUtil.addOrReduceGoodsNum(false, (ShoppingCartBean.Goods) v.getTag(),
-                            (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
-                    setDataChange();
-                    break;
-                case R.id.holder:
-                    String deleteTag = String.valueOf(v.getTag());
-                    if (deleteTag.contains(",")) {
-                        String s[] = deleteTag.split(",");
+                    String addTag = String.valueOf(v.getTag());
+                    if (addTag.contains(",")) {
+                        String s[] = addTag.split(",");
                         int groupPosition = Integer.parseInt(s[0]);
                         int childPosition = Integer.parseInt(s[1]);
-                        /*ToastHelper.getInstance()._toast("groupPosition: " + groupPosition
-                                + " childPosition: " + childPosition);*/
-                        showDelDialog(groupPosition, childPosition);
+                        String merchantId = ((ShoppingCartBean) getGroup(groupPosition)).getMerID();
+                        ShoppingCartUtil.addOrReduceGoodsNum(true, (ShoppingCartBean.Goods) getChild(groupPosition, childPosition), merchantId,
+                                (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
+                        setDataChange();
+                    }
+                    break;
+                case R.id.ivReduce:
+                    String reduceTag = String.valueOf(v.getTag());
+                    if (reduceTag.contains(",")) {
+                        String s[] = reduceTag.split(",");
+                        int groupPosition = Integer.parseInt(s[0]);
+                        int childPosition = Integer.parseInt(s[1]);
+                        String merchantId = ((ShoppingCartBean) getGroup(groupPosition)).getMerID();
+                        ShoppingCartUtil.addOrReduceGoodsNum(false, (ShoppingCartBean.Goods) getChild(groupPosition, childPosition), merchantId,
+                                (TextView) ((View) (v.getParent())).findViewById(R.id.etNum));
+                        setDataChange();
                     }
                     break;
             }
@@ -83,6 +85,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
 
     };
+
 
     public QFoodShoppingCartExplAdapter(Context context) {
         this.context = context;
@@ -135,7 +138,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         GroupViewHolder groupViewHolder;
         if (convertView == null) {
             groupViewHolder = new GroupViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_shop_cart_group, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_shop_cart_group, parent, false);
             groupViewHolder.btGroupCheck = (ImageView) convertView.findViewById(R.id.ivCheckGroup);
             groupViewHolder.tvShopName = (TextView) convertView.findViewById(R.id.tvShopNameGroup);
             groupViewHolder.btForwardShop = (ImageView) convertView.findViewById(R.id.imaShopForwardGroup);
@@ -153,23 +156,18 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ChildViewHolder childViewHolder;
-        SlideView slideView = (SlideView) convertView;
-        if (slideView == null) {
-            View itemView = LayoutInflater.from(context).inflate(R.layout.item_shop_cart_child, null);
-            slideView = new SlideView(context);
-            slideView.setContentView(itemView);
-
-            childViewHolder = new ChildViewHolder(slideView);
-            slideView.setOnSlideListener(this);
-            slideView.setTag(childViewHolder);
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final ChildViewHolder childViewHolder;
+        View itemView;
+        if (convertView == null) {
+            itemView = LayoutInflater.from(context).inflate(R.layout.item_shop_cart_child, parent, false);
+            childViewHolder = new ChildViewHolder(itemView);
+            itemView.setTag(childViewHolder);
         } else {
-            childViewHolder = (ChildViewHolder) slideView.getTag();
+            itemView = convertView;
+            childViewHolder = (ChildViewHolder) itemView.getTag();
         }
         ShoppingCartBean.Goods goods = mData.get(groupPosition).getGoods().get(childPosition);
-        goods.slideView = slideView;
-        goods.slideView.shrink();
 
         boolean isChildSelected = goods.isChildSelected();
         String goodsPrice = goods.getPrice();
@@ -184,8 +182,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         childViewHolder.goodsCount.setText(goodsNum);
 
         childViewHolder.btGoodsCheck.setTag(groupPosition + "," + childPosition);
-        childViewHolder.btReduceNum.setTag(goods);
-        childViewHolder.btAddNum.setTag(goods);
+        childViewHolder.btReduceNum.setTag(groupPosition + "," + childPosition);
+        childViewHolder.btAddNum.setTag(groupPosition + "," + childPosition);
         childViewHolder.delete.setTag(groupPosition + "," + childPosition);
 
         ShoppingCartUtil.checkItem(isChildSelected, childViewHolder.btGoodsCheck);
@@ -193,26 +191,24 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         childViewHolder.btGoodsCheck.setOnClickListener(ShortCartListener);
         childViewHolder.btReduceNum.setOnClickListener(ShortCartListener);
         childViewHolder.btAddNum.setOnClickListener(ShortCartListener);
-        childViewHolder.delete.setOnClickListener(ShortCartListener);
-        return slideView;
+        childViewHolder.rlChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Log.i("RHG", "child is click");
+            }
+        });
+        childViewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDelDialog(groupPosition, childPosition);
+            }
+        });
+        return itemView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
-    }
-
-    @Override
-    public void onSlide(View view, int status) {
-        /*if (lastSlideView == view && status == SLIDE_STATUS_ON) {
-            lastSlideView.shrink();
-            return;
-        }*/
-        if (lastSlideView != null && lastSlideView != view) {
-            lastSlideView.shrink();
-        }
-        if (status == SLIDE_STATUS_ON)
-            lastSlideView = (SlideView) view;
     }
 
     /**
@@ -234,8 +230,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
                                        @Override
                                        public void doRight() {
-                                           delGoods(groupPosition, childPosition, productID);
-                                           ShoppingCartUtil.delGood(productID);
+                                           delGoods(groupPosition, childPosition, ((ShoppingCartBean) getGroup(groupPosition)).getMerID(), productID);
                                            setDataChange();
                                            notifyDataSetChanged();
                                            delDialog.dismiss();
@@ -250,8 +245,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
      * @param groupPosition
      * @param childPosition
      */
-    private void delGoods(int groupPosition, int childPosition, String Id) {
-        onDataChangeListener.removeData(Id);
+    private void delGoods(int groupPosition, int childPosition, String merchantId, String foodId) {
+        onDataChangeListener.removeData(merchantId, foodId);
         mData.get(groupPosition).getGoods().remove(childPosition);
         if (mData.get(groupPosition).getGoods().size() == 0) {
             mData.remove(groupPosition);
@@ -272,7 +267,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     public interface DataChangeListener {
         void onDataChange(String CountMoney);
 
-        void removeData(String Id);
+        void removeData(String merchantId, String foodId);
     }
 
     class GroupViewHolder {
@@ -282,6 +277,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     }
 
     class ChildViewHolder {
+        RelativeLayout rlChild;
         /*商品选中*/
         ImageView btGoodsCheck;
         /*商品图片*/
@@ -297,9 +293,10 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         /*商品数量*/
         TextView goodsCount;
         /*删除*/
-        RelativeLayout delete;
+        LinearLayout delete;
 
         ChildViewHolder(View view) {
+            rlChild = (RelativeLayout) view.findViewById(R.id.rl_child);
             btGoodsCheck = (ImageView) view.findViewById(R.id.ivCheckGood);
             goodsLogo = (ImageView) view.findViewById(R.id.ivGoodsLogo);
             tvGoodsName = (TextView) view.findViewById(R.id.tvItemChild);
@@ -307,7 +304,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
             btReduceNum = (ImageView) view.findViewById(R.id.ivReduce);
             btAddNum = (ImageView) view.findViewById(R.id.ivAdd);
             goodsCount = (TextView) view.findViewById(R.id.etNum);
-            delete = (RelativeLayout) view.findViewById(R.id.holder);
+            delete = (LinearLayout) view.findViewById(R.id.lldelete);
             goodsCount.setFocusable(false);
         }
     }

@@ -53,7 +53,7 @@ public class HotFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             @Override
             public void onClick(View v) {
                 if (onRcvItemClickListener != null)
-                    onRcvItemClickListener.onItemClickListener(hotFoodViewHolder.getAdapterPosition(),
+                    onRcvItemClickListener.onItemClickListener(hotFoodViewHolder.hotSellLl,hotFoodViewHolder.getAdapterPosition(),
                             hotFoodBeanList.get(hotFoodViewHolder.getAdapterPosition()));
             }
         });

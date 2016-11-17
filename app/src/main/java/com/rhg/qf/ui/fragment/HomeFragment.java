@@ -1,6 +1,7 @@
 package com.rhg.qf.ui.fragment;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,7 +71,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
-        AppConstants.DEBUG = true;
+//        AppConstants.DEBUG = true;
         homePresenter = new HomePresenter(this);
         myLocationListener = new MyLocationListener(this);
         favorableTypeModel = new FavorableTypeModel();
@@ -98,7 +99,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     protected void refresh() {
-        if(!isLocated){
+        if (!isLocated) {
             reStartLocation();
         }
     }
@@ -120,7 +121,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if("".equals(AccountUtil.getInstance().getLatitude())) {
+                if ("".equals(AccountUtil.getInstance().getLatitude())) {
                     reStartLocation();
                     return;
                 }
@@ -236,27 +237,27 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     }
 
     @Override
-    public void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
+    public void bannerClick(View view, int position, BannerTypeUrlBean.BannerEntity bannerEntity) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, bannerEntity.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, bannerEntity.getSrc());
-        startActivity(intent);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 
     @Override
     public void gridItemClick(View view, FavorableFoodUrlBean.FavorableFoodEntity favorableFoodEntity) {
         Intent intent = new Intent(getContext(), HotFoodActivity.class);
         intent.putExtra(AppConstants.KEY_PRODUCT_NAME, favorableFoodEntity.getTitle());
-        startActivity(intent);
+        startActivity(intent, ActivityOptionsCompat.makeScaleUpAnimation(view, (int) view.getX(), (int) view.getY(), view.getWidth(), view.getHeight()).toBundle());
     }
 
     @Override
-    public void onItemClickListener(int position, MerchantUrlBean.MerchantBean item) {
+    public void onItemClickListener(View view, int position, MerchantUrlBean.MerchantBean item) {
         Intent intent = new Intent(getContext(), ShopDetailActivity.class);
         intent.putExtra(AppConstants.KEY_MERCHANT_ID, item.getID());
         intent.putExtra(AppConstants.KEY_MERCHANT_NAME, item.getName());
         intent.putExtra(AppConstants.KEY_MERCHANT_LOGO, item.getPic());
-        startActivity(intent);
+        startActivity(intent, ActivityOptionsCompat.makeScaleUpAnimation(view, (int) view.getX(), (int) view.getY(), view.getWidth(), view.getHeight()).toBundle());
     }
 
 

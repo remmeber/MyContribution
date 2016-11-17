@@ -194,10 +194,10 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
         AccountDao accountDao = AccountDao.getInstance();
         if (accountDao.isExist(ShoppingCartBean.KEY_MERCHANT_ID, merchantId) &&
                 accountDao.isExist(ShoppingCartBean.KEY_FOOD_ID, foodId)) {
-                isExitInDB = true;
-                String _num = accountDao.getNumByFoodID(foodId);
-                etNum.setText(_num);
-                ivAddToShoppingCart.setNum(_num);
+            isExitInDB = true;
+            String _num = accountDao.getNumByFoodID(foodId);
+            etNum.setText(_num);
+            ivAddToShoppingCart.setNum(_num);
         } else {
             etNum.setText("0");
             ivAddToShoppingCart.setNum("0");
@@ -316,7 +316,11 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
                 etNum.setText(Num);
                 ivAddToShoppingCart.setNum(Num);
                 if (isExitInDB) {
-                    ShoppingCartUtil.updateGoodsNumber(foodId, Num);
+                    if ("0".equals(Num)) {
+                        ShoppingCartUtil.delGood(merchantId, foodId);
+                        return;
+                    }
+                    ShoppingCartUtil.updateGoodsNumber(merchantId, foodId, Num);
                 } else {
                     FoodInfoBean foodInfoBean = new FoodInfoBean(foodId, Num, merchantName, tvGoodsName.getText().toString(), image,
                             price, merchantId);
@@ -330,7 +334,7 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
                 ivAddToShoppingCart.setNum(foodNum);
                 //TODO 需要更新购物车数据库的数据
                 if (isExitInDB) {
-                    ShoppingCartUtil.updateGoodsNumber(foodId, foodNum);
+                    ShoppingCartUtil.updateGoodsNumber(merchantId, foodId, foodNum);
                 } else {
                     FoodInfoBean foodInfoBean = new FoodInfoBean(foodId, foodNum, merchantName, tvGoodsName.getText().toString(), image,
                             price, merchantId);

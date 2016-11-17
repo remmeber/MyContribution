@@ -1,14 +1,13 @@
 package com.rhg.qf.widget;
 
 import android.content.Context;
-import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.NestedScrollingChild;
+import android.support.v4.view.NestedScrollingChildHelper;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-
-import com.rhg.qf.bean.ShoppingCartBean;
 
 /**
  * desc:
@@ -16,14 +15,10 @@ import com.rhg.qf.bean.ShoppingCartBean;
  * time：2016/6/7 15:58
  * email：1013773046@qq.com
  */
-public class SwipeDeleteExpandListView extends ExpandableListView implements GestureDetector.OnGestureListener {
-    SlideView slideView;
-    int downX;
-    int downY;
-    int mLastPosition = -1;
-    int pointPosition;
-    Position position;
-    GestureDetectorCompat gestureDetectorCompat;
+public class SwipeDeleteExpandListView extends ExpandableListView implements NestedScrollingChild {
+
+    SwipeDeleteLayout mExpandedLayout;
+    private NestedScrollingChildHelper mScrollingChildHelper;
 
     public SwipeDeleteExpandListView(Context context) {
         super(context);
@@ -42,50 +37,63 @@ public class SwipeDeleteExpandListView extends ExpandableListView implements Ges
     }
 
     private void init(Context context) {
-        gestureDetectorCompat = new GestureDetectorCompat(context, this);
+        ViewCompat.setNestedScrollingEnabled(this, true);
+
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        gestureDetectorCompat.onTouchEvent(ev);
-        return super.onTouchEvent(ev);
+    public boolean canScrollVertically(int direction) {
+        if (hasExpandState()) {
+            if (mExpandedLayout.getState() == SwipeDeleteLayout.EXPAND)
+                mExpandedLayout.shrink();
+            return false;
+        }
+        Log.i("RHG", "CHECK SCROLL");
+        return false;
     }
 
-    /* @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        ExpandableListAdapter
-                adapter = getExpandableListAdapter();
-        int x = (int) ev.getX();
-        int y = (int) ev.getY();
-        int pointPosition = pointToPosition(x, y);
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                Position position = getPosition(adapter, pointPosition);
-                if (pointPosition != mLastPosition)
-                    if (position.getChild() != -1) {
-                        ShoppingCartBean.Goods Item = (ShoppingCartBean.Goods) adapter.getChild(position.getGroup(), position.getChild());
-                        slideView = Item.slideView;
-                    } else slideView = null;
-                mLastPosition = pointPosition;
-            default:
-                break;
+
+    boolean hasExpandState() {
+        return mExpandedLayout != null;
+    }
+
+
+    /**
+     * @param mExpandedLayout 滑动的对象
+     * @return 当前对象的滑动是否能成功，成功则赋值。
+     */
+    public boolean setExpandedSwipeLayout(SwipeDeleteLayout mExpandedLayout) {
+        if (mExpandedLayout != null && this.mExpandedLayout != null) {
+//            Log.i("RHG", mExpandedLayout + "都不空");
+            if (mExpandedLayout == this.mExpandedLayout) {
+//                Log.i("RHG", mExpandedLayout + "同一对象");
+                return false;
+            } else {
+                if (this.mExpandedLayout.getState() != SwipeDeleteLayout.SHRINK) {
+//                    Log.i("RHG", mExpandedLayout + "不同一对象，先关闭");
+                    this.mExpandedLayout.shrink();
+                    return false;
+                }
+            }
         }
-        *//*boolean isConsume = false;
-        if (slideView != null) {
-            isConsume = slideView.onRequireTouchEvent(ev);
+//        Log.i("RHG", mExpandedLayout + "直接赋值");
+        this.mExpandedLayout = mExpandedLayout;
+        return true;
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mExpandedLayout != null) {
+            mExpandedLayout = null;
         }
-        if (isConsume)
-            return true;
-        else super.onTouchEvent(ev);*//*
-        *//*if (slideView.onRequireTouchEvent(ev)) {
-            return true;
-        } else
-            return super.onTouchEvent(ev);*//*
-        if (slideView == null)
-            return super.onTouchEvent(ev);
-        else
-            return slideView.onRequireTouchEvent(ev) || super.onTouchEvent(ev);
-    }*/
+    }
+
 
     /**
      * 获取点击的item position
@@ -113,62 +121,6 @@ public class SwipeDeleteExpandListView extends ExpandableListView implements Ges
         return position;
     }
 
-    @Override
-    public boolean onDown(MotionEvent e) {
-        ExpandableListAdapter
-                adapter = getExpandableListAdapter();
-        downX = (int) e.getX();
-        downY = (int) e.getY();
-        pointPosition = pointToPosition(downX, downY);
-        Position position = getPosition(adapter, pointPosition);
-        if (position.getChild() != -1) {
-            ShoppingCartBean.Goods Item = (ShoppingCartBean.Goods) adapter.getChild(position.getGroup(), position.getChild());
-            slideView = Item.slideView;/*
-                if (slideView.getState() == SlideView.OnSlideListener.SLIDE_STATUS_ON)
-                    slideView.getmOnSlideListener().onSlide(slideView, slideView.getState());*/
-        } else slideView = null;
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        if (pointPosition == mLastPosition)
-            return false;
-        if (slideView != null) {
-            slideView.getmOnSlideListener().onSlide(slideView, slideView.getState());
-        }
-        mLastPosition = pointPosition;
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (Math.abs(e2.getX() - e1.getX()) > 20 && Math.abs(e2.getY() - e1.getY()) < 15) {
-            if (slideView != null)
-                slideView.onRequireTouchEvent(e2, e1);
-            mLastPosition = pointPosition;
-            return true;
-        }
-        if (slideView != null)
-            if (slideView.getState() == SlideView.OnSlideListener.SLIDE_STATUS_ON)
-                slideView.shrink();
-        return true;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
 
     public class Position {
         private int group = -1;

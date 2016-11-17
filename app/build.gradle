@@ -27,14 +27,17 @@ android {
     }
 
     buildTypes {
-        release {
-            signingConfig signingConfigs.rhg
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlignEnabled true
-        }
+
         debug {
             signingConfig signingConfigs.rhg
+        }
+        家家美食 {
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.rhg
+            renderscriptDebuggable false
+            minifyEnabled false
+            zipAlignEnabled true
         }
     }
     productFlavors {

@@ -159,7 +159,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         convenientBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                onBannerClickListener.bannerClick(position, data.getBannerEntityList().get(position));
+                onBannerClickListener.bannerClick(convenientBanner,position, data.getBannerEntityList().get(position));
             }
         });
     }
@@ -209,7 +209,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
             holder.frameLayout_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClickListener(holder.getAdapterPosition(), data);
+                    onItemClickListener.onItemClickListener(holder.frameLayout_item,holder.getAdapterPosition(), data);
                 }
             });
     }
@@ -251,7 +251,7 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public interface OnBannerClickListener {
-        void bannerClick(int position, BannerTypeUrlBean.BannerEntity bannerEntity);
+        void bannerClick(View view,int position, BannerTypeUrlBean.BannerEntity bannerEntity);
     }
 
     public interface OnGridItemClickListener {

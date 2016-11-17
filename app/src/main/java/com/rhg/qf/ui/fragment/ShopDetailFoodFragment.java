@@ -31,6 +31,7 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
     FragmentController fragmentController;
     List<Fragment> fragments = new ArrayList<>();
 
+
     ShopDetailLocalModel shopDetailLocalModel;
     ShopDetailPresenter shopDetailPresenter;
 
@@ -64,14 +65,6 @@ public class ShopDetailFoodFragment extends BaseFragment implements RefreshListe
 
     @Override
     protected void initData() {
-        /*Bundle bundle = new Bundle();
-        bundle.putString(AppConstants.KEY_MERCHANT_ID, merchantId);
-        fragments = new Fragment[5];
-        for (int i = 0; i < fragments.length; i++) {
-            FoodTypeFragment fragment = new FoodTypeFragment();
-            fragment.setArguments(bundle);
-            fragments[i] = fragment;
-        }*/
         fragmentController = new FragmentController(getChildFragmentManager(), fragments, R.id.fl_shop_detail);
         verticalTabLayout.setOnVerticalTabClickListener(new VerticalTabLayout.VerticalTabClickListener() {
             @Override

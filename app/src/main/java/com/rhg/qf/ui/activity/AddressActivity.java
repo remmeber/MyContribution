@@ -13,13 +13,14 @@ import com.rhg.qf.R;
 import com.rhg.qf.adapter.AddressAdapter;
 import com.rhg.qf.bean.AddressUrlBean;
 import com.rhg.qf.constants.AppConstants;
+import com.rhg.qf.impl.DeleteItemListener;
 import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
 import com.rhg.qf.mvp.presenter.GetAddressPresenter;
+import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.AddressUtil;
 import com.rhg.qf.utils.SizeUtil;
 import com.rhg.qf.widget.RecycleViewDivider;
-import com.rhg.qf.widget.RecycleViewWithDelete;
-import com.rhg.qf.ui.UIAlertView;
+import com.rhg.qf.widget.SwipeDeleteRecycleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import butterknife.OnClick;
  *time 2016/7/3 22:11
  *email 1013773046@qq.com
  */
-public class AddressActivity extends BaseAppcompactActivity implements RecycleViewWithDelete.ItemClickListener {
+public class AddressActivity extends BaseAppcompactActivity {
 
     private static final int DELETE = 0;
     private static final int MODIFY = 1;
@@ -45,7 +46,7 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     @Bind(R.id.fl_tab)
     FrameLayout flTab;
     @Bind(R.id.rcy_address)
-    RecycleViewWithDelete rcyAddress;
+    SwipeDeleteRecycleView rcyAddress;
     @Bind(R.id.srl_address)
     SwipeRefreshLayout srlAddress;
     AddressAdapter addressAdapter;
@@ -55,10 +56,28 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     List<AddressUrlBean.AddressBean> addressBeanList;
     GetAddressPresenter getAddressPresenter = new GetAddressPresenter(this);
     AddOrUpdateAddressPresenter addOrUpdateAddressPresenter = new AddOrUpdateAddressPresenter(this);
-    private AddressAdapter.deleteListener deleteListener = new AddressAdapter.deleteListener() {
+    private DeleteItemListener deleteListener = new DeleteItemListener() {
         @Override
         public void onDelete(int position) {
             showDelDialog(position, "确定要删除选中的地址?", DELETE);
+        }
+
+        @Override
+        public void onItemClick(int position) {
+            if (position != lastPosition) {
+                selectOne(position);
+                addressAdapter.notifyDataSetChanged();
+                lastPosition = position;
+                addOrUpdateAddressPresenter.addOrUpdateAddress(addressBeanList.get(position).getID(),
+                        null, null, null, null, AppConstants.CHOOSE_DEFAULT);
+            }
+
+        }
+
+        @Override
+        public void onLongClick(int position) {
+            longClickPosition = position;
+            showDelDialog(position, getResources().getString(R.string.sure2Modify), MODIFY);
         }
     };
 
@@ -100,22 +119,8 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
                 SizeUtil.dip2px(8), ContextCompat.getColor(this, R.color.colorBackground));
         rcyAddress.addItemDecoration(divider);
         addressAdapter = new AddressAdapter(this, addressBeanList);
-        addressAdapter.setmDeleteListener(deleteListener);
+        addressAdapter.setItemListener(deleteListener);
         rcyAddress.setAdapter(addressAdapter);
-        rcyAddress.setOnItemClickListener(this);
-        rcyAddress.setOnLongClickListener(new RecycleViewWithDelete.LongClickListener() {
-            @Override
-            public void onLongClick(int position) {
-                longClickPosition = position;
-                showDelDialog(position, getResources().getString(R.string.sure2Modify), MODIFY);
-            }
-        });
-        /*rcyAddress.setRemoveListener(new SwipeDeleteRecycle.RemoveListener() {
-            @Override
-            public void removeItem(SwipeDeleteRecycle.RemoveDirection direction, int position) {
-                ToastHelper.getInstance()._toast("删除：" + position);
-            }
-        });*/
         srlAddress.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorBlueNormal));
         srlAddress.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -153,18 +158,6 @@ public class AddressActivity extends BaseAppcompactActivity implements RecycleVi
     @Override
     protected void showError(Object s) {
 
-    }
-
-
-    @Override
-    public void onItemClick(int position) {
-        if (position != lastPosition) {
-            selectOne(position);
-            addressAdapter.notifyDataSetChanged();
-            lastPosition = position;
-            addOrUpdateAddressPresenter.addOrUpdateAddress(addressBeanList.get(position).getID(),
-                    null, null, null, null, AppConstants.CHOOSE_DEFAULT);
-        }
     }
 
     private void selectOne(int position) {

@@ -15,12 +15,12 @@
         tools:ignore="contentDescription"
         tools:src="@drawable/ic_pic_failed" />
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="2dp"
 
-        android:background="@color/colorInActive" />
+        android:background="@color/colorInActive" />-->
 
     <RelativeLayout
         android:id="@+id/ll_header_seller_name"
@@ -64,7 +64,7 @@
             android:src="@drawable/ic_chevron_right_blue"
             tools:ignore="contentDescription" />
 
-        <View
+        <!--<View
             android:id="@+id/headerline"
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -72,7 +72,8 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:background="@drawable/virtual_line"
-            android:layerType="software" />
+            android:visibility="gone"
+            android:layerType="software" />-->
     </RelativeLayout>
 
     <RelativeLayout
@@ -118,10 +119,10 @@
 
     <!--</RelativeLayout>-->
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="2dp"
-        android:background="@color/colorInActive" />
+        android:background="@color/colorInActive" />-->
 
 </LinearLayout>

@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
@@ -22,7 +22,7 @@ import java.util.List;
  * time：2016/7/29 22:44
  * email：1013773046@qq.com
  */
-public class VerticalTabLayout extends FrameLayout implements View.OnClickListener {
+public class VerticalTabLayout extends ScrollView implements View.OnClickListener {
     private final static int DEFAULT_SELECT_TEXT_COLOR = Color.WHITE;
     private final static int DEFAULT_SELECT_BG_COLOR = Color.BLUE;
     private final static int DEFAULT_UNSELECT_TEXT_COLOR = Color.BLACK;
@@ -54,7 +54,9 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
     public VerticalTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-
+        setScrollContainer(true);
+        setScrollbarFadingEnabled(true);
+        setScrollBarStyle(SCROLLBARS_OUTSIDE_OVERLAY);
         ontainAttr(context, attrs);
 
 
@@ -104,6 +106,11 @@ public class VerticalTabLayout extends FrameLayout implements View.OnClickListen
             unSelectBgColor = a.getColor(R.styleable.VerticalTabLayout_item_unclick_bg_color, DEFAULT_UNSELECT_BG_COLOR);
         }
         a.recycle();
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
     }
 
     private void notifyDataSetChanged() {

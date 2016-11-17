@@ -1,8 +1,10 @@
 package com.rhg.qf.ui.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 
 import com.rhg.qf.application.InitApplication;
@@ -35,12 +38,40 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    View decorView = null;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        android.transition.Fade fade = new android.transition.Fade();
+        fade.setDuration(500);
+        getWindow().setEnterTransition(fade);
+
         super.onCreate(savedInstanceState);
 //        InitApplication.getInstance().addActivity(this);
         setContentView(getLayoutResId());
+
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                // Note that system bars will only be "visible" if none of the
+                // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    // The system bars are visible. Make any desired
+                    // adjustments to your UI, such as showing the action bar or
+                    // other navigational controls.
+                    hideNavigationBar(decorView);
+                } else {
+                    // The system bars are NOT visible. Make any desired
+                    // adjustments to your UI, such as hiding the action bar or
+                    // other navigational controls.
+                }
+            }
+        });
+
         ButterKnife.bind(this);
         dataReceive(getIntent());
         /*isFirstLoc = isNeedFirstLoc();
@@ -49,6 +80,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         initData(savedInstanceState);
         loadingData();
 //        bindData(loadData());
+    }
+
+    public void hideNavigationBar(View decorView) {
+
     }
 
     protected boolean isNeedFirstLoc() {
@@ -79,6 +114,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     @Override
     protected void onResume() {
         super.onResume();
+        hideNavigationBar(decorView);
         /*IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_NETWORK_CHANGE);
         filter.addAction(ACTION_PUSH_DATA);
@@ -227,7 +263,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             InitApplication.getInstance().exit();
             return;
         }
-        finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else finish();
     }
 
     @Override
