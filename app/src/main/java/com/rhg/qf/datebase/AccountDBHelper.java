@@ -17,7 +17,7 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     /**
      * 数据库名称常量
      */
-    public static final String DATABASE_NAME = "q_account.db3";
+    private static final String DATABASE_NAME = "q_account.db3";
     /**
      * 购物车表
      */
@@ -36,7 +36,7 @@ public class AccountDBHelper extends SQLiteOpenHelper {
 
     private static Context APPLICATION_CONTEXT;
 
-    public AccountDBHelper() {
+    private AccountDBHelper() {
         super(APPLICATION_CONTEXT, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -47,7 +47,6 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     public static AccountDBHelper getInstance() {
         if (helper == null) {
             helper = new AccountDBHelper();
-
         }
         return helper;
     }
@@ -66,8 +65,13 @@ public class AccountDBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TB_ADDRESS);
         String CREATE_TB_SHOPPING_CART = "create table " + Q_SHOPPING_CART_TABLE + "("
                 + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ShoppingCartBean.KEY_PRODUCT_ID + " text,"
-                + ShoppingCartBean.KEY_NUM + " text"
+                + ShoppingCartBean.KEY_FOOD_ID + " text,"
+                + ShoppingCartBean.KEY_FOOD_NAME + " text,"
+                + ShoppingCartBean.KEY_MERCHANT_NAME + " text,"
+                + ShoppingCartBean.KEY_FOOD_URI + " text,"
+                + ShoppingCartBean.KEY_NUM + " text,"
+                + ShoppingCartBean.KEY_FOOD_PRICE + " text,"
+                + ShoppingCartBean.KEY_MERCHANT_ID + " text"
                 + ");";
         db.execSQL(CREATE_TB_SHOPPING_CART);
 

@@ -125,7 +125,7 @@
         android:layout_marginRight="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="@dimen/margin_little"
-        android:background="@drawable/btn_green_style"
+        android:background="@drawable/btn_blue_style"
         android:gravity="center"
         android:paddingBottom="@dimen/margin_small"
         android:paddingTop="@dimen/margin_small"

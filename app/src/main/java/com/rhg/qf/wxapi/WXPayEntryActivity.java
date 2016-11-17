@@ -2,12 +2,13 @@ package com.rhg.qf.wxapi;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseAppcompactActivity;
 import com.rhg.qf.pay.model.KeyLibs;
+import com.rhg.qf.ui.activity.BaseAppcompactActivity;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -71,9 +72,11 @@ public class WXPayEntryActivity extends BaseAppcompactActivity implements IWXAPI
                 ivPayResult.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_right_blue));
                 tvPayResult.setText("支付成功");
             } else {
+                Log.i("RHG", "微信支付错误码:" + resp.errCode);
                 ivPayResult.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_wrong_blue));
                 tvPayResult.setText("支付失败");
             }
+
         }
     }
 }

@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.rhg.qf.activity.BaseAppcompactActivity;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.model.PayType;
@@ -109,9 +108,9 @@ public abstract class BasePayActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String prepayId = payManager.GetPrepayId(orderInfo);
+                payManager.GenParam(orderInfo);
                 // 4.调起支付
-                payManager.Pay(null, null, prepayId);
+                payManager.Pay(null, null, null);
             }
         }).start();
 

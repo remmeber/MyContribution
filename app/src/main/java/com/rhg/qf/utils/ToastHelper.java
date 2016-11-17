@@ -86,4 +86,13 @@ public class ToastHelper {
             }
         }).start();
     }
+
+    public boolean isShowing() {
+        return toast1 == null;
+    }
+
+    public void cancel() {
+        if (toast1 != null)
+            toast1.cancel();
+    }
 }

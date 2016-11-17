@@ -4,6 +4,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rhg.qf.R;
+import com.rhg.qf.bean.FoodInfoBean;
+import com.rhg.qf.bean.PayModel;
 import com.rhg.qf.bean.ShoppingCartBean;
 import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.datebase.AccountDao;
@@ -128,9 +130,8 @@ public class ShoppingCartUtil {
                 if (isSelectd) {
                     String price = listGoods.get(i).getGoods().get(j).getPrice();
                     String num = listGoods.get(i).getGoods().get(j).getNumber();
-                    String countMoney = DecimalUtil.multiply(price, num);
-                    selectedMoney = DecimalUtil.add(selectedMoney, countMoney);
-                    selectedCount = DecimalUtil.add(selectedCount, "1");
+                    selectedMoney = DecimalUtil.add(selectedMoney, DecimalUtil.multiplyWithScale(price, num, 2));
+                    selectedCount = DecimalUtil.add(selectedCount, num);
                 }
             }
         }
@@ -139,36 +140,42 @@ public class ShoppingCartUtil {
         return infos;
     }
 
-    public static List<ShoppingCartBean.Goods> getSelectGoods(List<ShoppingCartBean> listGoods) {
-        List<ShoppingCartBean.Goods> goodsList = new ArrayList<>();
+    public static ArrayList<PayModel.PayBean> getSelectGoods(List<ShoppingCartBean> listGoods) {
+        ArrayList<PayModel.PayBean> payBeen = new ArrayList<>();
         for (int i = 0; i < listGoods.size(); i++) {
             for (int j = 0; j < listGoods.get(i).getGoods().size(); j++) {
                 boolean isSelectd = listGoods.get(i).getGoods().get(j).isChildSelected();
                 if (isSelectd) {
-                    goodsList.add(listGoods.get(i).getGoods().get(j));
+                    PayModel.PayBean _pay = new PayModel.PayBean();
+                    _pay.setMerchantName(listGoods.get(i).getMerchantName());
+                    ShoppingCartBean.Goods _goods = listGoods.get(i).getGoods().get(j);
+                    _pay.setProductName(_goods.getGoodsName());
+                    _pay.setChecked(true);
+                    _pay.setProductId(_goods.getGoodsID());
+                    _pay.setProductNumber(_goods.getNumber());
+                    _pay.setProductPic(_goods.getGoodsLogoUrl());
+                    _pay.setProductPrice(DecimalUtil.multiplyWithScale(_goods.getPrice(), _goods.getNumber(), 2));
+                    payBeen.add(_pay);
                 }
             }
         }
-        return goodsList;
+        return payBeen;
     }
 
 
     public static boolean hasSelectedGoods(List<ShoppingCartBean> listGoods) {
         String count = getShoppingCount(listGoods)[0];
-        if ("0".equals(count)) {
-            return false;
-        }
-        return true;
+        return !"0".equals(count);
     }
+
 
     /**
      * 添加某商品的数量到数据库（非通用部分，都有这个动作，但是到底存什么，未可知）
      *
-     * @param productID 此商品的规格ID
-     * @param num       此商品的数量
+     * @param foodInfoBean
      */
-    public static void addGoodToCart(String productID, String num) {
-        AccountDao.getInstance().saveShoppingInfo(productID, num);
+    public static void addGoodToCart(FoodInfoBean foodInfoBean) {
+        AccountDao.getInstance().saveCartInfo(foodInfoBean);
     }
 
     /**
@@ -178,7 +185,7 @@ public class ShoppingCartUtil {
      */
     public static void delGood(String productID) {
         AccountDao.getInstance().deleteItemInTableById(AccountDBHelper.Q_SHOPPING_CART_TABLE,
-                ShoppingCartBean.KEY_PRODUCT_ID, productID);
+                ShoppingCartBean.KEY_FOOD_ID, productID);
     }
 
     /**
@@ -192,19 +199,13 @@ public class ShoppingCartUtil {
      * 增减数量，操作通用，数据不通用
      */
     public static void addOrReduceGoodsNum(boolean isPlus, ShoppingCartBean.Goods goods, TextView tvNum) {
-        String currentNum = goods.getNumber().trim();
-        String num = "1";
+        String num;
         if (isPlus) {
-            num = String.valueOf(Integer.parseInt(currentNum) + 1);
+            num = DecimalUtil.add(goods.getNumber(), "1");
         } else {
-            int i = Integer.parseInt(currentNum);
-            if (i > 1) {
-                num = String.valueOf(i - 1);
-            } else {
-                num = "1";
-            }
+            num = "1".equals(goods.getNumber()) ? "1" : DecimalUtil.subtract(goods.getNumber(), "1");
         }
-        String productID = goods.getProductID();
+        String productID = goods.getGoodsID();
         tvNum.setText(num);
         goods.setNumber(num);
         updateGoodsNumber(productID, num);
@@ -217,7 +218,7 @@ public class ShoppingCartUtil {
      * @param num
      */
     public static void updateGoodsNumber(String productID, String num) {
-        AccountDao.getInstance().updateGoodsNum(productID, num);
+        AccountDao.getInstance().updateFoodNum(productID, num);
     }
 
     /**
@@ -231,13 +232,14 @@ public class ShoppingCartUtil {
         return AccountDao.getInstance().getTableCountByName(AccountDBHelper.Q_SHOPPING_CART_TABLE);
     }
 
+
     /**
      * 获取所有商品ID，用于向服务器请求数据（非通用部分）
      *
      * @return
      */
-    public static List<String> getAllProductID() {
-        return AccountDao.getInstance().getProductList();
+    public static List<FoodInfoBean> getAllProductID() {
+        return AccountDao.getInstance().getCartList();
     }
 
     /**
@@ -262,7 +264,7 @@ public class ShoppingCartUtil {
                     continue;
                 }
                 String productID = goods.getProductID();
-                String num = AccountDao.getInstance().getNumByProductID(productID);
+                String num = AccountDao.getInstance().getNumByFoodID(productID);
                 list.get(i).getGoods().get(j).setNumber(num);
             }
         }

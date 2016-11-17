@@ -135,5 +135,29 @@ public class ShopDetailUrlBean {
         public void setVariety(String variety) {
             Variety = variety;
         }
+
+        @Override
+        public String toString() {
+            return "ShopDetailBean{" +
+                    "ID='" + ID + '\'' +
+                    ", Name='" + Name + '\'' +
+                    ", Price='" + Price + '\'' +
+                    ", MonthlySales='" + MonthlySales + '\'' +
+                    ", Style='" + Style + '\'' +
+                    ", Pic='" + Pic + '\'' +
+                    ", Variety='" + Variety + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ShopDetailUrlBean{" +
+                "result='" + result + '\'' +
+                ", msg='" + msg + '\'' +
+                ", total=" + total +
+                ", rows=" + rows +
+                ", Varietys=" + Varietys.toString() +
+                '}';
     }
 }

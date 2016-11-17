@@ -47,15 +47,25 @@
             tools:src="@drawable/ic_pic_failed" />
 
 
+        <TextView
+            android:id="@+id/item_deliver_fee"
+            tools:text="含跑腿费："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:textSize="@dimen/text_little_small"
+            android:layout_alignBottom="@+id/iv_pay_image"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
         <include
             layout="@layout/item_total_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_pay_image"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginRight="@dimen/margin_small" />
+            android:layout_above="@+id/item_deliver_fee"
+            android:layout_alignRight="@+id/item_deliver_fee"
+            android:layout_alignEnd="@+id/item_deliver_fee" />
     </RelativeLayout>
 
     <View

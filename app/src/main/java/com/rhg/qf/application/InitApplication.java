@@ -1,6 +1,7 @@
 package com.rhg.qf.application;
 
 import android.app.Service;
+import android.graphics.Bitmap;
 import android.os.Vibrator;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -8,14 +9,16 @@ import android.util.Log;
 import com.baidu.mapapi.SDKInitializer;
 import com.easemob.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.MemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LimitedAgeMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhg.qf.R;
-import com.rhg.qf.activity.BaseFragmentActivity;
-import com.rhg.qf.datebase.AccountDBHelper;
 import com.rhg.qf.locationservice.LocationService;
+import com.rhg.qf.ui.activity.BaseFragmentActivity;
 import com.rhg.qf.utils.AccountUtil;
 import com.rhg.qf.utils.ToastHelper;
 import com.umeng.socialize.PlatformConfig;
@@ -29,7 +32,7 @@ import java.util.HashMap;
  * time：2016/5/28 16:22
  * email：1013773046@qq.com
  */
-public class InitApplication extends MultiDexApplication implements Runnable{
+public class InitApplication extends MultiDexApplication implements Runnable {
     public final static String QQID = "1105497604";
     public final static String QQKEY = "MdCq3ttlP0xlAPIg";
     public final static String WXID = "wxb066167618e700e6";/*已签名*/
@@ -97,7 +100,6 @@ public class InitApplication extends MultiDexApplication implements Runnable{
         initBDMap();
         super.onCreate();
         initApplication = this;
-        initImageLoader();
         new Thread(this).run();
     }
 
@@ -133,23 +135,28 @@ public class InitApplication extends MultiDexApplication implements Runnable{
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
                 showImageForEmptyUri(R.drawable.ic_pic_failed)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
                 .cacheInMemory(true).cacheOnDisk(true).build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                getApplicationContext()).defaultDisplayImageOptions(defaultOptions)
+        MemoryCache memoryCache = new LimitedAgeMemoryCache(new LruMemoryCache(4 * 1024 * 1024), 15 * 60);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions)
+                .memoryCache(memoryCache)
                 .threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .writeDebugLogs()
                 .tasksProcessingOrder(QueueProcessingType.LIFO).build();
         ImageLoader.getInstance().init(config);
     }
 
     @Override
     public void run() {
-        EaseUI.getInstance().init(this);
         initAccountUtil();
-        AccountDBHelper.init(getApplicationContext());
+        initImageLoader();
         initToast();
         thirdConfig();
+        EaseUI.getInstance().init(this);
     }
 }

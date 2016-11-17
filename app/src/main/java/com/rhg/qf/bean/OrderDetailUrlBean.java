@@ -65,6 +65,7 @@ public class OrderDetailUrlBean {
         private String Phone;
         private String Address;
         private String Fee;
+        private String Price;
         /**
          * FName : 微辣黄焖鸡米饭
          * Price : 288
@@ -111,6 +112,14 @@ public class OrderDetailUrlBean {
 
         public void setFoods(List<FoodsBean> Foods) {
             this.Foods = Foods;
+        }
+
+        public String getPrice() {
+            return Price;
+        }
+
+        public void setPrice(String price) {
+            Price = price;
         }
 
         @Override
@@ -163,124 +172,4 @@ public class OrderDetailUrlBean {
             }
         }
     }
-
-
-
- /*   private String ID;
-    private String Client;
-    private String Receiver;
-    private String Address;
-    private String Phone;
-    private String Price;
-    private String Style;
-    private String Otime;
-    *//**
-     * FName : 微辣黄焖鸡米饭
-     * Price : 288
-     * Pic : http://www.zousitanghulu.com/Pic/1.jpg
-     *//*
-
-    private List<Foods> foods;
-
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
-    public String getClient() {
-        return Client;
-    }
-
-    public void setClient(String Client) {
-        this.Client = Client;
-    }
-
-    public String getReceiver() {
-        return Receiver;
-    }
-
-    public void setReceiver(String Receiver) {
-        this.Receiver = Receiver;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String Address) {
-        this.Address = Address;
-    }
-
-    public String getPhone() {
-        return Phone;
-    }
-
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
-    }
-
-    public String getPrice() {
-        return Price;
-    }
-
-    public void setPrice(String Price) {
-        this.Price = Price;
-    }
-
-    public String getStyle() {
-        return Style;
-    }
-
-    public void setStyle(String Style) {
-        this.Style = Style;
-    }
-
-    public String getOtime() {
-        return Otime;
-    }
-
-    public void setOtime(String Otime) {
-        this.Otime = Otime;
-    }
-
-    public List<Foods> getFoods() {
-        return foods;
-    }
-
-    public void setFoods(List<Foods> foods) {
-        this.foods = foods;
-    }
-
-    public static class Foods {
-        private String FName;
-        private String Price;
-        private String Pic;
-
-        public String getFName() {
-            return FName;
-        }
-
-        public void setFName(String FName) {
-            this.FName = FName;
-        }
-
-        public String getPrice() {
-            return Price;
-        }
-
-        public void setPrice(String Price) {
-            this.Price = Price;
-        }
-
-        public String getPic() {
-            return Pic;
-        }
-
-        public void setPic(String Pic) {
-            this.Pic = Pic;
-        }
-    }*/
 }

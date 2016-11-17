@@ -193,7 +193,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="@drawable/btn_green_style"
+        android:background="@drawable/btn_blue_style"
         android:gravity="center"
         android:paddingBottom="@dimen/margin_small"
         android:paddingTop="@dimen/margin_small"

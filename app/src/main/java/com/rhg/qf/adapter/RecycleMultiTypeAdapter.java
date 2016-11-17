@@ -2,7 +2,6 @@ package com.rhg.qf.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,7 +146,6 @@ public class RecycleMultiTypeAdapter extends RecyclerView.Adapter<RecyclerView.V
         List<String> images = new ArrayList<>();
         List<BannerTypeUrlBean.BannerEntity> _bannerEntity = data.getBannerEntityList();
         int _count = _bannerEntity == null ? 0 : _bannerEntity.size();
-        Log.i("RHG", "TOTAL: " + _count);
         for (int i = 0; i < _count; i++) {
             images.add(_bannerEntity.get(i).getSrc());
         }

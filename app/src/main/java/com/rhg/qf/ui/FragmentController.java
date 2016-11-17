@@ -37,6 +37,7 @@ public class FragmentController {
                 if (fragments.get(i) == null)
                     break;
                 ft.add(resId, fragments.get(i), fragments.get(i).getClass().getName());
+                ft.addToBackStack("");
                 if (i == showMark) {
                     ft.show(fragments.get(i));
                     fragments.get(i).setUserVisibleHint(true);

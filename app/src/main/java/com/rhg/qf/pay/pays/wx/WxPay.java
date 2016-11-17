@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.rhg.qf.mvp.api.QFoodApi;
 import com.rhg.qf.pay.model.KeyLibs;
 import com.rhg.qf.pay.model.OrderInfo;
 import com.rhg.qf.pay.pays.IPayable;
 import com.rhg.qf.pay.security.wx.MD5;
 import com.rhg.qf.utils.DecimalUtil;
-import com.rhg.qf.utils.XmlUtil;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -20,7 +23,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.MediaType;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -38,16 +41,13 @@ public class WxPay implements IPayable {
     private IWXAPI msgApi;
     //生成预付单需要的参数
     private Map<String, String> paramsForPrepay = null;
-    //预付单
-    private Map<String, String> resultOfPrepay;
 
     public WxPay() {
-//        getPrepayId = new GetPrepayIdImpl(this);
     }
 
     @Override
     public String Pay(Activity activity, OrderInfo orderInfo, String prepayId) {
-        boolean isSuccess = msgApi.sendReq(BuildCallAppParams(prepayId));
+        boolean isSuccess = msgApi.sendReq(BuildCallAppParams());
         return String.valueOf(isSuccess);
     }
 
@@ -56,8 +56,7 @@ public class WxPay implements IPayable {
                                     String notifyUrl, String tradeNo,
                                     String subject, String totalFee, String spbillCreateIp) {
         try {
-            String nonceStr = GetNonceStr();
-//            xml.append("</xml>");
+//            String nonceStr = GetNonceStr();
             /*List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
             packageParams.add(new BasicNameValuePair("appid", KeyLibs.weixin_appId));
             packageParams.add(new BasicNameValuePair("body", subject));//和支付宝的subject类似
@@ -69,22 +68,23 @@ public class WxPay implements IPayable {
             packageParams.add(new BasicNameValuePair("total_fee", Integer.valueOf()));
             packageParams.add(new BasicNameValuePair("trade_type", "APP"));*/
             Map<String, String> packageParams = new LinkedHashMap<>();//不能用HashMap();因为HashMap无序
-            packageParams.put("appid", KeyLibs.weixin_appId);/*微信开放平台审核通过的应用APPID*/
-            packageParams.put("body", subject);/*商品或支付单简要描述，可以多个商品一起打包*/
-            packageParams.put("mch_id", KeyLibs.weixin_mchId);/*微信支付分配的商户号*/
-            packageParams.put("nonce_str", nonceStr);/*随机字符串*/
-            packageParams.put("notify_url", notifyUrl);/*接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。*/
-            packageParams.put("out_trade_no", genOutTradNo(tradeNo));/*商户系统内部的订单号,32个字符内、可包含字母, */
+//            packageParams.put("appid", KeyLibs.weixin_appId);/*微信开放平台审核通过的应用APPID*/
+//            packageParams.put("body", subject);/*商品或支付单简要描述，可以多个商品一起打包*/
+//            packageParams.put("mch_id", KeyLibs.weixin_mchId);/*微信支付分配的商户号*/
+//            packageParams.put("nonce_str", nonceStr);/*随机字符串*/
+//            packageParams.put("notify_url", notifyUrl);/*接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。*/
+            packageParams.put("out_trade_no", tradeNo);/*商户系统内部的订单号,32个字符内、可包含字母, */
             packageParams.put("spbill_create_ip", spbillCreateIp);/*用户端实际ip*/
-            packageParams.put("total_fee", DecimalUtil.multiply(totalFee, "100"));/*总金额*/
-            packageParams.put("trade_type", "APP");/*支付类型*/
+            packageParams.put("total_fee", DecimalUtil.multiplyWithScale(totalFee, "100", 0));/*总金额*/
+//            packageParams.put("trade_type", "APP");/*支付类型*/
             paramsForPrepay = packageParams;//将参数保存一份，待调用支付时使用
-            String sign = Sign(packageParams);
-            packageParams.put("sign", sign);/*签名*/
-            String xmlString = XmlUtil.MapToXml(packageParams);
-            Log.i("RHG", "Build Order Info:" + xmlString);
+//            String sign = Sign(packageParams);
+//            packageParams.put("sign", sign);/*签名*/
+//            String xmlString = XmlUtil.MapToXml(packageParams);
+//            String json = new Gson().toJson(packageParams);
+//            Log.i("RHG", "Build Order Info:" + xmlString);
 
-            return new OrderInfo(xmlString);
+            return null;
 
         } catch (Exception e) {
             Log.i("RHG", e.getMessage());
@@ -103,53 +103,42 @@ public class WxPay implements IPayable {
         }
     }
 
-    public String GetPrepayId(final OrderInfo orderInfo) {
-        String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-        byte[] response = post(url, orderInfo.GetContent());
-        String content = new String(response);
-        content = content.replace("<![CDATA[", "");
-        content = content.replace("]]>", "");
-        Log.i("RHG", "response: " + content);
-        Map<String, String> map = XmlUtil.DecodeXmlToMap(content);
-        if (map == null) {
-            return "";
-        }
-        if (map.get("prepay_id") == null) {
-            return "";
-        }
-        return map.get("prepay_id");
+    public void GenParam(final OrderInfo orderInfo) {
+        String url = QFoodApi.BASE_URL + "Table/JsonSQL/weixinpay/prepay.php";
+//        String json = new Gson().toJson(orderInfo);
+//        Log.i("RHG", json);
+        try {
+            byte[] response = post(url, null);
+            String content = new String(response);
+        /*content = content.replace("<![CDATA[", "");
+        content = content.replace("]]>", "");*/
+//            Log.i("RHG", "response: " + content);
+//        return null;
+//        Map<String, String> map = XmlUtil.DecodeXmlToMap(content);
+            JSONObject jsonObject = new JSONObject(content);
+            if ("SUCCESS".equals(jsonObject.get("return_code"))) {
+                paramsForPrepay.put("appid", (String) jsonObject.get("appid"));
+                paramsForPrepay.put("mch_id", (String) jsonObject.get("mch_id"));
+                paramsForPrepay.put("nonce_str", (String) jsonObject.get("nonce_str"));
+                paramsForPrepay.put("trade_type", (String) jsonObject.get("trade_type"));
+                paramsForPrepay.put("sign", (String) jsonObject.get("sign"));
+                paramsForPrepay.put("prepay_id", (String) jsonObject.get("prepay_id"));
+            }
 
-        /*String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-        byte[] buf = Util.httpPost(url, orderInfo.GetContent());
-        Map<String, String> xml = null;
-        if (buf != null) {
-            content = new String(buf);
-            xml = XmlUtil.DecodeXmlToMap(content);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        if (xml != null) {
-            resultOfPrepay = xml;//保存预支付订单
-            return xml.get("prepay_id");
-        } else return null;*/
-
     }
 
-    private PayReq BuildCallAppParams(String prepayId) {
+    private PayReq BuildCallAppParams() {
 
         PayReq req = new PayReq();
-        req.appId = KeyLibs.weixin_appId;
-        req.partnerId = KeyLibs.weixin_mchId;
-        req.prepayId = prepayId;
+        req.appId = paramsForPrepay.get("appid");
+        req.partnerId = paramsForPrepay.get("mch_id");
+        req.prepayId = paramsForPrepay.get("prepay_id");
         req.packageValue = "Sign=WXPay";
         req.nonceStr = paramsForPrepay.get("nonce_str");
         req.timeStamp = String.valueOf(GetTimeStamp());
-
-        /*List<NameValuePair> signParams = new LinkedList<NameValuePair>();
-        signParams.add(new BasicNameValuePair("appid", req.appId));
-        signParams.add(new BasicNameValuePair("noncestr", req.nonceStr));
-        signParams.add(new BasicNameValuePair("package", req.packageValue));
-        signParams.add(new BasicNameValuePair("partnerid", req.partnerId));
-        signParams.add(new BasicNameValuePair("prepayid", req.prepayId));
-        signParams.add(new BasicNameValuePair("timestamp", req.timeStamp));*/
         Map<String, String> signParams = new LinkedHashMap<>();
         signParams.put("appid", req.appId);
         signParams.put("noncestr", req.nonceStr);
@@ -157,17 +146,20 @@ public class WxPay implements IPayable {
         signParams.put("partnerid", req.partnerId);
         signParams.put("prepayid", req.prepayId);
         signParams.put("timestamp", req.timeStamp);
-
         req.sign = Sign(signParams);
+        Log.i("RHG", req.sign);
         return req;
     }
 
     byte[] post(String url, String json) {
-        RequestBody formBody = RequestBody.create(MediaType.parse("text/xml;charset=UTF-8"), json);
-
+//        RequestBody formBody = RequestBody.create(MediaType.parse("text/xml;charset=UTF-8"), json);
+//        Map<String,String> parm = XmlUtil.DecodeXmlToMap(json);
+        RequestBody body = new FormBody.Builder().add("out_trade_no", paramsForPrepay.get("out_trade_no"))
+                .add("spbill_create_ip", paramsForPrepay.get("spbill_create_ip"))
+                .add("total_fee", paramsForPrepay.get("total_fee")).build();
         Request request = new Request.Builder()
                 .url(url)
-                .post(formBody)
+                .post(body)
                 .build();
         if (client == null)
             client = new OkHttpClient.Builder().readTimeout(5000, TimeUnit.MILLISECONDS)

@@ -11,7 +11,7 @@ import com.rhg.qf.R;
  * email：1013773046@qq.com
  */
 public class AppConstants {
-    public static final boolean DEBUG = false;
+    public static boolean DEBUG = false;
     public static final String f_Path = Environment.getExternalStorageDirectory() + "/QFood";
 
     public static final int[] IMAGE_INDICTORS = new int[]{R.drawable.ic_page_indicator,
@@ -147,9 +147,7 @@ public class AppConstants {
     public static final String UPDATE_ORDER_PAID = "UPdateorderPaid";//修改为等待接单
     public static final String UPDATE_ORDER_WAIT = "UPdateorderwait";//修改已经接单接口
 
-    public static final int DELIVER_FEE = 0;
-
-    public static final String CUSTOMER_SERVER = "DeliciousCS";
+    public static final String CUSTOMER_SERVER = "deliciouscs";
 
 
 }

@@ -1,6 +1,7 @@
 package com.rhg.qf.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rhg.qf.R;
 import com.rhg.qf.bean.PayModel;
-import com.rhg.qf.constants.AppConstants;
-import com.rhg.qf.utils.DecimalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +30,7 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
     Context context;
     List<PayModel.PayBean> payList;
     PayItemClickListener onPayItemClick;
+
 
     public PayItemAdapter(Context context, List<PayModel.PayBean> payList) {
         this.context = context;
@@ -54,9 +54,9 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
             holder.tvPayTitle.setText(payList.get(position).getMerchantName());
         else holder.tvPayTitle.setText(payList.get(position).getProductName());
         if (payList.get(position).isChecked())
-            holder.ivItemPay.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_check_green));
+            holder.ivItemPay.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check_green));
         else
-            holder.ivItemPay.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_uncheck_green));
+            holder.ivItemPay.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_uncheck_green));
         holder.ivItemPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,19 +66,20 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         });
 //        holder.rlPayCheck.setOnClickListener(this);
         holder.lyTotalCount.setVisibility(View.VISIBLE);
-        float _totalPrice;
+     /*   String _totalPrice;
         if ("0".equals(payList.get(position).getProductNumber()))
-            _totalPrice = Float.valueOf(payList.get(position).getProductPrice());
+            _totalPrice = payList.get(position).getProductPrice();
         else
-            _totalPrice = /*Integer.valueOf(payList.get(position).getProductPrice()) *
-                    Integer.valueOf(payList.get(position).getProductNumber())*/Float.valueOf(
-                    DecimalUtil.multiplyWithScale(payList.get(position).getProductPrice(),
+            _totalPrice = *//*Integer.valueOf(payList.get(position).getProductPrice()) *
+                    Integer.valueOf(payList.get(position).getProductNumber())*//*
+                    DecimalUtil.multiplyWithScale(,
                             payList.get(position).getProductNumber(),
-                            4)
-            );
+                            2);*/
         holder.tvTotalMoney.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.countMoney),
-                String.valueOf(_totalPrice + AppConstants.DELIVER_FEE)));
+                payList.get(position).getProductPrice()));
         ImageLoader.getInstance().displayImage(payList.get(position).getProductPic(), holder.ivPayImage);
+        holder.tvDeliverFee.setText(String.format(Locale.ENGLISH, context.getResources().getString(R.string.deliverFee),
+                payList.get(position).getDeliverFee() == null | "".equals(payList.get(position).getDeliverFee()) ? "0.00" : payList.get(position).getDeliverFee()));
     }
 
     @Override
@@ -105,6 +106,8 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.PayItemV
         TextView tvTotalMoney;
         @Bind(R.id.ly_totalCount)
         LinearLayout lyTotalCount;
+        @Bind(R.id.item_deliver_fee)
+        TextView tvDeliverFee;
 
         PayItemViewHolder(View view) {
             super(view);

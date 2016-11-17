@@ -37,7 +37,7 @@
         android:layout_marginStart="2dp"
         android:layout_toEndOf="@id/grid_imageView"
         android:layout_toRightOf="@id/grid_imageView"
-        android:background="@drawable/bg_green"
+        android:background="@drawable/bg_blue_white"
         android:paddingLeft="@dimen/margin_little"
         android:paddingRight="@dimen/margin_little">
 

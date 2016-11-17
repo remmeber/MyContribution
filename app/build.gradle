@@ -5,12 +5,12 @@ android {
         rhg {
             keyAlias 'rhg'
             keyPassword 'ruanhugang0215'
-            storeFile file('E:/MyContribution/app/src/main/java/qf.jks')
+            storeFile file('D:/AndroidWorkSpace/MyContribution/app/src/main/java/qf.jks')
             storePassword '331004'
         }
     }
     compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId 'com.rhg.qf'
         minSdkVersion 14

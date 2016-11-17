@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -53,6 +54,7 @@ public abstract class BaseDiaglogView extends Dialog {
         DisplayMetrics d = context.getResources().getDisplayMetrics();
 
         lp.width = (int) (d.widthPixels * 0.8);
+        lp.gravity = Gravity.CENTER_VERTICAL;
         dialogWindow.setAttributes(lp);
     }
 

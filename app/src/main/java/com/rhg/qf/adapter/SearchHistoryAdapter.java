@@ -2,6 +2,7 @@ package com.rhg.qf.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new SearchHistoryViewHolder(View.inflate(context, R.layout.item_search_history, null));
+        return new SearchHistoryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_search_history, parent,false));
     }
 
     @Override

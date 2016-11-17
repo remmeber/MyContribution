@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.rhg.qf.R;
 import com.rhg.qf.bean.ShoppingCartBean;
+import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.ShoppingCartUtil;
 import com.rhg.qf.widget.SlideView;
-import com.rhg.qf.ui.UIAlertView;
 
 import java.util.List;
 
@@ -29,6 +29,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
     Context context;
     SlideView lastSlideView;
     private DataChangeListener onDataChangeListener;
+
     //TODO--------------------------购物车事件监听--------------------------------------------------
     View.OnClickListener ShortCartListener = new View.OnClickListener() {
         @Override
@@ -171,8 +172,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         goods.slideView.shrink();
 
         boolean isChildSelected = goods.isChildSelected();
-        String goodsprice = String.format(context.getResources().getString(R.string.countMoney),
-                goods.getPrice());
+        String goodsPrice = goods.getPrice();
         String goodsNum = goods.getNumber();
         String goodsName = goods.getGoodsName();
         String goodsLogoUrl = goods.getGoodsLogoUrl();
@@ -180,7 +180,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
         ImageUtils.showImage(goodsLogoUrl, childViewHolder.goodsLogo);
         childViewHolder.goodsLogo.setDrawingCacheEnabled(true);
         childViewHolder.tvGoodsName.setText(goodsName);
-        childViewHolder.tvGoodsPrice.setText(goodsprice);
+        childViewHolder.tvGoodsPrice.setText(goodsPrice);
         childViewHolder.goodsCount.setText(goodsNum);
 
         childViewHolder.btGoodsCheck.setTag(groupPosition + "," + childPosition);
@@ -222,6 +222,7 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
      * @param childPosition
      */
     private void showDelDialog(final int groupPosition, final int childPosition) {
+        final String productID = mData.get(groupPosition).getGoods().get(childPosition).getGoodsID();
         final UIAlertView delDialog = new UIAlertView(context, "温馨提示", "确认删除该商品吗?",
                 "取消", "确定");
         delDialog.show();
@@ -233,9 +234,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
                                        @Override
                                        public void doRight() {
-                                           String productID = mData.get(groupPosition).getGoods().get(childPosition).getProductID();
+                                           delGoods(groupPosition, childPosition, productID);
                                            ShoppingCartUtil.delGood(productID);
-                                           delGoods(groupPosition, childPosition);
                                            setDataChange();
                                            notifyDataSetChanged();
                                            delDialog.dismiss();
@@ -250,7 +250,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
      * @param groupPosition
      * @param childPosition
      */
-    private void delGoods(int groupPosition, int childPosition) {
+    private void delGoods(int groupPosition, int childPosition, String Id) {
+        onDataChangeListener.removeData(Id);
         mData.get(groupPosition).getGoods().remove(childPosition);
         if (mData.get(groupPosition).getGoods().size() == 0) {
             mData.remove(groupPosition);
@@ -270,6 +271,8 @@ public class QFoodShoppingCartExplAdapter extends BaseExpandableListAdapter impl
 
     public interface DataChangeListener {
         void onDataChange(String CountMoney);
+
+        void removeData(String Id);
     }
 
     class GroupViewHolder {

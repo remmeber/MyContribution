@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 public class DecimalUtil {
 
     /**
-     * 金钱乘法
+     * 金钱加法
      *
      * @param v1
      * @param v2
@@ -17,6 +17,19 @@ public class DecimalUtil {
         BigDecimal b2 = new BigDecimal(v2);
 
         return b1.add(b2).toString();
+    }
+
+    /**
+     * @param v1
+     * @param v2
+     * @param scale
+     * @return
+     */
+    public static String addWithScale(String v1, String v2, int scale) {
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+
+        return b1.add(b2).setScale(scale).toString();
     }
 
     /**

@@ -16,8 +16,7 @@ import rx.functions.Func1;
 public class GoodsDetailModel {
     public Observable<GoodsDetailUrlBean.GoodsDetailBean> getGoodsDetail(String foodmessage, String foodId) {
         return QFoodApiMamager.getInstant()
-                .getQFoodApiService()
-                .getGoodsDetail(foodmessage, Integer.valueOf(foodId))
+                .getQFoodApiService().getGoodsDetail(foodmessage, Integer.valueOf(foodId))
                 .flatMap(new Func1<GoodsDetailUrlBean, Observable<GoodsDetailUrlBean.GoodsDetailBean>>() {
                     @Override
                     public Observable<GoodsDetailUrlBean.GoodsDetailBean> call(

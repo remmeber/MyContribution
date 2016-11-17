@@ -98,8 +98,7 @@ public class AliPay implements IPayable {
     public void RegisterApp(Context context, String appId) {
     }
 
-    public String GetPrepayId(OrderInfo orderInfo) {
-        return null;
+    public void GenParam(OrderInfo orderInfo) {
     }
 
     @Override
