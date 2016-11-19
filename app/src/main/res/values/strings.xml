@@ -95,6 +95,7 @@
     <string name="contacts">联系方式</string>
     <string name="contacts_Null">联系方式为空</string>
     <string name="contactAddress">收货地址</string>
+    <string name="contactErrorFormat">手机号码格式错误</string>
     <string name="contactAddress_Null">收货地址为空</string>
     <string name="contactAddressDetail">补充详细地址(如门牌号、楼层号)</string>
     <string name="sure2Modify">确定修改选中地址？</string>

@@ -1,8 +1,11 @@
 package com.rhg.qf.ui.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +20,7 @@ import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.base.IView;
 import com.rhg.qf.mvp.base.RxPresenter;
 import com.rhg.qf.mvp.view.BaseView;
+import com.rhg.qf.runtimepermissions.PermissionsManager;
 import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.KeyBoardUtil;
 
@@ -32,11 +36,11 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
 
     protected T presenter;
 
-    boolean isFirstLoc;
+    boolean isLocating;
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
-    private View decorView;
+    protected View decorView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -72,6 +76,36 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
         initData();
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    protected void checkPermissionAndSetIfNecessary(String[] permissions) {
+        if (!PermissionsManager.getInstance().hasAllPermissions(this, permissions)) {
+            PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(this,
+                    permissions, null);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                final String permission = permissions[i];
+                onDeny(permission);
+                return;
+            }
+        }
+        onGrant();
+    }
+
+    public void onGrant() {
+
+    }
+
+    public void onDeny(String permission) {
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -90,42 +124,22 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
 
     }
 
-    protected boolean isNeedFirstLoc() {
-        return false;
-    }
-
-    private void startLoc() {
-        if ((locationService = GetMapService()) != null) {
-            if ((mLocationListener = getLocationListener()) != null) {
-                locationService.registerListener(mLocationListener);
-                locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-                mLocationListener.getLocation(locationService);
+    protected void startLoc() {
+        if (!isLocating) {
+            isLocating = true;
+            if ((locationService = GetMapService()) != null) {
+                if ((mLocationListener = getLocationListener()) != null) {
+                    locationService.registerListener(mLocationListener);
+                    locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+                    mLocationListener.getLocation(locationService);
+                }
             }
-        }
-    }
-
-    public void reStartLocation() {
-        if (isFirstLoc) {
-            startLoc();
-            isFirstLoc = false;
-            return;
-        }
-        if (locationService == null)
-            locationService = GetMapService();
-        if (mLocationListener == null) {
-            locationService.registerListener(mLocationListener = getLocationListener());
-            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-        } else {
-            mLocationListener.getLocation(locationService);
         }
     }
 
     public MyLocationListener getLocationListener() {
         return null;
     }
-
-    /*public void getLocation(LocationService locationService, MyLocationListener mLocationListener) {
-    }*/
 
 
     /*默认不定位，如果需要定位，子类需要重写该方法*/
@@ -209,6 +223,7 @@ public abstract class BaseAppcompactActivity<T extends RxPresenter<? extends IVi
                     showLocSuccess(location_str[1].concat(",").concat(location_str[2])
                             .concat(",").concat(location_str[3]));
                 }
+                isLocating = false;
             } else {
                 showSuccess(_str);
             }

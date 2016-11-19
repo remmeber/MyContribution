@@ -1,6 +1,9 @@
 package com.rhg.qf.ui.fragment;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,6 +31,8 @@ import com.rhg.qf.impl.RcvItemClickListener;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.HomePresenter;
+import com.rhg.qf.runtimepermissions.PermissionsManager;
+import com.rhg.qf.runtimepermissions.PermissionsResultAction;
 import com.rhg.qf.ui.activity.HotFoodActivity;
 import com.rhg.qf.ui.activity.PersonalOrderActivity;
 import com.rhg.qf.ui.activity.SearchActivity;
@@ -64,6 +69,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     List<Object> mData;
     boolean isLocated;
+    boolean firstLoc;
 
     @Bind(R.id.home_recycle)
     RecyclerView home_rcv;
@@ -71,8 +77,6 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
-//        AppConstants.DEBUG = true;
-        homePresenter = new HomePresenter(this);
         myLocationListener = new MyLocationListener(this);
         favorableTypeModel = new FavorableTypeModel();
         bannerTypeBean = new BannerTypeBean();
@@ -92,14 +96,51 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
 
     @Override
     public void loadData() {
-        /*if (!AccountUtil.getInstance().hasAccount()) {
-            reStartLocation();
-        }*/
+        if (getUserVisibleHint()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_PHONE_STATE},
+                        new PermissionsResultAction() {
+                            @Override
+                            public void onGranted() {
+                                startLoc();
+                            }
+
+                            @Override
+                            public void onDenied(String permission) {
+
+                            }
+                        });
+            } else
+                startLoc();
+        }
+    }
+
+    @Override
+    public void onDeny(final String permission) {
+        Snackbar.make(view, "授权失败，将影响您的体验", Snackbar.LENGTH_LONG).setAction("重新授权", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(getActivity(),
+                        new String[]{permission}, null);
+            }
+        }).show();
+    }
+
+    @Override
+    public void onGrant() {
+        startLoc();
+        firstLoc = true;
     }
 
     @Override
     protected void refresh() {
-        if (!isLocated) {
+        //firstLoc 必须在startLoc方法调用后置位，在6.0以上的系统中，必须授权后再调用startLoc方法，
+        //reStartLocation也必须在startLoc方法调用过一次后才能调用。
+        if (firstLoc && !isLocated) {
             reStartLocation();
         }
     }
@@ -133,6 +174,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     @Override
     public LocationService GetMapService() {
 //        progressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
         return InitApplication.getInstance().locationService;
     }
 
@@ -161,6 +203,7 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     protected void showFailed() {
     }
 
+
     @Override
     public void showSuccess(Object o) {
         HomeBean _homeBean = (HomeBean) o;
@@ -180,14 +223,16 @@ public class HomeFragment extends BaseFragment implements RecycleMultiTypeAdapte
     public void showLocSuccess(String s) {
         isLocated = true;
         AccountUtil.getInstance().setLocation(s);
+        if (homePresenter == null)
+            homePresenter = new HomePresenter(this);
         homePresenter.getHomeData(AppConstants.HOME_RESTAURANTS);
-//        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showLocFailed(String s) {
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
         ToastHelper.getInstance()._toast(s);
-//        progressBar.setVisibility(View.GONE);
     }
 
     private void initList() {

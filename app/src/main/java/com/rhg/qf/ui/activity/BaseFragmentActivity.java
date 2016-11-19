@@ -3,7 +3,6 @@ package com.rhg.qf.ui.activity;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +19,7 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.view.BaseView;
+import com.rhg.qf.utils.ImageUtils;
 import com.rhg.qf.utils.KeyBoardUtil;
 
 import butterknife.ButterKnife;
@@ -31,9 +31,6 @@ import butterknife.ButterKnife;
  * email：1013773046@qq.com
  */
 public abstract class BaseFragmentActivity extends FragmentActivity implements BaseView/*, View.OnClickListener*/ {
-    private static final String ACTION_NETWORK_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
-    private static final String ACTION_PUSH_DATA = "fm.data.push.action";
-    private static final String ACTION_NEW_VERSION = "apk.update.action";
     boolean isFirstLoc;
     //TODO 百度地图
     private LocationService locationService;
@@ -50,7 +47,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         getWindow().setEnterTransition(fade);
 
         super.onCreate(savedInstanceState);
-//        InitApplication.getInstance().addActivity(this);
         setContentView(getLayoutResId());
 
         decorView = getWindow().getDecorView();
@@ -74,29 +70,18 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
         ButterKnife.bind(this);
         dataReceive(getIntent());
-        /*isFirstLoc = isNeedFirstLoc();
-        startLoc();*/
         initView(getRootView(this));
         initData(savedInstanceState);
-        loadingData();
-//        bindData(loadData());
     }
+
 
     public void hideNavigationBar(View decorView) {
 
     }
 
-    protected boolean isNeedFirstLoc() {
-        return false;
-    }
-
     /*获取根布局*/
     View getRootView(Activity context) {
         return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);
-    }
-
-    public void loadingData() {
-
     }
 
 
@@ -115,11 +100,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     protected void onResume() {
         super.onResume();
         hideNavigationBar(decorView);
-        /*IntentFilter filter = new IntentFilter();
-        filter.addAction(ACTION_NETWORK_CHANGE);
-        filter.addAction(ACTION_PUSH_DATA);
-        filter.addAction(ACTION_NEW_VERSION);
-        registerReceiver(receiver, filter);*/
     }
 
     @Override
@@ -211,29 +191,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     @Override
     protected void onDestroy() {
-//        ImageUtils.clearCache();
+        ImageUtils.clearCache();
         super.onDestroy();
         InitApplication.getInstance().removeActivity(this);
         ButterKnife.bind(this);
 
     }
-
-    /*BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (ACTION_NETWORK_CHANGE.equals(action)) {
-                InitApplication.isNetworkAvailable = NetUtil.isConnected(getApplicationContext());
-                //TODO 网络发生变化
-            } else if (ACTION_PUSH_DATA.equals(action)) {
-                Bundle b = intent.getExtras();
-                //TODO 数据改变
-            } else if (ACTION_NEW_VERSION.equals(action)) {
-                //TODO 版本发生变化
-            }
-        }
-    };*/
 
     protected int getLayoutResId() {
         return 0;
@@ -243,11 +206,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     protected abstract void initData(Bundle savedInstanceState);
 
-    //横竖屏切换，键盘等
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
 
     /*当Activity启动模式(LaunchMode)为SingleTop或者SingleTask的时候，多次调用此Activity可能会调用此方法，而不
     * 调用Activity的onCreate、onStart方法

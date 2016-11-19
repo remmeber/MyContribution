@@ -5,7 +5,7 @@ android {
         rhg {
             keyAlias 'rhg'
             keyPassword 'ruanhugang0215'
-            storeFile file('D:/AndroidWorkSpace/MyContribution/app/src/main/java/qf.jks')
+            storeFile file('E:/MyContribution/app/src/main/java/qf.jks')
             storePassword '331004'
         }
     }

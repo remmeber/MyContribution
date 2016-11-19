@@ -136,7 +136,7 @@ public class InitApplication extends MultiDexApplication implements Runnable {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
                 showImageForEmptyUri(R.drawable.ic_pic_failed)
                 .bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheInMemory(true).cacheOnDisk(true).build();
+                .cacheInMemory(true).build();
 
         MemoryCache memoryCache = new LimitedAgeMemoryCache(new LruMemoryCache(4 * 1024 * 1024), 15 * 60);
 

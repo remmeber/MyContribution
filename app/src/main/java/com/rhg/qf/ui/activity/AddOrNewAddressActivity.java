@@ -1,6 +1,9 @@
 package com.rhg.qf.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.locationservice.LocationService;
 import com.rhg.qf.locationservice.MyLocationListener;
 import com.rhg.qf.mvp.presenter.AddOrUpdateAddressPresenter;
+import com.rhg.qf.runtimepermissions.PermissionsManager;
 import com.rhg.qf.utils.RegexUtils;
 import com.rhg.qf.utils.ToastHelper;
 
@@ -71,10 +75,6 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
         return R.layout.new_address_layout;
     }
 
-    @Override
-    protected boolean isNeedFirstLoc() {
-        return false;
-    }
 
     @Override
     public LocationService GetMapService() {
@@ -95,6 +95,29 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
         else {
             tbCenterTv.setText(getResources().getString(R.string.modifyAddress));
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            checkPermissionAndSetIfNecessary(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        else
+            startLoc();
+    }
+
+    @Override
+    public void onGrant() {
+        startLoc();
+    }
+
+    @Override
+    public void onDeny(final String permission) {
+        Snackbar.make(decorView, "授权失败，将影响您的体验", Snackbar.LENGTH_LONG).setAction("重新授权", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(AddOrNewAddressActivity.this,
+                        new String[]{permission}, null);
+            }
+        }).show();
     }
 
     @Override
@@ -135,30 +158,22 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                 break;
             case R.id.add_new_address_bt:
                 if (TextUtils.isEmpty(addNewAddressContactPersonContent.getText())) {
-                    ToastHelper.getInstance()._toast(getResources().getString(R.string.contactUser_Null));
+                    ToastHelper.getInstance().displayToastWithQuickClose(getResources().getString(R.string.contactUser_Null));
                     break;
                 }
                 if (TextUtils.isEmpty(addNewAddressContactsContent.getText())) {
-                    ToastHelper.getInstance()._toast(getResources().getString(R.string.contacts_Null));
+                    ToastHelper.getInstance().displayToastWithQuickClose(getResources().getString(R.string.contacts_Null));
                     break;
                 }
                 if (!RegexUtils.isPhoneNumber(addNewAddressContactsContent.getText().toString())) {
-                    ToastHelper.getInstance()._toast("手机号码格式错误");
+                    ToastHelper.getInstance().displayToastWithQuickClose(getResources().getString(R.string.contactErrorFormat));
                     break;
                 }
                 if (TextUtils.isEmpty(addNewAddressContactAddressContent.getText())) {
-                    ToastHelper.getInstance()._toast(getResources().getString(R.string.contactAddress_Null));
+                    ToastHelper.getInstance().displayToastWithQuickClose(getResources().getString(R.string.contactAddress_Null));
                     break;
                 }
-               /* AddressUrlBean.AddressBean addressBean = new AddressUrlBean.AddressBean();
-                addressBean.setName(addNewAddressContactPersonContent.getText().toString());
-                addressBean.setPhone(addNewAddressContactsContent.getText().toString());
-                String _address = addNewAddressContactAddressContent.getText().toString();
-                _address = _address.concat(addNewAddressContentDetail.getText().toString());*/
-//                StringBuilder _address = new StringBuilder();
-               /* _address.append(addNewAddressContactAddressContent.getText().toString())
-                        .append(addNewAddressContentDetail.getText().toString());*/
-//                addressBean.setAddress(_address);
+
                 if (addOrUpdateAddress == null)
                     addOrUpdateAddress = new AddOrUpdateAddressPresenter(this);
                 addOrUpdateAddress.addOrUpdateAddress(addressId, addNewAddressContactPersonContent.getText().toString(),
@@ -170,7 +185,7 @@ public class AddOrNewAddressActivity extends BaseAppcompactActivity {
                 break;
             case R.id.add_new_address_location:
             case R.id.add_new_address_contact_address_content:
-                reStartLocation();
+                startLoc();
                 break;
         }
     }

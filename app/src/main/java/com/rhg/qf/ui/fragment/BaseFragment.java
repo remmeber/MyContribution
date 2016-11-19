@@ -3,7 +3,9 @@ package com.rhg.qf.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -33,6 +35,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     //TODO 百度地图
     private LocationService locationService;
     private MyLocationListener mLocationListener;
+    protected View view;
     protected Activity mActivity;
 //    private Unbinder bind;
 
@@ -51,7 +54,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         if (AppConstants.DEBUG)
             Log.i("RHG", "...........onCreateView");
         receiveData(getArguments());
-        View view = inflater.inflate(getLayoutResId(), container, false);
+        view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
         initView(view);
         return view;
@@ -74,13 +77,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         if (AppConstants.DEBUG)
             Log.i("RHG", "...........onActivityCreated");
         initData();
-        if (!NetUtil.isConnected(getContext())) {
-            ToastHelper.getInstance()._toast("网络未连接");
-        } else if (getUserVisibleHint()) {
-            startLoc();
-        }
     }
-
 
     /**
      * UI从后台回显示出来后会调用该生命周期
@@ -131,14 +128,37 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                final String permission = permissions[i];
+                onDeny(permission);
+                return;
+            }
+        }
+        onGrant();
+    }
+
+    public void onGrant() {
+
+    }
+
+    public void onDeny(String permission) {
+    }
+
     private void loadDataIfPrepared() {
         if (getUserVisibleHint() && !hasFetchData && isViewPrepare) {
+            if (!NetUtil.isConnected(getContext())) {
+                ToastHelper.getInstance()._toast("网络未连接");
+            } else
+                loadData();
             hasFetchData = true;
-            loadData();
         }
     }
 
-    private void startLoc() {
+    protected void startLoc() {
         if ((locationService = GetMapService()) != null) {
             if ((mLocationListener = getLocationListener()) != null) {
                 locationService.registerListener(mLocationListener);
@@ -255,5 +275,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
 
     public abstract void showSuccess(Object o);
+
+
 
 }

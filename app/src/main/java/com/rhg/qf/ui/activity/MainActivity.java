@@ -1,9 +1,8 @@
 package com.rhg.qf.ui.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -12,8 +11,6 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.rhg.qf.R;
 import com.rhg.qf.constants.AppConstants;
 import com.rhg.qf.mvp.view.BaseView;
-import com.rhg.qf.runtimepermissions.PermissionsManager;
-import com.rhg.qf.runtimepermissions.PermissionsResultAction;
 import com.rhg.qf.ui.FragmentController;
 import com.rhg.qf.ui.fragment.HomeFragment;
 import com.rhg.qf.ui.fragment.MyFragment;
@@ -71,17 +68,6 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-//        loadRootFragment(R.id.content_fragment, HomeFragment.newInstance());
-        List<Fragment> fragments = new ArrayList<>();
-        HomeFragment homeFragment = new HomeFragment();
-        fragments.add(homeFragment);
-        fragments.add(new SellerFragment());
-        fragments.add(new MyFragment());
-        fragments.add(new ShoppingCartFragment());
-        fragmentController = new FragmentController(getSupportFragmentManager(),
-                fragments, R.id.content_fragment);
-
-        //TODO---------------------底部导航栏=-------------------------------------------------------
 
         bottomNavigation.setMode(BottomNavigationBar.MODE_CLASSIC);
         bottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
@@ -111,8 +97,22 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
             public void onTabReselected(int position) {
             }
         });
-        requirePermission();
+        List<Fragment> fragments = new ArrayList<>();
+        HomeFragment homeFragment = new HomeFragment();
+        fragments.add(homeFragment);
+        fragments.add(new SellerFragment());
+        fragments.add(new MyFragment());
+        fragments.add(new ShoppingCartFragment());
+        fragmentController = new FragmentController(getSupportFragmentManager(),
+                fragments, R.id.content_fragment);
+
         //-----------------------------------------------------------------------------------------
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        fragmentController.getCurrentFM().onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /*数据回调*/
@@ -150,20 +150,5 @@ public class MainActivity extends BaseFragmentActivity implements BaseView
             super.onBackPressed();
             finish();
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private void requirePermission() {
-        PermissionsManager.getInstance().requestAllManifestPermissionsIfNecessary(this, new PermissionsResultAction() {
-            @Override
-            public void onGranted() {
-//              Toast.makeText(MainActivity.this, "All permissions have been granted", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onDenied(String permission) {
-                //Toast.makeText(MainActivity.this, "Permission " + permission + " has been denied", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

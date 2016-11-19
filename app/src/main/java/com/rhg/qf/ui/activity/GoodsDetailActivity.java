@@ -1,10 +1,12 @@
 package com.rhg.qf.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +36,7 @@ import com.rhg.qf.mvp.presenter.GoodsDetailPresenter;
 import com.rhg.qf.mvp.presenter.UserSignInPresenter;
 import com.rhg.qf.mvp.presenter.UserSignUpPresenter;
 import com.rhg.qf.mvp.presenter.contact.GoodsDetailContact;
+import com.rhg.qf.runtimepermissions.PermissionsManager;
 import com.rhg.qf.third.UmengUtil;
 import com.rhg.qf.ui.UIAlertView;
 import com.rhg.qf.utils.AccountUtil;
@@ -83,10 +86,8 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
     EditText etNum;
     @Bind(R.id.ivAddToShoppingCart)
     ShoppingCartWithNumber ivAddToShoppingCart;
-    //    private boolean isLike;
 
     Bundle bundle;
-    GoodsDetailPresenter goodsDetailPresenter;
 
     String foodId;
     String merchantId;
@@ -107,22 +108,15 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
 
     private boolean isNeedLoc;
     private String location;
-    private MyLocationListener myLocationListener;
     private UmengUtil signUtil;
 
 
     public GoodsDetailActivity() {
         presenter = new GoodsDetailPresenter();
-        myLocationListener = new MyLocationListener(this);
         location = AccountUtil.getInstance().getLocation();
         if (TextUtils.isEmpty(location)) {
             isNeedLoc = true;
         }
-    }
-
-    @Override
-    protected boolean isNeedFirstLoc() {
-        return true;
     }
 
     @Override
@@ -135,7 +129,6 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
 
     @Override
     public void loadingData() {
-        Log.i("RHG", "foodId:" + foodId);
         presenter.getGoodsInfo(AppConstants.TABLE_FOODMESSAGE, foodId);
     }
 
@@ -153,7 +146,6 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
             foodId = intent.getStringExtra(AppConstants.KEY_PRODUCT_ID);
             merchantId = intent.getStringExtra(AppConstants.KEY_MERCHANT_ID);
             merchantName = intent.getStringExtra(AppConstants.KEY_MERCHANT_NAME);
-//            merchantSrc = bundle.getString(AppConstants.KEY_PRODUCT_PRICE, null);
         }
     }
 
@@ -188,7 +180,15 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
     protected void initData() {
         tbRightIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_location_green));
         tbLeftIv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_left_black));
-        tbRightTv.setText(location);//TODO 根据定位来决定
+        if (isNeedLoc) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                checkPermissionAndSetIfNecessary(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE});
+            else startLoc();
+        } else
+            tbRightTv.setText(location);
         tbCenterTv.setText(getResources().getString(R.string.goodsDetail));
         // 获取本地数据库的购物车数量
         AccountDao accountDao = AccountDao.getInstance();
@@ -219,6 +219,22 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
     }
 
     @Override
+    public void onGrant() {
+        startLoc();
+    }
+
+    @Override
+    public void onDeny(final String permission) {
+        Snackbar.make(decorView, "授权失败，将影响您的体验", Snackbar.LENGTH_LONG).setAction("重新授权", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(GoodsDetailActivity.this,
+                        new String[]{permission}, null);
+            }
+        }).show();
+    }
+
+    @Override
     protected void showSuccess(Object o) {
         if (o instanceof GoodsDetailUrlBean.GoodsDetailBean) {
             GoodsDetailUrlBean.GoodsDetailBean _bean = (GoodsDetailUrlBean.GoodsDetailBean) o;
@@ -239,7 +255,7 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
             return;
         }
         if (o instanceof SignInBackBean.UserInfoBean) {
-            ToastHelper.getInstance()._toast("登录成功");
+            ToastHelper.getInstance().displayToastWithQuickClose("登录成功");
             SignInBackBean.UserInfoBean _data = (SignInBackBean.UserInfoBean) o;
             AccountUtil.getInstance().setUserID(_data.getID());
             AccountUtil.getInstance().setHeadImageUrl(_data.getPic());
@@ -309,7 +325,7 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
                 finish();
                 break;
             case R.id.tb_right_ll:
-                reStartLocation();
+                startLoc();
                 break;
             case R.id.ivReduce:
                 String Num = "0".equals(etNum.getText().toString()) ? "0" : DecimalUtil.subtract(etNum.getText().toString(), "1");
@@ -338,7 +354,6 @@ public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPrese
                 } else {
                     FoodInfoBean foodInfoBean = new FoodInfoBean(foodId, foodNum, merchantName, tvGoodsName.getText().toString(), image,
                             price, merchantId);
-                    Log.i("RHG", foodInfoBean.toString());
                     ShoppingCartUtil.addGoodToCart(foodInfoBean);
                     isExitInDB = true;
                 }
