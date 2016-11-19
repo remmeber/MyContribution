@@ -3,7 +3,6 @@ package com.rhg.qf.ui.activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -81,8 +80,9 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
             return;
         }
         if (o instanceof String && "success".equals(o)) {
-            if (userSignInPresenter != null)
-                userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT, openid, unionid);
+            if (userSignInPresenter == null)
+                userSignInPresenter = new UserSignInPresenter(this);
+            userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT, openid, unionid);
             return;
         }
         if (o instanceof SignInBackBean.UserInfoBean) {
@@ -100,7 +100,6 @@ public class PersonalOrderActivity extends BaseAppcompactActivity {
             return;
         }
         if (o instanceof AddressUrlBean.AddressBean) {
-            Log.i("RHG", "BACK ADDRESS");
             createOrderAndToPay((AddressUrlBean.AddressBean) o);
         }
     }

@@ -4,7 +4,6 @@ import com.rhg.qf.bean.MerchantInfoDetailUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /*
@@ -21,12 +20,7 @@ public class MerchantInfoDetailModel {
                     @Override
                     public Observable<MerchantInfoDetailUrlBean.MerchantInfoDetailBean> call(final MerchantInfoDetailUrlBean
                                                                                                      merchantInfoDetailUrlBean) {
-                        return Observable.create(new Observable.OnSubscribe<MerchantInfoDetailUrlBean.MerchantInfoDetailBean>() {
-                            @Override
-                            public void call(Subscriber<? super MerchantInfoDetailUrlBean.MerchantInfoDetailBean> subscriber) {
-                                subscriber.onNext(merchantInfoDetailUrlBean.getRows().get(0));
-                            }
-                        });
+                        return Observable.just(merchantInfoDetailUrlBean.getRows().get(0));
                     }
                 });
     }

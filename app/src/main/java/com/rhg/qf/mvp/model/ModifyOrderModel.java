@@ -6,7 +6,6 @@ import com.rhg.qf.mvp.api.QFoodApiMamager;
 import com.rhg.qf.mvp.api.QFoodApiService;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
@@ -30,13 +29,7 @@ public class ModifyOrderModel {
                     .flatMap(new Func1<BaseBean, Observable<String>>() {
                         @Override
                         public Observable<String> call(final BaseBean baseBean) {
-                            return Observable.create(new Observable.OnSubscribe<String>() {
-                                @Override
-                                public void call(Subscriber<? super String> subscriber) {
-                                    if (baseBean.getResult() == 0)
-                                        subscriber.onNext("order_modify_success");
-                                }
-                            });
+                            return Observable.just("order_modify_success");
                         }
                     });
         }
@@ -44,14 +37,9 @@ public class ModifyOrderModel {
             return _service.modifyDeliverOrderState(styleOrTable, orderId).flatMap(new Func1<BaseBean, Observable<String>>() {
                 @Override
                 public Observable<String> call(final BaseBean baseBean) {
-                    return Observable.create(new Observable.OnSubscribe<String>() {
-                        @Override
-                        public void call(Subscriber<? super String> subscriber) {
-                            if (baseBean.getResult() == 0)
-                                subscriber.onNext("state_delivering_success");
-                            else subscriber.onNext("state_error");
-                        }
-                    });
+                    if (baseBean.getResult() == 0)
+                        return Observable.just("state_delivering_success");
+                    return Observable.just("state_error");
                 }
             });
         else if (AppConstants.UPDATE_ORDER_PAID.equals(styleOrTable)) {
@@ -59,15 +47,9 @@ public class ModifyOrderModel {
                     new Func1<BaseBean, Observable<String>>() {
                         @Override
                         public Observable<String> call(final BaseBean baseBean) {
-                            return Observable.create(new Observable.OnSubscribe<String>() {
-                                @Override
-                                public void call(Subscriber<? super String> subscriber) {
-                                    if (baseBean.getResult() == 0)
-                                        subscriber.onNext("state_wait_success");
-                                    else subscriber.onNext("state_error");
-//                                    subscriber.onCompleted();
-                                }
-                            });
+                            if (baseBean.getResult() == 0)
+                                return Observable.just("state_wait_success");
+                            return Observable.just("state_error");
                         }
                     }
             );
@@ -75,14 +57,9 @@ public class ModifyOrderModel {
             return _service.modifyDeliverOrderState(styleOrTable, orderId).flatMap(new Func1<BaseBean, Observable<String>>() {
                 @Override
                 public Observable<String> call(final BaseBean baseBean) {
-                    return Observable.create(new Observable.OnSubscribe<String>() {
-                        @Override
-                        public void call(Subscriber<? super String> subscriber) {
-                            if (baseBean.getResult() == 0)
-                                subscriber.onNext("state_accept_success");
-                            else subscriber.onNext("state_error");
-                        }
-                    });
+                    if (baseBean.getResult() == 0)
+                        return Observable.just("state_accept_success");
+                    return Observable.just("state_error");
                 }
             });
         return null;

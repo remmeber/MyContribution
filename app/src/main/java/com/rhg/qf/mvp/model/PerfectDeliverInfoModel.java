@@ -1,13 +1,10 @@
 package com.rhg.qf.mvp.model;
 
-import android.util.Log;
-
 import com.rhg.qf.bean.BaseBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 import com.rhg.qf.utils.AccountUtil;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
@@ -25,14 +22,10 @@ public class PerfectDeliverInfoModel {
                 pwd, area, user_id).flatMap(new Func1<BaseBean, Observable<String>>() {
             @Override
             public Observable<String> call(final BaseBean baseBean) {
-                return Observable.create(new Observable.OnSubscribe<String>() {
-                    @Override
-                    public void call(Subscriber<? super String> subscriber) {
-                        Log.i("RHG", "BACK: " + baseBean.toString());
-                        if (baseBean.getResult() == 0)
-                            subscriber.onNext(baseBean.getMsg());
-                    }
-                });
+
+                if (baseBean.getResult() == 0)
+                    return Observable.just(baseBean.getMsg());
+                return Observable.just("error");
             }
         });
     }

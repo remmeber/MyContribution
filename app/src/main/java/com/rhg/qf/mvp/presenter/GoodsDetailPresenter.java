@@ -35,7 +35,7 @@ public class GoodsDetailPresenter extends RxPresenter<GoodsDetailContact.View<Go
     }
 
     public void getGoodsInfo(String foodmessage, String foodId) {
-        goodsDetailModel.getGoodsDetail(foodmessage, foodId).observeOn(AndroidSchedulers.mainThread())
+        addSubscription(goodsDetailModel.getGoodsDetail(foodmessage, foodId).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<GoodsDetailUrlBean.GoodsDetailBean>() {
                     @Override
@@ -51,9 +51,9 @@ public class GoodsDetailPresenter extends RxPresenter<GoodsDetailContact.View<Go
                     @Override
                     public void onNext(GoodsDetailUrlBean.GoodsDetailBean goodsDetailBean) {
 //                        baseView.showData(goodsDetailBean);
-                        Log.i("RHG", goodsDetailBean.toString());
                         view.showContent(goodsDetailBean);
                     }
-                });
+                }));
+
     }
 }

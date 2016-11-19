@@ -4,7 +4,6 @@ import com.rhg.qf.bean.DeliverStateBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
@@ -20,12 +19,7 @@ public class DeliverStateModel {
                 .flatMap(new Func1<DeliverStateBean, Observable<String>>() {
                     @Override
                     public Observable<String> call(final DeliverStateBean deliverStateBean) {
-                        return Observable.create(new Observable.OnSubscribe<String>() {
-                            @Override
-                            public void call(Subscriber<? super String> subscriber) {
-                                subscriber.onNext(deliverStateBean.getRows().get(0).getStyle());
-                            }
-                        });
+                        return Observable.just(deliverStateBean.getRows().get(0).getStyle());
                     }
                 });
     }

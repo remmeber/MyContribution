@@ -183,7 +183,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(hasFetchData)
+        if (hasFetchData)
             refresh();
     }
 
@@ -200,15 +200,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void showSuccess(Object o) {
         if (o == null) {/*没有登录成功*/
-            ToastHelper.getInstance()._toast("注册");
+//            ToastHelper.getInstance()._toast("注册");
             if (userSignUpPresenter == null)
                 userSignUpPresenter = new UserSignUpPresenter(this);
             userSignUpPresenter.userSignUp(openid, unionid, headImageUrl, nickName);
         }
-        if (o instanceof String) {
-            ToastHelper.getInstance()._toast((o).toString());
-            if (userSignInPresenter != null)
-                userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT, openid, unionid);
+        if (o instanceof String && "success".equals(o)) {
+            if (userSignInPresenter == null)
+                userSignInPresenter = new UserSignInPresenter(this);
+            userSignInPresenter.userSignIn(AppConstants.TABLE_CLIENT, openid, unionid);
         }
         if (o instanceof SignInBackBean.UserInfoBean) {
             ToastHelper.getInstance()._toast("登录成功");

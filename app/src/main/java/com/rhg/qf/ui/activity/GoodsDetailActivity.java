@@ -57,7 +57,8 @@ import butterknife.OnClick;
  * time：2016/5/28 16:14
  * email：1013773046@qq.com
  */
-public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPresenter> implements GoodsDetailContact.View<GoodsDetailUrlBean.GoodsDetailBean> {
+public class GoodsDetailActivity extends BaseAppcompactActivity<GoodsDetailPresenter>
+        implements GoodsDetailContact.View<GoodsDetailUrlBean.GoodsDetailBean> {
 
     @Bind(R.id.tb_center_tv)
     TextView tbCenterTv;

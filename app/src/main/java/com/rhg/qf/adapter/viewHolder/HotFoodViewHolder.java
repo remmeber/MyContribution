@@ -31,8 +31,6 @@ public class HotFoodViewHolder extends RecyclerView.ViewHolder {
     public TextView hotSellDeliverMoney;
     @Bind(R.id.hot_sell_rating_bar)
     public MyRatingBar hotSellRatingBar;
-    @Bind(R.id.hot_sell_deliver_distance)
-    public TextView hotSellDeliverDistance;
     @Bind(R.id.hot_sell_total_money)
     public TextView hotSellTotalMoney;
     @Bind(R.id.hot_sell_ll)
