@@ -1,18 +1,13 @@
 package com.rhg.qf.mvp.model;
 
-import com.rhg.qf.bean.HeadMerchantUrlBean;
 import com.rhg.qf.bean.MerchantUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
-import com.rhg.qf.mvp.api.QFoodApiService;
 import com.rhg.qf.utils.AccountUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
-import rx.functions.Func2;
 
 /**
  * desc:mvp测试实现
@@ -43,12 +38,7 @@ public class MerchantsModel {
                 .flatMap(new Func1<MerchantUrlBean, Observable<List<MerchantUrlBean.MerchantBean>>>() {
                     @Override
                     public Observable<List<MerchantUrlBean.MerchantBean>> call(final MerchantUrlBean merchantUrlBean) {
-                        return Observable.create(new Observable.OnSubscribe<List<MerchantUrlBean.MerchantBean>>() {
-                            @Override
-                            public void call(Subscriber<? super List<MerchantUrlBean.MerchantBean>> subscriber) {
-                                subscriber.onNext(merchantUrlBean.getRows());
-                            }
-                        });
+                        return Observable.just(merchantUrlBean.getRows());
                     }
                 });
     }

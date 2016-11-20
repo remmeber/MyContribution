@@ -1,14 +1,11 @@
 package com.rhg.qf.mvp.model;
 
-import android.util.Log;
-
 import com.rhg.qf.bean.DeliverOrderUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
@@ -25,13 +22,7 @@ public class DeliverOrderModel {
                 .flatMap(new Func1<DeliverOrderUrlBean, Observable<List<DeliverOrderUrlBean.DeliverOrderBean>>>() {
                     @Override
                     public Observable<List<DeliverOrderUrlBean.DeliverOrderBean>> call(final DeliverOrderUrlBean deliverOrderUrlBean) {
-                        return Observable.create(new Observable.OnSubscribe<List<DeliverOrderUrlBean.DeliverOrderBean>>() {
-                            @Override
-                            public void call(Subscriber<? super List<DeliverOrderUrlBean.DeliverOrderBean>> subscriber) {
-                                Log.i("RHG","deliverOrderUrlBean:"+deliverOrderUrlBean.toString());
-                                subscriber.onNext(deliverOrderUrlBean.getRows());
-                            }
-                        });
+                        return Observable.just(deliverOrderUrlBean.getRows());
                     }
                 });
     }

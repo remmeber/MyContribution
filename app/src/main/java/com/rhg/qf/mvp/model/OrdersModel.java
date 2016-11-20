@@ -6,7 +6,6 @@ import com.rhg.qf.mvp.api.QFoodApiMamager;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
@@ -22,13 +21,7 @@ public class OrdersModel {
                 .flatMap(new Func1<OrderUrlBean, Observable<List<OrderUrlBean.OrderBean>>>() {
                     @Override
                     public Observable<List<OrderUrlBean.OrderBean>> call(final OrderUrlBean orderUrlBean) {
-                        return Observable.create(new Observable.OnSubscribe<List<OrderUrlBean.OrderBean>>() {
-                            @Override
-                            public void call(Subscriber<? super List<OrderUrlBean.OrderBean>> subscriber) {
-//                                Collections.reverse(orderUrlBean.getRows());
-                                subscriber.onNext(orderUrlBean.getRows());
-                            }
-                        });
+                        return Observable.just(orderUrlBean.getRows());
                     }
                 });
     }

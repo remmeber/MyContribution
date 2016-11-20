@@ -5,7 +5,6 @@ import com.rhg.qf.bean.OrderDetailUrlBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /*
@@ -20,12 +19,7 @@ public class OrderDetailModel {
                 .flatMap(new Func1<OrderDetailUrlBean, Observable<OrderDetailUrlBean.OrderDetailBean>>() {
                     @Override
                     public Observable<OrderDetailUrlBean.OrderDetailBean> call(final OrderDetailUrlBean orderDetailUrlBean) {
-                        return Observable.create(new Observable.OnSubscribe<OrderDetailUrlBean.OrderDetailBean>() {
-                            @Override
-                            public void call(Subscriber<? super OrderDetailUrlBean.OrderDetailBean> subscriber) {
-                                subscriber.onNext(orderDetailUrlBean.getRows().get(0));
-                            }
-                        });
+                        return Observable.just(orderDetailUrlBean.getRows().get(0));
                     }
                 });
     }

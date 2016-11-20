@@ -4,10 +4,7 @@ import com.rhg.qf.bean.DeliverInfoBean;
 import com.rhg.qf.mvp.api.QFoodApiMamager;
 import com.rhg.qf.utils.AccountUtil;
 
-import java.util.List;
-
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
@@ -23,13 +20,7 @@ public class GetDeliverInfoModel {
                 flatMap(new Func1<DeliverInfoBean, Observable<DeliverInfoBean.InfoBean>>() {
                     @Override
                     public Observable<DeliverInfoBean.InfoBean> call(final DeliverInfoBean deliverInfoBean) {
-                        return Observable.create(new Observable.OnSubscribe<DeliverInfoBean.InfoBean>() {
-                            @Override
-                            public void call(Subscriber<? super DeliverInfoBean.InfoBean> subscriber) {
-                                if (deliverInfoBean.getResult() == 0)
-                                    subscriber.onNext(deliverInfoBean.getDeliverInfo().get(0));
-                            }
-                        });
+                        return Observable.just(deliverInfoBean.getDeliverInfo().get(0));
                     }
                 });
     }

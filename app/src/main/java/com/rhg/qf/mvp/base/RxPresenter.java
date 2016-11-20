@@ -11,7 +11,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public abstract class RxPresenter<V> implements IPresenter<V> {
-    CompositeSubscription subscriptions;
+    private CompositeSubscription subscriptions;
     protected V view;
 
     protected void addSubscription(Subscription subscription) {
